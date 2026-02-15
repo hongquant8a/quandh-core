@@ -1,13 +1,12 @@
 # Introduction
 
-
+Quandh Core API - RESTful API cho quản lý xác thực (Auth), người dùng (User) và bài viết (Post). Sử dụng Laravel Sanctum để xác thực Bearer token.
 
 <aside>
     <strong>Base URL</strong>: <code>http://localhost</code>
 </aside>
 
-    This documentation aims to provide all the information you need to work with our API.
+    Tài liệu này cung cấp thông tin chi tiết để tích hợp và sử dụng Quandh Core API.
 
-    <aside>As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
-    You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).</aside>
+    <aside>Khi cuộn xuống, bạn sẽ thấy ví dụ code (Bash, JavaScript, PHP) cho mỗi endpoint. Có thể chọn ngôn ngữ bằng tab góc phải hoặc menu điều hướng trên mobile.</aside>
 

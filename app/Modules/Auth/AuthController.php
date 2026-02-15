@@ -1,16 +1,31 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Modules\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Password;
 
+/**
+ * @group Auth
+ *
+ * Xác thực: đăng nhập, đăng xuất, quên mật khẩu, đặt lại mật khẩu
+ */
 class AuthController extends Controller
 {
-    public function login(Request $request) {
+    /**
+     * Đăng nhập
+     *
+     * Trả về access_token dùng cho các request cần xác thực.
+     *
+     * @unauthenticated
+     * @bodyParam email string required Email đăng nhập. Example: admin@example.com
+     * @bodyParam password string required Mật khẩu. Example: password123
+     */
+    public function login(Request $request)
+    {
         $request->validate(['email' => 'required|email', 'password' => 'required']);
 
         $user = User::where('email', $request->email)->first();
@@ -18,7 +33,7 @@ class AuthController extends Controller
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json(['message' => 'Thông tin đăng nhập không chính xác'], 401);
         }
-        
+
         if ($user->status !== 'active') {
             return response()->json(['message' => 'Tài khoản của bạn đã bị khóa'], 403);
         }
@@ -27,21 +42,47 @@ class AuthController extends Controller
         return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
     }
 
-    public function logout(Request $request) {
+    /**
+     * Đăng xuất
+     *
+     * Hủy token hiện tại.
+     */
+    public function logout(Request $request)
+    {
         $request->user()->currentAccessToken()->delete();
         return response()->json(['message' => 'Đã đăng xuất']);
     }
 
-    public function forgotPassword(Request $request) {
+    /**
+     * Quên mật khẩu
+     *
+     * Gửi link đặt lại mật khẩu qua email.
+     *
+     * @unauthenticated
+     * @bodyParam email string required Email tài khoản. Example: user@example.com
+     */
+    public function forgotPassword(Request $request)
+    {
         $request->validate(['email' => 'required|email']);
         $status = Password::sendResetLink($request->only('email'));
-    
+
         return $status === Password::RESET_LINK_SENT
             ? response()->json(['message' => 'Link reset đã được gửi vào Email'])
             : response()->json(['message' => 'Không thể gửi mail'], 400);
-    }      
-          
-    public function resetPassword(Request $request) {
+    }
+
+    /**
+     * Đặt lại mật khẩu
+     *
+     * Đặt mật khẩu mới dùng token từ email reset.
+     *
+     * @unauthenticated
+     * @bodyParam email string required Email tài khoản. Example: user@example.com
+     * @bodyParam password string required Mật khẩu mới (tối thiểu 6 ký tự). Example: newpassword123
+     * @bodyParam token string required Token từ email reset.
+     */
+    public function resetPassword(Request $request)
+    {
         $request->validate(['email' => 'required|email', 'password' => 'required|min:6', 'token' => 'required']);
         $status = Password::reset($request->only('email', 'password', 'token'), function (User $user, string $password) {
             $user->forceFill(['password' => Hash::make($password)])->save();

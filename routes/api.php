@@ -1,21 +1,20 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\AuthController;
 
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
-Route::post('/reset-password', [AuthController::class, 'resetPassword']);
-    
-    
-Route::apiResource('users', UserController::class);
-Route::post('users/bulk-delete', [UserController::class, 'bulkDestroy']);
-Route::patch('users/bulk-status', [UserController::class, 'bulkUpdateStatus']);
+// Auth module - public routes
+Route::prefix('auth')->group(function () {
+    require base_path('app/Modules/Auth/Routes/auth.php');
+});
 
-Route::apiResource('posts', PostController::class);
-Route::post('posts/bulk-delete', [PostController::class, 'bulkDestroy']);
-Route::patch('posts/bulk-status', [PostController::class, 'bulkUpdateStatus']);
+// Protected routes
+// Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', fn (\Illuminate\Http\Request $request) => $request->user());
+
+    Route::prefix('users')->group(function () {
+        require base_path('app/Modules/User/Routes/user.php');
+    });
+    Route::prefix('posts')->group(function () {
+        require base_path('app/Modules/Post/Routes/post.php');
+    });
+// });
