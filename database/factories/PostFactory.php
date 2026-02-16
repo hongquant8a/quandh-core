@@ -25,7 +25,7 @@ class PostFactory extends Factory
             'title' => fake()->sentence(),
             'content' => fake()->paragraphs(3, true),
             'status' => fake()->randomElement(['draft', 'published', 'archived']),
-            'category_id' => null,
+            'view_count' => 0,
             'created_by' => null,
             'updated_by' => null,
         ];
@@ -48,11 +48,16 @@ class PostFactory extends Factory
     }
 
     /**
-     * Thuộc danh mục (dùng trong seeder hoặc test).
+     * Thuộc một hoặc nhiều danh mục (gán sau khi create qua $post->categories()->attach(...)).
      */
-    public function forCategory(PostCategory $category): static
+    public function forCategories(PostCategory|array $categories): static
     {
-        return $this->state(fn (array $attributes) => ['category_id' => $category->id]);
+        return $this->afterCreating(function (Post $post) use ($categories) {
+            $ids = is_array($categories)
+                ? array_map(fn ($c) => $c instanceof PostCategory ? $c->id : $c, $categories)
+                : [$categories->id];
+            $post->categories()->sync($ids);
+        });
     }
 
     /**

@@ -40,7 +40,7 @@ class PostController extends Controller
      */
     public function index(FilterRequest $request)
     {
-        $posts = Post::with('category')->filter($request->all())
+        $posts = Post::with('categories')->filter($request->all())
             ->paginate($request->limit ?? 10);
         return new PostCollection($posts);
     }
@@ -52,7 +52,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $post->load(['category', 'attachments']);
+        $post->load(['categories', 'attachments']);
         return new PostResource($post);
     }
 
@@ -65,10 +65,11 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        $data = collect($request->validated())->except('images')->all();
+        $data = collect($request->validated())->except(['images', 'category_ids'])->all();
         $post = Post::create($data);
+        $this->syncPostCategories($post, $request->validated());
         $this->savePostAttachments($post, $request->file('images', []));
-        $post->load(['category', 'attachments']);
+        $post->load(['categories', 'attachments']);
         return (new PostResource($post))
             ->additional(['message' => 'Bài viết đã được tạo thành công!']);
     }
@@ -83,13 +84,16 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        $data = collect($request->validated())->except(['images', 'remove_attachment_ids'])->all();
+        $data = collect($request->validated())->except(['images', 'remove_attachment_ids', 'category_ids'])->all();
         $post->update($data);
+        if (array_key_exists('category_ids', $request->validated())) {
+            $this->syncPostCategories($post, $request->validated());
+        }
         if ($ids = $request->remove_attachment_ids) {
             PostAttachment::where('post_id', $post->id)->whereIn('id', $ids)->delete();
         }
         $this->savePostAttachments($post, $request->file('images', []));
-        $post->load(['category', 'attachments']);
+        $post->load(['categories', 'attachments']);
         return new PostResource($post);
     }
 
@@ -165,6 +169,29 @@ class PostController extends Controller
             'message' => 'Cập nhật trạng thái thành công!',
             'data' => new PostResource($post)
         ]);
+    }
+
+    /**
+     * Tăng lượt xem bài viết (gọi khi người dùng xem chi tiết).
+     *
+     * @urlParam post integer required ID bài viết. Example: 1
+     */
+    public function incrementView(Post $post)
+    {
+        $post->increment('view_count');
+        return response()->json([
+            'message' => 'Đã cập nhật lượt xem.',
+            'view_count' => $post->fresh()->view_count,
+        ]);
+    }
+
+    /**
+     * Đồng bộ danh mục bài viết (quan hệ n-n qua bảng pivot).
+     */
+    private function syncPostCategories(Post $post, array $validated): void
+    {
+        $ids = $validated['category_ids'] ?? [];
+        $post->categories()->sync($ids);
     }
 
     /**

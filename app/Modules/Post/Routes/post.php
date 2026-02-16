@@ -10,6 +10,7 @@ Route::post('/bulk-delete', [PostController::class, 'bulkDestroy']);
 Route::patch('/bulk-status', [PostController::class, 'bulkUpdateStatus']);
 Route::get('/', [PostController::class, 'index']);
 Route::get('/{post}', [PostController::class, 'show']);
+Route::post('/{post}/view', [PostController::class, 'incrementView']);
 Route::post('/', [PostController::class, 'store']);
 Route::put('/{post}', [PostController::class, 'update']);
 Route::patch('/{post}', [PostController::class, 'update']);

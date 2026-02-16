@@ -43,9 +43,11 @@ class PostCategory extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 
+    /** Bài viết thuộc danh mục này (quan hệ nhiều-nhiều qua bảng pivot). */
     public function posts()
     {
-        return $this->hasMany(Post::class, 'category_id');
+        return $this->belongsToMany(Post::class, 'post_post_category', 'post_category_id', 'post_id')
+            ->withTimestamps();
     }
 
     /**

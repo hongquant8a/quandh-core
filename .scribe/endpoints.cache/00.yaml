@@ -46,7 +46,7 @@ endpoints:
         name: password
         description: 'Mật khẩu.'
         required: true
-        example: password123
+        example: password
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -54,7 +54,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       email: admin@example.com
-      password: password123
+      password: password
     fileParameters: []
     responses: []
     responseFields: []

@@ -92,10 +92,14 @@ class DatabaseSeeder extends Seeder
                     fn ($sequence) => [
                         'created_by' => $users->random()->id,
                         'updated_by' => $users->random()->id,
-                        'category_id' => $categories->isNotEmpty() ? $categories->random()->id : null,
                     ]
                 )
-                ->create();
+                ->create()
+                ->each(function (Post $post) use ($categories) {
+                    if ($categories->isNotEmpty()) {
+                        $post->categories()->sync([$categories->random()->id]);
+                    }
+                });
         });
     }
 }

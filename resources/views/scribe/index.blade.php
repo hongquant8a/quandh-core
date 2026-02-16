@@ -150,6 +150,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="post-GETapi-posts--post_id-">
                                 <a href="#post-GETapi-posts--post_id-">Chi tiết bài viết</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="post-POSTapi-posts--post_id--view">
+                                <a href="#post-POSTapi-posts--post_id--view">Tăng lượt xem bài viết (gọi khi người dùng xem chi tiết).</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="post-POSTapi-posts">
                                 <a href="#post-POSTapi-posts">Tạo bài viết mới</a>
                             </li>
@@ -272,7 +275,7 @@
     --header "Accept: application/json" \
     --data "{
     \"email\": \"admin@example.com\",
-    \"password\": \"password123\"
+    \"password\": \"password\"
 }"
 </code></pre></div>
 
@@ -289,7 +292,7 @@ const headers = {
 
 let body = {
     "email": "admin@example.com",
-    "password": "password123"
+    "password": "password"
 };
 
 fetch(url, {
@@ -311,7 +314,7 @@ $response = $client-&gt;post(
         ],
         'json' =&gt; [
             'email' =&gt; 'admin@example.com',
-            'password' =&gt; 'password123',
+            'password' =&gt; 'password',
         ],
     ]
 );
@@ -413,10 +416,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="password"                data-endpoint="POSTapi-auth-login"
-               value="password123"
+               value="password"
                data-component="body">
     <br>
-<p>Mật khẩu. Example: <code>password123</code></p>
+<p>Mật khẩu. Example: <code>password</code></p>
         </div>
         </form>
 
@@ -1074,7 +1077,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpc3q3fb11j23i2e81VrC" </code></pre></div>
+    --form "file=@/tmp/phpkq1omjs3rt3gcCWs0l4" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1112,7 +1115,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/phpc3q3fb11j23i2e81VrC', 'r')
+                'contents' =&gt; fopen('/tmp/phpkq1omjs3rt3gcCWs0l4', 'r')
             ],
         ],
     ]
@@ -1227,7 +1230,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Example: <code>/tmp/phpc3q3fb11j23i2e81VrC</code></p>
+<p>File excel (xlsx, xls, csv). Example: <code>/tmp/phpkq1omjs3rt3gcCWs0l4</code></p>
         </div>
         </form>
 
@@ -1630,7 +1633,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"search\": \"b\",
     \"status\": \"architecto\",
     \"sort_by\": \"title\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 22
 }"
 </code></pre></div>
@@ -1661,7 +1664,7 @@ let body = {
     "search": "b",
     "status": "architecto",
     "sort_by": "title",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 22
 };
 
@@ -1694,7 +1697,7 @@ $response = $client-&gt;get(
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
             'sort_by' =&gt; 'title',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 22,
         ],
     ]
@@ -1947,10 +1950,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-users"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -2039,13 +2042,13 @@ access-control-allow-origin: *
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
         &quot;id&quot;: 1,
-        &quot;name&quot;: &quot;Keith Ledner Sr.&quot;,
-        &quot;email&quot;: &quot;alda53@example.net&quot;,
-        &quot;status&quot;: &quot;banned&quot;,
-        &quot;created_by&quot;: &quot;Keith Ledner Sr.&quot;,
-        &quot;updated_by&quot;: &quot;Keith Ledner Sr.&quot;,
-        &quot;created_at&quot;: &quot;2026-02-16 02:26:54&quot;,
-        &quot;updated_at&quot;: &quot;2026-02-16 02:26:54&quot;
+        &quot;name&quot;: &quot;Verlie Williamson&quot;,
+        &quot;email&quot;: &quot;bspinka@example.net&quot;,
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;created_by&quot;: &quot;Verlie Williamson&quot;,
+        &quot;updated_by&quot;: &quot;Verlie Williamson&quot;,
+        &quot;created_at&quot;: &quot;2026-02-16 09:57:47&quot;,
+        &quot;updated_at&quot;: &quot;2026-02-16 09:57:47&quot;
     }
 }</code>
  </pre>
@@ -3430,7 +3433,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php3p5uarqpjvjj9BkVv2K" </code></pre></div>
+    --form "file=@/tmp/phpqsfka0oqa68q9WjLETU" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3468,7 +3471,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/php3p5uarqpjvjj9BkVv2K', 'r')
+                'contents' =&gt; fopen('/tmp/phpqsfka0oqa68q9WjLETU', 'r')
             ],
         ],
     ]
@@ -3583,7 +3586,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Example: <code>/tmp/php3p5uarqpjvjj9BkVv2K</code></p>
+<p>File excel (xlsx, xls, csv). Example: <code>/tmp/phpqsfka0oqa68q9WjLETU</code></p>
         </div>
         </form>
 
@@ -3986,7 +3989,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"search\": \"b\",
     \"status\": \"architecto\",
     \"sort_by\": \"created_at\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 22
 }"
 </code></pre></div>
@@ -4017,7 +4020,7 @@ let body = {
     "search": "b",
     "status": "architecto",
     "sort_by": "created_at",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 22
 };
 
@@ -4050,7 +4053,7 @@ $response = $client-&gt;get(
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
             'sort_by' =&gt; 'created_at',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 22,
         ],
     ]
@@ -4303,10 +4306,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-posts"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -4395,17 +4398,32 @@ access-control-allow-origin: *
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
         &quot;id&quot;: 1,
-        &quot;title&quot;: &quot;Ut voluptatem omnis totam quibusdam cumque aut aspernatur.&quot;,
-        &quot;slug&quot;: &quot;ut-voluptatem-omnis-totam-quibusdam-cumque-aut-aspernatur&quot;,
-        &quot;content&quot;: &quot;Et facilis soluta aliquid suscipit error. In repellendus et quidem numquam aut autem. Nam et vero in.\n\nId cumque tempora non quis. In corrupti ut tempora quia rem. Neque alias reprehenderit nobis repellendus dignissimos alias aliquam dolores.\n\nRerum ipsum dolorem est ullam ut cumque. Quibusdam esse animi possimus doloribus quibusdam. Voluptas eius eos totam dolorem cupiditate. Voluptates dignissimos nemo fugit veniam et sed. Architecto fugit voluptas culpa aliquid blanditiis.&quot;,
+        &quot;title&quot;: &quot;Reiciendis soluta pariatur quo aut rem.&quot;,
+        &quot;slug&quot;: &quot;reiciendis-soluta-pariatur-quo-aut-rem&quot;,
+        &quot;content&quot;: &quot;At voluptas facere odit quos ipsa quia quo. Nostrum magni at repellendus voluptas ullam cum. Harum voluptatem quo voluptas consequuntur et sapiente animi. Itaque maiores qui atque culpa labore odio.\n\nQui aut accusantium aut. Quo non quis corporis ut alias aut magnam veritatis. Est voluptates eum dicta ipsa excepturi itaque.\n\nImpedit hic doloribus iure non vel culpa sunt non. Voluptatem laboriosam ullam non quas dolor. Voluptate distinctio natus cupiditate et ea qui necessitatibus magnam. Sequi deserunt odit saepe tenetur.&quot;,
         &quot;status&quot;: &quot;published&quot;,
-        &quot;category_id&quot;: null,
-        &quot;category&quot;: null,
+        &quot;view_count&quot;: 0,
+        &quot;categories&quot;: [
+            {
+                &quot;id&quot;: 7,
+                &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ - nam&quot;,
+                &quot;slug&quot;: &quot;tin-cong-nghe-nam-6992ea1b80727&quot;,
+                &quot;description&quot;: null,
+                &quot;status&quot;: &quot;active&quot;,
+                &quot;sort_order&quot;: 85,
+                &quot;parent_id&quot;: 1,
+                &quot;depth&quot;: null,
+                &quot;created_by&quot;: &quot;Verlie Williamson&quot;,
+                &quot;updated_by&quot;: &quot;Verlie Williamson&quot;,
+                &quot;created_at&quot;: &quot;2026-02-16 09:57:47&quot;,
+                &quot;updated_at&quot;: &quot;2026-02-16 09:57:47&quot;
+            }
+        ],
         &quot;attachments&quot;: [],
-        &quot;created_by&quot;: &quot;Dr. Noemi Jones Sr.&quot;,
-        &quot;updated_by&quot;: &quot;Dr. Noemi Jones Sr.&quot;,
-        &quot;created_at&quot;: &quot;2026-02-16 02:26:55&quot;,
-        &quot;updated_at&quot;: &quot;2026-02-16 02:26:55&quot;
+        &quot;created_by&quot;: &quot;Bobby Ratke&quot;,
+        &quot;updated_by&quot;: &quot;Aliza Bosco&quot;,
+        &quot;created_at&quot;: &quot;2026-02-16 09:57:48&quot;,
+        &quot;updated_at&quot;: &quot;2026-02-16 09:57:48&quot;
     }
 }</code>
  </pre>
@@ -4520,6 +4538,173 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
+                    <h2 id="post-POSTapi-posts--post_id--view">Tăng lượt xem bài viết (gọi khi người dùng xem chi tiết).</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-posts--post_id--view">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/api/posts/1/view" \
+    --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/posts/1/view"
+);
+
+const headers = {
+    "Authorization": "Bearer Bearer {YOUR_ACCESS_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost/api/posts/1/view';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer Bearer {YOUR_ACCESS_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-posts--post_id--view">
+</span>
+<span id="execution-results-POSTapi-posts--post_id--view" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-posts--post_id--view"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-posts--post_id--view"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-posts--post_id--view" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-posts--post_id--view">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-posts--post_id--view" data-method="POST"
+      data-path="api/posts/{post_id}/view"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-posts--post_id--view', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-posts--post_id--view"
+                    onclick="tryItOut('POSTapi-posts--post_id--view');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-posts--post_id--view"
+                    onclick="cancelTryOut('POSTapi-posts--post_id--view');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-posts--post_id--view"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/posts/{post_id}/view</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-posts--post_id--view"
+               value="Bearer Bearer {YOUR_ACCESS_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer Bearer {YOUR_ACCESS_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-posts--post_id--view"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-posts--post_id--view"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>post_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="post_id"                data-endpoint="POSTapi-posts--post_id--view"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the post. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>post</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="post"                data-endpoint="POSTapi-posts--post_id--view"
+               value="1"
+               data-component="url">
+    <br>
+<p>ID bài viết. Example: <code>1</code></p>
+            </div>
+                    </form>
+
                     <h2 id="post-POSTapi-posts">Tạo bài viết mới</h2>
 
 <p>
@@ -4541,7 +4726,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "title=Bài viết mẫu"\
     --form "content=Nội dung bài viết..."\
     --form "status=draft"\
-    --form "images[]=@/tmp/phpa8jpqlqflqr7achOEXE" </code></pre></div>
+    --form "category_ids[]=16"\
+    --form "images[]=@/tmp/php8krn6oc2c9qveBW0APi" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -4559,6 +4745,7 @@ const body = new FormData();
 body.append('title', 'Bài viết mẫu');
 body.append('content', 'Nội dung bài viết...');
 body.append('status', 'draft');
+body.append('category_ids[]', '16');
 body.append('images[]', document.querySelector('input[name="images[]"]').files[0]);
 
 fetch(url, {
@@ -4593,8 +4780,12 @@ $response = $client-&gt;post(
                 'contents' =&gt; 'draft'
             ],
             [
+                'name' =&gt; 'category_ids[]',
+                'contents' =&gt; '16'
+            ],
+            [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpa8jpqlqflqr7achOEXE', 'r')
+                'contents' =&gt; fopen('/tmp/php8krn6oc2c9qveBW0APi', 'r')
             ],
         ],
     ]
@@ -4727,13 +4918,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Trạng thái: draft, published, archived. Example: <code>draft</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>category_id</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
+            <b style="line-height: 2;"><code>category_ids</code></b>&nbsp;&nbsp;
+<small>integer[]</small>&nbsp;
 <i>optional</i> &nbsp;
  &nbsp;
-                <input type="text" style="display: none"
-                              name="category_id"                data-endpoint="POSTapi-posts"
-               value=""
+                <input type="number" style="display: none"
+               step="any"               name="category_ids[0]"                data-endpoint="POSTapi-posts"
+               data-component="body">
+        <input type="number" style="display: none"
+               name="category_ids[1]"                data-endpoint="POSTapi-posts"
                data-component="body">
     <br>
 <p>The <code>id</code> of an existing record in the post_categories table.</p>
@@ -4775,8 +4968,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "title=architecto"\
     --form "content=architecto"\
     --form "status=architecto"\
+    --form "category_ids[]=16"\
     --form "remove_attachment_ids[]=16"\
-    --form "images[]=@/tmp/php6s9ooq2e9b1f7PgliLG" </code></pre></div>
+    --form "images[]=@/tmp/phpru4uvmqd9o2i86E5hTM" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -4794,6 +4988,7 @@ const body = new FormData();
 body.append('title', 'architecto');
 body.append('content', 'architecto');
 body.append('status', 'architecto');
+body.append('category_ids[]', '16');
 body.append('remove_attachment_ids[]', '16');
 body.append('images[]', document.querySelector('input[name="images[]"]').files[0]);
 
@@ -4829,12 +5024,16 @@ $response = $client-&gt;put(
                 'contents' =&gt; 'architecto'
             ],
             [
+                'name' =&gt; 'category_ids[]',
+                'contents' =&gt; '16'
+            ],
+            [
                 'name' =&gt; 'remove_attachment_ids[]',
                 'contents' =&gt; '16'
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/php6s9ooq2e9b1f7PgliLG', 'r')
+                'contents' =&gt; fopen('/tmp/phpru4uvmqd9o2i86E5hTM', 'r')
             ],
         ],
     ]
@@ -4992,13 +5191,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Trạng thái: draft, published, archived. Example: <code>architecto</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>category_id</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
+            <b style="line-height: 2;"><code>category_ids</code></b>&nbsp;&nbsp;
+<small>integer[]</small>&nbsp;
 <i>optional</i> &nbsp;
  &nbsp;
-                <input type="text" style="display: none"
-                              name="category_id"                data-endpoint="PUTapi-posts--post_id-"
-               value=""
+                <input type="number" style="display: none"
+               step="any"               name="category_ids[0]"                data-endpoint="PUTapi-posts--post_id-"
+               data-component="body">
+        <input type="number" style="display: none"
+               name="category_ids[1]"                data-endpoint="PUTapi-posts--post_id-"
                data-component="body">
     <br>
 <p>The <code>id</code> of an existing record in the post_categories table.</p>
@@ -5054,8 +5255,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "title=architecto"\
     --form "content=architecto"\
     --form "status=architecto"\
+    --form "category_ids[]=16"\
     --form "remove_attachment_ids[]=16"\
-    --form "images[]=@/tmp/phpjqmefnpdfn2m9InHB8q" </code></pre></div>
+    --form "images[]=@/tmp/phpcq40g23jkr673MT2tfC" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -5073,6 +5275,7 @@ const body = new FormData();
 body.append('title', 'architecto');
 body.append('content', 'architecto');
 body.append('status', 'architecto');
+body.append('category_ids[]', '16');
 body.append('remove_attachment_ids[]', '16');
 body.append('images[]', document.querySelector('input[name="images[]"]').files[0]);
 
@@ -5108,12 +5311,16 @@ $response = $client-&gt;patch(
                 'contents' =&gt; 'architecto'
             ],
             [
+                'name' =&gt; 'category_ids[]',
+                'contents' =&gt; '16'
+            ],
+            [
                 'name' =&gt; 'remove_attachment_ids[]',
                 'contents' =&gt; '16'
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpjqmefnpdfn2m9InHB8q', 'r')
+                'contents' =&gt; fopen('/tmp/phpcq40g23jkr673MT2tfC', 'r')
             ],
         ],
     ]
@@ -5271,13 +5478,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Trạng thái: draft, published, archived. Example: <code>architecto</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>category_id</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
+            <b style="line-height: 2;"><code>category_ids</code></b>&nbsp;&nbsp;
+<small>integer[]</small>&nbsp;
 <i>optional</i> &nbsp;
  &nbsp;
-                <input type="text" style="display: none"
-                              name="category_id"                data-endpoint="PATCHapi-posts--post_id-"
-               value=""
+                <input type="number" style="display: none"
+               step="any"               name="category_ids[0]"                data-endpoint="PATCHapi-posts--post_id-"
+               data-component="body">
+        <input type="number" style="display: none"
+               name="category_ids[1]"                data-endpoint="PATCHapi-posts--post_id-"
                data-component="body">
     <br>
 <p>The <code>id</code> of an existing record in the post_categories table.</p>
@@ -6011,7 +6220,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php342o4439urv0aOYqjSs" </code></pre></div>
+    --form "file=@/tmp/phptgtlpdcaf1q39Y1R8bg" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -6049,7 +6258,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/php342o4439urv0aOYqjSs', 'r')
+                'contents' =&gt; fopen('/tmp/phptgtlpdcaf1q39Y1R8bg', 'r')
             ],
         ],
     ]
@@ -6164,7 +6373,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug. Example: <code>/tmp/php342o4439urv0aOYqjSs</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug. Example: <code>/tmp/phptgtlpdcaf1q39Y1R8bg</code></p>
         </div>
         </form>
 
@@ -6746,8 +6955,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"sort_by\": \"id\",
-    \"sort_order\": \"asc\",
+    \"sort_by\": \"name\",
+    \"sort_order\": \"desc\",
     \"limit\": 22
 }"
 </code></pre></div>
@@ -6777,8 +6986,8 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "sort_by": "id",
-    "sort_order": "asc",
+    "sort_by": "name",
+    "sort_order": "desc",
     "limit": 22
 };
 
@@ -6810,8 +7019,8 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'sort_by' =&gt; 'id',
-            'sort_order' =&gt; 'asc',
+            'sort_by' =&gt; 'name',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 22,
         ],
     ]
@@ -7050,10 +7259,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_by"                data-endpoint="GETapi-post-categories"
-               value="id"
+               value="name"
                data-component="body">
     <br>
-<p>Example: <code>id</code></p>
+<p>Example: <code>name</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>id</code></li> <li><code>title</code></li> <li><code>name</code></li> <li><code>sort_order</code></li> <li><code>created_at</code></li></ul>
         </div>
@@ -7064,10 +7273,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-post-categories"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -7099,7 +7308,7 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/post-categories/16" \
+    --get "http://localhost/api/post-categories/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -7107,7 +7316,7 @@ Must be one of:
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/post-categories/16"
+    "http://localhost/api/post-categories/1"
 );
 
 const headers = {
@@ -7124,7 +7333,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/post-categories/16';
+$url = 'http://localhost/api/post-categories/1';
 $response = $client-&gt;get(
     $url,
     [
@@ -7142,7 +7351,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-post-categories--category_id-">
             <blockquote>
-            <p>Example response (404):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -7154,7 +7363,51 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No query results for model [App\\Modules\\Post\\Models\\PostCategory] 16&quot;
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ&quot;,
+        &quot;slug&quot;: &quot;tin-cong-nghe&quot;,
+        &quot;description&quot;: null,
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;sort_order&quot;: 1,
+        &quot;parent_id&quot;: null,
+        &quot;depth&quot;: 0,
+        &quot;created_by&quot;: &quot;Verlie Williamson&quot;,
+        &quot;updated_by&quot;: &quot;Verlie Williamson&quot;,
+        &quot;created_at&quot;: &quot;2026-02-16 09:57:47&quot;,
+        &quot;updated_at&quot;: &quot;2026-02-16 09:57:47&quot;,
+        &quot;parent&quot;: null,
+        &quot;children&quot;: [
+            {
+                &quot;id&quot;: 6,
+                &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ - molestiae&quot;,
+                &quot;slug&quot;: &quot;tin-cong-nghe-molestiae-6992ea1b73b1f&quot;,
+                &quot;description&quot;: &quot;Eius facere eaque blanditiis occaecati totam sunt.&quot;,
+                &quot;status&quot;: &quot;active&quot;,
+                &quot;sort_order&quot;: 29,
+                &quot;parent_id&quot;: 1,
+                &quot;depth&quot;: null,
+                &quot;created_by&quot;: &quot;Verlie Williamson&quot;,
+                &quot;updated_by&quot;: &quot;Verlie Williamson&quot;,
+                &quot;created_at&quot;: &quot;2026-02-16 09:57:47&quot;,
+                &quot;updated_at&quot;: &quot;2026-02-16 09:57:47&quot;
+            },
+            {
+                &quot;id&quot;: 7,
+                &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ - nam&quot;,
+                &quot;slug&quot;: &quot;tin-cong-nghe-nam-6992ea1b80727&quot;,
+                &quot;description&quot;: null,
+                &quot;status&quot;: &quot;active&quot;,
+                &quot;sort_order&quot;: 85,
+                &quot;parent_id&quot;: 1,
+                &quot;depth&quot;: null,
+                &quot;created_by&quot;: &quot;Verlie Williamson&quot;,
+                &quot;updated_by&quot;: &quot;Verlie Williamson&quot;,
+                &quot;created_at&quot;: &quot;2026-02-16 09:57:47&quot;,
+                &quot;updated_at&quot;: &quot;2026-02-16 09:57:47&quot;
+            }
+        ]
+    }
 }</code>
  </pre>
     </span>
@@ -7249,10 +7502,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="category_id"                data-endpoint="GETapi-post-categories--category_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the category. Example: <code>16</code></p>
+<p>The ID of the category. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
@@ -7524,7 +7777,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost/api/post-categories/16" \
+    "http://localhost/api/post-categories/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -7541,7 +7794,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/post-categories/16"
+    "http://localhost/api/post-categories/1"
 );
 
 const headers = {
@@ -7568,7 +7821,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/post-categories/16';
+$url = 'http://localhost/api/post-categories/1';
 $response = $client-&gt;put(
     $url,
     [
@@ -7685,10 +7938,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="category_id"                data-endpoint="PUTapi-post-categories--category_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the category. Example: <code>16</code></p>
+<p>The ID of the category. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
@@ -7791,7 +8044,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost/api/post-categories/16" \
+    "http://localhost/api/post-categories/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -7808,7 +8061,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/post-categories/16"
+    "http://localhost/api/post-categories/1"
 );
 
 const headers = {
@@ -7835,7 +8088,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/post-categories/16';
+$url = 'http://localhost/api/post-categories/1';
 $response = $client-&gt;patch(
     $url,
     [
@@ -7952,10 +8205,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="category_id"                data-endpoint="PATCHapi-post-categories--category_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the category. Example: <code>16</code></p>
+<p>The ID of the category. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
@@ -8058,7 +8311,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost/api/post-categories/16" \
+    "http://localhost/api/post-categories/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -8066,7 +8319,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/post-categories/16"
+    "http://localhost/api/post-categories/1"
 );
 
 const headers = {
@@ -8083,7 +8336,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/post-categories/16';
+$url = 'http://localhost/api/post-categories/1';
 $response = $client-&gt;delete(
     $url,
     [
@@ -8192,10 +8445,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="category_id"                data-endpoint="DELETEapi-post-categories--category_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the category. Example: <code>16</code></p>
+<p>The ID of the category. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
@@ -8225,7 +8478,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost/api/post-categories/16/status" \
+    "http://localhost/api/post-categories/1/status" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -8237,7 +8490,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/post-categories/16/status"
+    "http://localhost/api/post-categories/1/status"
 );
 
 const headers = {
@@ -8259,7 +8512,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/post-categories/16/status';
+$url = 'http://localhost/api/post-categories/1/status';
 $response = $client-&gt;patch(
     $url,
     [
@@ -8371,10 +8624,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="category_id"                data-endpoint="PATCHapi-post-categories--category_id--status"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the category. Example: <code>16</code></p>
+<p>The ID of the category. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;

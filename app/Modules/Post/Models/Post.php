@@ -19,9 +19,13 @@ class Post extends Model
         'title',
         'content',
         'status',
-        'category_id',
+        'view_count',
         'created_by',
         'updated_by',
+    ];
+
+    protected $casts = [
+        'view_count' => 'integer',
     ];
 
     protected static function booted()
@@ -40,9 +44,11 @@ class Post extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 
-    public function category()
+    /** Danh mục của bài viết (quan hệ nhiều-nhiều qua bảng pivot). */
+    public function categories()
     {
-        return $this->belongsTo(PostCategory::class, 'category_id');
+        return $this->belongsToMany(PostCategory::class, 'post_post_category', 'post_id', 'post_category_id')
+            ->withTimestamps();
     }
 
     public function attachments()
@@ -57,9 +63,9 @@ class Post extends Model
         })->when($filters['status'] ?? null, function ($query, $status) {
             $query->where('status', $status);
         })->when($filters['category_id'] ?? null, function ($query, $categoryId) {
-            $query->where('category_id', $categoryId);
+            $query->whereHas('categories', fn ($q) => $q->where('post_categories.id', $categoryId));
         })->when($filters['sort_by'] ?? 'created_at', function ($query, $sortBy) use ($filters) {
-            $allowed = ['id', 'title', 'created_at', 'category_id'];
+            $allowed = ['id', 'title', 'created_at', 'view_count'];
             $column = in_array($sortBy, $allowed) ? $sortBy : 'created_at';
             $query->orderBy($column, $filters['sort_order'] ?? 'desc');
         });

@@ -16,8 +16,8 @@ class PostResource extends JsonResource
             'slug'        => Str::slug($this->title),
             'content'     => $this->content,
             'status'      => $this->status,
-            'category_id' => $this->category_id,
-            'category'    => $this->whenLoaded('category', fn () => new PostCategoryResource($this->category)),
+            'view_count'  => (int) $this->view_count,
+            'categories'  => $this->whenLoaded('categories', fn () => PostCategoryResource::collection($this->categories)),
             'attachments' => $this->whenLoaded('attachments', function () {
                 return $this->attachments->map(fn ($a) => [
                     'id'       => $a->id,
