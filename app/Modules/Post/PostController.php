@@ -28,6 +28,23 @@ use Illuminate\Support\Facades\Storage;
 class PostController extends Controller
 {
     /**
+     * Thống kê cơ bản
+     *
+     * Tổng số bản ghi, bản ghi đang kích hoạt (published), bản ghi không kích hoạt (draft, archived).
+     * Áp dụng cùng bộ lọc với index (search, status, category_id, ...).
+     */
+    public function stats(FilterRequest $request)
+    {
+        $base = Post::filter($request->all());
+
+        return response()->json([
+            'total'    => (clone $base)->count(),
+            'active'   => (clone $base)->where('status', 'published')->count(),
+            'inactive' => (clone $base)->where('status', '!=', 'published')->count(),
+        ]);
+    }
+
+    /**
      * Danh sách bài viết
      *
      * Lấy danh sách có phân trang, lọc và sắp xếp.
@@ -134,11 +151,13 @@ class PostController extends Controller
     /**
      * Xuất danh sách bài viết
      *
+     * Áp dụng cùng bộ lọc với index (search, status, category_id, ...).
+     *
      * @authenticated
      */
-    public function export()
+    public function export(FilterRequest $request)
     {
-        return Excel::download(new PostsExport, 'posts.xlsx');
+        return Excel::download(new PostsExport($request->all()), 'posts.xlsx');
     }
 
     /**

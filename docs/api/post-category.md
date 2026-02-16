@@ -8,7 +8,8 @@ Quản lý danh mục tin tức phân cấp theo cấu trúc cây (Nested Set). 
 
 - **Method:** GET  
 - **Path:** `/api/post-categories/export`  
-- **Response:** File `post-categories.xlsx` (danh mục theo thứ tự cây: cha trước con).
+- **Query:** Cùng bộ lọc với index — `search`, `status`, `sort_by`, `sort_order`, `limit`.  
+- **Response:** File `post-categories.xlsx` (dữ liệu đã lọc, theo thứ tự cây: cha trước con).
 
 ---
 
@@ -37,6 +38,15 @@ Quản lý danh mục tin tức phân cấp theo cấu trúc cây (Nested Set). 
 - **Path:** `/api/post-categories/bulk-status`  
 - **Body:** `ids` (array), `status` (required: active | inactive).  
 - **Response:** `{"message": "Cập nhật trạng thái thành công các danh mục được chọn!"}`
+
+---
+
+## Thống kê
+
+- **Method:** GET  
+- **Path:** `/api/post-categories/stats`  
+- **Query:** Cùng bộ lọc với index — `search`, `status`, `sort_by`, `sort_order`, `limit`.  
+- **Response:** `{ "total": 15, "active": 12, "inactive": 3 }` — tổng số bản ghi (sau khi lọc), đang kích hoạt (active), không kích hoạt (inactive).
 
 ---
 

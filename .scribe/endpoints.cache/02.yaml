@@ -19,7 +19,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Xuất danh sách người dùng'
-      description: ''
+      description: 'Áp dụng cùng bộ lọc với index (search, status, ...).'
       authenticated: true
       deprecated: false
     headers:
@@ -30,8 +30,75 @@ endpoints:
     cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    bodyParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: ''
+        required: false
+        example: sort_order
+        type: string
+        enumValues:
+          - id
+          - title
+          - name
+          - sort_order
+          - created_at
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: ''
+        required: false
+        example: desc
+        type: string
+        enumValues:
+          - asc
+          - desc
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Must be at least 1. Must not be greater than 100.'
+        required: false
+        example: 22
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      search: b
+      status: architecto
+      sort_by: sort_order
+      sort_order: desc
+      limit: 22
     fileParameters: []
     responses:
       -
@@ -234,6 +301,121 @@ endpoints:
     custom: []
     httpMethods:
       - GET
+    uri: api/users/stats
+    metadata:
+      custom: []
+      groupName: User
+      groupDescription: |-
+
+        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Thống kê cơ bản'
+      description: |-
+        Tổng số bản ghi, bản ghi đang kích hoạt (active), bản ghi không kích hoạt (inactive, banned).
+        Áp dụng cùng bộ lọc với index (search, status, ...).
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: ''
+        required: false
+        example: title
+        type: string
+        enumValues:
+          - id
+          - title
+          - name
+          - sort_order
+          - created_at
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: ''
+        required: false
+        example: desc
+        type: string
+        enumValues:
+          - asc
+          - desc
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Must be at least 1. Must not be greater than 100.'
+        required: false
+        example: 22
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      search: b
+      status: architecto
+      sort_by: title
+      sort_order: desc
+      limit: 22
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"total":0,"active":0,"inactive":0}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
     uri: api/users
     metadata:
       custom: []
@@ -343,7 +525,7 @@ endpoints:
         name: sort_by
         description: ''
         required: false
-        example: title
+        example: sort_order
         type: string
         enumValues:
           - id
@@ -381,7 +563,7 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      sort_by: title
+      sort_by: sort_order
       sort_order: desc
       limit: 22
     fileParameters: []
@@ -459,7 +641,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":1,"name":"Verlie Williamson","email":"bspinka@example.net","status":"active","created_by":"Verlie Williamson","updated_by":"Verlie Williamson","created_at":"2026-02-16 09:57:47","updated_at":"2026-02-16 09:57:47"}}'
+        content: '{"data":{"id":1,"name":"Tate Haley","email":"swift.graciela@example.net","status":"inactive","created_by":"Tate Haley","updated_by":"Tate Haley","created_at":"16\/02\/2026 14:07:59","updated_at":"16\/02\/2026 14:07:59"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json

@@ -19,7 +19,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Xuất danh sách danh mục'
-      description: 'File Excel theo thứ tự cây (cha trước con) để có thể nhập lại.'
+      description: 'Áp dụng cùng bộ lọc với index (search, status, ...). File Excel theo thứ tự cây (cha trước con) để có thể nhập lại.'
       authenticated: true
       deprecated: false
     headers:
@@ -30,8 +30,75 @@ endpoints:
     cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    bodyParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: ''
+        required: false
+        example: title
+        type: string
+        enumValues:
+          - id
+          - title
+          - name
+          - sort_order
+          - created_at
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: ''
+        required: false
+        example: asc
+        type: string
+        enumValues:
+          - asc
+          - desc
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Must be at least 1. Must not be greater than 100.'
+        required: false
+        example: 22
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      search: b
+      status: architecto
+      sort_by: title
+      sort_order: asc
+      limit: 22
     fileParameters: []
     responses:
       -
@@ -234,6 +301,121 @@ endpoints:
     custom: []
     httpMethods:
       - GET
+    uri: api/post-categories/stats
+    metadata:
+      custom: []
+      groupName: 'Post Category'
+      groupDescription: |-
+
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Thống kê cơ bản'
+      description: |-
+        Tổng số bản ghi, bản ghi đang kích hoạt (active), bản ghi không kích hoạt (inactive).
+        Áp dụng cùng bộ lọc với index (search, status, ...).
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: ''
+        required: false
+        example: title
+        type: string
+        enumValues:
+          - id
+          - title
+          - name
+          - sort_order
+          - created_at
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: ''
+        required: false
+        example: asc
+        type: string
+        enumValues:
+          - asc
+          - desc
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Must be at least 1. Must not be greater than 100.'
+        required: false
+        example: 22
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      search: b
+      status: architecto
+      sort_by: title
+      sort_order: asc
+      limit: 22
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"total":0,"active":0,"inactive":0}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
     uri: api/post-categories/tree
     metadata:
       custom: []
@@ -401,7 +583,7 @@ endpoints:
         name: sort_by
         description: ''
         required: false
-        example: id
+        example: created_at
         type: string
         enumValues:
           - id
@@ -439,7 +621,7 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      sort_by: id
+      sort_by: created_at
       sort_order: desc
       limit: 22
     fileParameters: []
@@ -517,7 +699,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":1,"name":"Tin c\u00f4ng ngh\u1ec7","slug":"tin-cong-nghe","description":null,"status":"active","sort_order":1,"parent_id":null,"depth":0,"created_by":"Verlie Williamson","updated_by":"Verlie Williamson","created_at":"2026-02-16 09:57:47","updated_at":"2026-02-16 09:57:47","parent":null,"children":[{"id":6,"name":"Tin c\u00f4ng ngh\u1ec7 - molestiae","slug":"tin-cong-nghe-molestiae-6992ea1b73b1f","description":"Eius facere eaque blanditiis occaecati totam sunt.","status":"active","sort_order":29,"parent_id":1,"depth":null,"created_by":"Verlie Williamson","updated_by":"Verlie Williamson","created_at":"2026-02-16 09:57:47","updated_at":"2026-02-16 09:57:47"},{"id":7,"name":"Tin c\u00f4ng ngh\u1ec7 - nam","slug":"tin-cong-nghe-nam-6992ea1b80727","description":null,"status":"active","sort_order":85,"parent_id":1,"depth":null,"created_by":"Verlie Williamson","updated_by":"Verlie Williamson","created_at":"2026-02-16 09:57:47","updated_at":"2026-02-16 09:57:47"}]}}'
+        content: '{"data":{"id":1,"name":"Tin c\u00f4ng ngh\u1ec7","slug":"tin-cong-nghe","description":null,"status":"inactive","sort_order":1,"parent_id":null,"depth":0,"created_by":"Tate Haley","updated_by":"Tate Haley","created_at":"16\/02\/2026 14:07:59","updated_at":"16\/02\/2026 14:07:59","parent":null,"children":[{"id":6,"name":"Tin c\u00f4ng ngh\u1ec7 - enim","slug":"tin-cong-nghe-enim-699324bf741d9","description":"Et aspernatur id ullam ullam.","status":"active","sort_order":100,"parent_id":1,"depth":null,"created_by":"Tate Haley","updated_by":"Tate Haley","created_at":"16\/02\/2026 14:07:59","updated_at":"16\/02\/2026 14:07:59"},{"id":7,"name":"Tin c\u00f4ng ngh\u1ec7 - tenetur","slug":"tin-cong-nghe-tenetur-699324bf79567","description":"Incidunt autem quod earum quisquam.","status":"inactive","sort_order":26,"parent_id":1,"depth":null,"created_by":"Tate Haley","updated_by":"Tate Haley","created_at":"16\/02\/2026 14:07:59","updated_at":"16\/02\/2026 14:07:59"},{"id":8,"name":"Tin c\u00f4ng ngh\u1ec7 - molestiae","slug":"tin-cong-nghe-molestiae-699324bf7e5f8","description":"Adipisci autem qui ad ad rerum fugit dolorem.","status":"inactive","sort_order":9,"parent_id":1,"depth":null,"created_by":"Tate Haley","updated_by":"Tate Haley","created_at":"16\/02\/2026 14:07:59","updated_at":"16\/02\/2026 14:07:59"}]}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json

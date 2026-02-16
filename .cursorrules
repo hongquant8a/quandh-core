@@ -1,10 +1,24 @@
-# Laravel & Documentation Rules for Quân
-- Sử dụng tiếng Việt cho toàn bộ tài liệu và comment giải thích logic.
-- Sử dụng lệnh sail để thay thế lệnh php khi thực thi công việc. Ví dụ: sail artisan migrate.    
-- Mỗi khi trả lời câu hỏi hãy luôn tạo tài liệu trong thư mục /docs/answer để mô tả các câu trả lời.
-- Mỗi khi tạo hoặc cập nhật một Controller, hãy tự động tạo/cập nhật file Markdown tương ứng trong thư mục /docs/api để mô tả các Endpoint.
-- Định dạng tài liệu API phải bao gồm: Method, Path, Request Body (nếu có), và Response mẫu.
-- Nếu có tạo Migration mới, hãy cập nhật sơ đồ bảng vào file DATABASE_DESIGN.md.
-- Luôn cập nhập thông tin chi tiết về cấu trúc tập tin, thư mục của dự án vào file STRUCTURE_DESIGN.md.
-- Tôi luôn làm việc với Laravel theo cấu trúc Modular. Hãy ưu tiên gợi ý và tạo file theo cấu trúc /app/Modules/ thay vì cấu trúc mặc định.
-- Các chức năng thường có khi tôi yêu cầu một module mới là: index, show, store, update, destroy, bulk delete, bulk update status, change status, export, import.    
+# Laravel Modular & Documentation Rules for Quân
+
+- **Ngôn ngữ**: Sử dụng tiếng Việt cho toàn bộ tài liệu, phản hồi và comment giải thích logic.
+- **Môi trường**: Luôn sử dụng lệnh `sail` thay thế cho `php` khi thực thi công việc. Ví dụ: `sail artisan migrate`.
+- **Cấu trúc Thư mục**: 
+    - Luôn làm việc theo cấu trúc Modular tại `/app/Modules/`. 
+    - Namespace phải khớp chính xác với cấu trúc thư mục (ví dụ: `App\Modules\Voter\Controllers`).
+    - Ưu tiên tạo file mới trong module thay vì các thư mục mặc định của Laravel.
+
+- **Module Chức năng Chuẩn**: 
+    - Một module mới mặc định phải bao gồm các hàm: `stats`, `index`, `show`, `store`, `update`, `destroy`, `bulk delete`, `bulk update status`, `change status`, `export`, `import`.
+
+- **API Resource & Localization**:
+    - Luôn sử dụng Resource để trả về dữ liệu API.
+    - **Định dạng ngày tháng**: Trong Resource, bắt buộc chuyển đổi dữ liệu thời gian về định dạng Việt Nam:
+        - Các trường chỉ có ngày (ví dụ: birthday): `d/m/Y`.
+        - Các trường có cả giờ (ví dụ: created_at, updated_at): `H:i:s d/m/Y`.
+    - Ví dụ: `'created_at' => $this->created_at->format('H:i:s d/m/Y')`.
+
+- **Tài liệu & Thiết kế**:
+    - **Tài liệu câu trả lời**: Lưu các giải thích kiến trúc hoặc giải pháp phức tạp vào `/docs/answer`.
+    - **Tài liệu API**: Khi tạo/cập nhật Controller, phải cập nhật file Markdown tương ứng trong `/docs/api` (gồm: Method, Path, Request Body, Response mẫu).
+    - **Database**: Cập nhật sơ đồ bảng vào `DATABASE_DESIGN.md` khi có Migration mới.
+    - **Cấu trúc dự án**: Cập nhật thông tin chi tiết về tập tin, thư mục vào `STRUCTURE_DESIGN.md` khi có thay đổi.

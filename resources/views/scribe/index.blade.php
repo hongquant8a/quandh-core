@@ -104,6 +104,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="user-PATCHapi-users-bulk-status">
                                 <a href="#user-PATCHapi-users-bulk-status">Cập nhật trạng thái hàng loạt</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="user-GETapi-users-stats">
+                                <a href="#user-GETapi-users-stats">Thống kê cơ bản</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="user-GETapi-users">
                                 <a href="#user-GETapi-users">Danh sách người dùng</a>
                             </li>
@@ -143,6 +146,9 @@
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="post-PATCHapi-posts-bulk-status">
                                 <a href="#post-PATCHapi-posts-bulk-status">Cập nhật trạng thái hàng loạt bài viết</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="post-GETapi-posts-stats">
+                                <a href="#post-GETapi-posts-stats">Thống kê cơ bản</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="post-GETapi-posts">
                                 <a href="#post-GETapi-posts">Danh sách bài viết</a>
@@ -196,6 +202,9 @@
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="post-category-PATCHapi-post-categories-bulk-status">
                                 <a href="#post-category-PATCHapi-post-categories-bulk-status">Cập nhật trạng thái hàng loạt danh mục</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="post-category-GETapi-post-categories-stats">
+                                <a href="#post-category-GETapi-post-categories-stats">Thống kê cơ bản</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="post-category-GETapi-post-categories-tree">
                                 <a href="#post-category-GETapi-post-categories-tree">Cây danh mục (toàn bộ cây, không phân trang)</a>
@@ -262,7 +271,7 @@
 <p>
 </p>
 
-<p>Trả về access_token dùng cho các request cần xác thực.</p>
+<p>Trả về access_token và thông tin user dùng cho các request cần xác thực.</p>
 
 <span id="example-requests-POSTapi-auth-login">
 <blockquote>Example request:</blockquote>
@@ -593,6 +602,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"email\": \"user@example.com\",
     \"password\": \"newpassword123\",
+    \"password_confirmation\": \"architecto\",
     \"token\": \"architecto\"
 }"
 </code></pre></div>
@@ -611,6 +621,7 @@ const headers = {
 let body = {
     "email": "user@example.com",
     "password": "newpassword123",
+    "password_confirmation": "architecto",
     "token": "architecto"
 };
 
@@ -634,6 +645,7 @@ $response = $client-&gt;post(
         'json' =&gt; [
             'email' =&gt; 'user@example.com',
             'password' =&gt; 'newpassword123',
+            'password_confirmation' =&gt; 'architecto',
             'token' =&gt; 'architecto',
         ],
     ]
@@ -739,7 +751,19 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="newpassword123"
                data-component="body">
     <br>
-<p>Mật khẩu mới (tối thiểu 6 ký tự). Example: <code>newpassword123</code></p>
+<p>Mật khẩu mới (tối thiểu 6 ký tự, có xác nhận). Example: <code>newpassword123</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password_confirmation</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="password_confirmation"                data-endpoint="POSTapi-auth-reset-password"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Xác nhận mật khẩu. Example: <code>architecto</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>token</code></b>&nbsp;&nbsp;
@@ -907,7 +931,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <small class="badge badge-darkred">requires authentication</small>
 </p>
 
-
+<p>Áp dụng cùng bộ lọc với index (search, status, ...).</p>
 
 <span id="example-requests-GETapi-users-export">
 <blockquote>Example request:</blockquote>
@@ -918,7 +942,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --get "http://localhost/api/users/export" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
+    --header "Accept: application/json" \
+    --data "{
+    \"search\": \"b\",
+    \"status\": \"architecto\",
+    \"sort_by\": \"sort_order\",
+    \"sort_order\": \"desc\",
+    \"limit\": 22
+}"
+</code></pre></div>
 
 
 <div class="javascript-example">
@@ -932,9 +964,18 @@ const headers = {
     "Accept": "application/json",
 };
 
+let body = {
+    "search": "b",
+    "status": "architecto",
+    "sort_by": "sort_order",
+    "sort_order": "desc",
+    "limit": 22
+};
+
 fetch(url, {
     method: "GET",
     headers,
+    body: JSON.stringify(body),
 }).then(response =&gt; response.json());</code></pre></div>
 
 
@@ -948,6 +989,13 @@ $response = $client-&gt;get(
             'Authorization' =&gt; 'Bearer Bearer {YOUR_ACCESS_TOKEN}',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'search' =&gt; 'b',
+            'status' =&gt; 'architecto',
+            'sort_by' =&gt; 'sort_order',
+            'sort_order' =&gt; 'desc',
+            'limit' =&gt; 22,
         ],
     ]
 );
@@ -1057,7 +1105,72 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Example: <code>application/json</code></p>
             </div>
-                        </form>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-users-export"
+               value="b"
+               data-component="body">
+    <br>
+<p>Must not be greater than 100 characters. Example: <code>b</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-users-export"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_by"                data-endpoint="GETapi-users-export"
+               value="sort_order"
+               data-component="body">
+    <br>
+<p>Example: <code>sort_order</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>id</code></li> <li><code>title</code></li> <li><code>name</code></li> <li><code>sort_order</code></li> <li><code>created_at</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_order"                data-endpoint="GETapi-users-export"
+               value="desc"
+               data-component="body">
+    <br>
+<p>Example: <code>desc</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-users-export"
+               value="22"
+               data-component="body">
+    <br>
+<p>Must be at least 1. Must not be greater than 100. Example: <code>22</code></p>
+        </div>
+        </form>
 
                     <h2 id="user-POSTapi-users-import">Nhập danh sách người dùng</h2>
 
@@ -1077,7 +1190,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpt115qgv3e75m021Op8r" </code></pre></div>
+    --form "file=@/tmp/phpsgfotdnhkth60hmWOru" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1115,7 +1228,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/phpt115qgv3e75m021Op8r', 'r')
+                'contents' =&gt; fopen('/tmp/phpsgfotdnhkth60hmWOru', 'r')
             ],
         ],
     ]
@@ -1230,7 +1343,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Example: <code>/tmp/phpt115qgv3e75m021Op8r</code></p>
+<p>File excel (xlsx, xls, csv). Example: <code>/tmp/phpsgfotdnhkth60hmWOru</code></p>
         </div>
         </form>
 
@@ -1611,6 +1724,256 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
+                    <h2 id="user-GETapi-users-stats">Thống kê cơ bản</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Tổng số bản ghi, bản ghi đang kích hoạt (active), bản ghi không kích hoạt (inactive, banned).
+Áp dụng cùng bộ lọc với index (search, status, ...).</p>
+
+<span id="example-requests-GETapi-users-stats">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/users/stats" \
+    --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"search\": \"b\",
+    \"status\": \"architecto\",
+    \"sort_by\": \"title\",
+    \"sort_order\": \"desc\",
+    \"limit\": 22
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/users/stats"
+);
+
+const headers = {
+    "Authorization": "Bearer Bearer {YOUR_ACCESS_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "search": "b",
+    "status": "architecto",
+    "sort_by": "title",
+    "sort_order": "desc",
+    "limit": 22
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost/api/users/stats';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer Bearer {YOUR_ACCESS_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'search' =&gt; 'b',
+            'status' =&gt; 'architecto',
+            'sort_by' =&gt; 'title',
+            'sort_order' =&gt; 'desc',
+            'limit' =&gt; 22,
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-users-stats">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;total&quot;: 0,
+    &quot;active&quot;: 0,
+    &quot;inactive&quot;: 0
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-users-stats" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-users-stats"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-users-stats"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-users-stats" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-users-stats">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-users-stats" data-method="GET"
+      data-path="api/users/stats"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-users-stats', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-users-stats"
+                    onclick="tryItOut('GETapi-users-stats');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-users-stats"
+                    onclick="cancelTryOut('GETapi-users-stats');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-users-stats"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/users/stats</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-users-stats"
+               value="Bearer Bearer {YOUR_ACCESS_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer Bearer {YOUR_ACCESS_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-users-stats"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-users-stats"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-users-stats"
+               value="b"
+               data-component="body">
+    <br>
+<p>Must not be greater than 100 characters. Example: <code>b</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-users-stats"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_by"                data-endpoint="GETapi-users-stats"
+               value="title"
+               data-component="body">
+    <br>
+<p>Example: <code>title</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>id</code></li> <li><code>title</code></li> <li><code>name</code></li> <li><code>sort_order</code></li> <li><code>created_at</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_order"                data-endpoint="GETapi-users-stats"
+               value="desc"
+               data-component="body">
+    <br>
+<p>Example: <code>desc</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-users-stats"
+               value="22"
+               data-component="body">
+    <br>
+<p>Must be at least 1. Must not be greater than 100. Example: <code>22</code></p>
+        </div>
+        </form>
+
                     <h2 id="user-GETapi-users">Danh sách người dùng</h2>
 
 <p>
@@ -1632,7 +1995,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"sort_by\": \"title\",
+    \"sort_by\": \"sort_order\",
     \"sort_order\": \"desc\",
     \"limit\": 22
 }"
@@ -1663,7 +2026,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "sort_by": "title",
+    "sort_by": "sort_order",
     "sort_order": "desc",
     "limit": 22
 };
@@ -1696,7 +2059,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'sort_by' =&gt; 'title',
+            'sort_by' =&gt; 'sort_order',
             'sort_order' =&gt; 'desc',
             'limit' =&gt; 22,
         ],
@@ -1936,10 +2299,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_by"                data-endpoint="GETapi-users"
-               value="title"
+               value="sort_order"
                data-component="body">
     <br>
-<p>Example: <code>title</code></p>
+<p>Example: <code>sort_order</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>id</code></li> <li><code>title</code></li> <li><code>name</code></li> <li><code>sort_order</code></li> <li><code>created_at</code></li></ul>
         </div>
@@ -2042,13 +2405,13 @@ access-control-allow-origin: *
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
         &quot;id&quot;: 1,
-        &quot;name&quot;: &quot;Verlie Williamson&quot;,
-        &quot;email&quot;: &quot;bspinka@example.net&quot;,
-        &quot;status&quot;: &quot;active&quot;,
-        &quot;created_by&quot;: &quot;Verlie Williamson&quot;,
-        &quot;updated_by&quot;: &quot;Verlie Williamson&quot;,
-        &quot;created_at&quot;: &quot;2026-02-16 09:57:47&quot;,
-        &quot;updated_at&quot;: &quot;2026-02-16 09:57:47&quot;
+        &quot;name&quot;: &quot;Tate Haley&quot;,
+        &quot;email&quot;: &quot;swift.graciela@example.net&quot;,
+        &quot;status&quot;: &quot;inactive&quot;,
+        &quot;created_by&quot;: &quot;Tate Haley&quot;,
+        &quot;updated_by&quot;: &quot;Tate Haley&quot;,
+        &quot;created_at&quot;: &quot;16/02/2026 14:07:59&quot;,
+        &quot;updated_at&quot;: &quot;16/02/2026 14:07:59&quot;
     }
 }</code>
  </pre>
@@ -3263,7 +3626,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <small class="badge badge-darkred">requires authentication</small>
 </p>
 
-
+<p>Áp dụng cùng bộ lọc với index (search, status, category_id, ...).</p>
 
 <span id="example-requests-GETapi-posts-export">
 <blockquote>Example request:</blockquote>
@@ -3274,7 +3637,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --get "http://localhost/api/posts/export" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
+    --header "Accept: application/json" \
+    --data "{
+    \"search\": \"b\",
+    \"status\": \"architecto\",
+    \"sort_by\": \"name\",
+    \"sort_order\": \"desc\",
+    \"limit\": 22
+}"
+</code></pre></div>
 
 
 <div class="javascript-example">
@@ -3288,9 +3659,18 @@ const headers = {
     "Accept": "application/json",
 };
 
+let body = {
+    "search": "b",
+    "status": "architecto",
+    "sort_by": "name",
+    "sort_order": "desc",
+    "limit": 22
+};
+
 fetch(url, {
     method: "GET",
     headers,
+    body: JSON.stringify(body),
 }).then(response =&gt; response.json());</code></pre></div>
 
 
@@ -3304,6 +3684,13 @@ $response = $client-&gt;get(
             'Authorization' =&gt; 'Bearer Bearer {YOUR_ACCESS_TOKEN}',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'search' =&gt; 'b',
+            'status' =&gt; 'architecto',
+            'sort_by' =&gt; 'name',
+            'sort_order' =&gt; 'desc',
+            'limit' =&gt; 22,
         ],
     ]
 );
@@ -3413,7 +3800,72 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Example: <code>application/json</code></p>
             </div>
-                        </form>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-posts-export"
+               value="b"
+               data-component="body">
+    <br>
+<p>Must not be greater than 100 characters. Example: <code>b</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-posts-export"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_by"                data-endpoint="GETapi-posts-export"
+               value="name"
+               data-component="body">
+    <br>
+<p>Example: <code>name</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>id</code></li> <li><code>title</code></li> <li><code>name</code></li> <li><code>sort_order</code></li> <li><code>created_at</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_order"                data-endpoint="GETapi-posts-export"
+               value="desc"
+               data-component="body">
+    <br>
+<p>Example: <code>desc</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-posts-export"
+               value="22"
+               data-component="body">
+    <br>
+<p>Must be at least 1. Must not be greater than 100. Example: <code>22</code></p>
+        </div>
+        </form>
 
                     <h2 id="post-POSTapi-posts-import">Nhập danh sách bài viết</h2>
 
@@ -3433,7 +3885,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php03tasqpb85mqaZCNKT2" </code></pre></div>
+    --form "file=@/tmp/phprecsb97oos1e0ieEyx3" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3471,7 +3923,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/php03tasqpb85mqaZCNKT2', 'r')
+                'contents' =&gt; fopen('/tmp/phprecsb97oos1e0ieEyx3', 'r')
             ],
         ],
     ]
@@ -3586,7 +4038,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Example: <code>/tmp/php03tasqpb85mqaZCNKT2</code></p>
+<p>File excel (xlsx, xls, csv). Example: <code>/tmp/phprecsb97oos1e0ieEyx3</code></p>
         </div>
         </form>
 
@@ -3967,6 +4419,256 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
+                    <h2 id="post-GETapi-posts-stats">Thống kê cơ bản</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Tổng số bản ghi, bản ghi đang kích hoạt (published), bản ghi không kích hoạt (draft, archived).
+Áp dụng cùng bộ lọc với index (search, status, category_id, ...).</p>
+
+<span id="example-requests-GETapi-posts-stats">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/posts/stats" \
+    --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"search\": \"b\",
+    \"status\": \"architecto\",
+    \"sort_by\": \"created_at\",
+    \"sort_order\": \"desc\",
+    \"limit\": 22
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/posts/stats"
+);
+
+const headers = {
+    "Authorization": "Bearer Bearer {YOUR_ACCESS_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "search": "b",
+    "status": "architecto",
+    "sort_by": "created_at",
+    "sort_order": "desc",
+    "limit": 22
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost/api/posts/stats';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer Bearer {YOUR_ACCESS_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'search' =&gt; 'b',
+            'status' =&gt; 'architecto',
+            'sort_by' =&gt; 'created_at',
+            'sort_order' =&gt; 'desc',
+            'limit' =&gt; 22,
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-posts-stats">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;total&quot;: 0,
+    &quot;active&quot;: 0,
+    &quot;inactive&quot;: 0
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-posts-stats" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-posts-stats"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-posts-stats"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-posts-stats" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-posts-stats">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-posts-stats" data-method="GET"
+      data-path="api/posts/stats"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-posts-stats', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-posts-stats"
+                    onclick="tryItOut('GETapi-posts-stats');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-posts-stats"
+                    onclick="cancelTryOut('GETapi-posts-stats');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-posts-stats"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/posts/stats</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-posts-stats"
+               value="Bearer Bearer {YOUR_ACCESS_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer Bearer {YOUR_ACCESS_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-posts-stats"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-posts-stats"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-posts-stats"
+               value="b"
+               data-component="body">
+    <br>
+<p>Must not be greater than 100 characters. Example: <code>b</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-posts-stats"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_by"                data-endpoint="GETapi-posts-stats"
+               value="created_at"
+               data-component="body">
+    <br>
+<p>Example: <code>created_at</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>id</code></li> <li><code>title</code></li> <li><code>name</code></li> <li><code>sort_order</code></li> <li><code>created_at</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_order"                data-endpoint="GETapi-posts-stats"
+               value="desc"
+               data-component="body">
+    <br>
+<p>Example: <code>desc</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-posts-stats"
+               value="22"
+               data-component="body">
+    <br>
+<p>Must be at least 1. Must not be greater than 100. Example: <code>22</code></p>
+        </div>
+        </form>
+
                     <h2 id="post-GETapi-posts">Danh sách bài viết</h2>
 
 <p>
@@ -3988,7 +4690,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"sort_by\": \"sort_order\",
+    \"sort_by\": \"created_at\",
     \"sort_order\": \"desc\",
     \"limit\": 22
 }"
@@ -4019,7 +4721,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "sort_by": "sort_order",
+    "sort_by": "created_at",
     "sort_order": "desc",
     "limit": 22
 };
@@ -4052,7 +4754,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'sort_by' =&gt; 'sort_order',
+            'sort_by' =&gt; 'created_at',
             'sort_order' =&gt; 'desc',
             'limit' =&gt; 22,
         ],
@@ -4292,10 +4994,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_by"                data-endpoint="GETapi-posts"
-               value="sort_order"
+               value="created_at"
                data-component="body">
     <br>
-<p>Example: <code>sort_order</code></p>
+<p>Example: <code>created_at</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>id</code></li> <li><code>title</code></li> <li><code>name</code></li> <li><code>sort_order</code></li> <li><code>created_at</code></li></ul>
         </div>
@@ -4398,32 +5100,32 @@ access-control-allow-origin: *
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
         &quot;id&quot;: 1,
-        &quot;title&quot;: &quot;Reiciendis soluta pariatur quo aut rem.&quot;,
-        &quot;slug&quot;: &quot;reiciendis-soluta-pariatur-quo-aut-rem&quot;,
-        &quot;content&quot;: &quot;At voluptas facere odit quos ipsa quia quo. Nostrum magni at repellendus voluptas ullam cum. Harum voluptatem quo voluptas consequuntur et sapiente animi. Itaque maiores qui atque culpa labore odio.\n\nQui aut accusantium aut. Quo non quis corporis ut alias aut magnam veritatis. Est voluptates eum dicta ipsa excepturi itaque.\n\nImpedit hic doloribus iure non vel culpa sunt non. Voluptatem laboriosam ullam non quas dolor. Voluptate distinctio natus cupiditate et ea qui necessitatibus magnam. Sequi deserunt odit saepe tenetur.&quot;,
+        &quot;title&quot;: &quot;Alias accusamus quibusdam saepe earum animi sint saepe quia.&quot;,
+        &quot;slug&quot;: &quot;alias-accusamus-quibusdam-saepe-earum-animi-sint-saepe-quia&quot;,
+        &quot;content&quot;: &quot;Libero suscipit voluptatem dolor sed. Similique molestiae laudantium unde. Et quibusdam possimus sed rerum nihil quo molestiae. Et tempora occaecati iste sapiente atque.\n\nAccusantium inventore qui consequatur maiores. Asperiores quod omnis similique sed aut qui ut. Consectetur sit rerum autem qui at sit aut architecto. In non id aut minus.\n\nHic quasi aut fugiat quod voluptas voluptatem earum. Possimus quasi doloribus eligendi. Quod nisi qui ullam hic numquam nihil vitae.&quot;,
         &quot;status&quot;: &quot;published&quot;,
         &quot;view_count&quot;: 0,
         &quot;categories&quot;: [
             {
-                &quot;id&quot;: 7,
-                &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ - nam&quot;,
-                &quot;slug&quot;: &quot;tin-cong-nghe-nam-6992ea1b80727&quot;,
+                &quot;id&quot;: 15,
+                &quot;name&quot;: &quot;Giải tr&iacute; - voluptas&quot;,
+                &quot;slug&quot;: &quot;giai-tri-voluptas-699324bf9ddce&quot;,
                 &quot;description&quot;: null,
                 &quot;status&quot;: &quot;active&quot;,
-                &quot;sort_order&quot;: 85,
-                &quot;parent_id&quot;: 1,
+                &quot;sort_order&quot;: 71,
+                &quot;parent_id&quot;: 4,
                 &quot;depth&quot;: null,
-                &quot;created_by&quot;: &quot;Verlie Williamson&quot;,
-                &quot;updated_by&quot;: &quot;Verlie Williamson&quot;,
-                &quot;created_at&quot;: &quot;2026-02-16 09:57:47&quot;,
-                &quot;updated_at&quot;: &quot;2026-02-16 09:57:47&quot;
+                &quot;created_by&quot;: &quot;Tate Haley&quot;,
+                &quot;updated_by&quot;: &quot;Tate Haley&quot;,
+                &quot;created_at&quot;: &quot;16/02/2026 14:07:59&quot;,
+                &quot;updated_at&quot;: &quot;16/02/2026 14:07:59&quot;
             }
         ],
         &quot;attachments&quot;: [],
-        &quot;created_by&quot;: &quot;Bobby Ratke&quot;,
-        &quot;updated_by&quot;: &quot;Aliza Bosco&quot;,
-        &quot;created_at&quot;: &quot;2026-02-16 09:57:48&quot;,
-        &quot;updated_at&quot;: &quot;2026-02-16 09:57:48&quot;
+        &quot;created_by&quot;: &quot;Prof. Dillon Thiel&quot;,
+        &quot;updated_by&quot;: &quot;Prof. Dillon Thiel&quot;,
+        &quot;created_at&quot;: &quot;16/02/2026 14:07:59&quot;,
+        &quot;updated_at&quot;: &quot;16/02/2026 14:07:59&quot;
     }
 }</code>
  </pre>
@@ -4727,7 +5429,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "content=Nội dung bài viết..."\
     --form "status=draft"\
     --form "category_ids[]=16"\
-    --form "images[]=@/tmp/phppg3fp6e1s8na8ZnDAYx" </code></pre></div>
+    --form "images[]=@/tmp/php9j3spmchb1pu4zOa01h" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -4785,7 +5487,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phppg3fp6e1s8na8ZnDAYx', 'r')
+                'contents' =&gt; fopen('/tmp/php9j3spmchb1pu4zOa01h', 'r')
             ],
         ],
     ]
@@ -4970,7 +5672,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "status=architecto"\
     --form "category_ids[]=16"\
     --form "remove_attachment_ids[]=16"\
-    --form "images[]=@/tmp/phput9hekdbp4tl3sgkFzY" </code></pre></div>
+    --form "images[]=@/tmp/phpm18oogqd8rsufspSdBX" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -5033,7 +5735,7 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phput9hekdbp4tl3sgkFzY', 'r')
+                'contents' =&gt; fopen('/tmp/phpm18oogqd8rsufspSdBX', 'r')
             ],
         ],
     ]
@@ -5257,7 +5959,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "status=architecto"\
     --form "category_ids[]=16"\
     --form "remove_attachment_ids[]=16"\
-    --form "images[]=@/tmp/phpn9s9kuh3o2g1fdohwCp" </code></pre></div>
+    --form "images[]=@/tmp/phpb2e7red6k1n6famfxUI" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -5320,7 +6022,7 @@ $response = $client-&gt;patch(
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpn9s9kuh3o2g1fdohwCp', 'r')
+                'contents' =&gt; fopen('/tmp/phpb2e7red6k1n6famfxUI', 'r')
             ],
         ],
     ]
@@ -6050,7 +6752,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <small class="badge badge-darkred">requires authentication</small>
 </p>
 
-<p>File Excel theo thứ tự cây (cha trước con) để có thể nhập lại.</p>
+<p>Áp dụng cùng bộ lọc với index (search, status, ...). File Excel theo thứ tự cây (cha trước con) để có thể nhập lại.</p>
 
 <span id="example-requests-GETapi-post-categories-export">
 <blockquote>Example request:</blockquote>
@@ -6061,7 +6763,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --get "http://localhost/api/post-categories/export" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
+    --header "Accept: application/json" \
+    --data "{
+    \"search\": \"b\",
+    \"status\": \"architecto\",
+    \"sort_by\": \"title\",
+    \"sort_order\": \"asc\",
+    \"limit\": 22
+}"
+</code></pre></div>
 
 
 <div class="javascript-example">
@@ -6075,9 +6785,18 @@ const headers = {
     "Accept": "application/json",
 };
 
+let body = {
+    "search": "b",
+    "status": "architecto",
+    "sort_by": "title",
+    "sort_order": "asc",
+    "limit": 22
+};
+
 fetch(url, {
     method: "GET",
     headers,
+    body: JSON.stringify(body),
 }).then(response =&gt; response.json());</code></pre></div>
 
 
@@ -6091,6 +6810,13 @@ $response = $client-&gt;get(
             'Authorization' =&gt; 'Bearer Bearer {YOUR_ACCESS_TOKEN}',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'search' =&gt; 'b',
+            'status' =&gt; 'architecto',
+            'sort_by' =&gt; 'title',
+            'sort_order' =&gt; 'asc',
+            'limit' =&gt; 22,
         ],
     ]
 );
@@ -6200,7 +6926,72 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Example: <code>application/json</code></p>
             </div>
-                        </form>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-post-categories-export"
+               value="b"
+               data-component="body">
+    <br>
+<p>Must not be greater than 100 characters. Example: <code>b</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-post-categories-export"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_by"                data-endpoint="GETapi-post-categories-export"
+               value="title"
+               data-component="body">
+    <br>
+<p>Example: <code>title</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>id</code></li> <li><code>title</code></li> <li><code>name</code></li> <li><code>sort_order</code></li> <li><code>created_at</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_order"                data-endpoint="GETapi-post-categories-export"
+               value="asc"
+               data-component="body">
+    <br>
+<p>Example: <code>asc</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-post-categories-export"
+               value="22"
+               data-component="body">
+    <br>
+<p>Must be at least 1. Must not be greater than 100. Example: <code>22</code></p>
+        </div>
+        </form>
 
                     <h2 id="post-category-POSTapi-post-categories-import">Nhập danh sách danh mục</h2>
 
@@ -6220,7 +7011,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpn468vkve2dnjfNkFs7C" </code></pre></div>
+    --form "file=@/tmp/phpcdm5dhnsk3kbdEsWoiz" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -6258,7 +7049,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/phpn468vkve2dnjfNkFs7C', 'r')
+                'contents' =&gt; fopen('/tmp/phpcdm5dhnsk3kbdEsWoiz', 'r')
             ],
         ],
     ]
@@ -6373,7 +7164,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug. Example: <code>/tmp/phpn468vkve2dnjfNkFs7C</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug. Example: <code>/tmp/phpcdm5dhnsk3kbdEsWoiz</code></p>
         </div>
         </form>
 
@@ -6754,6 +7545,256 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
+                    <h2 id="post-category-GETapi-post-categories-stats">Thống kê cơ bản</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Tổng số bản ghi, bản ghi đang kích hoạt (active), bản ghi không kích hoạt (inactive).
+Áp dụng cùng bộ lọc với index (search, status, ...).</p>
+
+<span id="example-requests-GETapi-post-categories-stats">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/post-categories/stats" \
+    --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"search\": \"b\",
+    \"status\": \"architecto\",
+    \"sort_by\": \"title\",
+    \"sort_order\": \"asc\",
+    \"limit\": 22
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/post-categories/stats"
+);
+
+const headers = {
+    "Authorization": "Bearer Bearer {YOUR_ACCESS_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "search": "b",
+    "status": "architecto",
+    "sort_by": "title",
+    "sort_order": "asc",
+    "limit": 22
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost/api/post-categories/stats';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer Bearer {YOUR_ACCESS_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'search' =&gt; 'b',
+            'status' =&gt; 'architecto',
+            'sort_by' =&gt; 'title',
+            'sort_order' =&gt; 'asc',
+            'limit' =&gt; 22,
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-post-categories-stats">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;total&quot;: 0,
+    &quot;active&quot;: 0,
+    &quot;inactive&quot;: 0
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-post-categories-stats" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-post-categories-stats"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-post-categories-stats"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-post-categories-stats" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-post-categories-stats">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-post-categories-stats" data-method="GET"
+      data-path="api/post-categories/stats"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-post-categories-stats', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-post-categories-stats"
+                    onclick="tryItOut('GETapi-post-categories-stats');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-post-categories-stats"
+                    onclick="cancelTryOut('GETapi-post-categories-stats');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-post-categories-stats"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/post-categories/stats</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-post-categories-stats"
+               value="Bearer Bearer {YOUR_ACCESS_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer Bearer {YOUR_ACCESS_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-post-categories-stats"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-post-categories-stats"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-post-categories-stats"
+               value="b"
+               data-component="body">
+    <br>
+<p>Must not be greater than 100 characters. Example: <code>b</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-post-categories-stats"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_by"                data-endpoint="GETapi-post-categories-stats"
+               value="title"
+               data-component="body">
+    <br>
+<p>Example: <code>title</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>id</code></li> <li><code>title</code></li> <li><code>name</code></li> <li><code>sort_order</code></li> <li><code>created_at</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_order"                data-endpoint="GETapi-post-categories-stats"
+               value="asc"
+               data-component="body">
+    <br>
+<p>Example: <code>asc</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-post-categories-stats"
+               value="22"
+               data-component="body">
+    <br>
+<p>Must be at least 1. Must not be greater than 100. Example: <code>22</code></p>
+        </div>
+        </form>
+
                     <h2 id="post-category-GETapi-post-categories-tree">Cây danh mục (toàn bộ cây, không phân trang)</h2>
 
 <p>
@@ -6955,7 +7996,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"sort_by\": \"id\",
+    \"sort_by\": \"created_at\",
     \"sort_order\": \"desc\",
     \"limit\": 22
 }"
@@ -6986,7 +8027,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "sort_by": "id",
+    "sort_by": "created_at",
     "sort_order": "desc",
     "limit": 22
 };
@@ -7019,7 +8060,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'sort_by' =&gt; 'id',
+            'sort_by' =&gt; 'created_at',
             'sort_order' =&gt; 'desc',
             'limit' =&gt; 22,
         ],
@@ -7259,10 +8300,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_by"                data-endpoint="GETapi-post-categories"
-               value="id"
+               value="created_at"
                data-component="body">
     <br>
-<p>Example: <code>id</code></p>
+<p>Example: <code>created_at</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>id</code></li> <li><code>title</code></li> <li><code>name</code></li> <li><code>sort_order</code></li> <li><code>created_at</code></li></ul>
         </div>
@@ -7368,43 +8409,57 @@ access-control-allow-origin: *
         &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ&quot;,
         &quot;slug&quot;: &quot;tin-cong-nghe&quot;,
         &quot;description&quot;: null,
-        &quot;status&quot;: &quot;active&quot;,
+        &quot;status&quot;: &quot;inactive&quot;,
         &quot;sort_order&quot;: 1,
         &quot;parent_id&quot;: null,
         &quot;depth&quot;: 0,
-        &quot;created_by&quot;: &quot;Verlie Williamson&quot;,
-        &quot;updated_by&quot;: &quot;Verlie Williamson&quot;,
-        &quot;created_at&quot;: &quot;2026-02-16 09:57:47&quot;,
-        &quot;updated_at&quot;: &quot;2026-02-16 09:57:47&quot;,
+        &quot;created_by&quot;: &quot;Tate Haley&quot;,
+        &quot;updated_by&quot;: &quot;Tate Haley&quot;,
+        &quot;created_at&quot;: &quot;16/02/2026 14:07:59&quot;,
+        &quot;updated_at&quot;: &quot;16/02/2026 14:07:59&quot;,
         &quot;parent&quot;: null,
         &quot;children&quot;: [
             {
                 &quot;id&quot;: 6,
-                &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ - molestiae&quot;,
-                &quot;slug&quot;: &quot;tin-cong-nghe-molestiae-6992ea1b73b1f&quot;,
-                &quot;description&quot;: &quot;Eius facere eaque blanditiis occaecati totam sunt.&quot;,
+                &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ - enim&quot;,
+                &quot;slug&quot;: &quot;tin-cong-nghe-enim-699324bf741d9&quot;,
+                &quot;description&quot;: &quot;Et aspernatur id ullam ullam.&quot;,
                 &quot;status&quot;: &quot;active&quot;,
-                &quot;sort_order&quot;: 29,
+                &quot;sort_order&quot;: 100,
                 &quot;parent_id&quot;: 1,
                 &quot;depth&quot;: null,
-                &quot;created_by&quot;: &quot;Verlie Williamson&quot;,
-                &quot;updated_by&quot;: &quot;Verlie Williamson&quot;,
-                &quot;created_at&quot;: &quot;2026-02-16 09:57:47&quot;,
-                &quot;updated_at&quot;: &quot;2026-02-16 09:57:47&quot;
+                &quot;created_by&quot;: &quot;Tate Haley&quot;,
+                &quot;updated_by&quot;: &quot;Tate Haley&quot;,
+                &quot;created_at&quot;: &quot;16/02/2026 14:07:59&quot;,
+                &quot;updated_at&quot;: &quot;16/02/2026 14:07:59&quot;
             },
             {
                 &quot;id&quot;: 7,
-                &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ - nam&quot;,
-                &quot;slug&quot;: &quot;tin-cong-nghe-nam-6992ea1b80727&quot;,
-                &quot;description&quot;: null,
-                &quot;status&quot;: &quot;active&quot;,
-                &quot;sort_order&quot;: 85,
+                &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ - tenetur&quot;,
+                &quot;slug&quot;: &quot;tin-cong-nghe-tenetur-699324bf79567&quot;,
+                &quot;description&quot;: &quot;Incidunt autem quod earum quisquam.&quot;,
+                &quot;status&quot;: &quot;inactive&quot;,
+                &quot;sort_order&quot;: 26,
                 &quot;parent_id&quot;: 1,
                 &quot;depth&quot;: null,
-                &quot;created_by&quot;: &quot;Verlie Williamson&quot;,
-                &quot;updated_by&quot;: &quot;Verlie Williamson&quot;,
-                &quot;created_at&quot;: &quot;2026-02-16 09:57:47&quot;,
-                &quot;updated_at&quot;: &quot;2026-02-16 09:57:47&quot;
+                &quot;created_by&quot;: &quot;Tate Haley&quot;,
+                &quot;updated_by&quot;: &quot;Tate Haley&quot;,
+                &quot;created_at&quot;: &quot;16/02/2026 14:07:59&quot;,
+                &quot;updated_at&quot;: &quot;16/02/2026 14:07:59&quot;
+            },
+            {
+                &quot;id&quot;: 8,
+                &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ - molestiae&quot;,
+                &quot;slug&quot;: &quot;tin-cong-nghe-molestiae-699324bf7e5f8&quot;,
+                &quot;description&quot;: &quot;Adipisci autem qui ad ad rerum fugit dolorem.&quot;,
+                &quot;status&quot;: &quot;inactive&quot;,
+                &quot;sort_order&quot;: 9,
+                &quot;parent_id&quot;: 1,
+                &quot;depth&quot;: null,
+                &quot;created_by&quot;: &quot;Tate Haley&quot;,
+                &quot;updated_by&quot;: &quot;Tate Haley&quot;,
+                &quot;created_at&quot;: &quot;16/02/2026 14:07:59&quot;,
+                &quot;updated_at&quot;: &quot;16/02/2026 14:07:59&quot;
             }
         ]
     }

@@ -19,7 +19,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Xuất danh sách bài viết'
-      description: ''
+      description: 'Áp dụng cùng bộ lọc với index (search, status, category_id, ...).'
       authenticated: true
       deprecated: false
     headers:
@@ -30,8 +30,75 @@ endpoints:
     cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    bodyParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: ''
+        required: false
+        example: name
+        type: string
+        enumValues:
+          - id
+          - title
+          - name
+          - sort_order
+          - created_at
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: ''
+        required: false
+        example: desc
+        type: string
+        enumValues:
+          - asc
+          - desc
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Must be at least 1. Must not be greater than 100.'
+        required: false
+        example: 22
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      search: b
+      status: architecto
+      sort_by: name
+      sort_order: desc
+      limit: 22
     fileParameters: []
     responses:
       -
@@ -234,6 +301,121 @@ endpoints:
     custom: []
     httpMethods:
       - GET
+    uri: api/posts/stats
+    metadata:
+      custom: []
+      groupName: Post
+      groupDescription: |-
+
+        Quản lý bài viết: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Thống kê cơ bản'
+      description: |-
+        Tổng số bản ghi, bản ghi đang kích hoạt (published), bản ghi không kích hoạt (draft, archived).
+        Áp dụng cùng bộ lọc với index (search, status, category_id, ...).
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: ''
+        required: false
+        example: created_at
+        type: string
+        enumValues:
+          - id
+          - title
+          - name
+          - sort_order
+          - created_at
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: ''
+        required: false
+        example: desc
+        type: string
+        enumValues:
+          - asc
+          - desc
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Must be at least 1. Must not be greater than 100.'
+        required: false
+        example: 22
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      search: b
+      status: architecto
+      sort_by: created_at
+      sort_order: desc
+      limit: 22
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"total":0,"active":0,"inactive":0}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
     uri: api/posts
     metadata:
       custom: []
@@ -343,7 +525,7 @@ endpoints:
         name: sort_by
         description: ''
         required: false
-        example: sort_order
+        example: created_at
         type: string
         enumValues:
           - id
@@ -381,7 +563,7 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      sort_by: sort_order
+      sort_by: created_at
       sort_order: desc
       limit: 22
     fileParameters: []
@@ -459,7 +641,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":1,"title":"Reiciendis soluta pariatur quo aut rem.","slug":"reiciendis-soluta-pariatur-quo-aut-rem","content":"At voluptas facere odit quos ipsa quia quo. Nostrum magni at repellendus voluptas ullam cum. Harum voluptatem quo voluptas consequuntur et sapiente animi. Itaque maiores qui atque culpa labore odio.\n\nQui aut accusantium aut. Quo non quis corporis ut alias aut magnam veritatis. Est voluptates eum dicta ipsa excepturi itaque.\n\nImpedit hic doloribus iure non vel culpa sunt non. Voluptatem laboriosam ullam non quas dolor. Voluptate distinctio natus cupiditate et ea qui necessitatibus magnam. Sequi deserunt odit saepe tenetur.","status":"published","view_count":0,"categories":[{"id":7,"name":"Tin c\u00f4ng ngh\u1ec7 - nam","slug":"tin-cong-nghe-nam-6992ea1b80727","description":null,"status":"active","sort_order":85,"parent_id":1,"depth":null,"created_by":"Verlie Williamson","updated_by":"Verlie Williamson","created_at":"2026-02-16 09:57:47","updated_at":"2026-02-16 09:57:47"}],"attachments":[],"created_by":"Bobby Ratke","updated_by":"Aliza Bosco","created_at":"2026-02-16 09:57:48","updated_at":"2026-02-16 09:57:48"}}'
+        content: '{"data":{"id":1,"title":"Alias accusamus quibusdam saepe earum animi sint saepe quia.","slug":"alias-accusamus-quibusdam-saepe-earum-animi-sint-saepe-quia","content":"Libero suscipit voluptatem dolor sed. Similique molestiae laudantium unde. Et quibusdam possimus sed rerum nihil quo molestiae. Et tempora occaecati iste sapiente atque.\n\nAccusantium inventore qui consequatur maiores. Asperiores quod omnis similique sed aut qui ut. Consectetur sit rerum autem qui at sit aut architecto. In non id aut minus.\n\nHic quasi aut fugiat quod voluptas voluptatem earum. Possimus quasi doloribus eligendi. Quod nisi qui ullam hic numquam nihil vitae.","status":"published","view_count":0,"categories":[{"id":15,"name":"Gi\u1ea3i tr\u00ed - voluptas","slug":"giai-tri-voluptas-699324bf9ddce","description":null,"status":"active","sort_order":71,"parent_id":4,"depth":null,"created_by":"Tate Haley","updated_by":"Tate Haley","created_at":"16\/02\/2026 14:07:59","updated_at":"16\/02\/2026 14:07:59"}],"attachments":[],"created_by":"Prof. Dillon Thiel","updated_by":"Prof. Dillon Thiel","created_at":"16\/02\/2026 14:07:59","updated_at":"16\/02\/2026 14:07:59"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json

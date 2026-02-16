@@ -8,6 +8,7 @@ Route::post('/import', [UserController::class, 'import']);
 
 Route::post('/bulk-delete', [UserController::class, 'bulkDestroy']);
 Route::patch('/bulk-status', [UserController::class, 'bulkUpdateStatus']);
+Route::get('/stats', [UserController::class, 'stats']);
 Route::get('/', [UserController::class, 'index']);
 Route::get('/{user}', [UserController::class, 'show']);
 Route::post('/', [UserController::class, 'store']);

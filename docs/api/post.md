@@ -4,6 +4,15 @@ Quản lý bài viết tin tức: CRUD, lọc theo danh mục, đính kèm hình
 
 ---
 
+## Thống kê
+
+- **Method:** GET  
+- **Path:** `/api/posts/stats`  
+- **Query:** Cùng bộ lọc với index — `search`, `status`, `category_id`, `sort_by`, `sort_order`, `limit`.  
+- **Response:** `{ "total": 50, "active": 30, "inactive": 20 }` — tổng số bản ghi (sau khi lọc), đang kích hoạt (published), không kích hoạt (draft, archived).
+
+---
+
 ## Danh sách bài viết
 
 - **Method:** GET  
@@ -18,6 +27,15 @@ Quản lý bài viết tin tức: CRUD, lọc theo danh mục, đính kèm hình
 - **Method:** GET  
 - **Path:** `/api/posts/{id}`  
 - **Response:** Object bài viết kèm `categories`, `attachments`, `view_count`.
+
+---
+
+## Xuất Excel
+
+- **Method:** GET  
+- **Path:** `/api/posts/export`  
+- **Query:** Cùng bộ lọc với index — `search`, `status`, `category_id`, `sort_by`, `sort_order`, `limit`.  
+- **Response:** File `posts.xlsx` (dữ liệu đã lọc).
 
 ---
 

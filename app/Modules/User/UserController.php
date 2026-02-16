@@ -27,6 +27,23 @@ use App\Modules\User\Requests\ChangeStatusUserRequest;
 class UserController extends Controller
 {
     /**
+     * Thống kê cơ bản
+     *
+     * Tổng số bản ghi, bản ghi đang kích hoạt (active), bản ghi không kích hoạt (inactive, banned).
+     * Áp dụng cùng bộ lọc với index (search, status, ...).
+     */
+    public function stats(FilterRequest $request)
+    {
+        $base = User::filter($request->all());
+
+        return response()->json([
+            'total'    => (clone $base)->count(),
+            'active'   => (clone $base)->where('status', 'active')->count(),
+            'inactive' => (clone $base)->where('status', '!=', 'active')->count(),
+        ]);
+    }
+
+    /**
      * Danh sách người dùng
      *
      * Lấy danh sách có phân trang, lọc và sắp xếp.
@@ -129,11 +146,13 @@ class UserController extends Controller
     /**
      * Xuất danh sách người dùng
      *
+     * Áp dụng cùng bộ lọc với index (search, status, ...).
+     *
      * @authenticated
      */
-    public function export()
+    public function export(FilterRequest $request)
     {
-        return Excel::download(new UsersExport, 'users.xlsx');
+        return Excel::download(new UsersExport($request->all()), 'users.xlsx');
     }
 
     /**

@@ -17,7 +17,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Đăng nhập'
-      description: 'Trả về access_token dùng cho các request cần xác thực.'
+      description: 'Trả về access_token và thông tin user dùng cho các request cần xác thực.'
       authenticated: false
       deprecated: false
     headers:
@@ -144,12 +144,23 @@ endpoints:
       password:
         custom: []
         name: password
-        description: 'Mật khẩu mới (tối thiểu 6 ký tự).'
+        description: 'Mật khẩu mới (tối thiểu 6 ký tự, có xác nhận).'
         required: true
         example: newpassword123
         type: string
         enumValues: []
         exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password_confirmation:
+        custom: []
+        name: password_confirmation
+        description: 'Xác nhận mật khẩu.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
         nullable: false
         deprecated: false
       token:
@@ -166,6 +177,7 @@ endpoints:
     cleanBodyParameters:
       email: user@example.com
       password: newpassword123
+      password_confirmation: architecto
       token: architecto
     fileParameters: []
     responses: []

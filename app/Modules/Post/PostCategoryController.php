@@ -27,6 +27,23 @@ use Maatwebsite\Excel\Facades\Excel;
 class PostCategoryController extends Controller
 {
     /**
+     * Thống kê cơ bản
+     *
+     * Tổng số bản ghi, bản ghi đang kích hoạt (active), bản ghi không kích hoạt (inactive).
+     * Áp dụng cùng bộ lọc với index (search, status, ...).
+     */
+    public function stats(FilterRequest $request)
+    {
+        $base = PostCategory::filter($request->all());
+
+        return response()->json([
+            'total'    => (clone $base)->count(),
+            'active'   => (clone $base)->where('status', 'active')->count(),
+            'inactive' => (clone $base)->where('status', '!=', 'active')->count(),
+        ]);
+    }
+
+    /**
      * Danh sách danh mục (dạng phẳng, phân trang)
      *
      * Lấy danh sách có phân trang, lọc và sắp xếp (đồng bộ User/Post).
@@ -179,11 +196,11 @@ class PostCategoryController extends Controller
     /**
      * Xuất danh sách danh mục
      *
-     * File Excel theo thứ tự cây (cha trước con) để có thể nhập lại.
+     * Áp dụng cùng bộ lọc với index (search, status, ...). File Excel theo thứ tự cây (cha trước con) để có thể nhập lại.
      */
-    public function export()
+    public function export(FilterRequest $request)
     {
-        return Excel::download(new PostCategoriesExport, 'post-categories.xlsx');
+        return Excel::download(new PostCategoriesExport($request->all()), 'post-categories.xlsx');
     }
 
     /**

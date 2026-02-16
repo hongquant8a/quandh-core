@@ -8,6 +8,7 @@ Route::post('/import', [PostController::class, 'import']);
 
 Route::post('/bulk-delete', [PostController::class, 'bulkDestroy']);
 Route::patch('/bulk-status', [PostController::class, 'bulkUpdateStatus']);
+Route::get('/stats', [PostController::class, 'stats']);
 Route::get('/', [PostController::class, 'index']);
 Route::get('/{post}', [PostController::class, 'show']);
 Route::post('/{post}/view', [PostController::class, 'incrementView']);

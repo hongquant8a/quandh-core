@@ -30,8 +30,8 @@ class PostResource extends JsonResource
             }),
             'created_by'  => $this->creator->name ?? 'N/A',
             'updated_by'  => $this->editor->name ?? 'N/A',
-            'created_at'  => $this->created_at->toDateTimeString(),
-            'updated_at'  => $this->updated_at->toDateTimeString(),
+            'created_at'  => $this->created_at?->format('d/m/Y H:i:s'),
+            'updated_at'  => $this->updated_at?->format('d/m/Y H:i:s'),
         ];
     }
 }
