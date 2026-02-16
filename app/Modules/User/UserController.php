@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UsersExport;
 use App\Imports\UsersImport;
+use App\Modules\User\Requests\ImportUserRequest;
+use App\Modules\User\Requests\ChangeStatusUserRequest;
 
 /**
  * @group User
@@ -141,14 +143,26 @@ class UserController extends Controller
      * @bodyParam file file required File excel (xlsx, xls, csv).
      * @response 200 {"message": "Users imported successfully."}
      */
-    public function import(Request $request)
+    public function import(ImportUserRequest $request)
     {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls,csv',
-        ]);
-
         Excel::import(new UsersImport, $request->file('file'));
 
         return response()->json(['message' => 'Users imported successfully.']);
+    }
+
+    /**
+     * Thay đổi trạng thái người dùng
+     *
+     * @urlParam user integer required ID người dùng. Example: 1
+     * @bodyParam status string required Trạng thái mới: active, inactive, banned. Example: active
+     */
+    public function changeStatus(ChangeStatusUserRequest $request, User $user)
+    {
+        $user->update(['status' => $request->status]);
+
+        return response()->json([
+            'message' => 'Cập nhật trạng thái thành công!',
+            'data' => new UserResource($user)
+        ]);
     }
 }

@@ -14,3 +14,4 @@ Route::post('/', [UserController::class, 'store']);
 Route::put('/{user}', [UserController::class, 'update']);
 Route::patch('/{user}', [UserController::class, 'update']);
 Route::delete('/{user}', [UserController::class, 'destroy']);
+Route::patch('/{user}/status', [UserController::class, 'changeStatus']);

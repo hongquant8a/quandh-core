@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\PostsExport;
 use App\Imports\PostsImport;
+use App\Modules\Post\Requests\ImportPostRequest;
+use App\Modules\Post\Requests\ChangeStatusPostRequest;
 
 /**
  * @group Post
@@ -130,14 +132,26 @@ class PostController extends Controller
      * @bodyParam file file required File excel (xlsx, xls, csv).
      * @response 200 {"message": "Posts imported successfully."}
      */
-    public function import(Request $request)
+    public function import(ImportPostRequest $request)
     {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls,csv',
-        ]);
-
         Excel::import(new PostsImport, $request->file('file'));
 
         return response()->json(['message' => 'Posts imported successfully.']);
+    }
+
+    /**
+     * Thay đổi trạng thái bài viết
+     *
+     * @urlParam post integer required ID bài viết. Example: 1
+     * @bodyParam status string required Trạng thái mới: draft, published, archived. Example: published
+     */
+    public function changeStatus(ChangeStatusPostRequest $request, Post $post)
+    {
+        $post->update(['status' => $request->status]);
+
+        return response()->json([
+            'message' => 'Cập nhật trạng thái thành công!',
+            'data' => new PostResource($post)
+        ]);
     }
 }
