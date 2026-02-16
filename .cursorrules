@@ -1,7 +1,10 @@
 # Laravel & Documentation Rules for Quân
+- Sử dụng tiếng Việt cho toàn bộ tài liệu và comment giải thích logic.
+- Sử dụng lệnh sail để thay thế lệnh php khi thực thi công việc. Ví dụ: sail artisan migrate.    
 - Mỗi khi trả lời câu hỏi hãy luôn tạo tài liệu trong thư mục /docs/answer để mô tả các câu trả lời.
 - Mỗi khi tạo hoặc cập nhật một Controller, hãy tự động tạo/cập nhật file Markdown tương ứng trong thư mục /docs/api để mô tả các Endpoint.
 - Định dạng tài liệu API phải bao gồm: Method, Path, Request Body (nếu có), và Response mẫu.
 - Nếu có tạo Migration mới, hãy cập nhật sơ đồ bảng vào file DATABASE_DESIGN.md.
-- Sử dụng tiếng Việt cho toàn bộ tài liệu và comment giải thích logic.
+- Luôn cập nhập thông tin chi tiết về cấu trúc tập tin, thư mục của dự án vào file STRUCTURE_DESIGN.md.
 - Tôi luôn làm việc với Laravel theo cấu trúc Modular. Hãy ưu tiên gợi ý và tạo file theo cấu trúc /app/Modules/ thay vì cấu trúc mặc định.
+- Các chức năng thường có khi tôi yêu cầu một module mới là: index, show, store, update, destroy, bulk delete, bulk update status, change status, export, import.    

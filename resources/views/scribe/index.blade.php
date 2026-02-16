@@ -1077,7 +1077,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpkq1omjs3rt3gcCWs0l4" </code></pre></div>
+    --form "file=@/tmp/phpt115qgv3e75m021Op8r" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1115,7 +1115,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/phpkq1omjs3rt3gcCWs0l4', 'r')
+                'contents' =&gt; fopen('/tmp/phpt115qgv3e75m021Op8r', 'r')
             ],
         ],
     ]
@@ -1230,7 +1230,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Example: <code>/tmp/phpkq1omjs3rt3gcCWs0l4</code></p>
+<p>File excel (xlsx, xls, csv). Example: <code>/tmp/phpt115qgv3e75m021Op8r</code></p>
         </div>
         </form>
 
@@ -1633,7 +1633,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"search\": \"b\",
     \"status\": \"architecto\",
     \"sort_by\": \"title\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 22
 }"
 </code></pre></div>
@@ -1664,7 +1664,7 @@ let body = {
     "search": "b",
     "status": "architecto",
     "sort_by": "title",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 22
 };
 
@@ -1697,7 +1697,7 @@ $response = $client-&gt;get(
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
             'sort_by' =&gt; 'title',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 22,
         ],
     ]
@@ -1950,10 +1950,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-users"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -3433,7 +3433,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpqsfka0oqa68q9WjLETU" </code></pre></div>
+    --form "file=@/tmp/php03tasqpb85mqaZCNKT2" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3471,7 +3471,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/phpqsfka0oqa68q9WjLETU', 'r')
+                'contents' =&gt; fopen('/tmp/php03tasqpb85mqaZCNKT2', 'r')
             ],
         ],
     ]
@@ -3586,7 +3586,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Example: <code>/tmp/phpqsfka0oqa68q9WjLETU</code></p>
+<p>File excel (xlsx, xls, csv). Example: <code>/tmp/php03tasqpb85mqaZCNKT2</code></p>
         </div>
         </form>
 
@@ -3988,7 +3988,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"sort_by\": \"created_at\",
+    \"sort_by\": \"sort_order\",
     \"sort_order\": \"desc\",
     \"limit\": 22
 }"
@@ -4019,7 +4019,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "sort_by": "created_at",
+    "sort_by": "sort_order",
     "sort_order": "desc",
     "limit": 22
 };
@@ -4052,7 +4052,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'sort_by' =&gt; 'created_at',
+            'sort_by' =&gt; 'sort_order',
             'sort_order' =&gt; 'desc',
             'limit' =&gt; 22,
         ],
@@ -4292,10 +4292,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_by"                data-endpoint="GETapi-posts"
-               value="created_at"
+               value="sort_order"
                data-component="body">
     <br>
-<p>Example: <code>created_at</code></p>
+<p>Example: <code>sort_order</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>id</code></li> <li><code>title</code></li> <li><code>name</code></li> <li><code>sort_order</code></li> <li><code>created_at</code></li></ul>
         </div>
@@ -4727,7 +4727,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "content=Nội dung bài viết..."\
     --form "status=draft"\
     --form "category_ids[]=16"\
-    --form "images[]=@/tmp/php8krn6oc2c9qveBW0APi" </code></pre></div>
+    --form "images[]=@/tmp/phppg3fp6e1s8na8ZnDAYx" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -4785,7 +4785,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/php8krn6oc2c9qveBW0APi', 'r')
+                'contents' =&gt; fopen('/tmp/phppg3fp6e1s8na8ZnDAYx', 'r')
             ],
         ],
     ]
@@ -4970,7 +4970,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "status=architecto"\
     --form "category_ids[]=16"\
     --form "remove_attachment_ids[]=16"\
-    --form "images[]=@/tmp/phpru4uvmqd9o2i86E5hTM" </code></pre></div>
+    --form "images[]=@/tmp/phput9hekdbp4tl3sgkFzY" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -5033,7 +5033,7 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpru4uvmqd9o2i86E5hTM', 'r')
+                'contents' =&gt; fopen('/tmp/phput9hekdbp4tl3sgkFzY', 'r')
             ],
         ],
     ]
@@ -5257,7 +5257,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "status=architecto"\
     --form "category_ids[]=16"\
     --form "remove_attachment_ids[]=16"\
-    --form "images[]=@/tmp/phpcq40g23jkr673MT2tfC" </code></pre></div>
+    --form "images[]=@/tmp/phpn9s9kuh3o2g1fdohwCp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -5320,7 +5320,7 @@ $response = $client-&gt;patch(
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpcq40g23jkr673MT2tfC', 'r')
+                'contents' =&gt; fopen('/tmp/phpn9s9kuh3o2g1fdohwCp', 'r')
             ],
         ],
     ]
@@ -6220,7 +6220,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phptgtlpdcaf1q39Y1R8bg" </code></pre></div>
+    --form "file=@/tmp/phpn468vkve2dnjfNkFs7C" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -6258,7 +6258,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/phptgtlpdcaf1q39Y1R8bg', 'r')
+                'contents' =&gt; fopen('/tmp/phpn468vkve2dnjfNkFs7C', 'r')
             ],
         ],
     ]
@@ -6373,7 +6373,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug. Example: <code>/tmp/phptgtlpdcaf1q39Y1R8bg</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug. Example: <code>/tmp/phpn468vkve2dnjfNkFs7C</code></p>
         </div>
         </form>
 
@@ -6955,7 +6955,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"sort_by\": \"name\",
+    \"sort_by\": \"id\",
     \"sort_order\": \"desc\",
     \"limit\": 22
 }"
@@ -6986,7 +6986,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "sort_by": "name",
+    "sort_by": "id",
     "sort_order": "desc",
     "limit": 22
 };
@@ -7019,7 +7019,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'sort_by' =&gt; 'name',
+            'sort_by' =&gt; 'id',
             'sort_order' =&gt; 'desc',
             'limit' =&gt; 22,
         ],
@@ -7259,10 +7259,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_by"                data-endpoint="GETapi-post-categories"
-               value="name"
+               value="id"
                data-component="body">
     <br>
-<p>Example: <code>name</code></p>
+<p>Example: <code>id</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>id</code></li> <li><code>title</code></li> <li><code>name</code></li> <li><code>sort_order</code></li> <li><code>created_at</code></li></ul>
         </div>

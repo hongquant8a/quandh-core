@@ -399,7 +399,7 @@ endpoints:
         name: sort_by
         description: ''
         required: false
-        example: name
+        example: id
         type: string
         enumValues:
           - id
@@ -437,7 +437,7 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      sort_by: name
+      sort_by: id
       sort_order: desc
       limit: 22
     fileParameters: []
