@@ -6,6 +6,110 @@ endpoints:
   -
     custom: []
     httpMethods:
+      - GET
+    uri: api/users/export
+    metadata:
+      custom: []
+      groupName: User
+      groupDescription: |-
+
+        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Xuất danh sách người dùng'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 500
+        content: |-
+          {
+              "message": "Server Error"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/users/import
+    metadata:
+      custom: []
+      groupName: User
+      groupDescription: |-
+
+        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Nhập danh sách người dùng'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      file:
+        custom: []
+        name: file
+        description: 'File excel (xlsx, xls, csv).'
+        required: true
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters: []
+    fileParameters:
+      file: null
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"message": "Users imported successfully."}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
       - POST
     uri: api/users/bulk-delete
     metadata:
@@ -238,7 +342,7 @@ endpoints:
         name: sort_by
         description: ''
         required: false
-        example: name
+        example: id
         type: string
         enumValues:
           - id
@@ -275,7 +379,7 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      sort_by: name
+      sort_by: id
       sort_order: desc
       limit: 22
     fileParameters: []
