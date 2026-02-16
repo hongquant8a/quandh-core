@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Modules\User\UserController;
 
+Route::get('/export', [UserController::class, 'export']);
+Route::post('/import', [UserController::class, 'import']);
+
 Route::post('/bulk-delete', [UserController::class, 'bulkDestroy']);
 Route::patch('/bulk-status', [UserController::class, 'bulkUpdateStatus']);
 Route::get('/', [UserController::class, 'index']);

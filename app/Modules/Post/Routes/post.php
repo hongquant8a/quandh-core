@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Modules\Post\PostController;
 
+Route::get('/export', [PostController::class, 'export']);
+Route::post('/import', [PostController::class, 'import']);
+
 Route::post('/bulk-delete', [PostController::class, 'bulkDestroy']);
 Route::patch('/bulk-status', [PostController::class, 'bulkUpdateStatus']);
 Route::get('/', [PostController::class, 'index']);

@@ -11,6 +11,10 @@ use App\Modules\Post\Requests\BulkDestroyPostRequest;
 use App\Modules\Post\Requests\BulkUpdateStatusPostRequest;
 use App\Modules\Post\Resources\PostResource;
 use App\Modules\Post\Resources\PostCollection;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PostsExport;
+use App\Imports\PostsImport;
 
 /**
  * @group Post
@@ -107,5 +111,33 @@ class PostController extends Controller
     {
         Post::whereIn('id', $request->ids)->update(['status' => $request->status]);
         return response()->json(['message' => 'Cập nhật trạng thái thành công các bài viết được chọn!']);
+    }
+
+    /**
+     * Xuất danh sách bài viết
+     *
+     * @authenticated
+     */
+    public function export()
+    {
+        return Excel::download(new PostsExport, 'posts.xlsx');
+    }
+
+    /**
+     * Nhập danh sách bài viết
+     *
+     * @authenticated
+     * @bodyParam file file required File excel (xlsx, xls, csv).
+     * @response 200 {"message": "Posts imported successfully."}
+     */
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        Excel::import(new PostsImport, $request->file('file'));
+
+        return response()->json(['message' => 'Posts imported successfully.']);
     }
 }

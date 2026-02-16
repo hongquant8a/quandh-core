@@ -12,6 +12,10 @@ use App\Modules\User\Requests\BulkUpdateStatusUserRequest;
 use App\Modules\User\Resources\UserResource;
 use App\Modules\User\Resources\UserCollection;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UsersExport;
+use App\Imports\UsersImport;
 
 /**
  * @group User
@@ -118,5 +122,33 @@ class UserController extends Controller
     {
         User::whereIn('id', $request->ids)->update(['status' => $request->status]);
         return response()->json(['message' => 'Cập nhật trạng thái thành công']);
+    }
+
+    /**
+     * Xuất danh sách người dùng
+     *
+     * @authenticated
+     */
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
+    /**
+     * Nhập danh sách người dùng
+     *
+     * @authenticated
+     * @bodyParam file file required File excel (xlsx, xls, csv).
+     * @response 200 {"message": "Users imported successfully."}
+     */
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        Excel::import(new UsersImport, $request->file('file'));
+
+        return response()->json(['message' => 'Users imported successfully.']);
     }
 }
