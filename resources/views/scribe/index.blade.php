@@ -1235,8 +1235,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"sort_by\": \"id\",
-    \"sort_order\": \"asc\",
+    \"sort_by\": \"name\",
+    \"sort_order\": \"desc\",
     \"limit\": 22
 }"
 </code></pre></div>
@@ -1266,8 +1266,8 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "sort_by": "id",
-    "sort_order": "asc",
+    "sort_by": "name",
+    "sort_order": "desc",
     "limit": 22
 };
 
@@ -1299,8 +1299,8 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'sort_by' =&gt; 'id',
-            'sort_order' =&gt; 'asc',
+            'sort_by' =&gt; 'name',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 22,
         ],
     ]
@@ -1539,10 +1539,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_by"                data-endpoint="GETapi-users"
-               value="id"
+               value="name"
                data-component="body">
     <br>
-<p>Example: <code>id</code></p>
+<p>Example: <code>name</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>id</code></li> <li><code>title</code></li> <li><code>name</code></li> <li><code>created_at</code></li></ul>
         </div>
@@ -1553,10 +1553,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-users"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -1588,7 +1588,7 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/users/16" \
+    --get "http://localhost/api/users/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -1596,7 +1596,7 @@ Must be one of:
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/users/16"
+    "http://localhost/api/users/1"
 );
 
 const headers = {
@@ -1613,7 +1613,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/users/16';
+$url = 'http://localhost/api/users/1';
 $response = $client-&gt;get(
     $url,
     [
@@ -1631,7 +1631,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-users--user_id-">
             <blockquote>
-            <p>Example response (404):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -1643,7 +1643,16 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\User] 16&quot;
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Lisa Abshire&quot;,
+        &quot;email&quot;: &quot;rogers95@example.org&quot;,
+        &quot;status&quot;: &quot;inactive&quot;,
+        &quot;created_by&quot;: &quot;Lisa Abshire&quot;,
+        &quot;updated_by&quot;: &quot;Lisa Abshire&quot;,
+        &quot;created_at&quot;: &quot;2026-02-15 15:44:12&quot;,
+        &quot;updated_at&quot;: &quot;2026-02-15 15:44:12&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -1738,10 +1747,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="user_id"                data-endpoint="GETapi-users--user_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the user. Example: <code>16</code></p>
+<p>The ID of the user. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>user</code></b>&nbsp;&nbsp;
@@ -1998,7 +2007,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost/api/users/16" \
+    "http://localhost/api/users/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -2014,7 +2023,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/users/16"
+    "http://localhost/api/users/1"
 );
 
 const headers = {
@@ -2040,7 +2049,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/users/16';
+$url = 'http://localhost/api/users/1';
 $response = $client-&gt;put(
     $url,
     [
@@ -2156,10 +2165,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="user_id"                data-endpoint="PUTapi-users--user_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the user. Example: <code>16</code></p>
+<p>The ID of the user. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>user</code></b>&nbsp;&nbsp;
@@ -2250,7 +2259,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost/api/users/16" \
+    "http://localhost/api/users/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -2266,7 +2275,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/users/16"
+    "http://localhost/api/users/1"
 );
 
 const headers = {
@@ -2292,7 +2301,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/users/16';
+$url = 'http://localhost/api/users/1';
 $response = $client-&gt;patch(
     $url,
     [
@@ -2408,10 +2417,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="user_id"                data-endpoint="PATCHapi-users--user_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the user. Example: <code>16</code></p>
+<p>The ID of the user. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>user</code></b>&nbsp;&nbsp;
@@ -2502,7 +2511,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost/api/users/16" \
+    "http://localhost/api/users/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2510,7 +2519,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/users/16"
+    "http://localhost/api/users/1"
 );
 
 const headers = {
@@ -2527,7 +2536,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/users/16';
+$url = 'http://localhost/api/users/1';
 $response = $client-&gt;delete(
     $url,
     [
@@ -2636,10 +2645,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="user_id"                data-endpoint="DELETEapi-users--user_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the user. Example: <code>16</code></p>
+<p>The ID of the user. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>user</code></b>&nbsp;&nbsp;
@@ -3467,14 +3476,14 @@ access-control-allow-origin: *
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
         &quot;id&quot;: 1,
-        &quot;title&quot;: &quot;tin tức thử nghiệp&quot;,
-        &quot;slug&quot;: &quot;tin-tuc-thu-nghiep&quot;,
-        &quot;content&quot;: &quot;ngzmiyvdljnikhwaykcmyuwpwlvqwrsitcpscqldzsn&quot;,
-        &quot;status&quot;: &quot;archived&quot;,
-        &quot;created_by&quot;: &quot;N/A&quot;,
-        &quot;updated_by&quot;: &quot;N/A&quot;,
-        &quot;created_at&quot;: &quot;2026-02-15 09:55:34&quot;,
-        &quot;updated_at&quot;: &quot;2026-02-15 09:55:34&quot;
+        &quot;title&quot;: &quot;Reiciendis rerum vel laboriosam nisi et odio soluta.&quot;,
+        &quot;slug&quot;: &quot;reiciendis-rerum-vel-laboriosam-nisi-et-odio-soluta&quot;,
+        &quot;content&quot;: &quot;Cumque saepe assumenda itaque quaerat ipsum officiis. Beatae rerum cum magnam amet porro. Veniam cupiditate repudiandae totam.\n\nSunt et amet aliquid. Deleniti vitae qui temporibus debitis quia quas.\n\nConsequatur natus voluptas corporis possimus. Doloribus enim temporibus dolor voluptas. Molestias quis eum animi et. Dolore saepe dolore assumenda ut ad qui.&quot;,
+        &quot;status&quot;: &quot;draft&quot;,
+        &quot;created_by&quot;: &quot;Mina Langosh&quot;,
+        &quot;updated_by&quot;: &quot;Ms. Violette Koss&quot;,
+        &quot;created_at&quot;: &quot;2026-02-15 15:44:12&quot;,
+        &quot;updated_at&quot;: &quot;2026-02-15 15:44:12&quot;
     }
 }</code>
  </pre>

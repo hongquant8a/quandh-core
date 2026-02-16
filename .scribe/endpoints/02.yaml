@@ -238,7 +238,7 @@ endpoints:
         name: sort_by
         description: ''
         required: false
-        example: id
+        example: name
         type: string
         enumValues:
           - id
@@ -253,7 +253,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: asc
+        example: desc
         type: string
         enumValues:
           - asc
@@ -275,8 +275,8 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      sort_by: id
-      sort_order: asc
+      sort_by: name
+      sort_order: desc
       limit: 22
     fileParameters: []
     responses:
@@ -324,7 +324,7 @@ endpoints:
         name: user_id
         description: 'The ID of the user.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -342,7 +342,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      user_id: 16
+      user_id: 1
       user: 1
     queryParameters: []
     cleanQueryParameters: []
@@ -352,11 +352,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 404
-        content: |-
-          {
-              "message": "No query results for model [App\\Models\\User] 16"
-          }
+        status: 200
+        content: '{"data":{"id":1,"name":"Lisa Abshire","email":"rogers95@example.org","status":"inactive","created_by":"Lisa Abshire","updated_by":"Lisa Abshire","created_at":"2026-02-15 15:44:12","updated_at":"2026-02-15 15:44:12"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -494,7 +491,7 @@ endpoints:
         name: user_id
         description: 'The ID of the user.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -512,7 +509,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      user_id: 16
+      user_id: 1
       user: 1
     queryParameters: []
     cleanQueryParameters: []
@@ -615,7 +612,7 @@ endpoints:
         name: user_id
         description: 'The ID of the user.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -633,7 +630,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      user_id: 16
+      user_id: 1
       user: 1
     queryParameters: []
     cleanQueryParameters: []
@@ -736,7 +733,7 @@ endpoints:
         name: user_id
         description: 'The ID of the user.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -754,7 +751,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      user_id: 16
+      user_id: 1
       user: 1
     queryParameters: []
     cleanQueryParameters: []

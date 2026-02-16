@@ -353,7 +353,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":1,"title":"tin t\u1ee9c th\u1eed nghi\u1ec7p","slug":"tin-tuc-thu-nghiep","content":"ngzmiyvdljnikhwaykcmyuwpwlvqwrsitcpscqldzsn","status":"archived","created_by":"N\/A","updated_by":"N\/A","created_at":"2026-02-15 09:55:34","updated_at":"2026-02-15 09:55:34"}}'
+        content: '{"data":{"id":1,"title":"Reiciendis rerum vel laboriosam nisi et odio soluta.","slug":"reiciendis-rerum-vel-laboriosam-nisi-et-odio-soluta","content":"Cumque saepe assumenda itaque quaerat ipsum officiis. Beatae rerum cum magnam amet porro. Veniam cupiditate repudiandae totam.\n\nSunt et amet aliquid. Deleniti vitae qui temporibus debitis quia quas.\n\nConsequatur natus voluptas corporis possimus. Doloribus enim temporibus dolor voluptas. Molestias quis eum animi et. Dolore saepe dolore assumenda ut ad qui.","status":"draft","created_by":"Mina Langosh","updated_by":"Ms. Violette Koss","created_at":"2026-02-15 15:44:12","updated_at":"2026-02-15 15:44:12"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
