@@ -3,7 +3,7 @@
 namespace App\Modules\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Modules\User\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
@@ -22,7 +22,7 @@ class AuthController extends Controller
      *
      * @unauthenticated
      * @bodyParam email string required Email đăng nhập. Example: admin@example.com
-     * @bodyParam password string required Mật khẩu. Example: password123
+     * @bodyParam password string required Mật khẩu. Example: password
      */
     public function login(Request $request)
     {

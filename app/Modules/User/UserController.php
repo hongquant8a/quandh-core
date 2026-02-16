@@ -4,18 +4,18 @@ namespace App\Modules\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FilterRequest;
-use App\Models\User;
+use App\Modules\User\Models\User;
 use App\Modules\User\Requests\StoreUserRequest;
 use App\Modules\User\Requests\UpdateUserRequest;
 use App\Modules\User\Requests\BulkDestroyUserRequest;
 use App\Modules\User\Requests\BulkUpdateStatusUserRequest;
 use App\Modules\User\Resources\UserResource;
 use App\Modules\User\Resources\UserCollection;
+use App\Modules\User\Exports\UsersExport;
+use App\Modules\User\Imports\UsersImport;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\UsersExport;
-use App\Imports\UsersImport;
 use App\Modules\User\Requests\ImportUserRequest;
 use App\Modules\User\Requests\ChangeStatusUserRequest;
 

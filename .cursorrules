@@ -4,3 +4,4 @@
 - Định dạng tài liệu API phải bao gồm: Method, Path, Request Body (nếu có), và Response mẫu.
 - Nếu có tạo Migration mới, hãy cập nhật sơ đồ bảng vào file DATABASE_DESIGN.md.
 - Sử dụng tiếng Việt cho toàn bộ tài liệu và comment giải thích logic.
+- Tôi luôn làm việc với Laravel theo cấu trúc Modular. Hãy ưu tiên gợi ý và tạo file theo cấu trúc /app/Modules/ thay vì cấu trúc mặc định.

@@ -14,9 +14,14 @@ class UpdatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'   => 'sometimes|string|max:255|unique:posts,title,' . $this->route('post'),
-            'content' => 'sometimes|string|min:10',
-            'status'  => 'sometimes|in:draft,published,archived',
+            'title'                 => 'sometimes|string|max:255|unique:posts,title,' . $this->route('post'),
+            'content'               => 'sometimes|string|min:10',
+            'status'                => 'sometimes|in:draft,published,archived',
+            'category_id'            => 'nullable|exists:post_categories,id',
+            'images'                => 'nullable|array|max:10',
+            'images.*'              => 'image|mimes:jpeg,png,gif,webp|max:5120',
+            'remove_attachment_ids' => 'nullable|array',
+            'remove_attachment_ids.*' => 'integer|exists:post_attachments,id',
         ];
     }
 
@@ -29,6 +34,8 @@ class UpdatePostRequest extends FormRequest
             'content.string' => 'Nội dung phải là một chuỗi ký tự.',
             'content.min'    => 'Nội dung phải có ít nhất 10 ký tự.',
             'status.in'      => 'Trạng thái không hợp lệ. Chỉ chấp nhận draft, published, archived.',
+            'category_id.exists' => 'Danh mục không tồn tại.',
+            'images.*.image'     => 'File phải là hình ảnh.',
         ];
     }
 }

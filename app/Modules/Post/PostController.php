@@ -4,19 +4,21 @@ namespace App\Modules\Post;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FilterRequest;
-use App\Models\Post;
+use App\Modules\Post\Models\Post;
 use App\Modules\Post\Requests\StorePostRequest;
 use App\Modules\Post\Requests\UpdatePostRequest;
 use App\Modules\Post\Requests\BulkDestroyPostRequest;
 use App\Modules\Post\Requests\BulkUpdateStatusPostRequest;
 use App\Modules\Post\Resources\PostResource;
 use App\Modules\Post\Resources\PostCollection;
+use App\Modules\Post\Exports\PostsExport;
+use App\Modules\Post\Imports\PostsImport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\PostsExport;
-use App\Imports\PostsImport;
 use App\Modules\Post\Requests\ImportPostRequest;
 use App\Modules\Post\Requests\ChangeStatusPostRequest;
+use App\Modules\Post\Models\PostAttachment;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @group Post
@@ -38,7 +40,7 @@ class PostController extends Controller
      */
     public function index(FilterRequest $request)
     {
-        $posts = Post::filter($request->all())
+        $posts = Post::with('category')->filter($request->all())
             ->paginate($request->limit ?? 10);
         return new PostCollection($posts);
     }
@@ -50,6 +52,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        $post->load(['category', 'attachments']);
         return new PostResource($post);
     }
 
@@ -62,7 +65,10 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        $post = Post::create($request->validated());
+        $data = collect($request->validated())->except('images')->all();
+        $post = Post::create($data);
+        $this->savePostAttachments($post, $request->file('images', []));
+        $post->load(['category', 'attachments']);
         return (new PostResource($post))
             ->additional(['message' => 'Bài viết đã được tạo thành công!']);
     }
@@ -77,7 +83,13 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        $post->update($request->validated());
+        $data = collect($request->validated())->except(['images', 'remove_attachment_ids'])->all();
+        $post->update($data);
+        if ($ids = $request->remove_attachment_ids) {
+            PostAttachment::where('post_id', $post->id)->whereIn('id', $ids)->delete();
+        }
+        $this->savePostAttachments($post, $request->file('images', []));
+        $post->load(['category', 'attachments']);
         return new PostResource($post);
     }
 
@@ -153,5 +165,28 @@ class PostController extends Controller
             'message' => 'Cập nhật trạng thái thành công!',
             'data' => new PostResource($post)
         ]);
+    }
+
+    /**
+     * Lưu file ảnh đính kèm vào storage và tạo bản ghi post_attachments.
+     */
+    private function savePostAttachments(Post $post, array $files): void
+    {
+        $sortOrder = $post->attachments()->max('sort_order') ?? 0;
+        foreach ($files as $file) {
+            if (! $file || ! $file->isValid()) {
+                continue;
+            }
+            $path = $file->store('post-attachments/' . $post->id, 'public');
+            PostAttachment::create([
+                'post_id'        => $post->id,
+                'path'           => $path,
+                'disk'           => 'public',
+                'original_name'  => $file->getClientOriginalName(),
+                'mime_type'      => $file->getMimeType(),
+                'size'           => $file->getSize(),
+                'sort_order'     => ++$sortOrder,
+            ]);
+        }
     }
 }

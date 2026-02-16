@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Exports;
+namespace App\Modules\User\Exports;
 
-use App\Models\User;
+use App\Modules\User\Models\User;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class UsersExport implements FromCollection, WithHeadings
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
         return User::all(['id', 'name', 'email', 'created_at']);

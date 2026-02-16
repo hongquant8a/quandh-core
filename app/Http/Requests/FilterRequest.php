@@ -17,7 +17,7 @@ class FilterRequest extends FormRequest
         return [
             'search'     => 'nullable|string|max:100',
             'status'     => 'nullable|string',
-            'sort_by'    => 'nullable|in:id,title,name,created_at',
+            'sort_by'    => 'nullable|in:id,title,name,sort_order,created_at',
             'sort_order' => 'nullable|in:asc,desc',
             'limit'      => 'nullable|integer|min:1|max:100',
         ];                  

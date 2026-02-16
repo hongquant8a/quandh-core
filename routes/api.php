@@ -17,4 +17,7 @@ Route::prefix('auth')->group(function () {
     Route::prefix('posts')->group(function () {
         require base_path('app/Modules/Post/Routes/post.php');
     });
+    Route::prefix('post-categories')->group(function () {
+        require base_path('app/Modules/Post/Routes/post_category.php');
+    });
 // });

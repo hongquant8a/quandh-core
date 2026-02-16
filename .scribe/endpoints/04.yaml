@@ -1,23 +1,23 @@
-name: User
+name: 'Post Category'
 description: |-
 
-  Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+  Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/users/export
+    uri: api/post-categories/export
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Xuất danh sách người dùng'
-      description: ''
+      title: 'Xuất danh sách danh mục'
+      description: 'File Excel theo thứ tự cây (cha trước con) để có thể nhập lại.'
       authenticated: true
       deprecated: false
     headers:
@@ -38,7 +38,7 @@ endpoints:
         content: ''
         headers:
           cache-control: public
-          content-disposition: 'attachment; filename=users.xlsx'
+          content-disposition: 'attachment; filename=post-categories.xlsx'
           content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
           accept-ranges: bytes
           access-control-allow-origin: '*'
@@ -55,16 +55,16 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/users/import
+    uri: api/post-categories/import
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Nhập danh sách người dùng'
+      title: 'Nhập danh sách danh mục'
       description: ''
       authenticated: true
       deprecated: false
@@ -80,7 +80,7 @@ endpoints:
       file:
         custom: []
         name: file
-        description: 'File excel (xlsx, xls, csv).'
+        description: 'File excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug.'
         required: true
         example: null
         type: file
@@ -95,7 +95,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"message": "Users imported successfully."}'
+        content: '{"message": "Post categories imported successfully."}'
         headers: []
         description: ''
     responseFields: []
@@ -110,16 +110,16 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/users/bulk-delete
+    uri: api/post-categories/bulk-delete
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Xóa hàng loạt người dùng'
+      title: 'Xóa hàng loạt danh mục'
       description: ''
       authenticated: true
       deprecated: false
@@ -165,16 +165,16 @@ endpoints:
     custom: []
     httpMethods:
       - PATCH
-    uri: api/users/bulk-status
+    uri: api/post-categories/bulk-status
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Cập nhật trạng thái hàng loạt'
+      title: 'Cập nhật trạng thái hàng loạt danh mục'
       description: ''
       authenticated: true
       deprecated: false
@@ -204,7 +204,7 @@ endpoints:
       status:
         custom: []
         name: status
-        description: 'Trạng thái: active, inactive, banned.'
+        description: 'Trạng thái: active, inactive.'
         required: true
         example: active
         type: string
@@ -232,17 +232,75 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/users
+    uri: api/post-categories/tree
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Danh sách người dùng'
-      description: 'Lấy danh sách có phân trang, lọc và sắp xếp.'
+      title: 'Cây danh mục (toàn bộ cây, không phân trang)'
+      description: 'Trả về cấu trúc parent-children để hiển thị tree.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      status:
+        custom: []
+        name: status
+        description: 'Lọc theo trạng thái: active, inactive.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      status: architecto
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"data":[]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/post-categories
+    metadata:
+      custom: []
+      groupName: 'Post Category'
+      groupDescription: |-
+
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Danh sách danh mục (dạng phẳng, phân trang)'
+      description: 'Lấy danh sách có phân trang, lọc và sắp xếp (đồng bộ User/Post).'
       authenticated: true
       deprecated: false
     headers:
@@ -255,9 +313,9 @@ endpoints:
       search:
         custom: []
         name: search
-        description: 'Từ khóa tìm kiếm (name, email).'
+        description: 'Từ khóa tìm kiếm (tên).'
         required: false
-        example: john
+        example: tin
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -266,7 +324,7 @@ endpoints:
       status:
         custom: []
         name: status
-        description: 'Lọc theo trạng thái: active, inactive, banned.'
+        description: 'Lọc theo trạng thái: active, inactive.'
         required: false
         example: architecto
         type: string
@@ -277,9 +335,9 @@ endpoints:
       sort_by:
         custom: []
         name: sort_by
-        description: 'Sắp xếp theo: id, title, name, created_at.'
+        description: 'Sắp xếp theo: id, name, sort_order, created_at.'
         required: false
-        example: created_at
+        example: sort_order
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -290,7 +348,7 @@ endpoints:
         name: sort_order
         description: 'Thứ tự: asc, desc.'
         required: false
-        example: desc
+        example: asc
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -308,10 +366,10 @@ endpoints:
         nullable: false
         deprecated: false
     cleanQueryParameters:
-      search: john
+      search: tin
       status: architecto
-      sort_by: created_at
-      sort_order: desc
+      sort_by: sort_order
+      sort_order: asc
       limit: 10
     bodyParameters:
       search:
@@ -341,7 +399,7 @@ endpoints:
         name: sort_by
         description: ''
         required: false
-        example: title
+        example: id
         type: string
         enumValues:
           - id
@@ -357,7 +415,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: desc
+        example: asc
         type: string
         enumValues:
           - asc
@@ -379,15 +437,15 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      sort_by: title
-      sort_order: desc
+      sort_by: id
+      sort_order: asc
       limit: 22
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{"data":[],"links":{"first":"http:\/\/localhost\/api\/users?page=1","last":"http:\/\/localhost\/api\/users?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":null,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost\/api\/users?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"http:\/\/localhost\/api\/users","per_page":22,"to":null,"total":0}}'
+        content: '{"data":[],"links":{"first":"http:\/\/localhost\/api\/post-categories?page=1","last":"http:\/\/localhost\/api\/post-categories?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":null,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost\/api\/post-categories?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"http:\/\/localhost\/api\/post-categories","per_page":22,"to":null,"total":0}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -405,16 +463,16 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/users/{user_id}'
+    uri: 'api/post-categories/{category_id}'
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Chi tiết người dùng'
+      title: 'Chi tiết danh mục'
       description: ''
       authenticated: true
       deprecated: false
@@ -423,21 +481,21 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      user_id:
+      category_id:
         custom: []
-        name: user_id
-        description: 'The ID of the user.'
+        name: category_id
+        description: 'The ID of the category.'
         required: true
-        example: 1
+        example: 16
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      user:
+      category:
         custom: []
-        name: user
-        description: 'ID người dùng.'
+        name: category
+        description: 'ID danh mục.'
         required: true
         example: 1
         type: integer
@@ -446,8 +504,8 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      user_id: 1
-      user: 1
+      category_id: 16
+      category: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -456,8 +514,11 @@ endpoints:
     responses:
       -
         custom: []
-        status: 200
-        content: '{"data":{"id":1,"name":"Keith Ledner Sr.","email":"alda53@example.net","status":"banned","created_by":"Keith Ledner Sr.","updated_by":"Keith Ledner Sr.","created_at":"2026-02-16 02:26:54","updated_at":"2026-02-16 02:26:54"}}'
+        status: 404
+        content: |-
+          {
+              "message": "No query results for model [App\\Modules\\Post\\Models\\PostCategory] 16"
+          }
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -475,16 +536,16 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/users
+    uri: api/post-categories
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Tạo người dùng mới'
+      title: 'Tạo danh mục mới'
       description: ''
       authenticated: true
       deprecated: false
@@ -500,64 +561,76 @@ endpoints:
       name:
         custom: []
         name: name
-        description: 'Tên người dùng.'
+        description: 'Tên danh mục.'
         required: true
-        example: 'Nguyễn Văn A'
+        example: 'Tin công nghệ'
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      email:
+      slug:
         custom: []
-        name: email
-        description: 'Email (duy nhất).'
-        required: true
-        example: user@example.com
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      password:
-        custom: []
-        name: password
-        description: 'Mật khẩu (tối thiểu 6 ký tự).'
-        required: true
-        example: password123
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: 'Trạng thái: active, inactive, banned.'
+        name: slug
+        description: 'Slug (nếu không gửi sẽ tự sinh từ name).'
         required: false
-        example: active
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      password_confirmation:
-        custom: []
-        name: password_confirmation
-        description: 'Xác nhận mật khẩu.'
-        required: true
         example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'Mô tả.'
+        required: false
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'active, inactive.'
+        required: true
+        example: active
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
         nullable: false
         deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự.'
+        required: false
+        example: 0
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      parent_id:
+        custom: []
+        name: parent_id
+        description: 'ID danh mục cha (để tạo con).'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
-      name: 'Nguyễn Văn A'
-      email: user@example.com
-      password: password123
+      name: 'Tin công nghệ'
+      slug: architecto
+      description: 'Eius et animi quos velit et.'
       status: active
-      password_confirmation: architecto
+      sort_order: 0
+      parent_id: null
     fileParameters: []
     responses: []
     responseFields: []
@@ -572,16 +645,16 @@ endpoints:
     custom: []
     httpMethods:
       - PUT
-    uri: 'api/users/{user_id}'
+    uri: 'api/post-categories/{category_id}'
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Cập nhật người dùng'
+      title: 'Cập nhật danh mục'
       description: ''
       authenticated: true
       deprecated: false
@@ -590,21 +663,21 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      user_id:
+      category_id:
         custom: []
-        name: user_id
-        description: 'The ID of the user.'
+        name: category_id
+        description: 'The ID of the category.'
         required: true
-        example: 1
+        example: 16
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      user:
+      category:
         custom: []
-        name: user
-        description: 'ID người dùng.'
+        name: category
+        description: 'ID danh mục.'
         required: true
         example: 1
         type: integer
@@ -613,15 +686,15 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      user_id: 1
-      user: 1
+      category_id: 16
+      category: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       name:
         custom: []
         name: name
-        description: 'Tên người dùng.'
+        description: 'Tên danh mục.'
         required: false
         example: architecto
         type: string
@@ -629,32 +702,32 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      email:
+      slug:
         custom: []
-        name: email
-        description: 'Email (duy nhất).'
+        name: slug
+        description: Slug.
         required: false
-        example: gbailey@example.net
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      password:
+      description:
         custom: []
-        name: password
-        description: 'Mật khẩu mới (nếu muốn đổi).'
+        name: description
+        description: 'Mô tả.'
         required: false
-        example: '|]|{+-'
+        example: 'Eius et animi quos velit et.'
         type: string
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
         deprecated: false
       status:
         custom: []
         name: status
-        description: 'Trạng thái: active, inactive, banned.'
+        description: 'active, inactive.'
         required: false
         example: architecto
         type: string
@@ -662,23 +735,35 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      password_confirmation:
+      sort_order:
         custom: []
-        name: password_confirmation
-        description: 'Xác nhận mật khẩu.'
+        name: sort_order
+        description: 'Thứ tự.'
         required: false
-        example: architecto
-        type: string
+        example: 16
+        type: integer
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
+        deprecated: false
+      parent_id:
+        custom: []
+        name: parent_id
+        description: 'ID danh mục cha (0 = chuyển thành gốc).'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
         deprecated: false
     cleanBodyParameters:
       name: architecto
-      email: gbailey@example.net
-      password: '|]|{+-'
+      slug: architecto
+      description: 'Eius et animi quos velit et.'
       status: architecto
-      password_confirmation: architecto
+      sort_order: 16
+      parent_id: 16
     fileParameters: []
     responses: []
     responseFields: []
@@ -693,16 +778,16 @@ endpoints:
     custom: []
     httpMethods:
       - PATCH
-    uri: 'api/users/{user_id}'
+    uri: 'api/post-categories/{category_id}'
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Cập nhật người dùng'
+      title: 'Cập nhật danh mục'
       description: ''
       authenticated: true
       deprecated: false
@@ -711,21 +796,21 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      user_id:
+      category_id:
         custom: []
-        name: user_id
-        description: 'The ID of the user.'
+        name: category_id
+        description: 'The ID of the category.'
         required: true
-        example: 1
+        example: 16
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      user:
+      category:
         custom: []
-        name: user
-        description: 'ID người dùng.'
+        name: category
+        description: 'ID danh mục.'
         required: true
         example: 1
         type: integer
@@ -734,15 +819,15 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      user_id: 1
-      user: 1
+      category_id: 16
+      category: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       name:
         custom: []
         name: name
-        description: 'Tên người dùng.'
+        description: 'Tên danh mục.'
         required: false
         example: architecto
         type: string
@@ -750,32 +835,32 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      email:
+      slug:
         custom: []
-        name: email
-        description: 'Email (duy nhất).'
+        name: slug
+        description: Slug.
         required: false
-        example: gbailey@example.net
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      password:
+      description:
         custom: []
-        name: password
-        description: 'Mật khẩu mới (nếu muốn đổi).'
+        name: description
+        description: 'Mô tả.'
         required: false
-        example: '|]|{+-'
+        example: 'Eius et animi quos velit et.'
         type: string
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
         deprecated: false
       status:
         custom: []
         name: status
-        description: 'Trạng thái: active, inactive, banned.'
+        description: 'active, inactive.'
         required: false
         example: architecto
         type: string
@@ -783,23 +868,35 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      password_confirmation:
+      sort_order:
         custom: []
-        name: password_confirmation
-        description: 'Xác nhận mật khẩu.'
+        name: sort_order
+        description: 'Thứ tự.'
         required: false
-        example: architecto
-        type: string
+        example: 16
+        type: integer
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
+        deprecated: false
+      parent_id:
+        custom: []
+        name: parent_id
+        description: 'ID danh mục cha (0 = chuyển thành gốc).'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
         deprecated: false
     cleanBodyParameters:
       name: architecto
-      email: gbailey@example.net
-      password: '|]|{+-'
+      slug: architecto
+      description: 'Eius et animi quos velit et.'
       status: architecto
-      password_confirmation: architecto
+      sort_order: 16
+      parent_id: 16
     fileParameters: []
     responses: []
     responseFields: []
@@ -814,17 +911,17 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/users/{user_id}'
+    uri: 'api/post-categories/{category_id}'
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Xóa người dùng'
-      description: ''
+      title: 'Xóa danh mục'
+      description: 'Xóa danh mục sẽ xóa luôn tất cả danh mục con (nested set).'
       authenticated: true
       deprecated: false
     headers:
@@ -832,21 +929,21 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      user_id:
+      category_id:
         custom: []
-        name: user_id
-        description: 'The ID of the user.'
+        name: category_id
+        description: 'The ID of the category.'
         required: true
-        example: 1
+        example: 16
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      user:
+      category:
         custom: []
-        name: user
-        description: 'ID người dùng.'
+        name: category
+        description: 'ID danh mục.'
         required: true
         example: 1
         type: integer
@@ -855,8 +952,8 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      user_id: 1
-      user: 1
+      category_id: 16
+      category: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -875,16 +972,16 @@ endpoints:
     custom: []
     httpMethods:
       - PATCH
-    uri: 'api/users/{user_id}/status'
+    uri: 'api/post-categories/{category_id}/status'
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Thay đổi trạng thái người dùng'
+      title: 'Thay đổi trạng thái danh mục'
       description: ''
       authenticated: true
       deprecated: false
@@ -893,21 +990,21 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      user_id:
+      category_id:
         custom: []
-        name: user_id
-        description: 'The ID of the user.'
+        name: category_id
+        description: 'The ID of the category.'
         required: true
-        example: 1
+        example: 16
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      user:
+      category:
         custom: []
-        name: user
-        description: 'ID người dùng.'
+        name: category
+        description: 'ID danh mục.'
         required: true
         example: 1
         type: integer
@@ -916,15 +1013,15 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      user_id: 1
-      user: 1
+      category_id: 16
+      category: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       status:
         custom: []
         name: status
-        description: 'Trạng thái mới: active, inactive, banned.'
+        description: 'Trạng thái mới: active, inactive.'
         required: true
         example: active
         type: string

@@ -36,14 +36,13 @@ endpoints:
     responses:
       -
         custom: []
-        status: 500
-        content: |-
-          {
-              "message": "Server Error"
-          }
+        status: 200
+        content: ''
         headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
+          cache-control: public
+          content-disposition: 'attachment; filename=users.xlsx'
+          content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+          accept-ranges: bytes
           access-control-allow-origin: '*'
         description: null
     responseFields: []
@@ -344,12 +343,13 @@ endpoints:
         name: sort_by
         description: ''
         required: false
-        example: id
+        example: title
         type: string
         enumValues:
           - id
           - title
           - name
+          - sort_order
           - created_at
         exampleWasSpecified: false
         nullable: true
@@ -381,7 +381,7 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      sort_by: id
+      sort_by: title
       sort_order: desc
       limit: 22
     fileParameters: []
@@ -459,7 +459,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":1,"name":"Lisa Abshire","email":"rogers95@example.org","status":"inactive","created_by":"Lisa Abshire","updated_by":"Lisa Abshire","created_at":"2026-02-15 15:44:12","updated_at":"2026-02-15 15:44:12"}}'
+        content: '{"data":{"id":1,"name":"Keith Ledner Sr.","email":"alda53@example.net","status":"banned","created_by":"Keith Ledner Sr.","updated_by":"Keith Ledner Sr.","created_at":"2026-02-16 02:26:54","updated_at":"2026-02-16 02:26:54"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -863,6 +863,79 @@ endpoints:
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/users/{user_id}/status'
+    metadata:
+      custom: []
+      groupName: User
+      groupDescription: |-
+
+        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Thay đổi trạng thái người dùng'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      user_id:
+        custom: []
+        name: user_id
+        description: 'The ID of the user.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      user:
+        custom: []
+        name: user
+        description: 'ID người dùng.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      user_id: 1
+      user: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      status:
+        custom: []
+        name: status
+        description: 'Trạng thái mới: active, inactive, banned.'
+        required: true
+        example: active
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      status: active
     fileParameters: []
     responses: []
     responseFields: []
