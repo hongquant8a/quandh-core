@@ -9,6 +9,11 @@
 
 - **Module Chức năng Chuẩn**: 
     - Một module mới mặc định phải bao gồm các hàm: `stats`, `index`, `show`, `store`, `update`, `destroy`, `bulk delete`, `bulk update status`, `change status`, `export`, `import`.
+    - **Bộ lọc index**: Luôn có tìm kiếm theo tên (hoặc trường chính), trạng thái (status), khoảng ngày tạo (từ ngày đến ngày — `created_at`), và sắp xếp theo `id`, `created_at`, `updated_at` cùng các trường thông tin khác phù hợp (ví dụ: `title`, `sort_order`, `view_count`).
+
+- **Export**:
+    - Khi export Excel, luôn xuất đầy đủ các trường thông tin giống danh sách index (Resource).
+    - Các trường quan hệ (created_by, created_at, updated_by, updated_at, status, categories, ...) phải có trong export tương ứng index.
 
 - **API Resource & Localization**:
     - Luôn sử dụng Resource để trả về dữ liệu API.

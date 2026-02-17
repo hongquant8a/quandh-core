@@ -13,13 +13,26 @@ class UsersExport implements FromCollection, WithHeadings
     ) {}
 
     /**
-     * Xuất theo bộ lọc của index.
+     * Xuất theo bộ lọc của index, đầy đủ trường như UserResource.
      *
      * @return \Illuminate\Support\Collection
      */
     public function collection()
     {
-        return User::filter($this->filters)->get(['id', 'name', 'email', 'created_at']);
+        $users = User::with(['creator', 'editor'])
+            ->filter($this->filters)
+            ->get();
+
+        return $users->map(fn ($user) => [
+            'id'         => $user->id,
+            'name'       => $user->name,
+            'email'      => $user->email,
+            'status'     => $user->status,
+            'created_by' => $user->creator?->name ?? 'N/A',
+            'updated_by' => $user->editor?->name ?? 'N/A',
+            'created_at' => $user->created_at?->format('d/m/Y H:i:s'),
+            'updated_at' => $user->updated_at?->format('d/m/Y H:i:s'),
+        ]);
     }
 
     public function headings(): array
@@ -28,7 +41,11 @@ class UsersExport implements FromCollection, WithHeadings
             'ID',
             'Name',
             'Email',
+            'Status',
+            'Created By',
+            'Updated By',
             'Created At',
+            'Updated At',
         ];
     }
 }

@@ -13,13 +13,19 @@ class PostCategoriesExport implements FromCollection, WithHeadings
     ) {}
 
     /**
-     * Xuất danh mục theo bộ lọc của index, thứ tự cây (cha trước con) để import lại đúng cấu trúc.
+     * Xuất danh mục theo bộ lọc của index, đầy đủ trường như PostCategoryResource.
+     * Thứ tự cây (cha trước con) để import lại đúng cấu trúc.
      *
      * @return \Illuminate\Support\Collection
      */
     public function collection()
     {
-        $nodes = PostCategory::filter($this->filters)->defaultOrder()->withDepth()->get();
+        $nodes = PostCategory::with(['creator', 'editor'])
+            ->filter($this->filters)
+            ->defaultOrder()
+            ->withDepth()
+            ->get();
+
         return $nodes->map(function (PostCategory $category) {
             return [
                 'id'          => $category->id,
@@ -28,8 +34,13 @@ class PostCategoriesExport implements FromCollection, WithHeadings
                 'description' => $category->description,
                 'status'      => $category->status,
                 'sort_order'  => $category->sort_order,
+                'parent_id'   => $category->parent_id,
                 'parent_slug' => $category->parent_id ? (PostCategory::find($category->parent_id)?->slug ?? '') : '',
                 'depth'       => $category->depth,
+                'created_by'  => $category->creator?->name ?? 'N/A',
+                'updated_by'  => $category->editor?->name ?? 'N/A',
+                'created_at'  => $category->created_at?->format('d/m/Y H:i:s'),
+                'updated_at'  => $category->updated_at?->format('d/m/Y H:i:s'),
             ];
         });
     }
@@ -43,8 +54,13 @@ class PostCategoriesExport implements FromCollection, WithHeadings
             'Description',
             'Status',
             'Sort Order',
+            'Parent ID',
             'Parent Slug',
             'Depth',
+            'Created By',
+            'Updated By',
+            'Created At',
+            'Updated At',
         ];
     }
 }
