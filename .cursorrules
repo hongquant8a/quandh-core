@@ -27,3 +27,15 @@
     - **Tài liệu API**: Khi tạo/cập nhật Controller, phải cập nhật file Markdown tương ứng trong `/docs/api` (gồm: Method, Path, Request Body, Response mẫu).
     - **Database**: Cập nhật sơ đồ bảng vào `DATABASE_DESIGN.md` khi có Migration mới.
     - **Cấu trúc dự án**: Cập nhật thông tin chi tiết về tập tin, thư mục vào `STRUCTURE_DESIGN.md` khi có thay đổi.
+
+- **Scribe (API documentation)**:
+    - Khi tạo hoặc thay đổi Controller API, **bắt buộc** bổ sung PHPDoc cho Scribe để sinh tài liệu API (`sail artisan scribe:generate`).
+    - **Trên class**: dùng `@group Tên nhóm` (ví dụ: `@group Core - User`) và mô tả ngắn chức năng của controller.
+    - **Trên từng action (method)**:
+        - Mô tả ngắn bằng tiếng Việt cho từng endpoint.
+        - `@queryParam` cho tham số query (search, status, sort_by, sort_order, limit, from_date, to_date, ...): ghi rõ kiểu, mô tả, Example nếu cần.
+        - `@urlParam` cho tham số trên đường dẫn (ví dụ: `{user}`, `{id}`): required/optional, mô tả, Example.
+        - `@bodyParam` cho request body (POST/PUT/PATCH): tên trường, kiểu, required/optional, mô tả, Example.
+        - `@response` hoặc `@responseField` khi cần mô tả response mẫu cụ thể.
+    - Đồng bộ với chuẩn module: mỗi action (stats, index, show, store, update, destroy, bulkDestroy, bulkUpdateStatus, changeStatus, export, import) đều có block PHPDoc đầy đủ tham số.
+    - Tham khảo style trong `app/Modules/Post/PostController.php` và `app/Modules/Post/PostCategoryController.php`.

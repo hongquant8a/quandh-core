@@ -22,6 +22,18 @@ use Maatwebsite\Excel\Facades\Excel;
  */
 class PermissionController extends Controller
 {
+    /**
+     * Thống kê permission
+     *
+     * Tổng số bản ghi sau khi áp dụng bộ lọc.
+     *
+     * @queryParam search string Từ khóa tìm kiếm (name, guard_name). Example: posts
+     * @queryParam from_date date Lọc từ ngày tạo (created_at) (Y-m-d). Example: 2026-02-01
+     * @queryParam to_date date Lọc đến ngày tạo (created_at) (Y-m-d). Example: 2026-02-17
+     * @queryParam sort_by string Sắp xếp theo: id, name, guard_name, created_at, updated_at. Example: created_at
+     * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
+     * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     */
     public function stats(FilterRequest $request)
     {
         $base = Permission::filter($request->all());
@@ -30,6 +42,18 @@ class PermissionController extends Controller
         ]);
     }
 
+    /**
+     * Danh sách permission
+     *
+     * Lấy danh sách có phân trang, lọc và sắp xếp.
+     *
+     * @queryParam search string Từ khóa tìm kiếm (name, guard_name). Example: posts
+     * @queryParam from_date date Lọc từ ngày tạo (created_at) (Y-m-d). Example: 2026-02-01
+     * @queryParam to_date date Lọc đến ngày tạo (created_at) (Y-m-d). Example: 2026-02-17
+     * @queryParam sort_by string Sắp xếp theo: id, name, guard_name, created_at, updated_at. Example: id
+     * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
+     * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     */
     public function index(FilterRequest $request)
     {
         $items = Permission::filter($request->all())
@@ -37,11 +61,22 @@ class PermissionController extends Controller
         return new PermissionCollection($items);
     }
 
+    /**
+     * Chi tiết permission
+     *
+     * @urlParam permission integer required ID permission. Example: 1
+     */
     public function show(Permission $permission)
     {
         return new PermissionResource($permission);
     }
 
+    /**
+     * Tạo permission mới
+     *
+     * @bodyParam name string required Tên permission. Example: posts.create
+     * @bodyParam guard_name string Guard name (mặc định theo auth.defaults.guard). Example: web
+     */
     public function store(StorePermissionRequest $request)
     {
         $data = $request->validated();
@@ -51,6 +86,13 @@ class PermissionController extends Controller
             ->additional(['message' => 'Quyền đã được tạo thành công!']);
     }
 
+    /**
+     * Cập nhật permission
+     *
+     * @urlParam permission integer required ID permission. Example: 1
+     * @bodyParam name string Tên permission. Example: posts.update
+     * @bodyParam guard_name string Guard name. Example: web
+     */
     public function update(UpdatePermissionRequest $request, Permission $permission)
     {
         $data = $request->validated();
@@ -65,23 +107,49 @@ class PermissionController extends Controller
             ->additional(['message' => 'Quyền đã được cập nhật!']);
     }
 
+    /**
+     * Xóa permission
+     *
+     * @urlParam permission integer required ID permission. Example: 1
+     */
     public function destroy(Permission $permission)
     {
         $permission->delete();
         return response()->json(['message' => 'Quyền đã được xóa!']);
     }
 
+    /**
+     * Xóa hàng loạt permission
+     *
+     * @bodyParam ids array required Danh sách ID. Example: [1, 2, 3]
+     */
     public function bulkDestroy(BulkDestroyPermissionRequest $request)
     {
         Permission::whereIn('id', $request->ids)->delete();
         return response()->json(['message' => 'Đã xóa thành công các quyền được chọn!']);
     }
 
+    /**
+     * Xuất danh sách permission
+     *
+     * Áp dụng cùng bộ lọc với index. Trả về file Excel.
+     *
+     * @queryParam search string Từ khóa tìm kiếm (name, guard_name).
+     * @queryParam from_date date Lọc từ ngày tạo (created_at) (Y-m-d).
+     * @queryParam to_date date Lọc đến ngày tạo (created_at) (Y-m-d).
+     * @queryParam sort_by string Sắp xếp theo: id, name, guard_name, created_at, updated_at.
+     * @queryParam sort_order string Thứ tự: asc, desc.
+     */
     public function export(FilterRequest $request)
     {
         return Excel::download(new PermissionsExport($request->all()), 'permissions.xlsx');
     }
 
+    /**
+     * Nhập danh sách permission
+     *
+     * @bodyParam file file required File excel (xlsx, xls, csv). Cột: name, guard_name.
+     */
     public function import(ImportPermissionRequest $request)
     {
         Excel::import(new PermissionsImport, $request->file('file'));

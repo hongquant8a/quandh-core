@@ -53,19 +53,36 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      from_date:
+        custom: []
+        name: from_date
+        description: 'Must be a valid date.'
+        required: false
+        example: '2026-02-17T11:15:28'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      to_date:
+        custom: []
+        name: to_date
+        description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
+        required: false
+        example: '2052-03-12'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
       sort_by:
         custom: []
         name: sort_by
-        description: ''
+        description: 'Must not be greater than 50 characters.'
         required: false
-        example: title
+        example: 'n'
         type: string
-        enumValues:
-          - id
-          - title
-          - name
-          - sort_order
-          - created_at
+        enumValues: []
         exampleWasSpecified: false
         nullable: true
         deprecated: false
@@ -87,7 +104,7 @@ endpoints:
         name: limit
         description: 'Must be at least 1. Must not be greater than 100.'
         required: false
-        example: 22
+        example: 7
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -96,9 +113,11 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      sort_by: title
+      from_date: '2026-02-17T11:15:28'
+      to_date: '2052-03-12'
+      sort_by: 'n'
       sort_order: asc
-      limit: 22
+      limit: 7
     fileParameters: []
     responses:
       -
@@ -347,19 +366,36 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      from_date:
+        custom: []
+        name: from_date
+        description: 'Must be a valid date.'
+        required: false
+        example: '2026-02-17T11:15:28'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      to_date:
+        custom: []
+        name: to_date
+        description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
+        required: false
+        example: '2052-03-12'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
       sort_by:
         custom: []
         name: sort_by
-        description: ''
+        description: 'Must not be greater than 50 characters.'
         required: false
-        example: title
+        example: 'n'
         type: string
-        enumValues:
-          - id
-          - title
-          - name
-          - sort_order
-          - created_at
+        enumValues: []
         exampleWasSpecified: false
         nullable: true
         deprecated: false
@@ -368,7 +404,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: asc
+        example: desc
         type: string
         enumValues:
           - asc
@@ -381,7 +417,7 @@ endpoints:
         name: limit
         description: 'Must be at least 1. Must not be greater than 100.'
         required: false
-        example: 22
+        example: 7
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -390,9 +426,11 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      sort_by: title
-      sort_order: asc
-      limit: 22
+      from_date: '2026-02-17T11:15:28'
+      to_date: '2052-03-12'
+      sort_by: 'n'
+      sort_order: desc
+      limit: 7
     fileParameters: []
     responses:
       -
@@ -578,19 +616,36 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      from_date:
+        custom: []
+        name: from_date
+        description: 'Must be a valid date.'
+        required: false
+        example: '2026-02-17T11:15:28'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      to_date:
+        custom: []
+        name: to_date
+        description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
+        required: false
+        example: '2052-03-12'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
       sort_by:
         custom: []
         name: sort_by
-        description: ''
+        description: 'Must not be greater than 50 characters.'
         required: false
-        example: created_at
+        example: 'n'
         type: string
-        enumValues:
-          - id
-          - title
-          - name
-          - sort_order
-          - created_at
+        enumValues: []
         exampleWasSpecified: false
         nullable: true
         deprecated: false
@@ -612,7 +667,7 @@ endpoints:
         name: limit
         description: 'Must be at least 1. Must not be greater than 100.'
         required: false
-        example: 22
+        example: 7
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -621,15 +676,17 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      sort_by: created_at
+      from_date: '2026-02-17T11:15:28'
+      to_date: '2052-03-12'
+      sort_by: 'n'
       sort_order: desc
-      limit: 22
+      limit: 7
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{"data":[],"links":{"first":"http:\/\/localhost\/api\/post-categories?page=1","last":"http:\/\/localhost\/api\/post-categories?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":null,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost\/api\/post-categories?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"http:\/\/localhost\/api\/post-categories","per_page":22,"to":null,"total":0}}'
+        content: '{"data":[],"links":{"first":"http:\/\/localhost\/api\/post-categories?page=1","last":"http:\/\/localhost\/api\/post-categories?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":null,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost\/api\/post-categories?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"http:\/\/localhost\/api\/post-categories","per_page":7,"to":null,"total":0}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -699,7 +756,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":1,"name":"Tin c\u00f4ng ngh\u1ec7","slug":"tin-cong-nghe","description":null,"status":"inactive","sort_order":1,"parent_id":null,"depth":0,"created_by":"Tate Haley","updated_by":"Tate Haley","created_at":"16\/02\/2026 14:07:59","updated_at":"16\/02\/2026 14:07:59","parent":null,"children":[{"id":6,"name":"Tin c\u00f4ng ngh\u1ec7 - enim","slug":"tin-cong-nghe-enim-699324bf741d9","description":"Et aspernatur id ullam ullam.","status":"active","sort_order":100,"parent_id":1,"depth":null,"created_by":"Tate Haley","updated_by":"Tate Haley","created_at":"16\/02\/2026 14:07:59","updated_at":"16\/02\/2026 14:07:59"},{"id":7,"name":"Tin c\u00f4ng ngh\u1ec7 - tenetur","slug":"tin-cong-nghe-tenetur-699324bf79567","description":"Incidunt autem quod earum quisquam.","status":"inactive","sort_order":26,"parent_id":1,"depth":null,"created_by":"Tate Haley","updated_by":"Tate Haley","created_at":"16\/02\/2026 14:07:59","updated_at":"16\/02\/2026 14:07:59"},{"id":8,"name":"Tin c\u00f4ng ngh\u1ec7 - molestiae","slug":"tin-cong-nghe-molestiae-699324bf7e5f8","description":"Adipisci autem qui ad ad rerum fugit dolorem.","status":"inactive","sort_order":9,"parent_id":1,"depth":null,"created_by":"Tate Haley","updated_by":"Tate Haley","created_at":"16\/02\/2026 14:07:59","updated_at":"16\/02\/2026 14:07:59"}]}}'
+        content: '{"data":{"id":1,"name":"Tin c\u00f4ng ngh\u1ec7","slug":"tin-cong-nghe","description":"Fugit exercitationem natus alias asperiores itaque modi.","status":"inactive","sort_order":1,"parent_id":null,"depth":0,"created_by":"Prof. Kaylee Prohaska","updated_by":"Prof. Kaylee Prohaska","created_at":"17\/02\/2026 10:46:01","updated_at":"17\/02\/2026 10:46:02","parent":null,"children":[{"id":6,"name":"Tin c\u00f4ng ngh\u1ec7 - animi","slug":"tin-cong-nghe-animi-699446e9540a9","description":"Alias aut deleniti quia repellendus molestiae deserunt veniam.","status":"active","sort_order":15,"parent_id":1,"depth":null,"created_by":"Prof. Kaylee Prohaska","updated_by":"Prof. Kaylee Prohaska","created_at":"17\/02\/2026 10:46:01","updated_at":"17\/02\/2026 10:46:02"},{"id":7,"name":"Tin c\u00f4ng ngh\u1ec7 - autem","slug":"tin-cong-nghe-autem-699446e95df27","description":"Ex et in voluptate eaque explicabo.","status":"inactive","sort_order":26,"parent_id":1,"depth":null,"created_by":"Prof. Kaylee Prohaska","updated_by":"Prof. Kaylee Prohaska","created_at":"17\/02\/2026 10:46:01","updated_at":"17\/02\/2026 10:46:02"},{"id":8,"name":"Tin c\u00f4ng ngh\u1ec7 - laudantium","slug":"tin-cong-nghe-laudantium-699446e9696b8","description":"Non eos quam qui officia.","status":"active","sort_order":49,"parent_id":1,"depth":null,"created_by":"Prof. Kaylee Prohaska","updated_by":"Prof. Kaylee Prohaska","created_at":"17\/02\/2026 10:46:01","updated_at":"17\/02\/2026 10:46:02"}]}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json

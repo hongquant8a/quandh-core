@@ -53,19 +53,36 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      from_date:
+        custom: []
+        name: from_date
+        description: 'Must be a valid date.'
+        required: false
+        example: '2026-02-17T11:15:27'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      to_date:
+        custom: []
+        name: to_date
+        description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
+        required: false
+        example: '2052-03-12'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
       sort_by:
         custom: []
         name: sort_by
-        description: ''
+        description: 'Must not be greater than 50 characters.'
         required: false
-        example: name
+        example: 'n'
         type: string
-        enumValues:
-          - id
-          - title
-          - name
-          - sort_order
-          - created_at
+        enumValues: []
         exampleWasSpecified: false
         nullable: true
         deprecated: false
@@ -74,7 +91,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: desc
+        example: asc
         type: string
         enumValues:
           - asc
@@ -87,7 +104,7 @@ endpoints:
         name: limit
         description: 'Must be at least 1. Must not be greater than 100.'
         required: false
-        example: 22
+        example: 7
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -96,9 +113,11 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      sort_by: name
-      sort_order: desc
-      limit: 22
+      from_date: '2026-02-17T11:15:27'
+      to_date: '2052-03-12'
+      sort_by: 'n'
+      sort_order: asc
+      limit: 7
     fileParameters: []
     responses:
       -
@@ -347,19 +366,36 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      from_date:
+        custom: []
+        name: from_date
+        description: 'Must be a valid date.'
+        required: false
+        example: '2026-02-17T11:15:27'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      to_date:
+        custom: []
+        name: to_date
+        description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
+        required: false
+        example: '2052-03-12'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
       sort_by:
         custom: []
         name: sort_by
-        description: ''
+        description: 'Must not be greater than 50 characters.'
         required: false
-        example: created_at
+        example: 'n'
         type: string
-        enumValues:
-          - id
-          - title
-          - name
-          - sort_order
-          - created_at
+        enumValues: []
         exampleWasSpecified: false
         nullable: true
         deprecated: false
@@ -368,7 +404,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: desc
+        example: asc
         type: string
         enumValues:
           - asc
@@ -381,7 +417,7 @@ endpoints:
         name: limit
         description: 'Must be at least 1. Must not be greater than 100.'
         required: false
-        example: 22
+        example: 7
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -390,9 +426,11 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      sort_by: created_at
-      sort_order: desc
-      limit: 22
+      from_date: '2026-02-17T11:15:27'
+      to_date: '2052-03-12'
+      sort_by: 'n'
+      sort_order: asc
+      limit: 7
     fileParameters: []
     responses:
       -
@@ -520,19 +558,36 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      from_date:
+        custom: []
+        name: from_date
+        description: 'Must be a valid date.'
+        required: false
+        example: '2026-02-17T11:15:28'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      to_date:
+        custom: []
+        name: to_date
+        description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
+        required: false
+        example: '2052-03-12'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
       sort_by:
         custom: []
         name: sort_by
-        description: ''
+        description: 'Must not be greater than 50 characters.'
         required: false
-        example: created_at
+        example: 'n'
         type: string
-        enumValues:
-          - id
-          - title
-          - name
-          - sort_order
-          - created_at
+        enumValues: []
         exampleWasSpecified: false
         nullable: true
         deprecated: false
@@ -554,7 +609,7 @@ endpoints:
         name: limit
         description: 'Must be at least 1. Must not be greater than 100.'
         required: false
-        example: 22
+        example: 7
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -563,15 +618,17 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      sort_by: created_at
+      from_date: '2026-02-17T11:15:28'
+      to_date: '2052-03-12'
+      sort_by: 'n'
       sort_order: desc
-      limit: 22
+      limit: 7
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{"data":[],"links":{"first":"http:\/\/localhost\/api\/posts?page=1","last":"http:\/\/localhost\/api\/posts?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":null,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost\/api\/posts?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"http:\/\/localhost\/api\/posts","per_page":22,"to":null,"total":0}}'
+        content: '{"data":[],"links":{"first":"http:\/\/localhost\/api\/posts?page=1","last":"http:\/\/localhost\/api\/posts?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":null,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost\/api\/posts?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"http:\/\/localhost\/api\/posts","per_page":7,"to":null,"total":0}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -641,7 +698,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":1,"title":"Alias accusamus quibusdam saepe earum animi sint saepe quia.","slug":"alias-accusamus-quibusdam-saepe-earum-animi-sint-saepe-quia","content":"Libero suscipit voluptatem dolor sed. Similique molestiae laudantium unde. Et quibusdam possimus sed rerum nihil quo molestiae. Et tempora occaecati iste sapiente atque.\n\nAccusantium inventore qui consequatur maiores. Asperiores quod omnis similique sed aut qui ut. Consectetur sit rerum autem qui at sit aut architecto. In non id aut minus.\n\nHic quasi aut fugiat quod voluptas voluptatem earum. Possimus quasi doloribus eligendi. Quod nisi qui ullam hic numquam nihil vitae.","status":"published","view_count":0,"categories":[{"id":15,"name":"Gi\u1ea3i tr\u00ed - voluptas","slug":"giai-tri-voluptas-699324bf9ddce","description":null,"status":"active","sort_order":71,"parent_id":4,"depth":null,"created_by":"Tate Haley","updated_by":"Tate Haley","created_at":"16\/02\/2026 14:07:59","updated_at":"16\/02\/2026 14:07:59"}],"attachments":[],"created_by":"Prof. Dillon Thiel","updated_by":"Prof. Dillon Thiel","created_at":"16\/02\/2026 14:07:59","updated_at":"16\/02\/2026 14:07:59"}}'
+        content: '{"data":{"id":1,"title":"Eveniet libero quas et quod praesentium.","slug":"eveniet-libero-quas-et-quod-praesentium","content":"Ut amet neque unde sit quia inventore ut. Est velit vitae neque aut sed. Sit ea cumque repudiandae aut id.\n\nMinima natus ipsum blanditiis cumque. Quos veritatis enim laudantium laudantium ab a illum. Voluptatibus velit totam laboriosam quae aperiam earum.\n\nId commodi sed alias est illo modi. Eos iste iste debitis ipsum debitis eligendi. Non at dolorum asperiores fuga amet ut nihil. Sed soluta voluptatem nostrum et fugit.","status":"published","view_count":0,"categories":[{"id":6,"name":"Tin c\u00f4ng ngh\u1ec7 - animi","slug":"tin-cong-nghe-animi-699446e9540a9","description":"Alias aut deleniti quia repellendus molestiae deserunt veniam.","status":"active","sort_order":15,"parent_id":1,"depth":null,"created_by":"Prof. Kaylee Prohaska","updated_by":"Prof. Kaylee Prohaska","created_at":"17\/02\/2026 10:46:01","updated_at":"17\/02\/2026 10:46:02"}],"attachments":[],"created_by":"Stefan Bednar DVM","updated_by":"Shannon Kunze","created_at":"17\/02\/2026 10:46:02","updated_at":"17\/02\/2026 10:46:02"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json

@@ -1,7 +1,7 @@
-name: User
+name: 'Core - User'
 description: |-
 
-  Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+  Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập Excel, đổi trạng thái.
 endpoints:
   -
     custom: []
@@ -10,14 +10,14 @@ endpoints:
     uri: api/users/export
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Core - User'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập Excel, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Xuất danh sách người dùng'
-      description: 'Áp dụng cùng bộ lọc với index (search, status, ...).'
+      description: 'Áp dụng cùng bộ lọc với index. Trả về file Excel.'
       authenticated: true
       deprecated: false
     headers:
@@ -26,8 +26,68 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Từ khóa tìm kiếm (name, email).'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Lọc theo trạng thái: active, inactive, banned.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: 'Sắp xếp theo: id, name, email, created_at.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự: asc, desc.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Số bản ghi (1-100).'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: architecto
+      status: architecto
+      sort_by: architecto
+      sort_order: architecto
+      limit: 16
     bodyParameters:
       search:
         custom: []
@@ -51,19 +111,36 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      from_date:
+        custom: []
+        name: from_date
+        description: 'Must be a valid date.'
+        required: false
+        example: '2026-02-17T11:15:27'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      to_date:
+        custom: []
+        name: to_date
+        description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
+        required: false
+        example: '2052-03-12'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
       sort_by:
         custom: []
         name: sort_by
-        description: ''
+        description: 'Must not be greater than 50 characters.'
         required: false
-        example: sort_order
+        example: 'n'
         type: string
-        enumValues:
-          - id
-          - title
-          - name
-          - sort_order
-          - created_at
+        enumValues: []
         exampleWasSpecified: false
         nullable: true
         deprecated: false
@@ -72,7 +149,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: desc
+        example: asc
         type: string
         enumValues:
           - asc
@@ -85,7 +162,7 @@ endpoints:
         name: limit
         description: 'Must be at least 1. Must not be greater than 100.'
         required: false
-        example: 22
+        example: 7
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -94,9 +171,11 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      sort_by: sort_order
-      sort_order: desc
-      limit: 22
+      from_date: '2026-02-17T11:15:27'
+      to_date: '2052-03-12'
+      sort_by: 'n'
+      sort_order: asc
+      limit: 7
     fileParameters: []
     responses:
       -
@@ -125,10 +204,10 @@ endpoints:
     uri: api/users/import
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Core - User'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập Excel, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Nhập danh sách người dùng'
@@ -147,7 +226,7 @@ endpoints:
       file:
         custom: []
         name: file
-        description: 'File excel (xlsx, xls, csv).'
+        description: 'File excel (xlsx, xls, csv). Cột: name, email, password, status.'
         required: true
         example: null
         type: file
@@ -158,13 +237,7 @@ endpoints:
     cleanBodyParameters: []
     fileParameters:
       file: null
-    responses:
-      -
-        custom: []
-        status: 200
-        content: '{"message": "Users imported successfully."}'
-        headers: []
-        description: ''
+    responses: []
     responseFields: []
     auth:
       - headers
@@ -180,10 +253,10 @@ endpoints:
     uri: api/users/bulk-delete
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Core - User'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập Excel, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Xóa hàng loạt người dùng'
@@ -235,10 +308,10 @@ endpoints:
     uri: api/users/bulk-status
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Core - User'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập Excel, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Cập nhật trạng thái hàng loạt'
@@ -302,129 +375,14 @@ endpoints:
     uri: api/users/stats
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Core - User'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập Excel, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Thống kê cơ bản'
-      description: |-
-        Tổng số bản ghi, bản ghi đang kích hoạt (active), bản ghi không kích hoạt (inactive, banned).
-        Áp dụng cùng bộ lọc với index (search, status, ...).
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      search:
-        custom: []
-        name: search
-        description: 'Must not be greater than 100 characters.'
-        required: false
-        example: b
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      sort_by:
-        custom: []
-        name: sort_by
-        description: ''
-        required: false
-        example: title
-        type: string
-        enumValues:
-          - id
-          - title
-          - name
-          - sort_order
-          - created_at
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      sort_order:
-        custom: []
-        name: sort_order
-        description: ''
-        required: false
-        example: desc
-        type: string
-        enumValues:
-          - asc
-          - desc
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      limit:
-        custom: []
-        name: limit
-        description: 'Must be at least 1. Must not be greater than 100.'
-        required: false
-        example: 22
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-    cleanBodyParameters:
-      search: b
-      status: architecto
-      sort_by: title
-      sort_order: desc
-      limit: 22
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: '{"total":0,"active":0,"inactive":0}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: api/users
-    metadata:
-      custom: []
-      groupName: User
-      groupDescription: |-
-
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Danh sách người dùng'
-      description: 'Lấy danh sách có phân trang, lọc và sắp xếp.'
+      title: 'Thống kê người dùng'
+      description: 'Tổng số, đang kích hoạt (active), không kích hoạt (inactive, banned). Áp dụng cùng bộ lọc với index.'
       authenticated: true
       deprecated: false
     headers:
@@ -459,7 +417,7 @@ endpoints:
       sort_by:
         custom: []
         name: sort_by
-        description: 'Sắp xếp theo: id, title, name, created_at.'
+        description: 'Sắp xếp theo: id, name, email, created_at.'
         required: false
         example: created_at
         type: string
@@ -518,19 +476,36 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      from_date:
+        custom: []
+        name: from_date
+        description: 'Must be a valid date.'
+        required: false
+        example: '2026-02-17T11:15:27'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      to_date:
+        custom: []
+        name: to_date
+        description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
+        required: false
+        example: '2052-03-12'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
       sort_by:
         custom: []
         name: sort_by
-        description: ''
+        description: 'Must not be greater than 50 characters.'
         required: false
-        example: sort_order
+        example: 'n'
         type: string
-        enumValues:
-          - id
-          - title
-          - name
-          - sort_order
-          - created_at
+        enumValues: []
         exampleWasSpecified: false
         nullable: true
         deprecated: false
@@ -539,7 +514,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: desc
+        example: asc
         type: string
         enumValues:
           - asc
@@ -552,7 +527,7 @@ endpoints:
         name: limit
         description: 'Must be at least 1. Must not be greater than 100.'
         required: false
-        example: 22
+        example: 7
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -561,15 +536,209 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      sort_by: sort_order
-      sort_order: desc
-      limit: 22
+      from_date: '2026-02-17T11:15:27'
+      to_date: '2052-03-12'
+      sort_by: 'n'
+      sort_order: asc
+      limit: 7
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{"data":[],"links":{"first":"http:\/\/localhost\/api\/users?page=1","last":"http:\/\/localhost\/api\/users?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":null,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost\/api\/users?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"http:\/\/localhost\/api\/users","per_page":22,"to":null,"total":0}}'
+        content: '{"total":0,"active":0,"inactive":0}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/users
+    metadata:
+      custom: []
+      groupName: 'Core - User'
+      groupDescription: |-
+
+        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập Excel, đổi trạng thái.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Danh sách người dùng'
+      description: 'Lấy danh sách có phân trang, lọc và sắp xếp.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Từ khóa tìm kiếm (name, email).'
+        required: false
+        example: john
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Lọc theo trạng thái: active, inactive, banned.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: 'Sắp xếp theo: id, name, email, created_at.'
+        required: false
+        example: created_at
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự: asc, desc.'
+        required: false
+        example: desc
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Số bản ghi mỗi trang (1-100).'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: john
+      status: architecto
+      sort_by: created_at
+      sort_order: desc
+      limit: 10
+    bodyParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      from_date:
+        custom: []
+        name: from_date
+        description: 'Must be a valid date.'
+        required: false
+        example: '2026-02-17T11:15:27'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      to_date:
+        custom: []
+        name: to_date
+        description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
+        required: false
+        example: '2052-03-12'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: 'Must not be greater than 50 characters.'
+        required: false
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: ''
+        required: false
+        example: asc
+        type: string
+        enumValues:
+          - asc
+          - desc
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Must be at least 1. Must not be greater than 100.'
+        required: false
+        example: 7
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      search: b
+      status: architecto
+      from_date: '2026-02-17T11:15:27'
+      to_date: '2052-03-12'
+      sort_by: 'n'
+      sort_order: asc
+      limit: 7
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"data":[],"links":{"first":"http:\/\/localhost\/api\/users?page=1","last":"http:\/\/localhost\/api\/users?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":null,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost\/api\/users?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"http:\/\/localhost\/api\/users","per_page":7,"to":null,"total":0}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -590,10 +759,10 @@ endpoints:
     uri: 'api/users/{user_id}'
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Core - User'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập Excel, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Chi tiết người dùng'
@@ -639,7 +808,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":1,"name":"Tate Haley","email":"swift.graciela@example.net","status":"inactive","created_by":"Tate Haley","updated_by":"Tate Haley","created_at":"16\/02\/2026 14:07:59","updated_at":"16\/02\/2026 14:07:59"}}'
+        content: '{"data":{"id":1,"name":"Prof. Kaylee Prohaska","email":"jschiller@example.net","status":"inactive","created_by":"Prof. Kaylee Prohaska","updated_by":"Prof. Kaylee Prohaska","created_at":"17\/02\/2026 10:46:00","updated_at":"17\/02\/2026 10:46:01"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -660,10 +829,10 @@ endpoints:
     uri: api/users
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Core - User'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập Excel, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Tạo người dùng mới'
@@ -757,10 +926,10 @@ endpoints:
     uri: 'api/users/{user_id}'
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Core - User'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập Excel, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Cập nhật người dùng'
@@ -849,7 +1018,7 @@ endpoints:
         name: password_confirmation
         description: 'Xác nhận mật khẩu.'
         required: false
-        example: architecto
+        example: optio
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -860,7 +1029,7 @@ endpoints:
       email: gbailey@example.net
       password: '|]|{+-'
       status: architecto
-      password_confirmation: architecto
+      password_confirmation: optio
     fileParameters: []
     responses: []
     responseFields: []
@@ -878,10 +1047,10 @@ endpoints:
     uri: 'api/users/{user_id}'
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Core - User'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập Excel, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Cập nhật người dùng'
@@ -999,10 +1168,10 @@ endpoints:
     uri: 'api/users/{user_id}'
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Core - User'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập Excel, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Xóa người dùng'
@@ -1060,10 +1229,10 @@ endpoints:
     uri: 'api/users/{user_id}/status'
     metadata:
       custom: []
-      groupName: User
+      groupName: 'Core - User'
       groupDescription: |-
 
-        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
+        Quản lý người dùng: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập Excel, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Thay đổi trạng thái người dùng'

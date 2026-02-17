@@ -24,6 +24,19 @@ use Maatwebsite\Excel\Facades\Excel;
  */
 class TeamController extends Controller
 {
+    /**
+     * Thống kê team
+     *
+     * Tổng số, đang kích hoạt (active), không kích hoạt (inactive). Áp dụng cùng bộ lọc với index.
+     *
+     * @queryParam search string Từ khóa tìm kiếm (name, slug). Example: cong-ty
+     * @queryParam status string Lọc theo trạng thái: active, inactive.
+     * @queryParam from_date date Lọc từ ngày tạo (created_at) (Y-m-d). Example: 2026-02-01
+     * @queryParam to_date date Lọc đến ngày tạo (created_at) (Y-m-d). Example: 2026-02-17
+     * @queryParam sort_by string Sắp xếp theo: id, name, slug, status, created_at, updated_at. Example: created_at
+     * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
+     * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     */
     public function stats(FilterRequest $request)
     {
         $base = Team::filter($request->all());
@@ -34,6 +47,19 @@ class TeamController extends Controller
         ]);
     }
 
+    /**
+     * Danh sách team
+     *
+     * Lấy danh sách có phân trang, lọc và sắp xếp.
+     *
+     * @queryParam search string Từ khóa tìm kiếm (name, slug). Example: cong-ty
+     * @queryParam status string Lọc theo trạng thái: active, inactive.
+     * @queryParam from_date date Lọc từ ngày tạo (created_at) (Y-m-d). Example: 2026-02-01
+     * @queryParam to_date date Lọc đến ngày tạo (created_at) (Y-m-d). Example: 2026-02-17
+     * @queryParam sort_by string Sắp xếp theo: id, name, slug, status, created_at, updated_at. Example: id
+     * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
+     * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     */
     public function index(FilterRequest $request)
     {
         $items = Team::with(['creator', 'editor'])
@@ -42,11 +68,24 @@ class TeamController extends Controller
         return new TeamCollection($items);
     }
 
+    /**
+     * Chi tiết team
+     *
+     * @urlParam team integer required ID team. Example: 1
+     */
     public function show(Team $team)
     {
         return new TeamResource($team);
     }
 
+    /**
+     * Tạo team mới
+     *
+     * @bodyParam name string required Tên team. Example: Công ty A
+     * @bodyParam slug string Slug (nếu không gửi sẽ tự sinh từ name). Example: cong-ty-a
+     * @bodyParam description string Mô tả. Example: Team quản trị
+     * @bodyParam status string required Trạng thái: active, inactive. Example: active
+     */
     public function store(StoreTeamRequest $request)
     {
         $team = Team::create($request->validated());
@@ -54,6 +93,15 @@ class TeamController extends Controller
             ->additional(['message' => 'Team đã được tạo thành công!']);
     }
 
+    /**
+     * Cập nhật team
+     *
+     * @urlParam team integer required ID team. Example: 1
+     * @bodyParam name string Tên team. Example: Công ty A
+     * @bodyParam slug string Slug. Example: cong-ty-a
+     * @bodyParam description string Mô tả. Example: Team quản trị
+     * @bodyParam status string Trạng thái: active, inactive. Example: inactive
+     */
     public function update(UpdateTeamRequest $request, Team $team)
     {
         $team->update($request->validated());
@@ -61,24 +109,46 @@ class TeamController extends Controller
             ->additional(['message' => 'Team đã được cập nhật!']);
     }
 
+    /**
+     * Xóa team
+     *
+     * @urlParam team integer required ID team. Example: 1
+     */
     public function destroy(Team $team)
     {
         $team->delete();
         return response()->json(['message' => 'Team đã được xóa!']);
     }
 
+    /**
+     * Xóa hàng loạt team
+     *
+     * @bodyParam ids array required Danh sách ID. Example: [1, 2, 3]
+     */
     public function bulkDestroy(BulkDestroyTeamRequest $request)
     {
         Team::whereIn('id', $request->ids)->delete();
         return response()->json(['message' => 'Đã xóa thành công các team được chọn!']);
     }
 
+    /**
+     * Cập nhật trạng thái team hàng loạt
+     *
+     * @bodyParam ids array required Danh sách ID. Example: [1, 2, 3]
+     * @bodyParam status string required Trạng thái: active, inactive. Example: active
+     */
     public function bulkUpdateStatus(BulkUpdateStatusTeamRequest $request)
     {
         Team::whereIn('id', $request->ids)->update(['status' => $request->status]);
         return response()->json(['message' => 'Cập nhật trạng thái team thành công.']);
     }
 
+    /**
+     * Thay đổi trạng thái team
+     *
+     * @urlParam team integer required ID team. Example: 1
+     * @bodyParam status string required Trạng thái mới: active, inactive. Example: inactive
+     */
     public function changeStatus(ChangeStatusTeamRequest $request, Team $team)
     {
         $team->update(['status' => $request->status]);
@@ -88,11 +158,28 @@ class TeamController extends Controller
         ]);
     }
 
+    /**
+     * Xuất danh sách team
+     *
+     * Áp dụng cùng bộ lọc với index. Trả về file Excel.
+     *
+     * @queryParam search string Từ khóa tìm kiếm (name, slug).
+     * @queryParam status string Lọc theo trạng thái: active, inactive.
+     * @queryParam from_date date Lọc từ ngày tạo (created_at) (Y-m-d).
+     * @queryParam to_date date Lọc đến ngày tạo (created_at) (Y-m-d).
+     * @queryParam sort_by string Sắp xếp theo: id, name, slug, status, created_at, updated_at.
+     * @queryParam sort_order string Thứ tự: asc, desc.
+     */
     public function export(FilterRequest $request)
     {
         return Excel::download(new TeamsExport($request->all()), 'teams.xlsx');
     }
 
+    /**
+     * Nhập danh sách team
+     *
+     * @bodyParam file file required File excel (xlsx, xls, csv). Cột: name, slug, description, status.
+     */
     public function import(ImportTeamRequest $request)
     {
         Excel::import(new TeamsImport, $request->file('file'));
