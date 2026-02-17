@@ -1,6 +1,6 @@
-# API Người dùng (User)
+# API Người dùng (User) – Module Core
 
-Quản lý tài khoản người dùng: CRUD, xuất/nhập Excel, thao tác hàng loạt, đổi trạng thái. Cấu trúc action đồng bộ với Post / Post Category.
+Quản lý tài khoản người dùng: CRUD, xuất/nhập Excel, thao tác hàng loạt, đổi trạng thái. Chức năng nằm trong **module Core** (`app/Modules/Core/`). Cấu trúc action đồng bộ với Post / Post Category.
 
 ---
 

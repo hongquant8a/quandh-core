@@ -126,7 +126,81 @@ Job thất bại.
 
 ---
 
-## 3. Bài viết & Danh mục (Module Post)
+## 3. Core – Permission, Role, Team (Spatie Laravel Permission)
+
+### `teams`
+Bảng team (nhóm) dùng cho tính năng teams của Spatie Laravel Permission.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK, auto increment |
+| name | varchar(255) | No | — | |
+| slug | varchar(255) | Yes | null | UNIQUE |
+| description | text | Yes | null | |
+| status | varchar(255) | No | 'active' | active, inactive |
+| created_by | bigint unsigned | Yes | null | FK → users.id |
+| updated_by | bigint unsigned | Yes | null | FK → users.id |
+| created_at | timestamp | Yes | null | |
+| updated_at | timestamp | Yes | null | |
+
+### `permissions`
+Quyền (Spatie Laravel Permission).
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK, auto increment |
+| name | varchar(255) | No | — | UNIQUE(name, guard_name) |
+| guard_name | varchar(255) | No | — | |
+| created_at | timestamp | Yes | null | |
+| updated_at | timestamp | Yes | null | |
+
+### `roles`
+Vai trò (Spatie Laravel Permission, bật teams).
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK, auto increment |
+| team_id | bigint unsigned | Yes | null | FK → teams.id (ngữ cảnh team) |
+| name | varchar(255) | No | — | UNIQUE(team_id, name, guard_name) |
+| guard_name | varchar(255) | No | — | |
+| status | varchar(255) | No | 'active' | active, inactive (mở rộng) |
+| created_at | timestamp | Yes | null | |
+| updated_at | timestamp | Yes | null | |
+
+### `model_has_permissions`
+Pivot: model (user) ↔ permission (Spatie, bật teams).
+
+| Cột | Kiểu | Ràng buộc / Ghi chú |
+|-----|------|---------------------|
+| permission_id | bigint unsigned | FK → permissions.id |
+| model_type | varchar(255) | Polymorphic |
+| model_id | bigint unsigned | Polymorphic |
+| team_id | bigint unsigned | FK team (khi bật teams) |
+| — | — | PK(team_id, permission_id, model_id, model_type) |
+
+### `model_has_roles`
+Pivot: model (user) ↔ role (Spatie, bật teams).
+
+| Cột | Kiểu | Ràng buộc / Ghi chú |
+|-----|------|---------------------|
+| role_id | bigint unsigned | FK → roles.id |
+| model_type | varchar(255) | Polymorphic |
+| model_id | bigint unsigned | Polymorphic |
+| team_id | bigint unsigned | FK team (khi bật teams) |
+| — | — | PK(team_id, role_id, model_id, model_type) |
+
+### `role_has_permissions`
+Pivot: role ↔ permission (Spatie).
+
+| Cột | Kiểu | Ràng buộc / Ghi chú |
+|-----|------|---------------------|
+| permission_id | bigint unsigned | FK → permissions.id |
+| role_id | bigint unsigned | FK → roles.id |
+| — | — | PK(permission_id, role_id) |
+
+---
+
+## 4. Bài viết & Danh mục (Module Post)
 
 ### `posts`
 Bài viết tin tức.

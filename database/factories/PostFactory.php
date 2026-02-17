@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Modules\Post\Models\Post;
 use App\Modules\Post\Models\PostCategory;
-use App\Modules\User\Models\User;
+use App\Modules\Core\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

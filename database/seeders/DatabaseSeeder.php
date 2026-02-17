@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Modules\User\Models\User;
+use App\Modules\Core\Models\User;
 use App\Modules\Post\Models\Post;
 use App\Modules\Post\Models\PostCategory;
 use Illuminate\Database\Seeder;

@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Modules\Core\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreRoleRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name'          => 'required|string|max:255',
+            'guard_name'    => 'nullable|string|max:255',
+            'team_id'       => 'nullable|exists:teams,id',
+            'status'        => 'nullable|in:active,inactive',
+            'permission_ids'   => 'nullable|array',
+            'permission_ids.*' => 'exists:permissions,id',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required'  => 'Tên vai trò không được để trống.',
+            'team_id.exists' => 'Team không tồn tại.',
+            'status.in'      => 'Trạng thái chỉ chấp nhận active, inactive.',
+        ];
+    }
+}

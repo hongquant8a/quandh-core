@@ -7,11 +7,12 @@
 
 ## 1. Cấu trúc mới
 
-### Module User
+### Module Core (User, Permission, Role, Team)
 
-- **Model:** `app/Modules/User/Models/User.php` — namespace `App\Modules\User\Models`
-- **Export:** `app/Modules/User/Exports/UsersExport.php` — namespace `App\Modules\User\Exports`
-- **Import:** `app/Modules/User/Imports/UsersImport.php` — namespace `App\Modules\User\Imports`
+- **User – Model:** `app/Modules/Core/Models/User.php` — namespace `App\Modules\Core\Models`
+- **User – Export:** `app/Modules/Core/Exports/UsersExport.php` — namespace `App\Modules\Core\Exports`
+- **User – Import:** `app/Modules/Core/Imports/UsersImport.php` — namespace `App\Modules\Core\Imports`
+- Permission, Role, Team cũng nằm trong Core (Models, Exports, Imports tương ứng).
 
 ### Module Post
 
@@ -31,20 +32,20 @@
 
 | Vị trí | Thay đổi |
 |--------|----------|
-| `UserController` | `use App\Modules\User\Models\User`, `UsersExport`, `UsersImport` từ namespace module |
+| `UserController` (Core) | `use App\Modules\Core\Models\User`, `UsersExport`, `UsersImport` từ `App\Modules\Core` |
 | `PostController` | `use App\Modules\Post\Models\Post`, `PostsExport`, `PostsImport` từ namespace module |
-| `AuthController` | `use App\Modules\User\Models\User` |
-| `config/auth.php` | `model` => `App\Modules\User\Models\User::class` |
-| `DatabaseSeeder` | `use` User và Post từ namespace module |
-| `UserFactory` | `$model = \App\Modules\User\Models\User::class` |
-| `PostFactory` | `$model = Post::class` (Post từ `App\Modules\Post\Models`), `use App\Modules\User\Models\User` |
+| `AuthController` | `use App\Modules\Core\Models\User` |
+| `config/auth.php` | `model` => `App\Modules\Core\Models\User::class` |
+| `DatabaseSeeder` | `use` User từ Core, Post từ Post module |
+| `UserFactory` | `$model = \App\Modules\Core\Models\User::class` |
+| `PostFactory` | `$model = Post::class` (Post từ `App\Modules\Post\Models`), `use App\Modules\Core\Models\User` |
 
 ---
 
 ## 3. Quan hệ giữa các model
 
-- **Post** (`App\Modules\Post\Models\Post`): quan hệ `creator()`, `editor()` trỏ tới `App\Modules\User\Models\User`.
-- **User** (`App\Modules\User\Models\User`): quan hệ `creator()`, `editor()` trỏ tới chính `User` (cùng namespace).
+- **Post** (`App\Modules\Post\Models\Post`): quan hệ `creator()`, `editor()` trỏ tới `App\Modules\Core\Models\User`.
+- **User** (`App\Modules\Core\Models\User`): quan hệ `creator()`, `editor()` trỏ tới chính `User` (cùng namespace).
 
 Route model binding và Auth (Sanctum) vẫn hoạt động vì controller type-hint đúng class và `config/auth.php` trỏ đúng model User.
 
