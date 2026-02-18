@@ -18,6 +18,8 @@ class StoreTeamRequest extends FormRequest
             'slug'        => 'nullable|string|max:255|unique:teams,slug',
             'description' => 'nullable|string',
             'status'      => 'required|in:active,inactive',
+            'parent_id'   => 'nullable|exists:teams,id',
+            'sort_order'  => 'nullable|integer|min:0',
         ];
     }
 

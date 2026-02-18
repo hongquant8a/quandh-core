@@ -1,7 +1,7 @@
 name: 'Post Category'
 description: |-
 
-  Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
+  Quản lý danh mục tin tức phân cấp (cấu trúc cây parent_id): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
 endpoints:
   -
     custom: []
@@ -13,11 +13,11 @@ endpoints:
       groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây parent_id): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Xuất danh sách danh mục'
-      description: 'Áp dụng cùng bộ lọc với index (search, status, ...). File Excel theo thứ tự cây (cha trước con) để có thể nhập lại.'
+      description: 'Áp dụng cùng bộ lọc với index. Trả về file Excel.'
       authenticated: true
       deprecated: false
     headers:
@@ -26,8 +26,80 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Từ khóa tìm kiếm (name).'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Lọc theo trạng thái: active, inactive.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      from_date:
+        custom: []
+        name: from_date
+        description: 'date Lọc từ ngày tạo (Y-m-d).'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      to_date:
+        custom: []
+        name: to_date
+        description: 'date Lọc đến ngày tạo (Y-m-d).'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: 'Sắp xếp theo: id, name, sort_order, parent_id, created_at.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự: asc, desc.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: architecto
+      status: architecto
+      from_date: architecto
+      to_date: architecto
+      sort_by: architecto
+      sort_order: architecto
     bodyParameters:
       search:
         custom: []
@@ -56,7 +128,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-17T11:15:28'
+        example: '2026-02-18T08:05:05'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -67,7 +139,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-12'
+        example: '2052-03-13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -111,8 +183,8 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-17T11:15:28'
-      to_date: '2052-03-12'
+      from_date: '2026-02-18T08:05:05'
+      to_date: '2052-03-13'
       sort_by: 'n'
       sort_order: asc
       limit: 7
@@ -147,7 +219,7 @@ endpoints:
       groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây parent_id): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Nhập danh sách danh mục'
@@ -166,7 +238,7 @@ endpoints:
       file:
         custom: []
         name: file
-        description: 'File excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug.'
+        description: 'File Excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug.'
         required: true
         example: null
         type: file
@@ -202,7 +274,7 @@ endpoints:
       groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây parent_id): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Xóa hàng loạt danh mục'
@@ -257,10 +329,10 @@ endpoints:
       groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây parent_id): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Cập nhật trạng thái hàng loạt danh mục'
+      title: 'Cập nhật trạng thái danh mục hàng loạt'
       description: ''
       authenticated: true
       deprecated: false
@@ -324,13 +396,11 @@ endpoints:
       groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây parent_id): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Thống kê cơ bản'
-      description: |-
-        Tổng số bản ghi, bản ghi đang kích hoạt (active), bản ghi không kích hoạt (inactive).
-        Áp dụng cùng bộ lọc với index (search, status, ...).
+      title: 'Thống kê danh mục tin tức'
+      description: 'Tổng số, đang kích hoạt (active), không kích hoạt (inactive). Áp dụng cùng bộ lọc với index.'
       authenticated: true
       deprecated: false
     headers:
@@ -339,8 +409,92 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Từ khóa tìm kiếm (name).'
+        required: false
+        example: tin-tuc
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Lọc theo trạng thái: active, inactive.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      from_date:
+        custom: []
+        name: from_date
+        description: 'date Lọc từ ngày tạo (created_at) (Y-m-d).'
+        required: false
+        example: '2026-02-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      to_date:
+        custom: []
+        name: to_date
+        description: 'date Lọc đến ngày tạo (created_at) (Y-m-d).'
+        required: false
+        example: '2026-02-17'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: 'Sắp xếp theo: id, name, sort_order, parent_id, created_at.'
+        required: false
+        example: sort_order
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự: asc, desc.'
+        required: false
+        example: asc
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Số bản ghi mỗi trang (1-100).'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: tin-tuc
+      status: architecto
+      from_date: '2026-02-01'
+      to_date: '2026-02-17'
+      sort_by: sort_order
+      sort_order: asc
+      limit: 10
     bodyParameters:
       search:
         custom: []
@@ -369,7 +523,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-17T11:15:28'
+        example: '2026-02-18T08:05:05'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -380,7 +534,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-12'
+        example: '2052-03-13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -424,8 +578,8 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-17T11:15:28'
-      to_date: '2052-03-12'
+      from_date: '2026-02-18T08:05:05'
+      to_date: '2052-03-13'
       sort_by: 'n'
       sort_order: desc
       limit: 7
@@ -458,11 +612,11 @@ endpoints:
       groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây parent_id): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Cây danh mục (toàn bộ cây, không phân trang)'
-      description: 'Trả về cấu trúc parent-children để hiển thị tree.'
+      title: 'Cây danh mục (toàn bộ cây, không phân trang). Cấu trúc parent_id, children đệ quy.'
+      description: ''
       authenticated: true
       deprecated: false
     headers:
@@ -516,11 +670,11 @@ endpoints:
       groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây parent_id): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Danh sách danh mục (dạng phẳng, phân trang)'
-      description: 'Lấy danh sách có phân trang, lọc và sắp xếp (đồng bộ User/Post).'
+      title: 'Danh sách danh mục (dạng phẳng, phân trang, thứ tự cây)'
+      description: ''
       authenticated: true
       deprecated: false
     headers:
@@ -533,9 +687,9 @@ endpoints:
       search:
         custom: []
         name: search
-        description: 'Từ khóa tìm kiếm (tên).'
+        description: 'Từ khóa tìm kiếm (name).'
         required: false
-        example: tin
+        example: tin-tuc
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -552,10 +706,32 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      from_date:
+        custom: []
+        name: from_date
+        description: 'date Lọc từ ngày tạo (created_at) (Y-m-d).'
+        required: false
+        example: '2026-02-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      to_date:
+        custom: []
+        name: to_date
+        description: 'date Lọc đến ngày tạo (created_at) (Y-m-d).'
+        required: false
+        example: '2026-02-17'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
       sort_by:
         custom: []
         name: sort_by
-        description: 'Sắp xếp theo: id, name, sort_order, created_at.'
+        description: 'Sắp xếp theo: id, name, sort_order, parent_id, created_at.'
         required: false
         example: sort_order
         type: string
@@ -586,8 +762,10 @@ endpoints:
         nullable: false
         deprecated: false
     cleanQueryParameters:
-      search: tin
+      search: tin-tuc
       status: architecto
+      from_date: '2026-02-01'
+      to_date: '2026-02-17'
       sort_by: sort_order
       sort_order: asc
       limit: 10
@@ -619,7 +797,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-17T11:15:28'
+        example: '2026-02-18T08:05:05'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -630,7 +808,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-12'
+        example: '2052-03-13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -674,8 +852,8 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-17T11:15:28'
-      to_date: '2052-03-12'
+      from_date: '2026-02-18T08:05:05'
+      to_date: '2052-03-13'
       sort_by: 'n'
       sort_order: desc
       limit: 7
@@ -708,7 +886,7 @@ endpoints:
       groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây parent_id): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Chi tiết danh mục'
@@ -754,7 +932,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":1,"name":"Tin c\u00f4ng ngh\u1ec7","slug":"tin-cong-nghe","description":"Fugit exercitationem natus alias asperiores itaque modi.","status":"inactive","sort_order":1,"parent_id":null,"depth":0,"created_by":"Prof. Kaylee Prohaska","updated_by":"Prof. Kaylee Prohaska","created_at":"17\/02\/2026 10:46:01","updated_at":"17\/02\/2026 10:46:02","parent":null,"children":[{"id":6,"name":"Tin c\u00f4ng ngh\u1ec7 - animi","slug":"tin-cong-nghe-animi-699446e9540a9","description":"Alias aut deleniti quia repellendus molestiae deserunt veniam.","status":"active","sort_order":15,"parent_id":1,"depth":null,"created_by":"Prof. Kaylee Prohaska","updated_by":"Prof. Kaylee Prohaska","created_at":"17\/02\/2026 10:46:01","updated_at":"17\/02\/2026 10:46:02"},{"id":7,"name":"Tin c\u00f4ng ngh\u1ec7 - autem","slug":"tin-cong-nghe-autem-699446e95df27","description":"Ex et in voluptate eaque explicabo.","status":"inactive","sort_order":26,"parent_id":1,"depth":null,"created_by":"Prof. Kaylee Prohaska","updated_by":"Prof. Kaylee Prohaska","created_at":"17\/02\/2026 10:46:01","updated_at":"17\/02\/2026 10:46:02"},{"id":8,"name":"Tin c\u00f4ng ngh\u1ec7 - laudantium","slug":"tin-cong-nghe-laudantium-699446e9696b8","description":"Non eos quam qui officia.","status":"active","sort_order":49,"parent_id":1,"depth":null,"created_by":"Prof. Kaylee Prohaska","updated_by":"Prof. Kaylee Prohaska","created_at":"17\/02\/2026 10:46:01","updated_at":"17\/02\/2026 10:46:02"}]}}'
+        content: '{"data":{"id":1,"name":"Tin c\u00f4ng ngh\u1ec7","slug":"tin-cong-nghe","description":null,"status":"inactive","sort_order":1,"parent_id":null,"depth":0,"created_by":"Nelle Heidenreich","updated_by":"Nelle Heidenreich","created_at":"18\/02\/2026 07:31:52","updated_at":"18\/02\/2026 07:31:52","parent":null,"children":[{"id":6,"name":"Tin c\u00f4ng ngh\u1ec7 - similique","slug":"tin-cong-nghe-magnam-69956ae88cc8b","description":"Non suscipit quibusdam temporibus temporibus corporis et at.","status":"active","sort_order":1,"parent_id":1,"depth":1,"created_by":"Nelle Heidenreich","updated_by":"Nelle Heidenreich","created_at":"18\/02\/2026 07:31:52","updated_at":"18\/02\/2026 07:31:52"},{"id":7,"name":"Tin c\u00f4ng ngh\u1ec7 - veritatis","slug":"tin-cong-nghe-autem-69956ae891b84","description":null,"status":"active","sort_order":2,"parent_id":1,"depth":1,"created_by":"Nelle Heidenreich","updated_by":"Nelle Heidenreich","created_at":"18\/02\/2026 07:31:52","updated_at":"18\/02\/2026 07:31:52"},{"id":8,"name":"Tin c\u00f4ng ngh\u1ec7 - provident","slug":"tin-cong-nghe-aut-69956ae89777a","description":"Assumenda inventore omnis repellendus beatae.","status":"active","sort_order":3,"parent_id":1,"depth":1,"created_by":"Nelle Heidenreich","updated_by":"Nelle Heidenreich","created_at":"18\/02\/2026 07:31:52","updated_at":"18\/02\/2026 07:31:52"}]}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -778,7 +956,7 @@ endpoints:
       groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây parent_id): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Tạo danh mục mới'
@@ -799,7 +977,7 @@ endpoints:
         name: name
         description: 'Tên danh mục.'
         required: true
-        example: 'Tin công nghệ'
+        example: 'Tin tức'
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -808,12 +986,12 @@ endpoints:
       slug:
         custom: []
         name: slug
-        description: 'Slug (nếu không gửi sẽ tự sinh từ name).'
+        description: 'Slug (tự sinh từ name nếu không gửi).'
         required: false
-        example: architecto
+        example: tin-tuc
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: true
         deprecated: false
       description:
@@ -830,7 +1008,7 @@ endpoints:
       status:
         custom: []
         name: status
-        description: 'active, inactive.'
+        description: 'Trạng thái: active, inactive.'
         required: true
         example: active
         type: string
@@ -852,7 +1030,7 @@ endpoints:
       parent_id:
         custom: []
         name: parent_id
-        description: 'ID danh mục cha (để tạo con).'
+        description: 'ID danh mục cha (null = gốc).'
         required: false
         example: null
         type: integer
@@ -861,8 +1039,8 @@ endpoints:
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      name: 'Tin công nghệ'
-      slug: architecto
+      name: 'Tin tức'
+      slug: tin-tuc
       description: 'Eius et animi quos velit et.'
       status: active
       sort_order: 0
@@ -887,7 +1065,7 @@ endpoints:
       groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây parent_id): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Cập nhật danh mục'
@@ -963,7 +1141,7 @@ endpoints:
       status:
         custom: []
         name: status
-        description: 'active, inactive.'
+        description: 'Trạng thái: active, inactive.'
         required: false
         example: architecto
         type: string
@@ -985,7 +1163,7 @@ endpoints:
       parent_id:
         custom: []
         name: parent_id
-        description: 'ID danh mục cha (0 = chuyển thành gốc).'
+        description: 'ID danh mục cha (null hoặc 0 = gốc).'
         required: false
         example: 16
         type: integer
@@ -1020,7 +1198,7 @@ endpoints:
       groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây parent_id): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Cập nhật danh mục'
@@ -1096,7 +1274,7 @@ endpoints:
       status:
         custom: []
         name: status
-        description: 'active, inactive.'
+        description: 'Trạng thái: active, inactive.'
         required: false
         example: architecto
         type: string
@@ -1118,7 +1296,7 @@ endpoints:
       parent_id:
         custom: []
         name: parent_id
-        description: 'ID danh mục cha (0 = chuyển thành gốc).'
+        description: 'ID danh mục cha (null hoặc 0 = gốc).'
         required: false
         example: 16
         type: integer
@@ -1153,11 +1331,11 @@ endpoints:
       groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây parent_id): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Xóa danh mục'
-      description: 'Xóa danh mục sẽ xóa luôn tất cả danh mục con (nested set).'
+      description: ''
       authenticated: true
       deprecated: false
     headers:
@@ -1214,7 +1392,7 @@ endpoints:
       groupName: 'Post Category'
       groupDescription: |-
 
-        Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
+        Quản lý danh mục tin tức phân cấp (cấu trúc cây parent_id): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
       subgroup: ''
       subgroupDescription: ''
       title: 'Thay đổi trạng thái danh mục'

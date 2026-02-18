@@ -15,9 +15,25 @@ class Team extends Model
         'slug',
         'description',
         'status',
+        'parent_id',
+        'sort_order',
         'created_by',
         'updated_by',
     ];
+
+    protected $casts = [
+        'sort_order' => 'integer',
+    ];
+
+    public function parent()
+    {
+        return $this->belongsTo(Team::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Team::class, 'parent_id')->orderBy('sort_order');
+    }
 
     protected static function booted()
     {
@@ -31,6 +47,11 @@ class Team extends Model
             $team->updated_by = auth()->id();
             if ($team->isDirty('name') && ! $team->isDirty('slug')) {
                 $team->slug = static::uniqueSlug(\Illuminate\Support\Str::slug($team->name), $team->id);
+            }
+        });
+        static::deleting(function (Team $team) {
+            foreach ($team->children as $child) {
+                $child->delete();
             }
         });
     }
@@ -59,11 +80,70 @@ class Team extends Model
         })->when(isset($filters['to_date']) && $filters['to_date'], function ($q) use ($filters) {
             $q->whereDate('created_at', '<=', $filters['to_date']);
         })->when($filters['sort_by'] ?? 'id', function ($q, $sortBy) use ($filters) {
-            $allowed = ['id', 'name', 'slug', 'status', 'created_at', 'updated_at'];
+            $allowed = ['id', 'name', 'slug', 'status', 'parent_id', 'sort_order', 'created_at', 'updated_at'];
             $column = in_array($sortBy, $allowed) ? $sortBy : 'id';
             $q->orderBy($column, $filters['sort_order'] ?? 'desc');
         });
         return $query;
+    }
+
+    /** Sắp xếp theo cây: cha trước con. */
+    public function scopeTreeOrder($query)
+    {
+        return $query->orderByRaw('COALESCE(parent_id, 0), sort_order, id');
+    }
+
+    /**
+     * Xây cây từ collection (parent_id).
+     *
+     * @param  \Illuminate\Support\Collection  $items
+     * @return \Illuminate\Support\Collection
+     */
+    public static function buildTree($items)
+    {
+        $grouped = $items->groupBy('parent_id');
+        $builder = function ($parentId) use ($grouped, &$builder) {
+            return ($grouped->get($parentId) ?? collect())->map(function ($node) use (&$builder) {
+                $node->setRelation('children', $builder($node->id));
+                return $node;
+            })->values();
+        };
+        return $builder(null);
+    }
+
+    /** Danh sách phẳng theo thứ tự cây (để export). */
+    public static function getFlatTreeOrdered(array $filters = [])
+    {
+        $query = static::with(['creator', 'editor'])->filter($filters);
+        $all = $query->get();
+        $tree = static::buildTree($all);
+        $result = collect();
+        $flatten = function ($nodes) use (&$flatten, &$result) {
+            foreach ($nodes as $node) {
+                $result->push($node);
+                $flatten($node->children);
+            }
+        };
+        $flatten($tree);
+        return $result;
+    }
+
+    /** Độ sâu (0 = gốc). */
+    public function getDepthAttribute(): int
+    {
+        $d = 0;
+        $p = $this->parent_id;
+        $ids = [$this->id];
+        while ($p) {
+            if (in_array($p, $ids)) {
+                break;
+            }
+            $ids[] = $p;
+            $parent = static::find($p);
+            $p = $parent ? $parent->parent_id : null;
+            $d++;
+        }
+        return $d;
     }
 
     protected static function uniqueSlug(string $base, ?int $excludeId = null): string

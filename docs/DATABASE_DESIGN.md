@@ -129,7 +129,7 @@ Job thất bại.
 ## 3. Core – Permission, Role, Team (Spatie Laravel Permission)
 
 ### `teams`
-Bảng team (nhóm) dùng cho tính năng teams của Spatie Laravel Permission.
+Bảng team (nhóm) dùng cho Spatie Laravel Permission; cấu trúc cây theo parent_id.
 
 | Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
 |-----|------|----------|----------|---------------------|
@@ -138,6 +138,8 @@ Bảng team (nhóm) dùng cho tính năng teams của Spatie Laravel Permission.
 | slug | varchar(255) | Yes | null | UNIQUE |
 | description | text | Yes | null | |
 | status | varchar(255) | No | 'active' | active, inactive |
+| parent_id | bigint unsigned | Yes | null | FK → teams.id (cha) |
+| sort_order | int unsigned | No | 0 | Thứ tự trong cây |
 | created_by | bigint unsigned | Yes | null | FK → users.id |
 | updated_by | bigint unsigned | Yes | null | FK → users.id |
 | created_at | timestamp | Yes | null | |
@@ -238,7 +240,7 @@ File/ảnh đính kèm bài viết.
 | updated_at | timestamp | Yes | null | |
 
 ### `post_categories`
-Danh mục tin tức phân cấp (cây Nested Set).
+Danh mục tin tức phân cấp (cây theo parent_id).
 
 | Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
 |-----|------|----------|----------|---------------------|
@@ -248,16 +250,13 @@ Danh mục tin tức phân cấp (cây Nested Set).
 | description | text | Yes | null | |
 | status | varchar(255) | No | 'active' | active, inactive |
 | sort_order | int unsigned | No | 0 | |
+| parent_id | bigint unsigned | Yes | null | FK → post_categories.id (cha) |
 | created_by | bigint unsigned | Yes | null | FK → users.id |
 | updated_by | bigint unsigned | Yes | null | FK → users.id |
-| _lft | int unsigned | No | — | Nested Set (trái) |
-| _rgt | int unsigned | No | — | Nested Set (phải) |
-| parent_id | bigint unsigned | Yes | null | Nested Set (cha) |
 | created_at | timestamp | Yes | null | |
 | updated_at | timestamp | Yes | null | |
 
-**Ghi chú:** Cột `_lft`, `_rgt`, `parent_id` do `$table->nestedSet()` (Kalnoy Nested Set) tạo.  
-**Quan hệ:** N-n với `posts` qua bảng `post_post_category`.
+**Quan hệ:** Cây parent_id; N-n với `posts` qua bảng `post_post_category`.
 
 ### `post_post_category`
 Bảng pivot: bài viết ↔ danh mục (n-n).

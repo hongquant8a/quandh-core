@@ -11,13 +11,14 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
-     * Thứ tự: User → PostCategory (cây) → Post.
+     * Thứ tự: User → PostCategory (cây) → Post → Permission/Role/Team (phân quyền).
      */
     public function run(): void
     {
         $this->seedUsers();
         $this->seedPostCategories();
         $this->seedPosts();
+        $this->call(PermissionSeeder::class);
     }
 
     /**
@@ -33,9 +34,7 @@ class DatabaseSeeder extends Seeder
     }
 
     /**
-     * Tạo danh mục tin tức dạng cây: vài danh mục gốc, mỗi gốc có vài danh mục con.
-     * Không dùng withoutEvents — Nested Set cần model events để set _lft/_rgt.
-     * Sau khi tạo xong, cập nhật created_by/updated_by (khi seed không có auth).
+     * Tạo danh mục tin tức dạng cây (parent_id): vài danh mục gốc, mỗi gốc có vài danh mục con.
      */
     protected function seedPostCategories(): void
     {
@@ -51,23 +50,24 @@ class DatabaseSeeder extends Seeder
                     'name' => $name,
                     'slug' => \Illuminate\Support\Str::slug($name),
                     'sort_order' => $index + 1,
+                    'parent_id' => null,
                 ]);
         }
 
-        $roots = PostCategory::whereIsRoot()->defaultOrder()->get();
+        $roots = PostCategory::whereNull('parent_id')->orderBy('sort_order')->get();
 
         foreach ($roots as $root) {
             $childCount = rand(2, 3);
             for ($i = 0; $i < $childCount; $i++) {
-                $child = PostCategory::factory()->make([
+                PostCategory::factory()->create([
                     'name' => $root->name . ' - ' . fake()->word(),
+                    'slug' => \Illuminate\Support\Str::slug($root->name . ' ' . fake()->word()) . '-' . uniqid(),
+                    'sort_order' => $i + 1,
+                    'parent_id' => $root->id,
                 ]);
-                $child->slug = \Illuminate\Support\Str::slug($child->name) . '-' . uniqid();
-                $child->appendToNode($root)->save();
             }
         }
 
-        // Gán created_by, updated_by (khi seed không có auth nên model booted gán null)
         PostCategory::whereNull('created_by')->update([
             'created_by' => $user->id,
             'updated_by' => $user->id,

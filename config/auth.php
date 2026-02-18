@@ -14,7 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
+        // RESTful API: dùng 'api'. Có dashboard web/session thì đặt AUTH_GUARD=web.
+        'guard' => env('AUTH_GUARD', 'api'),
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
@@ -37,6 +38,11 @@ return [
 
     'guards' => [
         'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+        // Guard cho RESTful API (frontend gọi bằng Bearer token, Sanctum). Dùng cho Spatie permission/role.
+        'api' => [
             'driver' => 'session',
             'provider' => 'users',
         ],

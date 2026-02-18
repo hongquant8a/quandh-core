@@ -13,19 +13,11 @@ class PostCategoriesExport implements FromCollection, WithHeadings
     ) {}
 
     /**
-     * Xuất danh mục theo bộ lọc của index, đầy đủ trường như PostCategoryResource.
-     * Thứ tự cây (cha trước con) để import lại đúng cấu trúc.
-     *
-     * @return \Illuminate\Support\Collection
+     * Xuất danh mục theo bộ lọc, thứ tự cây (cha trước con) để import lại đúng cấu trúc parent_id.
      */
     public function collection()
     {
-        $nodes = PostCategory::with(['creator', 'editor'])
-            ->filter($this->filters)
-            ->defaultOrder()
-            ->withDepth()
-            ->get();
-
+        $nodes = PostCategory::getFlatTreeOrdered($this->filters);
         return $nodes->map(function (PostCategory $category) {
             return [
                 'id'          => $category->id,
@@ -48,19 +40,9 @@ class PostCategoriesExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'ID',
-            'Name',
-            'Slug',
-            'Description',
-            'Status',
-            'Sort Order',
-            'Parent ID',
-            'Parent Slug',
-            'Depth',
-            'Created By',
-            'Updated By',
-            'Created At',
-            'Updated At',
+            'ID', 'Name', 'Slug', 'Description', 'Status', 'Sort Order',
+            'Parent ID', 'Parent Slug', 'Depth',
+            'Created By', 'Updated By', 'Created At', 'Updated At',
         ];
     }
 }

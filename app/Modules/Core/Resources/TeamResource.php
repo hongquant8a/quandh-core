@@ -15,10 +15,15 @@ class TeamResource extends JsonResource
             'slug'       => $this->slug,
             'description' => $this->description,
             'status'     => $this->status,
+            'parent_id'  => $this->parent_id,
+            'sort_order' => $this->sort_order,
+            'depth'      => $this->depth,
             'created_by' => $this->creator?->name ?? 'N/A',
             'updated_by' => $this->editor?->name ?? 'N/A',
             'created_at' => $this->created_at?->format('H:i:s d/m/Y'),
             'updated_at' => $this->updated_at?->format('H:i:s d/m/Y'),
+            'parent'     => $this->whenLoaded('parent', fn () => new TeamResource($this->parent)),
+            'children'   => $this->whenLoaded('children', fn () => TeamResource::collection($this->children)),
         ];
     }
 }

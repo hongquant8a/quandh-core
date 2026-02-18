@@ -10,7 +10,7 @@ class PermissionsImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
-        $guard = $row['guard_name'] ?? config('auth.defaults.guard', 'web');
+        $guard = $row['guard_name'] ?? config('auth.defaults.guard', 'api');
         return new Permission([
             'name'       => $row['name'] ?? $row['name_'] ?? '',
             'guard_name' => $guard,

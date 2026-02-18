@@ -128,7 +128,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-17T11:15:28'
+        example: '2026-02-18T08:05:05'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -139,7 +139,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-12'
+        example: '2052-03-13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -161,7 +161,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: desc
+        example: asc
         type: string
         enumValues:
           - asc
@@ -183,10 +183,10 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-17T11:15:28'
-      to_date: '2052-03-12'
+      from_date: '2026-02-18T08:05:05'
+      to_date: '2052-03-13'
       sort_by: 'n'
-      sort_order: desc
+      sort_order: asc
       limit: 7
     fileParameters: []
     responses:
@@ -517,7 +517,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-17T11:15:28'
+        example: '2026-02-18T08:05:05'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -528,7 +528,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-12'
+        example: '2052-03-13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -572,8 +572,8 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-17T11:15:28'
-      to_date: '2052-03-12'
+      from_date: '2026-02-18T08:05:05'
+      to_date: '2052-03-13'
       sort_by: 'n'
       sort_order: asc
       limit: 7
@@ -733,7 +733,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-17T11:15:28'
+        example: '2026-02-18T08:05:05'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -744,7 +744,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-12'
+        example: '2052-03-13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -766,7 +766,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: asc
+        example: desc
         type: string
         enumValues:
           - asc
@@ -788,10 +788,10 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-17T11:15:28'
-      to_date: '2052-03-12'
+      from_date: '2026-02-18T08:05:05'
+      to_date: '2052-03-13'
       sort_by: 'n'
-      sort_order: asc
+      sort_order: desc
       limit: 7
     fileParameters: []
     responses:
@@ -839,7 +839,7 @@ endpoints:
         name: role_id
         description: 'The ID of the role.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -857,7 +857,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      role_id: 16
+      role_id: 1
       role: 1
     queryParameters: []
     cleanQueryParameters: []
@@ -867,11 +867,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 404
-        content: |-
-          {
-              "message": "No query results for model [App\\Modules\\Core\\Models\\Role] 16"
-          }
+        status: 200
+        content: '{"data":{"id":1,"name":"Super Admin","guard_name":"api","team_id":1,"team":{"id":1,"name":"Default"},"status":"active","permissions":["users.stats","users.index","users.show","users.store","users.update","users.destroy","users.bulkDestroy","users.bulkUpdateStatus","users.changeStatus","users.export","users.import","permissions.stats","permissions.index","permissions.show","permissions.store","permissions.update","permissions.destroy","permissions.bulkDestroy","permissions.export","permissions.import","roles.stats","roles.index","roles.show","roles.store","roles.update","roles.destroy","roles.bulkDestroy","roles.bulkUpdateStatus","roles.changeStatus","roles.export","roles.import","teams.stats","teams.index","teams.tree","teams.show","teams.store","teams.update","teams.destroy","teams.bulkDestroy","teams.bulkUpdateStatus","teams.changeStatus","teams.export","teams.import","posts.stats","posts.index","posts.show","posts.store","posts.update","posts.destroy","posts.bulkDestroy","posts.bulkUpdateStatus","posts.changeStatus","posts.export","posts.import","posts.incrementView","post-categories.stats","post-categories.index","post-categories.tree","post-categories.show","post-categories.store","post-categories.update","post-categories.destroy","post-categories.bulkDestroy","post-categories.bulkUpdateStatus","post-categories.changeStatus","post-categories.export","post-categories.import"],"created_at":"07:31:54 18\/02\/2026","updated_at":"07:31:54 18\/02\/2026"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -925,9 +922,9 @@ endpoints:
       guard_name:
         custom: []
         name: guard_name
-        description: 'Guard name (mặc định theo auth.defaults.guard).'
+        description: 'Guard name (mặc định api cho RESTful API).'
         required: false
-        example: web
+        example: api
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -971,7 +968,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       name: admin
-      guard_name: web
+      guard_name: api
       team_id: 1
       status: active
       permission_ids:
@@ -1015,7 +1012,7 @@ endpoints:
         name: role_id
         description: 'The ID of the role.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -1033,7 +1030,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      role_id: 16
+      role_id: 1
       role: 1
     queryParameters: []
     cleanQueryParameters: []
@@ -1054,7 +1051,7 @@ endpoints:
         name: guard_name
         description: 'Guard name.'
         required: false
-        example: web
+        example: api
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -1097,7 +1094,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       name: editor
-      guard_name: web
+      guard_name: api
       team_id: 1
       status: inactive
       permission_ids:
@@ -1140,7 +1137,7 @@ endpoints:
         name: role_id
         description: 'The ID of the role.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -1158,7 +1155,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      role_id: 16
+      role_id: 1
       role: 1
     queryParameters: []
     cleanQueryParameters: []
@@ -1179,7 +1176,7 @@ endpoints:
         name: guard_name
         description: 'Guard name.'
         required: false
-        example: web
+        example: api
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -1222,7 +1219,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       name: editor
-      guard_name: web
+      guard_name: api
       team_id: 1
       status: inactive
       permission_ids:
@@ -1265,7 +1262,7 @@ endpoints:
         name: role_id
         description: 'The ID of the role.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -1283,7 +1280,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      role_id: 16
+      role_id: 1
       role: 1
     queryParameters: []
     cleanQueryParameters: []
@@ -1326,7 +1323,7 @@ endpoints:
         name: role_id
         description: 'The ID of the role.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -1344,7 +1341,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      role_id: 16
+      role_id: 1
       role: 1
     queryParameters: []
     cleanQueryParameters: []

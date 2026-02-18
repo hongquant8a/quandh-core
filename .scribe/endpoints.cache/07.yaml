@@ -130,7 +130,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-17T11:15:29'
+        example: '2026-02-18T08:05:06'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -141,7 +141,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-12'
+        example: '2052-03-13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -163,7 +163,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: asc
+        example: desc
         type: string
         enumValues:
           - asc
@@ -185,10 +185,10 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-17T11:15:29'
-      to_date: '2052-03-12'
+      from_date: '2026-02-18T08:05:06'
+      to_date: '2052-03-13'
       sort_by: 'n'
-      sort_order: asc
+      sort_order: desc
       limit: 7
     fileParameters: []
     responses:
@@ -519,7 +519,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-17T11:15:29'
+        example: '2026-02-18T08:05:06'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -530,7 +530,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-12'
+        example: '2052-03-13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -574,8 +574,8 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-17T11:15:29'
-      to_date: '2052-03-12'
+      from_date: '2026-02-18T08:05:06'
+      to_date: '2052-03-13'
       sort_by: 'n'
       sort_order: asc
       limit: 7
@@ -585,6 +585,64 @@ endpoints:
         custom: []
         status: 200
         content: '{"total":0,"active":0,"inactive":0}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/teams/tree
+    metadata:
+      custom: []
+      groupName: 'Core - Team'
+      groupDescription: |-
+
+        Quản lý team (nhóm): stats, index, show, store, update, destroy, bulk delete, bulk status, change status, export, import.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Cây team (toàn bộ cây, không phân trang). Cấu trúc parent_id.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      status:
+        custom: []
+        name: status
+        description: 'Lọc theo trạng thái: active, inactive.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      status: architecto
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"data":[]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -735,7 +793,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-17T11:15:29'
+        example: '2026-02-18T08:05:06'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -746,7 +804,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-12'
+        example: '2052-03-13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -768,7 +826,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: desc
+        example: asc
         type: string
         enumValues:
           - asc
@@ -790,10 +848,10 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-17T11:15:29'
-      to_date: '2052-03-12'
+      from_date: '2026-02-18T08:05:06'
+      to_date: '2052-03-13'
       sort_by: 'n'
-      sort_order: desc
+      sort_order: asc
       limit: 7
     fileParameters: []
     responses:
@@ -841,7 +899,7 @@ endpoints:
         name: team_id
         description: 'The ID of the team.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -859,7 +917,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      team_id: 16
+      team_id: 1
       team: 1
     queryParameters: []
     cleanQueryParameters: []
@@ -869,11 +927,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 404
-        content: |-
-          {
-              "message": "No query results for model [App\\Modules\\Core\\Models\\Team] 16"
-          }
+        status: 200
+        content: '{"data":{"id":1,"name":"Default","slug":"default","description":"Team m\u1eb7c \u0111\u1ecbnh c\u1ee7a h\u1ec7 th\u1ed1ng","status":"active","parent_id":null,"sort_order":0,"depth":0,"created_by":"N\/A","updated_by":"N\/A","created_at":"07:31:53 18\/02\/2026","updated_at":"07:31:53 18\/02\/2026","parent":null,"children":[]}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -957,11 +1012,35 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      parent_id:
+        custom: []
+        name: parent_id
+        description: 'ID team cha (null = gốc).'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự.'
+        required: false
+        example: 0
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       name: 'Công ty A'
       slug: cong-ty-a
       description: 'Team quản trị'
       status: active
+      parent_id: null
+      sort_order: 0
     fileParameters: []
     responses: []
     responseFields: []
@@ -999,7 +1078,7 @@ endpoints:
         name: team_id
         description: 'The ID of the team.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -1017,7 +1096,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      team_id: 16
+      team_id: 1
       team: 1
     queryParameters: []
     cleanQueryParameters: []
@@ -1066,11 +1145,35 @@ endpoints:
         exampleWasSpecified: true
         nullable: true
         deprecated: false
+      parent_id:
+        custom: []
+        name: parent_id
+        description: 'ID team cha (null = gốc).'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự.'
+        required: false
+        example: 0
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       name: 'Công ty A'
       slug: cong-ty-a
       description: 'Team quản trị'
       status: inactive
+      parent_id: null
+      sort_order: 0
     fileParameters: []
     responses: []
     responseFields: []
@@ -1108,7 +1211,7 @@ endpoints:
         name: team_id
         description: 'The ID of the team.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -1126,7 +1229,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      team_id: 16
+      team_id: 1
       team: 1
     queryParameters: []
     cleanQueryParameters: []
@@ -1175,11 +1278,35 @@ endpoints:
         exampleWasSpecified: true
         nullable: true
         deprecated: false
+      parent_id:
+        custom: []
+        name: parent_id
+        description: 'ID team cha (null = gốc).'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự.'
+        required: false
+        example: 0
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       name: 'Công ty A'
       slug: cong-ty-a
       description: 'Team quản trị'
       status: inactive
+      parent_id: null
+      sort_order: 0
     fileParameters: []
     responses: []
     responseFields: []
@@ -1217,7 +1344,7 @@ endpoints:
         name: team_id
         description: 'The ID of the team.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -1235,7 +1362,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      team_id: 16
+      team_id: 1
       team: 1
     queryParameters: []
     cleanQueryParameters: []
@@ -1278,7 +1405,7 @@ endpoints:
         name: team_id
         description: 'The ID of the team.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -1296,7 +1423,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      team_id: 16
+      team_id: 1
       team: 1
     queryParameters: []
     cleanQueryParameters: []

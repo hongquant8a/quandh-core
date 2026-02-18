@@ -75,12 +75,12 @@ class PermissionController extends Controller
      * Tạo permission mới
      *
      * @bodyParam name string required Tên permission. Example: posts.create
-     * @bodyParam guard_name string Guard name (mặc định theo auth.defaults.guard). Example: web
+     * @bodyParam guard_name string Guard name (mặc định api cho RESTful API). Example: api
      */
     public function store(StorePermissionRequest $request)
     {
         $data = $request->validated();
-        $data['guard_name'] = $data['guard_name'] ?? config('auth.defaults.guard', 'web');
+        $data['guard_name'] = $data['guard_name'] ?? config('auth.defaults.guard', 'api');
         $permission = Permission::create($data);
         return (new PermissionResource($permission))
             ->additional(['message' => 'Quyền đã được tạo thành công!']);
@@ -91,7 +91,7 @@ class PermissionController extends Controller
      *
      * @urlParam permission integer required ID permission. Example: 1
      * @bodyParam name string Tên permission. Example: posts.update
-     * @bodyParam guard_name string Guard name. Example: web
+     * @bodyParam guard_name string Guard name. Example: api
      */
     public function update(UpdatePermissionRequest $request, Permission $permission)
     {

@@ -28,10 +28,16 @@ use Illuminate\Support\Facades\Storage;
 class PostController extends Controller
 {
     /**
-     * Thống kê cơ bản
+     * Thống kê bài viết
      *
-     * Tổng số bản ghi, bản ghi đang kích hoạt (published), bản ghi không kích hoạt (draft, archived).
-     * Áp dụng cùng bộ lọc với index (search, status, category_id, ...).
+     * Tổng số, đang xuất bản (published), không xuất bản (draft, archived). Áp dụng cùng bộ lọc với index.
+     *
+     * @queryParam search string Từ khóa tìm kiếm (tiêu đề). Example: hello
+     * @queryParam status string Lọc theo trạng thái: draft, published, archived.
+     * @queryParam category_id integer Lọc bài viết thuộc danh mục (ID). Example: 1
+     * @queryParam sort_by string Sắp xếp theo: id, title, created_at, view_count. Example: created_at
+     * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
+     * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
      */
     public function stats(FilterRequest $request)
     {
@@ -51,7 +57,8 @@ class PostController extends Controller
      *
      * @queryParam search string Từ khóa tìm kiếm (tiêu đề). Example: hello
      * @queryParam status string Lọc theo trạng thái: draft, published, archived.
-     * @queryParam sort_by string Sắp xếp theo: id, title, name, created_at. Example: created_at
+     * @queryParam category_id integer Lọc bài viết thuộc danh mục (ID). Example: 1
+     * @queryParam sort_by string Sắp xếp theo: id, title, created_at, view_count. Example: created_at
      * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
      * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
      */
@@ -79,6 +86,8 @@ class PostController extends Controller
      * @bodyParam title string required Tiêu đề (duy nhất). Example: Bài viết mẫu
      * @bodyParam content string required Nội dung (tối thiểu 10 ký tự). Example: Nội dung bài viết...
      * @bodyParam status string required Trạng thái: draft, published, archived. Example: draft
+     * @bodyParam category_ids array Mảng ID danh mục (tối đa 20). Example: [1, 2]
+     * @bodyParam images[] file Ảnh đính kèm (jpeg/png/gif/webp, tối đa 10 ảnh, mỗi ảnh ≤ 5MB).
      */
     public function store(StorePostRequest $request)
     {
@@ -98,6 +107,9 @@ class PostController extends Controller
      * @bodyParam title string Tiêu đề (duy nhất).
      * @bodyParam content string Nội dung (tối thiểu 10 ký tự).
      * @bodyParam status string Trạng thái: draft, published, archived.
+     * @bodyParam category_ids array Mảng ID danh mục (ghi đè danh sách hiện tại).
+     * @bodyParam images[] file Ảnh mới (append).
+     * @bodyParam remove_attachment_ids array Mảng ID đính kèm cần xóa.
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
@@ -151,9 +163,13 @@ class PostController extends Controller
     /**
      * Xuất danh sách bài viết
      *
-     * Áp dụng cùng bộ lọc với index (search, status, category_id, ...).
+     * Áp dụng cùng bộ lọc với index. Trả về file Excel.
      *
-     * @authenticated
+     * @queryParam search string Từ khóa tìm kiếm (tiêu đề).
+     * @queryParam status string Lọc theo trạng thái: draft, published, archived.
+     * @queryParam category_id integer Lọc bài viết thuộc danh mục (ID).
+     * @queryParam sort_by string Sắp xếp theo: id, title, created_at, view_count.
+     * @queryParam sort_order string Thứ tự: asc, desc.
      */
     public function export(FilterRequest $request)
     {
@@ -163,8 +179,7 @@ class PostController extends Controller
     /**
      * Nhập danh sách bài viết
      *
-     * @authenticated
-     * @bodyParam file file required File excel (xlsx, xls, csv).
+     * @bodyParam file file required File Excel (xlsx, xls, csv). Cột theo chuẩn export.
      * @response 200 {"message": "Posts imported successfully."}
      */
     public function import(ImportPostRequest $request)

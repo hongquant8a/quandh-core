@@ -17,7 +17,7 @@ class PostCategoryResource extends JsonResource
             'status'      => $this->status,
             'sort_order'  => $this->sort_order,
             'parent_id'   => $this->parent_id,
-            'depth'       => $this->depth ?? null,
+            'depth'       => $this->depth,
             'created_by'  => $this->creator->name ?? 'N/A',
             'updated_by'  => $this->editor->name ?? 'N/A',
             'created_at'  => $this->created_at?->format('d/m/Y H:i:s'),

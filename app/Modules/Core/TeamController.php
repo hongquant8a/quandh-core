@@ -13,6 +13,8 @@ use App\Modules\Core\Requests\ChangeStatusTeamRequest;
 use App\Modules\Core\Requests\ImportTeamRequest;
 use App\Modules\Core\Resources\TeamResource;
 use App\Modules\Core\Resources\TeamCollection;
+use App\Modules\Core\Resources\TeamTreeResource;
+use Illuminate\Http\Request;
 use App\Modules\Core\Exports\TeamsExport;
 use App\Modules\Core\Imports\TeamsImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -62,10 +64,25 @@ class TeamController extends Controller
      */
     public function index(FilterRequest $request)
     {
-        $items = Team::with(['creator', 'editor'])
+        $items = Team::with(['creator', 'editor', 'parent'])
             ->filter($request->all())
+            ->treeOrder()
             ->paginate($request->limit ?? 10);
         return new TeamCollection($items);
+    }
+
+    /**
+     * Cây team (toàn bộ cây, không phân trang). Cấu trúc parent_id.
+     *
+     * @queryParam status string Lọc theo trạng thái: active, inactive.
+     */
+    public function tree(Request $request)
+    {
+        $query = Team::query()
+            ->when($request->status, fn ($q, $v) => $q->where('status', $v));
+        $items = $query->orderBy('sort_order')->orderBy('id')->get();
+        $tree = Team::buildTree($items);
+        return TeamTreeResource::collection($tree);
     }
 
     /**
@@ -75,6 +92,7 @@ class TeamController extends Controller
      */
     public function show(Team $team)
     {
+        $team->load(['creator', 'editor', 'parent', 'children' => fn ($q) => $q->orderBy('sort_order')]);
         return new TeamResource($team);
     }
 
@@ -85,6 +103,8 @@ class TeamController extends Controller
      * @bodyParam slug string Slug (nếu không gửi sẽ tự sinh từ name). Example: cong-ty-a
      * @bodyParam description string Mô tả. Example: Team quản trị
      * @bodyParam status string required Trạng thái: active, inactive. Example: active
+     * @bodyParam parent_id integer ID team cha (null = gốc). Example: null
+     * @bodyParam sort_order integer Thứ tự. Example: 0
      */
     public function store(StoreTeamRequest $request)
     {
@@ -101,12 +121,35 @@ class TeamController extends Controller
      * @bodyParam slug string Slug. Example: cong-ty-a
      * @bodyParam description string Mô tả. Example: Team quản trị
      * @bodyParam status string Trạng thái: active, inactive. Example: inactive
+     * @bodyParam parent_id integer ID team cha (null = gốc). Example: null
+     * @bodyParam sort_order integer Thứ tự. Example: 0
      */
     public function update(UpdateTeamRequest $request, Team $team)
     {
-        $team->update($request->validated());
-        return (new TeamResource($team))
+        $data = $request->validated();
+        if (isset($data['parent_id']) && (int) $data['parent_id'] !== 0) {
+            if (static::isDescendantOf($data['parent_id'], $team->id)) {
+                return response()->json(['message' => 'Không thể chọn team con làm team cha.'], 422);
+            }
+        }
+        if (array_key_exists('parent_id', $data) && (int) $data['parent_id'] === 0) {
+            $data['parent_id'] = null;
+        }
+        $team->update($data);
+        return (new TeamResource($team->fresh(['parent', 'children'])))
             ->additional(['message' => 'Team đã được cập nhật!']);
+    }
+
+    protected static function isDescendantOf(int $candidateId, int $id): bool
+    {
+        $current = Team::find($id);
+        while ($current && $current->parent_id) {
+            if ($current->parent_id === $candidateId) {
+                return true;
+            }
+            $current = Team::find($current->parent_id);
+        }
+        return false;
     }
 
     /**

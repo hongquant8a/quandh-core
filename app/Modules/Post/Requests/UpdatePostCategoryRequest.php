@@ -2,7 +2,9 @@
 
 namespace App\Modules\Post\Requests;
 
+use App\Modules\Post\Models\PostCategory;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdatePostCategoryRequest extends FormRequest
 {
@@ -13,14 +15,19 @@ class UpdatePostCategoryRequest extends FormRequest
 
     public function rules(): array
     {
-        $categoryId = $this->route('category');
+        $category = $this->route('category');
+        $categoryId = is_object($category) ? $category->id : $category;
         return [
             'name'        => 'sometimes|string|max:255',
             'slug'        => 'sometimes|string|max:255|unique:post_categories,slug,' . $categoryId,
             'description' => 'nullable|string|max:65535',
             'status'      => 'sometimes|in:active,inactive',
             'sort_order'  => 'nullable|integer|min:0',
-            'parent_id'   => 'nullable|exists:post_categories,id',
+            'parent_id'   => [
+                'nullable',
+                Rule::notIn([$categoryId]),
+                Rule::when($this->filled('parent_id') && (int) $this->parent_id !== 0, ['exists:post_categories,id']),
+            ],
         ];
     }
 

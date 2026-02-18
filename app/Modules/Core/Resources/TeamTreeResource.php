@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Modules\Post\Resources;
+namespace App\Modules\Core\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/**
- * Resource dùng cho API tree: chỉ có id, name, slug, ... và children (đệ quy).
- * Không có parent để tránh tham chiếu vòng → "Maximum stack depth exceeded".
- */
-class PostCategoryTreeResource extends JsonResource
+/** Resource cho API tree team (cấu trúc cây parent_id). */
+class TeamTreeResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
@@ -19,12 +16,12 @@ class PostCategoryTreeResource extends JsonResource
             'slug'        => $this->slug,
             'description' => $this->description,
             'status'      => $this->status,
-            'sort_order'  => $this->sort_order,
             'parent_id'   => $this->parent_id,
+            'sort_order'  => $this->sort_order,
             'depth'       => $this->depth,
             'children'    => $this->whenLoaded(
                 'children',
-                fn () => PostCategoryTreeResource::collection($this->children),
+                fn () => TeamTreeResource::collection($this->children),
                 []
             ),
         ];

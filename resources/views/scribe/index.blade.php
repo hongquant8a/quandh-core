@@ -105,7 +105,7 @@
                                 <a href="#post-PATCHapi-posts-bulk-status">Cập nhật trạng thái hàng loạt bài viết</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="post-GETapi-posts-stats">
-                                <a href="#post-GETapi-posts-stats">Thống kê cơ bản</a>
+                                <a href="#post-GETapi-posts-stats">Thống kê bài viết</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="post-GETapi-posts">
                                 <a href="#post-GETapi-posts">Danh sách bài viết</a>
@@ -233,6 +233,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="core-team-GETapi-teams-stats">
                                 <a href="#core-team-GETapi-teams-stats">Thống kê team</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="core-team-GETapi-teams-tree">
+                                <a href="#core-team-GETapi-teams-tree">Cây team (toàn bộ cây, không phân trang). Cấu trúc parent_id.</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="core-team-GETapi-teams">
                                 <a href="#core-team-GETapi-teams">Danh sách team</a>
                             </li>
@@ -324,16 +327,16 @@
                                 <a href="#post-category-POSTapi-post-categories-bulk-delete">Xóa hàng loạt danh mục</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="post-category-PATCHapi-post-categories-bulk-status">
-                                <a href="#post-category-PATCHapi-post-categories-bulk-status">Cập nhật trạng thái hàng loạt danh mục</a>
+                                <a href="#post-category-PATCHapi-post-categories-bulk-status">Cập nhật trạng thái danh mục hàng loạt</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="post-category-GETapi-post-categories-stats">
-                                <a href="#post-category-GETapi-post-categories-stats">Thống kê cơ bản</a>
+                                <a href="#post-category-GETapi-post-categories-stats">Thống kê danh mục tin tức</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="post-category-GETapi-post-categories-tree">
-                                <a href="#post-category-GETapi-post-categories-tree">Cây danh mục (toàn bộ cây, không phân trang)</a>
+                                <a href="#post-category-GETapi-post-categories-tree">Cây danh mục (toàn bộ cây, không phân trang). Cấu trúc parent_id, children đệ quy.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="post-category-GETapi-post-categories">
-                                <a href="#post-category-GETapi-post-categories">Danh sách danh mục (dạng phẳng, phân trang)</a>
+                                <a href="#post-category-GETapi-post-categories">Danh sách danh mục (dạng phẳng, phân trang, thứ tự cây)</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="post-category-GETapi-post-categories--category_id-">
                                 <a href="#post-category-GETapi-post-categories--category_id-">Chi tiết danh mục</a>
@@ -364,7 +367,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: February 17, 2026</li>
+        <li>Last updated: February 18, 2026</li>
     </ul>
 </div>
 
@@ -1054,7 +1057,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <small class="badge badge-darkred">requires authentication</small>
 </p>
 
-<p>Áp dụng cùng bộ lọc với index (search, status, category_id, ...).</p>
+<p>Áp dụng cùng bộ lọc với index. Trả về file Excel.</p>
 
 <span id="example-requests-GETapi-posts-export">
 <blockquote>Example request:</blockquote>
@@ -1062,15 +1065,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/posts/export" \
+    --get "http://localhost/api/posts/export?search=architecto&amp;status=architecto&amp;category_id=16&amp;sort_by=architecto&amp;sort_order=architecto" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:27\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:05\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
     \"sort_order\": \"asc\",
     \"limit\": 7
@@ -1083,6 +1086,16 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost/api/posts/export"
 );
 
+const params = {
+    "search": "architecto",
+    "status": "architecto",
+    "category_id": "16",
+    "sort_by": "architecto",
+    "sort_order": "architecto",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
 const headers = {
     "Authorization": "Bearer Bearer {YOUR_ACCESS_TOKEN}",
     "Content-Type": "application/json",
@@ -1092,8 +1105,8 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:27",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:05",
+    "to_date": "2052-03-13",
     "sort_by": "n",
     "sort_order": "asc",
     "limit": 7
@@ -1117,11 +1130,18 @@ $response = $client-&gt;get(
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
+        'query' =&gt; [
+            'search' =&gt; 'architecto',
+            'status' =&gt; 'architecto',
+            'category_id' =&gt; '16',
+            'sort_by' =&gt; 'architecto',
+            'sort_order' =&gt; 'architecto',
+        ],
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:27',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:05',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
@@ -1234,7 +1254,68 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Example: <code>application/json</code></p>
             </div>
-                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-posts-export"
+               value="architecto"
+               data-component="query">
+    <br>
+<p>Từ khóa tìm kiếm (tiêu đề). Example: <code>architecto</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-posts-export"
+               value="architecto"
+               data-component="query">
+    <br>
+<p>Lọc theo trạng thái: draft, published, archived. Example: <code>architecto</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>category_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="category_id"                data-endpoint="GETapi-posts-export"
+               value="16"
+               data-component="query">
+    <br>
+<p>Lọc bài viết thuộc danh mục (ID). Example: <code>16</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_by"                data-endpoint="GETapi-posts-export"
+               value="architecto"
+               data-component="query">
+    <br>
+<p>Sắp xếp theo: id, title, created_at, view_count. Example: <code>architecto</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_order"                data-endpoint="GETapi-posts-export"
+               value="architecto"
+               data-component="query">
+    <br>
+<p>Thứ tự: asc, desc. Example: <code>architecto</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
@@ -1266,10 +1347,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-posts-export"
-               value="2026-02-17T11:15:27"
+               value="2026-02-18T08:05:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:27</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -1278,10 +1359,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-posts-export"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -1341,7 +1422,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php64guotk64k175k5TdDa" </code></pre></div>
+    --form "file=@/tmp/php0b4r0h28dr9h6jvGbIx" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1379,7 +1460,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/php64guotk64k175k5TdDa', 'r')
+                'contents' =&gt; fopen('/tmp/php0b4r0h28dr9h6jvGbIx', 'r')
             ],
         ],
     ]
@@ -1494,7 +1575,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Example: <code>/tmp/php64guotk64k175k5TdDa</code></p>
+<p>File Excel (xlsx, xls, csv). Cột theo chuẩn export. Example: <code>/tmp/php0b4r0h28dr9h6jvGbIx</code></p>
         </div>
         </form>
 
@@ -1875,14 +1956,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                    <h2 id="post-GETapi-posts-stats">Thống kê cơ bản</h2>
+                    <h2 id="post-GETapi-posts-stats">Thống kê bài viết</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
 </p>
 
-<p>Tổng số bản ghi, bản ghi đang kích hoạt (published), bản ghi không kích hoạt (draft, archived).
-Áp dụng cùng bộ lọc với index (search, status, category_id, ...).</p>
+<p>Tổng số, đang xuất bản (published), không xuất bản (draft, archived). Áp dụng cùng bộ lọc với index.</p>
 
 <span id="example-requests-GETapi-posts-stats">
 <blockquote>Example request:</blockquote>
@@ -1890,17 +1970,17 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/posts/stats" \
+    --get "http://localhost/api/posts/stats?search=hello&amp;status=architecto&amp;category_id=1&amp;sort_by=created_at&amp;sort_order=desc&amp;limit=10" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:27\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:05\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -1911,6 +1991,17 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost/api/posts/stats"
 );
 
+const params = {
+    "search": "hello",
+    "status": "architecto",
+    "category_id": "1",
+    "sort_by": "created_at",
+    "sort_order": "desc",
+    "limit": "10",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
 const headers = {
     "Authorization": "Bearer Bearer {YOUR_ACCESS_TOKEN}",
     "Content-Type": "application/json",
@@ -1920,10 +2011,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:27",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:05",
+    "to_date": "2052-03-13",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -1945,13 +2036,21 @@ $response = $client-&gt;get(
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
+        'query' =&gt; [
+            'search' =&gt; 'hello',
+            'status' =&gt; 'architecto',
+            'category_id' =&gt; '1',
+            'sort_by' =&gt; 'created_at',
+            'sort_order' =&gt; 'desc',
+            'limit' =&gt; '10',
+        ],
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:27',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:05',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -2064,7 +2163,80 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Example: <code>application/json</code></p>
             </div>
-                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-posts-stats"
+               value="hello"
+               data-component="query">
+    <br>
+<p>Từ khóa tìm kiếm (tiêu đề). Example: <code>hello</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-posts-stats"
+               value="architecto"
+               data-component="query">
+    <br>
+<p>Lọc theo trạng thái: draft, published, archived. Example: <code>architecto</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>category_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="category_id"                data-endpoint="GETapi-posts-stats"
+               value="1"
+               data-component="query">
+    <br>
+<p>Lọc bài viết thuộc danh mục (ID). Example: <code>1</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_by"                data-endpoint="GETapi-posts-stats"
+               value="created_at"
+               data-component="query">
+    <br>
+<p>Sắp xếp theo: id, title, created_at, view_count. Example: <code>created_at</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_order"                data-endpoint="GETapi-posts-stats"
+               value="desc"
+               data-component="query">
+    <br>
+<p>Thứ tự: asc, desc. Example: <code>desc</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-posts-stats"
+               value="10"
+               data-component="query">
+    <br>
+<p>Số bản ghi mỗi trang (1-100). Example: <code>10</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
@@ -2096,10 +2268,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-posts-stats"
-               value="2026-02-17T11:15:27"
+               value="2026-02-18T08:05:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:27</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -2108,10 +2280,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-posts-stats"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -2132,10 +2304,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-posts-stats"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -2167,17 +2339,17 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/posts?search=hello&amp;status=architecto&amp;sort_by=created_at&amp;sort_order=desc&amp;limit=10" \
+    --get "http://localhost/api/posts?search=hello&amp;status=architecto&amp;category_id=1&amp;sort_by=created_at&amp;sort_order=desc&amp;limit=10" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:28\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:05\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -2191,6 +2363,7 @@ Must be one of:
 const params = {
     "search": "hello",
     "status": "architecto",
+    "category_id": "1",
     "sort_by": "created_at",
     "sort_order": "desc",
     "limit": "10",
@@ -2207,10 +2380,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:28",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:05",
+    "to_date": "2052-03-13",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -2235,6 +2408,7 @@ $response = $client-&gt;get(
         'query' =&gt; [
             'search' =&gt; 'hello',
             'status' =&gt; 'architecto',
+            'category_id' =&gt; '1',
             'sort_by' =&gt; 'created_at',
             'sort_order' =&gt; 'desc',
             'limit' =&gt; '10',
@@ -2242,10 +2416,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:28',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:05',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -2417,6 +2591,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Lọc theo trạng thái: draft, published, archived. Example: <code>architecto</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>category_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="category_id"                data-endpoint="GETapi-posts"
+               value="1"
+               data-component="query">
+    <br>
+<p>Lọc bài viết thuộc danh mục (ID). Example: <code>1</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
 <i>optional</i> &nbsp;
@@ -2426,7 +2612,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="created_at"
                data-component="query">
     <br>
-<p>Sắp xếp theo: id, title, name, created_at. Example: <code>created_at</code></p>
+<p>Sắp xếp theo: id, title, created_at, view_count. Example: <code>created_at</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
@@ -2484,10 +2670,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-posts"
-               value="2026-02-17T11:15:28"
+               value="2026-02-18T08:05:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -2496,10 +2682,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-posts"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -2520,10 +2706,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-posts"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -2612,32 +2798,32 @@ access-control-allow-origin: *
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
         &quot;id&quot;: 1,
-        &quot;title&quot;: &quot;Eveniet libero quas et quod praesentium.&quot;,
-        &quot;slug&quot;: &quot;eveniet-libero-quas-et-quod-praesentium&quot;,
-        &quot;content&quot;: &quot;Ut amet neque unde sit quia inventore ut. Est velit vitae neque aut sed. Sit ea cumque repudiandae aut id.\n\nMinima natus ipsum blanditiis cumque. Quos veritatis enim laudantium laudantium ab a illum. Voluptatibus velit totam laboriosam quae aperiam earum.\n\nId commodi sed alias est illo modi. Eos iste iste debitis ipsum debitis eligendi. Non at dolorum asperiores fuga amet ut nihil. Sed soluta voluptatem nostrum et fugit.&quot;,
-        &quot;status&quot;: &quot;published&quot;,
+        &quot;title&quot;: &quot;Culpa reiciendis quasi corrupti qui in sequi.&quot;,
+        &quot;slug&quot;: &quot;culpa-reiciendis-quasi-corrupti-qui-in-sequi&quot;,
+        &quot;content&quot;: &quot;Consequatur aut dolorum sed sed. Et explicabo molestiae et quam illum. Corrupti dicta architecto dignissimos alias ut et. Aut mollitia vel amet eos tempore dignissimos.\n\nEligendi autem eum nostrum culpa eveniet harum. Exercitationem excepturi doloremque et et. Voluptatem magnam asperiores enim totam tempore quisquam et. Suscipit magnam iure eum.\n\nQui suscipit qui et qui. Quibusdam nemo qui nulla ea. Illum qui unde eius.&quot;,
+        &quot;status&quot;: &quot;draft&quot;,
         &quot;view_count&quot;: 0,
         &quot;categories&quot;: [
             {
-                &quot;id&quot;: 6,
-                &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ - animi&quot;,
-                &quot;slug&quot;: &quot;tin-cong-nghe-animi-699446e9540a9&quot;,
-                &quot;description&quot;: &quot;Alias aut deleniti quia repellendus molestiae deserunt veniam.&quot;,
-                &quot;status&quot;: &quot;active&quot;,
-                &quot;sort_order&quot;: 15,
-                &quot;parent_id&quot;: 1,
-                &quot;depth&quot;: null,
-                &quot;created_by&quot;: &quot;Prof. Kaylee Prohaska&quot;,
-                &quot;updated_by&quot;: &quot;Prof. Kaylee Prohaska&quot;,
-                &quot;created_at&quot;: &quot;17/02/2026 10:46:01&quot;,
-                &quot;updated_at&quot;: &quot;17/02/2026 10:46:02&quot;
+                &quot;id&quot;: 18,
+                &quot;name&quot;: &quot;Gi&aacute;o dục - commodi&quot;,
+                &quot;slug&quot;: &quot;giao-duc-perspiciatis-69956ae8d4bcf&quot;,
+                &quot;description&quot;: &quot;Error est quidem enim quasi suscipit cumque repudiandae sit.&quot;,
+                &quot;status&quot;: &quot;inactive&quot;,
+                &quot;sort_order&quot;: 3,
+                &quot;parent_id&quot;: 5,
+                &quot;depth&quot;: 1,
+                &quot;created_by&quot;: &quot;Nelle Heidenreich&quot;,
+                &quot;updated_by&quot;: &quot;Nelle Heidenreich&quot;,
+                &quot;created_at&quot;: &quot;18/02/2026 07:31:52&quot;,
+                &quot;updated_at&quot;: &quot;18/02/2026 07:31:52&quot;
             }
         ],
         &quot;attachments&quot;: [],
-        &quot;created_by&quot;: &quot;Stefan Bednar DVM&quot;,
-        &quot;updated_by&quot;: &quot;Shannon Kunze&quot;,
-        &quot;created_at&quot;: &quot;17/02/2026 10:46:02&quot;,
-        &quot;updated_at&quot;: &quot;17/02/2026 10:46:02&quot;
+        &quot;created_by&quot;: &quot;Dr. Margarette Klocko Jr.&quot;,
+        &quot;updated_by&quot;: &quot;April Reinger IV&quot;,
+        &quot;created_at&quot;: &quot;18/02/2026 07:31:52&quot;,
+        &quot;updated_at&quot;: &quot;18/02/2026 07:31:52&quot;
     }
 }</code>
  </pre>
@@ -2940,8 +3126,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "title=Bài viết mẫu"\
     --form "content=Nội dung bài viết..."\
     --form "status=draft"\
-    --form "category_ids[]=16"\
-    --form "images[]=@/tmp/phpdsvnj5sife1c7ecgaQ7" </code></pre></div>
+    --form "category_ids[]=1"\
+    --form "images[]=@/tmp/phpagec6k3tecs8eyYhhGz" \
+    --form "images[]=@/tmp/phpqcb8pj3fd93g6kqzfLf" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2959,7 +3146,8 @@ const body = new FormData();
 body.append('title', 'Bài viết mẫu');
 body.append('content', 'Nội dung bài viết...');
 body.append('status', 'draft');
-body.append('category_ids[]', '16');
+body.append('category_ids[]', '1');
+body.append('images[]', document.querySelector('input[name="images[]"]').files[0]);
 body.append('images[]', document.querySelector('input[name="images[]"]').files[0]);
 
 fetch(url, {
@@ -2995,11 +3183,15 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'category_ids[]',
-                'contents' =&gt; '16'
+                'contents' =&gt; '1'
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpdsvnj5sife1c7ecgaQ7', 'r')
+                'contents' =&gt; fopen('/tmp/phpagec6k3tecs8eyYhhGz', 'r')
+            ],
+            [
+                'name' =&gt; 'images[]',
+                'contents' =&gt; fopen('/tmp/phpqcb8pj3fd93g6kqzfLf', 'r')
             ],
         ],
     ]
@@ -3133,17 +3325,17 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>category_ids</code></b>&nbsp;&nbsp;
-<small>integer[]</small>&nbsp;
+<small>string[]</small>&nbsp;
 <i>optional</i> &nbsp;
  &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="category_ids[0]"                data-endpoint="POSTapi-posts"
+                <input type="text" style="display: none"
+                              name="category_ids[0]"                data-endpoint="POSTapi-posts"
                data-component="body">
-        <input type="number" style="display: none"
+        <input type="text" style="display: none"
                name="category_ids[1]"                data-endpoint="POSTapi-posts"
                data-component="body">
     <br>
-<p>The <code>id</code> of an existing record in the post_categories table.</p>
+<p>Mảng ID danh mục (tối đa 20).</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>images</code></b>&nbsp;&nbsp;
@@ -3158,6 +3350,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>Must be an image. Must not be greater than 5120 kilobytes.</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>images[]</code></b>&nbsp;&nbsp;
+<small>file</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="file" style="display: none"
+                              name="images.0"                data-endpoint="POSTapi-posts"
+               value=""
+               data-component="body">
+    <br>
+<p>Ảnh đính kèm (jpeg/png/gif/webp, tối đa 10 ảnh, mỗi ảnh ≤ 5MB). Example: <code>/tmp/phpqcb8pj3fd93g6kqzfLf</code></p>
         </div>
         </form>
 
@@ -3182,9 +3386,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "title=architecto"\
     --form "content=architecto"\
     --form "status=architecto"\
-    --form "category_ids[]=16"\
-    --form "remove_attachment_ids[]=16"\
-    --form "images[]=@/tmp/phpns3u5cv2pgjhbjtaII9" </code></pre></div>
+    --form "category_ids[]=architecto"\
+    --form "remove_attachment_ids[]=architecto"\
+    --form "images[]=@/tmp/phptth4trji74j9b1wcxBg" \
+    --form "images[]=@/tmp/php8vt532tcll8v0GEHVGp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3202,8 +3407,9 @@ const body = new FormData();
 body.append('title', 'architecto');
 body.append('content', 'architecto');
 body.append('status', 'architecto');
-body.append('category_ids[]', '16');
-body.append('remove_attachment_ids[]', '16');
+body.append('category_ids[]', 'architecto');
+body.append('remove_attachment_ids[]', 'architecto');
+body.append('images[]', document.querySelector('input[name="images[]"]').files[0]);
 body.append('images[]', document.querySelector('input[name="images[]"]').files[0]);
 
 fetch(url, {
@@ -3239,15 +3445,19 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'category_ids[]',
-                'contents' =&gt; '16'
+                'contents' =&gt; 'architecto'
             ],
             [
                 'name' =&gt; 'remove_attachment_ids[]',
-                'contents' =&gt; '16'
+                'contents' =&gt; 'architecto'
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpns3u5cv2pgjhbjtaII9', 'r')
+                'contents' =&gt; fopen('/tmp/phptth4trji74j9b1wcxBg', 'r')
+            ],
+            [
+                'name' =&gt; 'images[]',
+                'contents' =&gt; fopen('/tmp/php8vt532tcll8v0GEHVGp', 'r')
             ],
         ],
     ]
@@ -3406,17 +3616,17 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>category_ids</code></b>&nbsp;&nbsp;
-<small>integer[]</small>&nbsp;
+<small>string[]</small>&nbsp;
 <i>optional</i> &nbsp;
  &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="category_ids[0]"                data-endpoint="PUTapi-posts--post_id-"
+                <input type="text" style="display: none"
+                              name="category_ids[0]"                data-endpoint="PUTapi-posts--post_id-"
                data-component="body">
-        <input type="number" style="display: none"
+        <input type="text" style="display: none"
                name="category_ids[1]"                data-endpoint="PUTapi-posts--post_id-"
                data-component="body">
     <br>
-<p>The <code>id</code> of an existing record in the post_categories table.</p>
+<p>Mảng ID danh mục (ghi đè danh sách hiện tại).</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>images</code></b>&nbsp;&nbsp;
@@ -3434,17 +3644,29 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>remove_attachment_ids</code></b>&nbsp;&nbsp;
-<small>integer[]</small>&nbsp;
+<small>string[]</small>&nbsp;
 <i>optional</i> &nbsp;
  &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="remove_attachment_ids[0]"                data-endpoint="PUTapi-posts--post_id-"
+                <input type="text" style="display: none"
+                              name="remove_attachment_ids[0]"                data-endpoint="PUTapi-posts--post_id-"
                data-component="body">
-        <input type="number" style="display: none"
+        <input type="text" style="display: none"
                name="remove_attachment_ids[1]"                data-endpoint="PUTapi-posts--post_id-"
                data-component="body">
     <br>
-<p>The <code>id</code> of an existing record in the post_attachments table.</p>
+<p>Mảng ID đính kèm cần xóa.</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>images[]</code></b>&nbsp;&nbsp;
+<small>file</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="file" style="display: none"
+                              name="images.0"                data-endpoint="PUTapi-posts--post_id-"
+               value=""
+               data-component="body">
+    <br>
+<p>Ảnh mới (append). Example: <code>/tmp/php8vt532tcll8v0GEHVGp</code></p>
         </div>
         </form>
 
@@ -3469,9 +3691,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "title=architecto"\
     --form "content=architecto"\
     --form "status=architecto"\
-    --form "category_ids[]=16"\
-    --form "remove_attachment_ids[]=16"\
-    --form "images[]=@/tmp/phpriiebtebcud41Iyi9ct" </code></pre></div>
+    --form "category_ids[]=architecto"\
+    --form "remove_attachment_ids[]=architecto"\
+    --form "images[]=@/tmp/phpaq4jok0gl4236lFdj17" \
+    --form "images[]=@/tmp/phpc2o5i4tfs6pcdwbxwJO" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3489,8 +3712,9 @@ const body = new FormData();
 body.append('title', 'architecto');
 body.append('content', 'architecto');
 body.append('status', 'architecto');
-body.append('category_ids[]', '16');
-body.append('remove_attachment_ids[]', '16');
+body.append('category_ids[]', 'architecto');
+body.append('remove_attachment_ids[]', 'architecto');
+body.append('images[]', document.querySelector('input[name="images[]"]').files[0]);
 body.append('images[]', document.querySelector('input[name="images[]"]').files[0]);
 
 fetch(url, {
@@ -3526,15 +3750,19 @@ $response = $client-&gt;patch(
             ],
             [
                 'name' =&gt; 'category_ids[]',
-                'contents' =&gt; '16'
+                'contents' =&gt; 'architecto'
             ],
             [
                 'name' =&gt; 'remove_attachment_ids[]',
-                'contents' =&gt; '16'
+                'contents' =&gt; 'architecto'
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpriiebtebcud41Iyi9ct', 'r')
+                'contents' =&gt; fopen('/tmp/phpaq4jok0gl4236lFdj17', 'r')
+            ],
+            [
+                'name' =&gt; 'images[]',
+                'contents' =&gt; fopen('/tmp/phpc2o5i4tfs6pcdwbxwJO', 'r')
             ],
         ],
     ]
@@ -3693,17 +3921,17 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>category_ids</code></b>&nbsp;&nbsp;
-<small>integer[]</small>&nbsp;
+<small>string[]</small>&nbsp;
 <i>optional</i> &nbsp;
  &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="category_ids[0]"                data-endpoint="PATCHapi-posts--post_id-"
+                <input type="text" style="display: none"
+                              name="category_ids[0]"                data-endpoint="PATCHapi-posts--post_id-"
                data-component="body">
-        <input type="number" style="display: none"
+        <input type="text" style="display: none"
                name="category_ids[1]"                data-endpoint="PATCHapi-posts--post_id-"
                data-component="body">
     <br>
-<p>The <code>id</code> of an existing record in the post_categories table.</p>
+<p>Mảng ID danh mục (ghi đè danh sách hiện tại).</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>images</code></b>&nbsp;&nbsp;
@@ -3721,17 +3949,29 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>remove_attachment_ids</code></b>&nbsp;&nbsp;
-<small>integer[]</small>&nbsp;
+<small>string[]</small>&nbsp;
 <i>optional</i> &nbsp;
  &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="remove_attachment_ids[0]"                data-endpoint="PATCHapi-posts--post_id-"
+                <input type="text" style="display: none"
+                              name="remove_attachment_ids[0]"                data-endpoint="PATCHapi-posts--post_id-"
                data-component="body">
-        <input type="number" style="display: none"
+        <input type="text" style="display: none"
                name="remove_attachment_ids[1]"                data-endpoint="PATCHapi-posts--post_id-"
                data-component="body">
     <br>
-<p>The <code>id</code> of an existing record in the post_attachments table.</p>
+<p>Mảng ID đính kèm cần xóa.</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>images[]</code></b>&nbsp;&nbsp;
+<small>file</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="file" style="display: none"
+                              name="images.0"                data-endpoint="PATCHapi-posts--post_id-"
+               value=""
+               data-component="body">
+    <br>
+<p>Ảnh mới (append). Example: <code>/tmp/phpc2o5i4tfs6pcdwbxwJO</code></p>
         </div>
         </form>
 
@@ -4119,10 +4359,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:28\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:05\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -4152,10 +4392,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:28",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:05",
+    "to_date": "2052-03-13",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -4187,10 +4427,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:28',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:05',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -4394,10 +4634,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-permissions-export"
-               value="2026-02-17T11:15:28"
+               value="2026-02-18T08:05:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -4406,10 +4646,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-permissions-export"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -4430,10 +4670,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-permissions-export"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -4469,7 +4709,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpu1dlu5gcuqpo2ZMhOjk" </code></pre></div>
+    --form "file=@/tmp/phpq2c6bqdu9ighaXd9IWs" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -4507,7 +4747,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/phpu1dlu5gcuqpo2ZMhOjk', 'r')
+                'contents' =&gt; fopen('/tmp/phpq2c6bqdu9ighaXd9IWs', 'r')
             ],
         ],
     ]
@@ -4613,7 +4853,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, guard_name. Example: <code>/tmp/phpu1dlu5gcuqpo2ZMhOjk</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, guard_name. Example: <code>/tmp/phpq2c6bqdu9ighaXd9IWs</code></p>
         </div>
         </form>
 
@@ -4819,10 +5059,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:28\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:05\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -4853,10 +5093,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:28",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:05",
+    "to_date": "2052-03-13",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -4889,10 +5129,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:28',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:05',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -5108,10 +5348,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-permissions-stats"
-               value="2026-02-17T11:15:28"
+               value="2026-02-18T08:05:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -5120,10 +5360,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-permissions-stats"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -5144,10 +5384,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-permissions-stats"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -5186,8 +5426,8 @@ Must be one of:
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:28\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:05\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
     \"sort_order\": \"asc\",
     \"limit\": 7
@@ -5220,8 +5460,8 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:28",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:05",
+    "to_date": "2052-03-13",
     "sort_by": "n",
     "sort_order": "asc",
     "limit": 7
@@ -5256,8 +5496,8 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:28',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:05',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
@@ -5510,10 +5750,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-permissions"
-               value="2026-02-17T11:15:28"
+               value="2026-02-18T08:05:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -5522,10 +5762,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-permissions"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -5581,7 +5821,7 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/permissions/16" \
+    --get "http://localhost/api/permissions/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -5589,7 +5829,7 @@ Must be one of:
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/permissions/16"
+    "http://localhost/api/permissions/1"
 );
 
 const headers = {
@@ -5606,7 +5846,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/permissions/16';
+$url = 'http://localhost/api/permissions/1';
 $response = $client-&gt;get(
     $url,
     [
@@ -5624,7 +5864,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-permissions--permission_id-">
             <blockquote>
-            <p>Example response (404):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -5636,7 +5876,13 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No query results for model [App\\Modules\\Core\\Models\\Permission] 16&quot;
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;users.stats&quot;,
+        &quot;guard_name&quot;: &quot;api&quot;,
+        &quot;created_at&quot;: &quot;07:31:54 18/02/2026&quot;,
+        &quot;updated_at&quot;: &quot;07:31:54 18/02/2026&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -5731,10 +5977,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="permission_id"                data-endpoint="GETapi-permissions--permission_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the permission. Example: <code>16</code></p>
+<p>The ID of the permission. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>permission</code></b>&nbsp;&nbsp;
@@ -5770,7 +6016,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"name\": \"posts.create\",
-    \"guard_name\": \"web\"
+    \"guard_name\": \"api\"
 }"
 </code></pre></div>
 
@@ -5788,7 +6034,7 @@ const headers = {
 
 let body = {
     "name": "posts.create",
-    "guard_name": "web"
+    "guard_name": "api"
 };
 
 fetch(url, {
@@ -5811,7 +6057,7 @@ $response = $client-&gt;post(
         ],
         'json' =&gt; [
             'name' =&gt; 'posts.create',
-            'guard_name' =&gt; 'web',
+            'guard_name' =&gt; 'api',
         ],
     ]
 );
@@ -5925,10 +6171,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="guard_name"                data-endpoint="POSTapi-permissions"
-               value="web"
+               value="api"
                data-component="body">
     <br>
-<p>Guard name (mặc định theo auth.defaults.guard). Example: <code>web</code></p>
+<p>Guard name (mặc định api cho RESTful API). Example: <code>api</code></p>
         </div>
         </form>
 
@@ -5946,20 +6192,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost/api/permissions/16" \
+    "http://localhost/api/permissions/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"name\": \"posts.update\",
-    \"guard_name\": \"web\"
+    \"guard_name\": \"api\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/permissions/16"
+    "http://localhost/api/permissions/1"
 );
 
 const headers = {
@@ -5970,7 +6216,7 @@ const headers = {
 
 let body = {
     "name": "posts.update",
-    "guard_name": "web"
+    "guard_name": "api"
 };
 
 fetch(url, {
@@ -5982,7 +6228,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/permissions/16';
+$url = 'http://localhost/api/permissions/1';
 $response = $client-&gt;put(
     $url,
     [
@@ -5993,7 +6239,7 @@ $response = $client-&gt;put(
         ],
         'json' =&gt; [
             'name' =&gt; 'posts.update',
-            'guard_name' =&gt; 'web',
+            'guard_name' =&gt; 'api',
         ],
     ]
 );
@@ -6095,10 +6341,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="permission_id"                data-endpoint="PUTapi-permissions--permission_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the permission. Example: <code>16</code></p>
+<p>The ID of the permission. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>permission</code></b>&nbsp;&nbsp;
@@ -6132,10 +6378,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="guard_name"                data-endpoint="PUTapi-permissions--permission_id-"
-               value="web"
+               value="api"
                data-component="body">
     <br>
-<p>Guard name. Example: <code>web</code></p>
+<p>Guard name. Example: <code>api</code></p>
         </div>
         </form>
 
@@ -6153,20 +6399,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost/api/permissions/16" \
+    "http://localhost/api/permissions/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"name\": \"posts.update\",
-    \"guard_name\": \"web\"
+    \"guard_name\": \"api\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/permissions/16"
+    "http://localhost/api/permissions/1"
 );
 
 const headers = {
@@ -6177,7 +6423,7 @@ const headers = {
 
 let body = {
     "name": "posts.update",
-    "guard_name": "web"
+    "guard_name": "api"
 };
 
 fetch(url, {
@@ -6189,7 +6435,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/permissions/16';
+$url = 'http://localhost/api/permissions/1';
 $response = $client-&gt;patch(
     $url,
     [
@@ -6200,7 +6446,7 @@ $response = $client-&gt;patch(
         ],
         'json' =&gt; [
             'name' =&gt; 'posts.update',
-            'guard_name' =&gt; 'web',
+            'guard_name' =&gt; 'api',
         ],
     ]
 );
@@ -6302,10 +6548,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="permission_id"                data-endpoint="PATCHapi-permissions--permission_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the permission. Example: <code>16</code></p>
+<p>The ID of the permission. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>permission</code></b>&nbsp;&nbsp;
@@ -6339,10 +6585,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="guard_name"                data-endpoint="PATCHapi-permissions--permission_id-"
-               value="web"
+               value="api"
                data-component="body">
     <br>
-<p>Guard name. Example: <code>web</code></p>
+<p>Guard name. Example: <code>api</code></p>
         </div>
         </form>
 
@@ -6360,7 +6606,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost/api/permissions/16" \
+    "http://localhost/api/permissions/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -6368,7 +6614,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/permissions/16"
+    "http://localhost/api/permissions/1"
 );
 
 const headers = {
@@ -6385,7 +6631,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/permissions/16';
+$url = 'http://localhost/api/permissions/1';
 $response = $client-&gt;delete(
     $url,
     [
@@ -6494,10 +6740,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="permission_id"                data-endpoint="DELETEapi-permissions--permission_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the permission. Example: <code>16</code></p>
+<p>The ID of the permission. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>permission</code></b>&nbsp;&nbsp;
@@ -6538,10 +6784,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:28\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:05\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -6572,10 +6818,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:28",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:05",
+    "to_date": "2052-03-13",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -6608,10 +6854,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:28',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:05',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -6827,10 +7073,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-roles-export"
-               value="2026-02-17T11:15:28"
+               value="2026-02-18T08:05:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -6839,10 +7085,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-roles-export"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -6863,10 +7109,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-roles-export"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -6902,7 +7148,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php3ge3fjp80h8g4Q3obLL" </code></pre></div>
+    --form "file=@/tmp/phpavf6meire8ma4LPXDe8" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -6940,7 +7186,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/php3ge3fjp80h8g4Q3obLL', 'r')
+                'contents' =&gt; fopen('/tmp/phpavf6meire8ma4LPXDe8', 'r')
             ],
         ],
     ]
@@ -7046,7 +7292,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, guard_name, team_id, status. Example: <code>/tmp/php3ge3fjp80h8g4Q3obLL</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, guard_name, team_id, status. Example: <code>/tmp/phpavf6meire8ma4LPXDe8</code></p>
         </div>
         </form>
 
@@ -7448,8 +7694,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:28\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:05\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
     \"sort_order\": \"asc\",
     \"limit\": 7
@@ -7483,8 +7729,8 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:28",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:05",
+    "to_date": "2052-03-13",
     "sort_by": "n",
     "sort_order": "asc",
     "limit": 7
@@ -7520,8 +7766,8 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:28',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:05',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
@@ -7753,10 +7999,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-roles-stats"
-               value="2026-02-17T11:15:28"
+               value="2026-02-18T08:05:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -7765,10 +8011,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-roles-stats"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -7831,10 +8077,10 @@ Must be one of:
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:28\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:05\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -7866,10 +8112,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:28",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:05",
+    "to_date": "2052-03-13",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -7903,10 +8149,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:28',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:05',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -8169,10 +8415,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-roles"
-               value="2026-02-17T11:15:28"
+               value="2026-02-18T08:05:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -8181,10 +8427,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-roles"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -8205,10 +8451,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-roles"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -8240,7 +8486,7 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/roles/16" \
+    --get "http://localhost/api/roles/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -8248,7 +8494,7 @@ Must be one of:
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/roles/16"
+    "http://localhost/api/roles/1"
 );
 
 const headers = {
@@ -8265,7 +8511,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/roles/16';
+$url = 'http://localhost/api/roles/1';
 $response = $client-&gt;get(
     $url,
     [
@@ -8283,7 +8529,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-roles--role_id-">
             <blockquote>
-            <p>Example response (404):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -8295,7 +8541,88 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No query results for model [App\\Modules\\Core\\Models\\Role] 16&quot;
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Super Admin&quot;,
+        &quot;guard_name&quot;: &quot;api&quot;,
+        &quot;team_id&quot;: 1,
+        &quot;team&quot;: {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;Default&quot;
+        },
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;permissions&quot;: [
+            &quot;users.stats&quot;,
+            &quot;users.index&quot;,
+            &quot;users.show&quot;,
+            &quot;users.store&quot;,
+            &quot;users.update&quot;,
+            &quot;users.destroy&quot;,
+            &quot;users.bulkDestroy&quot;,
+            &quot;users.bulkUpdateStatus&quot;,
+            &quot;users.changeStatus&quot;,
+            &quot;users.export&quot;,
+            &quot;users.import&quot;,
+            &quot;permissions.stats&quot;,
+            &quot;permissions.index&quot;,
+            &quot;permissions.show&quot;,
+            &quot;permissions.store&quot;,
+            &quot;permissions.update&quot;,
+            &quot;permissions.destroy&quot;,
+            &quot;permissions.bulkDestroy&quot;,
+            &quot;permissions.export&quot;,
+            &quot;permissions.import&quot;,
+            &quot;roles.stats&quot;,
+            &quot;roles.index&quot;,
+            &quot;roles.show&quot;,
+            &quot;roles.store&quot;,
+            &quot;roles.update&quot;,
+            &quot;roles.destroy&quot;,
+            &quot;roles.bulkDestroy&quot;,
+            &quot;roles.bulkUpdateStatus&quot;,
+            &quot;roles.changeStatus&quot;,
+            &quot;roles.export&quot;,
+            &quot;roles.import&quot;,
+            &quot;teams.stats&quot;,
+            &quot;teams.index&quot;,
+            &quot;teams.tree&quot;,
+            &quot;teams.show&quot;,
+            &quot;teams.store&quot;,
+            &quot;teams.update&quot;,
+            &quot;teams.destroy&quot;,
+            &quot;teams.bulkDestroy&quot;,
+            &quot;teams.bulkUpdateStatus&quot;,
+            &quot;teams.changeStatus&quot;,
+            &quot;teams.export&quot;,
+            &quot;teams.import&quot;,
+            &quot;posts.stats&quot;,
+            &quot;posts.index&quot;,
+            &quot;posts.show&quot;,
+            &quot;posts.store&quot;,
+            &quot;posts.update&quot;,
+            &quot;posts.destroy&quot;,
+            &quot;posts.bulkDestroy&quot;,
+            &quot;posts.bulkUpdateStatus&quot;,
+            &quot;posts.changeStatus&quot;,
+            &quot;posts.export&quot;,
+            &quot;posts.import&quot;,
+            &quot;posts.incrementView&quot;,
+            &quot;post-categories.stats&quot;,
+            &quot;post-categories.index&quot;,
+            &quot;post-categories.tree&quot;,
+            &quot;post-categories.show&quot;,
+            &quot;post-categories.store&quot;,
+            &quot;post-categories.update&quot;,
+            &quot;post-categories.destroy&quot;,
+            &quot;post-categories.bulkDestroy&quot;,
+            &quot;post-categories.bulkUpdateStatus&quot;,
+            &quot;post-categories.changeStatus&quot;,
+            &quot;post-categories.export&quot;,
+            &quot;post-categories.import&quot;
+        ],
+        &quot;created_at&quot;: &quot;07:31:54 18/02/2026&quot;,
+        &quot;updated_at&quot;: &quot;07:31:54 18/02/2026&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -8390,10 +8717,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="role_id"                data-endpoint="GETapi-roles--role_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the role. Example: <code>16</code></p>
+<p>The ID of the role. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
@@ -8429,7 +8756,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"name\": \"admin\",
-    \"guard_name\": \"web\",
+    \"guard_name\": \"api\",
     \"team_id\": 1,
     \"status\": \"active\",
     \"permission_ids\": [
@@ -8454,7 +8781,7 @@ const headers = {
 
 let body = {
     "name": "admin",
-    "guard_name": "web",
+    "guard_name": "api",
     "team_id": 1,
     "status": "active",
     "permission_ids": [
@@ -8484,7 +8811,7 @@ $response = $client-&gt;post(
         ],
         'json' =&gt; [
             'name' =&gt; 'admin',
-            'guard_name' =&gt; 'web',
+            'guard_name' =&gt; 'api',
             'team_id' =&gt; 1,
             'status' =&gt; 'active',
             'permission_ids' =&gt; [
@@ -8605,10 +8932,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="guard_name"                data-endpoint="POSTapi-roles"
-               value="web"
+               value="api"
                data-component="body">
     <br>
-<p>Guard name (mặc định theo auth.defaults.guard). Example: <code>web</code></p>
+<p>Guard name (mặc định api cho RESTful API). Example: <code>api</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>team_id</code></b>&nbsp;&nbsp;
@@ -8664,13 +8991,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost/api/roles/16" \
+    "http://localhost/api/roles/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"name\": \"editor\",
-    \"guard_name\": \"web\",
+    \"guard_name\": \"api\",
     \"team_id\": 1,
     \"status\": \"inactive\",
     \"permission_ids\": [
@@ -8683,7 +9010,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/roles/16"
+    "http://localhost/api/roles/1"
 );
 
 const headers = {
@@ -8694,7 +9021,7 @@ const headers = {
 
 let body = {
     "name": "editor",
-    "guard_name": "web",
+    "guard_name": "api",
     "team_id": 1,
     "status": "inactive",
     "permission_ids": [
@@ -8712,7 +9039,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/roles/16';
+$url = 'http://localhost/api/roles/1';
 $response = $client-&gt;put(
     $url,
     [
@@ -8723,7 +9050,7 @@ $response = $client-&gt;put(
         ],
         'json' =&gt; [
             'name' =&gt; 'editor',
-            'guard_name' =&gt; 'web',
+            'guard_name' =&gt; 'api',
             'team_id' =&gt; 1,
             'status' =&gt; 'inactive',
             'permission_ids' =&gt; [
@@ -8831,10 +9158,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="role_id"                data-endpoint="PUTapi-roles--role_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the role. Example: <code>16</code></p>
+<p>The ID of the role. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
@@ -8868,10 +9195,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="guard_name"                data-endpoint="PUTapi-roles--role_id-"
-               value="web"
+               value="api"
                data-component="body">
     <br>
-<p>Guard name. Example: <code>web</code></p>
+<p>Guard name. Example: <code>api</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>team_id</code></b>&nbsp;&nbsp;
@@ -8927,13 +9254,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost/api/roles/16" \
+    "http://localhost/api/roles/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"name\": \"editor\",
-    \"guard_name\": \"web\",
+    \"guard_name\": \"api\",
     \"team_id\": 1,
     \"status\": \"inactive\",
     \"permission_ids\": [
@@ -8946,7 +9273,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/roles/16"
+    "http://localhost/api/roles/1"
 );
 
 const headers = {
@@ -8957,7 +9284,7 @@ const headers = {
 
 let body = {
     "name": "editor",
-    "guard_name": "web",
+    "guard_name": "api",
     "team_id": 1,
     "status": "inactive",
     "permission_ids": [
@@ -8975,7 +9302,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/roles/16';
+$url = 'http://localhost/api/roles/1';
 $response = $client-&gt;patch(
     $url,
     [
@@ -8986,7 +9313,7 @@ $response = $client-&gt;patch(
         ],
         'json' =&gt; [
             'name' =&gt; 'editor',
-            'guard_name' =&gt; 'web',
+            'guard_name' =&gt; 'api',
             'team_id' =&gt; 1,
             'status' =&gt; 'inactive',
             'permission_ids' =&gt; [
@@ -9094,10 +9421,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="role_id"                data-endpoint="PATCHapi-roles--role_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the role. Example: <code>16</code></p>
+<p>The ID of the role. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
@@ -9131,10 +9458,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="guard_name"                data-endpoint="PATCHapi-roles--role_id-"
-               value="web"
+               value="api"
                data-component="body">
     <br>
-<p>Guard name. Example: <code>web</code></p>
+<p>Guard name. Example: <code>api</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>team_id</code></b>&nbsp;&nbsp;
@@ -9190,7 +9517,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost/api/roles/16" \
+    "http://localhost/api/roles/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -9198,7 +9525,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/roles/16"
+    "http://localhost/api/roles/1"
 );
 
 const headers = {
@@ -9215,7 +9542,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/roles/16';
+$url = 'http://localhost/api/roles/1';
 $response = $client-&gt;delete(
     $url,
     [
@@ -9324,10 +9651,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="role_id"                data-endpoint="DELETEapi-roles--role_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the role. Example: <code>16</code></p>
+<p>The ID of the role. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
@@ -9357,7 +9684,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost/api/roles/16/status" \
+    "http://localhost/api/roles/1/status" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -9369,7 +9696,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/roles/16/status"
+    "http://localhost/api/roles/1/status"
 );
 
 const headers = {
@@ -9391,7 +9718,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/roles/16/status';
+$url = 'http://localhost/api/roles/1/status';
 $response = $client-&gt;patch(
     $url,
     [
@@ -9503,10 +9830,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="role_id"                data-endpoint="PATCHapi-roles--role_id--status"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the role. Example: <code>16</code></p>
+<p>The ID of the role. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
@@ -9560,10 +9887,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:29\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:06\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -9594,10 +9921,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:29",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:06",
+    "to_date": "2052-03-13",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -9630,10 +9957,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:29',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:06',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -9849,10 +10176,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-teams-export"
-               value="2026-02-17T11:15:29"
+               value="2026-02-18T08:05:06"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:29</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:06</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -9861,10 +10188,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-teams-export"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -9885,10 +10212,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-teams-export"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -9924,7 +10251,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php5nebm70b4r8m8N8vOkB" </code></pre></div>
+    --form "file=@/tmp/phpdrgvg2e5k71f1mN1XFp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -9962,7 +10289,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/php5nebm70b4r8m8N8vOkB', 'r')
+                'contents' =&gt; fopen('/tmp/phpdrgvg2e5k71f1mN1XFp', 'r')
             ],
         ],
     ]
@@ -10068,7 +10395,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, slug, description, status. Example: <code>/tmp/php5nebm70b4r8m8N8vOkB</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, slug, description, status. Example: <code>/tmp/phpdrgvg2e5k71f1mN1XFp</code></p>
         </div>
         </form>
 
@@ -10470,8 +10797,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:29\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:06\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
     \"sort_order\": \"asc\",
     \"limit\": 7
@@ -10505,8 +10832,8 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:29",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:06",
+    "to_date": "2052-03-13",
     "sort_by": "n",
     "sort_order": "asc",
     "limit": 7
@@ -10542,8 +10869,8 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:29',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:06',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
@@ -10775,10 +11102,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-teams-stats"
-               value="2026-02-17T11:15:29"
+               value="2026-02-18T08:05:06"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:29</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:06</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -10787,10 +11114,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-teams-stats"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -10832,6 +11159,186 @@ Must be one of:
         </div>
         </form>
 
+                    <h2 id="core-team-GETapi-teams-tree">Cây team (toàn bộ cây, không phân trang). Cấu trúc parent_id.</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-teams-tree">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/teams/tree?status=architecto" \
+    --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/teams/tree"
+);
+
+const params = {
+    "status": "architecto",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer Bearer {YOUR_ACCESS_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost/api/teams/tree';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer Bearer {YOUR_ACCESS_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'status' =&gt; 'architecto',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-teams-tree">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: []
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-teams-tree" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-teams-tree"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-teams-tree"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-teams-tree" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-teams-tree">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-teams-tree" data-method="GET"
+      data-path="api/teams/tree"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-teams-tree', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-teams-tree"
+                    onclick="tryItOut('GETapi-teams-tree');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-teams-tree"
+                    onclick="cancelTryOut('GETapi-teams-tree');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-teams-tree"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/teams/tree</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-teams-tree"
+               value="Bearer Bearer {YOUR_ACCESS_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer Bearer {YOUR_ACCESS_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-teams-tree"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-teams-tree"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-teams-tree"
+               value="architecto"
+               data-component="query">
+    <br>
+<p>Lọc theo trạng thái: active, inactive. Example: <code>architecto</code></p>
+            </div>
+                </form>
+
                     <h2 id="core-team-GETapi-teams">Danh sách team</h2>
 
 <p>
@@ -10853,10 +11360,10 @@ Must be one of:
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:29\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:06\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -10888,10 +11395,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:29",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:06",
+    "to_date": "2052-03-13",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -10925,10 +11432,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:29',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:06',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -11191,10 +11698,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-teams"
-               value="2026-02-17T11:15:29"
+               value="2026-02-18T08:05:06"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:29</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:06</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -11203,10 +11710,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-teams"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -11227,10 +11734,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-teams"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -11262,7 +11769,7 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/teams/16" \
+    --get "http://localhost/api/teams/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -11270,7 +11777,7 @@ Must be one of:
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/teams/16"
+    "http://localhost/api/teams/1"
 );
 
 const headers = {
@@ -11287,7 +11794,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/teams/16';
+$url = 'http://localhost/api/teams/1';
 $response = $client-&gt;get(
     $url,
     [
@@ -11305,7 +11812,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-teams--team_id-">
             <blockquote>
-            <p>Example response (404):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -11317,7 +11824,22 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No query results for model [App\\Modules\\Core\\Models\\Team] 16&quot;
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Default&quot;,
+        &quot;slug&quot;: &quot;default&quot;,
+        &quot;description&quot;: &quot;Team mặc định của hệ thống&quot;,
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;parent_id&quot;: null,
+        &quot;sort_order&quot;: 0,
+        &quot;depth&quot;: 0,
+        &quot;created_by&quot;: &quot;N/A&quot;,
+        &quot;updated_by&quot;: &quot;N/A&quot;,
+        &quot;created_at&quot;: &quot;07:31:53 18/02/2026&quot;,
+        &quot;updated_at&quot;: &quot;07:31:53 18/02/2026&quot;,
+        &quot;parent&quot;: null,
+        &quot;children&quot;: []
+    }
 }</code>
  </pre>
     </span>
@@ -11412,10 +11934,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="team_id"                data-endpoint="GETapi-teams--team_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the team. Example: <code>16</code></p>
+<p>The ID of the team. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>team</code></b>&nbsp;&nbsp;
@@ -11453,7 +11975,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"name\": \"Công ty A\",
     \"slug\": \"cong-ty-a\",
     \"description\": \"Team quản trị\",
-    \"status\": \"active\"
+    \"status\": \"active\",
+    \"parent_id\": null,
+    \"sort_order\": 0
 }"
 </code></pre></div>
 
@@ -11473,7 +11997,9 @@ let body = {
     "name": "Công ty A",
     "slug": "cong-ty-a",
     "description": "Team quản trị",
-    "status": "active"
+    "status": "active",
+    "parent_id": null,
+    "sort_order": 0
 };
 
 fetch(url, {
@@ -11499,6 +12025,8 @@ $response = $client-&gt;post(
             'slug' =&gt; 'cong-ty-a',
             'description' =&gt; 'Team quản trị',
             'status' =&gt; 'active',
+            'parent_id' =&gt; null,
+            'sort_order' =&gt; 0,
         ],
     ]
 );
@@ -11641,6 +12169,30 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Trạng thái: active, inactive. Example: <code>active</code></p>
         </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>parent_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="parent_id"                data-endpoint="POSTapi-teams"
+               value=""
+               data-component="body">
+    <br>
+<p>ID team cha (null = gốc).</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sort_order"                data-endpoint="POSTapi-teams"
+               value="0"
+               data-component="body">
+    <br>
+<p>Thứ tự. Example: <code>0</code></p>
+        </div>
         </form>
 
                     <h2 id="core-team-PUTapi-teams--team_id-">Cập nhật team</h2>
@@ -11657,7 +12209,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost/api/teams/16" \
+    "http://localhost/api/teams/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -11665,14 +12217,16 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"name\": \"Công ty A\",
     \"slug\": \"cong-ty-a\",
     \"description\": \"Team quản trị\",
-    \"status\": \"inactive\"
+    \"status\": \"inactive\",
+    \"parent_id\": null,
+    \"sort_order\": 0
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/teams/16"
+    "http://localhost/api/teams/1"
 );
 
 const headers = {
@@ -11685,7 +12239,9 @@ let body = {
     "name": "Công ty A",
     "slug": "cong-ty-a",
     "description": "Team quản trị",
-    "status": "inactive"
+    "status": "inactive",
+    "parent_id": null,
+    "sort_order": 0
 };
 
 fetch(url, {
@@ -11697,7 +12253,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/teams/16';
+$url = 'http://localhost/api/teams/1';
 $response = $client-&gt;put(
     $url,
     [
@@ -11711,6 +12267,8 @@ $response = $client-&gt;put(
             'slug' =&gt; 'cong-ty-a',
             'description' =&gt; 'Team quản trị',
             'status' =&gt; 'inactive',
+            'parent_id' =&gt; null,
+            'sort_order' =&gt; 0,
         ],
     ]
 );
@@ -11812,10 +12370,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="team_id"                data-endpoint="PUTapi-teams--team_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the team. Example: <code>16</code></p>
+<p>The ID of the team. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>team</code></b>&nbsp;&nbsp;
@@ -11878,6 +12436,30 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Trạng thái: active, inactive. Example: <code>inactive</code></p>
         </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>parent_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="parent_id"                data-endpoint="PUTapi-teams--team_id-"
+               value=""
+               data-component="body">
+    <br>
+<p>ID team cha (null = gốc).</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sort_order"                data-endpoint="PUTapi-teams--team_id-"
+               value="0"
+               data-component="body">
+    <br>
+<p>Thứ tự. Example: <code>0</code></p>
+        </div>
         </form>
 
                     <h2 id="core-team-PATCHapi-teams--team_id-">Cập nhật team</h2>
@@ -11894,7 +12476,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost/api/teams/16" \
+    "http://localhost/api/teams/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -11902,14 +12484,16 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"name\": \"Công ty A\",
     \"slug\": \"cong-ty-a\",
     \"description\": \"Team quản trị\",
-    \"status\": \"inactive\"
+    \"status\": \"inactive\",
+    \"parent_id\": null,
+    \"sort_order\": 0
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/teams/16"
+    "http://localhost/api/teams/1"
 );
 
 const headers = {
@@ -11922,7 +12506,9 @@ let body = {
     "name": "Công ty A",
     "slug": "cong-ty-a",
     "description": "Team quản trị",
-    "status": "inactive"
+    "status": "inactive",
+    "parent_id": null,
+    "sort_order": 0
 };
 
 fetch(url, {
@@ -11934,7 +12520,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/teams/16';
+$url = 'http://localhost/api/teams/1';
 $response = $client-&gt;patch(
     $url,
     [
@@ -11948,6 +12534,8 @@ $response = $client-&gt;patch(
             'slug' =&gt; 'cong-ty-a',
             'description' =&gt; 'Team quản trị',
             'status' =&gt; 'inactive',
+            'parent_id' =&gt; null,
+            'sort_order' =&gt; 0,
         ],
     ]
 );
@@ -12049,10 +12637,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="team_id"                data-endpoint="PATCHapi-teams--team_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the team. Example: <code>16</code></p>
+<p>The ID of the team. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>team</code></b>&nbsp;&nbsp;
@@ -12115,6 +12703,30 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Trạng thái: active, inactive. Example: <code>inactive</code></p>
         </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>parent_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="parent_id"                data-endpoint="PATCHapi-teams--team_id-"
+               value=""
+               data-component="body">
+    <br>
+<p>ID team cha (null = gốc).</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sort_order"                data-endpoint="PATCHapi-teams--team_id-"
+               value="0"
+               data-component="body">
+    <br>
+<p>Thứ tự. Example: <code>0</code></p>
+        </div>
         </form>
 
                     <h2 id="core-team-DELETEapi-teams--team_id-">Xóa team</h2>
@@ -12131,7 +12743,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost/api/teams/16" \
+    "http://localhost/api/teams/1" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -12139,7 +12751,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/teams/16"
+    "http://localhost/api/teams/1"
 );
 
 const headers = {
@@ -12156,7 +12768,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/teams/16';
+$url = 'http://localhost/api/teams/1';
 $response = $client-&gt;delete(
     $url,
     [
@@ -12265,10 +12877,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="team_id"                data-endpoint="DELETEapi-teams--team_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the team. Example: <code>16</code></p>
+<p>The ID of the team. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>team</code></b>&nbsp;&nbsp;
@@ -12298,7 +12910,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost/api/teams/16/status" \
+    "http://localhost/api/teams/1/status" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -12310,7 +12922,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/teams/16/status"
+    "http://localhost/api/teams/1/status"
 );
 
 const headers = {
@@ -12332,7 +12944,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/teams/16/status';
+$url = 'http://localhost/api/teams/1/status';
 $response = $client-&gt;patch(
     $url,
     [
@@ -12444,10 +13056,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="team_id"                data-endpoint="PATCHapi-teams--team_id--status"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the team. Example: <code>16</code></p>
+<p>The ID of the team. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>team</code></b>&nbsp;&nbsp;
@@ -12501,10 +13113,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:27\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:04\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -12534,10 +13146,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:27",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:04",
+    "to_date": "2052-03-13",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -12569,10 +13181,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:27',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:04',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -12776,10 +13388,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-users-export"
-               value="2026-02-17T11:15:27"
+               value="2026-02-18T08:05:04"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:27</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:04</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -12788,10 +13400,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-users-export"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -12812,10 +13424,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-users-export"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -12851,7 +13463,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php04pmf0bc32madnaVfP0" </code></pre></div>
+    --form "file=@/tmp/phpo7q2uu81au3b2djHLGU" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -12889,7 +13501,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/php04pmf0bc32madnaVfP0', 'r')
+                'contents' =&gt; fopen('/tmp/phpo7q2uu81au3b2djHLGU', 'r')
             ],
         ],
     ]
@@ -12995,7 +13607,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, email, password, status. Example: <code>/tmp/php04pmf0bc32madnaVfP0</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, email, password, status. Example: <code>/tmp/phpo7q2uu81au3b2djHLGU</code></p>
         </div>
         </form>
 
@@ -13397,8 +14009,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:27\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:05\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
     \"sort_order\": \"asc\",
     \"limit\": 7
@@ -13430,8 +14042,8 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:27",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:05",
+    "to_date": "2052-03-13",
     "sort_by": "n",
     "sort_order": "asc",
     "limit": 7
@@ -13465,8 +14077,8 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:27',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:05',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
@@ -13674,10 +14286,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-users-stats"
-               value="2026-02-17T11:15:27"
+               value="2026-02-18T08:05:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:27</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -13686,10 +14298,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-users-stats"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -13752,10 +14364,10 @@ Must be one of:
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:27\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:05\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -13785,10 +14397,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:27",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:05",
+    "to_date": "2052-03-13",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -13820,10 +14432,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:27',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:05',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -14062,10 +14674,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-users"
-               value="2026-02-17T11:15:27"
+               value="2026-02-18T08:05:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:27</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -14074,10 +14686,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-users"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -14098,10 +14710,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-users"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -14190,13 +14802,13 @@ access-control-allow-origin: *
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
         &quot;id&quot;: 1,
-        &quot;name&quot;: &quot;Prof. Kaylee Prohaska&quot;,
-        &quot;email&quot;: &quot;jschiller@example.net&quot;,
-        &quot;status&quot;: &quot;inactive&quot;,
-        &quot;created_by&quot;: &quot;Prof. Kaylee Prohaska&quot;,
-        &quot;updated_by&quot;: &quot;Prof. Kaylee Prohaska&quot;,
-        &quot;created_at&quot;: &quot;17/02/2026 10:46:00&quot;,
-        &quot;updated_at&quot;: &quot;17/02/2026 10:46:01&quot;
+        &quot;name&quot;: &quot;Nelle Heidenreich&quot;,
+        &quot;email&quot;: &quot;flo.schiller@example.com&quot;,
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;created_by&quot;: &quot;Nelle Heidenreich&quot;,
+        &quot;updated_by&quot;: &quot;Nelle Heidenreich&quot;,
+        &quot;created_at&quot;: &quot;18/02/2026 07:31:52&quot;,
+        &quot;updated_at&quot;: &quot;18/02/2026 07:31:52&quot;
     }
 }</code>
  </pre>
@@ -14561,7 +15173,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"email\": \"gbailey@example.net\",
     \"password\": \"|]|{+-\",
     \"status\": \"architecto\",
-    \"password_confirmation\": \"optio\"
+    \"password_confirmation\": \"architecto\"
 }"
 </code></pre></div>
 
@@ -14582,7 +15194,7 @@ let body = {
     "email": "gbailey@example.net",
     "password": "|]|{+-",
     "status": "architecto",
-    "password_confirmation": "optio"
+    "password_confirmation": "architecto"
 };
 
 fetch(url, {
@@ -14608,7 +15220,7 @@ $response = $client-&gt;put(
             'email' =&gt; 'gbailey@example.net',
             'password' =&gt; '|]|{+-',
             'status' =&gt; 'architecto',
-            'password_confirmation' =&gt; 'optio',
+            'password_confirmation' =&gt; 'architecto',
         ],
     ]
 );
@@ -14783,10 +15395,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="password_confirmation"                data-endpoint="PUTapi-users--user_id-"
-               value="optio"
+               value="architecto"
                data-component="body">
     <br>
-<p>Xác nhận mật khẩu. Example: <code>optio</code></p>
+<p>Xác nhận mật khẩu. Example: <code>architecto</code></p>
         </div>
         </form>
 
@@ -15563,7 +16175,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
                 <h1 id="post-category">Post Category</h1>
 
-    <p>Quản lý danh mục tin tức phân cấp (cấu trúc cây): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.</p>
+    <p>Quản lý danh mục tin tức phân cấp (cấu trúc cây parent_id): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.</p>
 
                                 <h2 id="post-category-GETapi-post-categories-export">Xuất danh sách danh mục</h2>
 
@@ -15571,7 +16183,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <small class="badge badge-darkred">requires authentication</small>
 </p>
 
-<p>Áp dụng cùng bộ lọc với index (search, status, ...). File Excel theo thứ tự cây (cha trước con) để có thể nhập lại.</p>
+<p>Áp dụng cùng bộ lọc với index. Trả về file Excel.</p>
 
 <span id="example-requests-GETapi-post-categories-export">
 <blockquote>Example request:</blockquote>
@@ -15579,15 +16191,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/post-categories/export" \
+    --get "http://localhost/api/post-categories/export?search=architecto&amp;status=architecto&amp;from_date=architecto&amp;to_date=architecto&amp;sort_by=architecto&amp;sort_order=architecto" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:28\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:05\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
     \"sort_order\": \"asc\",
     \"limit\": 7
@@ -15600,6 +16212,17 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost/api/post-categories/export"
 );
 
+const params = {
+    "search": "architecto",
+    "status": "architecto",
+    "from_date": "architecto",
+    "to_date": "architecto",
+    "sort_by": "architecto",
+    "sort_order": "architecto",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
 const headers = {
     "Authorization": "Bearer Bearer {YOUR_ACCESS_TOKEN}",
     "Content-Type": "application/json",
@@ -15609,8 +16232,8 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:28",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:05",
+    "to_date": "2052-03-13",
     "sort_by": "n",
     "sort_order": "asc",
     "limit": 7
@@ -15634,11 +16257,19 @@ $response = $client-&gt;get(
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
+        'query' =&gt; [
+            'search' =&gt; 'architecto',
+            'status' =&gt; 'architecto',
+            'from_date' =&gt; 'architecto',
+            'to_date' =&gt; 'architecto',
+            'sort_by' =&gt; 'architecto',
+            'sort_order' =&gt; 'architecto',
+        ],
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:28',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:05',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
@@ -15751,7 +16382,80 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Example: <code>application/json</code></p>
             </div>
-                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-post-categories-export"
+               value="architecto"
+               data-component="query">
+    <br>
+<p>Từ khóa tìm kiếm (name). Example: <code>architecto</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-post-categories-export"
+               value="architecto"
+               data-component="query">
+    <br>
+<p>Lọc theo trạng thái: active, inactive. Example: <code>architecto</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>from_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="from_date"                data-endpoint="GETapi-post-categories-export"
+               value="architecto"
+               data-component="query">
+    <br>
+<p>date Lọc từ ngày tạo (Y-m-d). Example: <code>architecto</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="to_date"                data-endpoint="GETapi-post-categories-export"
+               value="architecto"
+               data-component="query">
+    <br>
+<p>date Lọc đến ngày tạo (Y-m-d). Example: <code>architecto</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_by"                data-endpoint="GETapi-post-categories-export"
+               value="architecto"
+               data-component="query">
+    <br>
+<p>Sắp xếp theo: id, name, sort_order, parent_id, created_at. Example: <code>architecto</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_order"                data-endpoint="GETapi-post-categories-export"
+               value="architecto"
+               data-component="query">
+    <br>
+<p>Thứ tự: asc, desc. Example: <code>architecto</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
@@ -15783,10 +16487,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-post-categories-export"
-               value="2026-02-17T11:15:28"
+               value="2026-02-18T08:05:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -15795,10 +16499,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-post-categories-export"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -15858,7 +16562,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpjrgnac3c34i1bqt9zil" </code></pre></div>
+    --form "file=@/tmp/phpn7skol5ltjc4apNiar6" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -15896,7 +16600,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/phpjrgnac3c34i1bqt9zil', 'r')
+                'contents' =&gt; fopen('/tmp/phpn7skol5ltjc4apNiar6', 'r')
             ],
         ],
     ]
@@ -16011,7 +16715,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug. Example: <code>/tmp/phpjrgnac3c34i1bqt9zil</code></p>
+<p>File Excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug. Example: <code>/tmp/phpn7skol5ltjc4apNiar6</code></p>
         </div>
         </form>
 
@@ -16196,7 +16900,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                    <h2 id="post-category-PATCHapi-post-categories-bulk-status">Cập nhật trạng thái hàng loạt danh mục</h2>
+                    <h2 id="post-category-PATCHapi-post-categories-bulk-status">Cập nhật trạng thái danh mục hàng loạt</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -16392,14 +17096,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                    <h2 id="post-category-GETapi-post-categories-stats">Thống kê cơ bản</h2>
+                    <h2 id="post-category-GETapi-post-categories-stats">Thống kê danh mục tin tức</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
 </p>
 
-<p>Tổng số bản ghi, bản ghi đang kích hoạt (active), bản ghi không kích hoạt (inactive).
-Áp dụng cùng bộ lọc với index (search, status, ...).</p>
+<p>Tổng số, đang kích hoạt (active), không kích hoạt (inactive). Áp dụng cùng bộ lọc với index.</p>
 
 <span id="example-requests-GETapi-post-categories-stats">
 <blockquote>Example request:</blockquote>
@@ -16407,15 +17110,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/post-categories/stats" \
+    --get "http://localhost/api/post-categories/stats?search=tin-tuc&amp;status=architecto&amp;from_date=2026-02-01&amp;to_date=2026-02-17&amp;sort_by=sort_order&amp;sort_order=asc&amp;limit=10" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:28\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:05\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
     \"sort_order\": \"desc\",
     \"limit\": 7
@@ -16428,6 +17131,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost/api/post-categories/stats"
 );
 
+const params = {
+    "search": "tin-tuc",
+    "status": "architecto",
+    "from_date": "2026-02-01",
+    "to_date": "2026-02-17",
+    "sort_by": "sort_order",
+    "sort_order": "asc",
+    "limit": "10",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
 const headers = {
     "Authorization": "Bearer Bearer {YOUR_ACCESS_TOKEN}",
     "Content-Type": "application/json",
@@ -16437,8 +17152,8 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:28",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:05",
+    "to_date": "2052-03-13",
     "sort_by": "n",
     "sort_order": "desc",
     "limit": 7
@@ -16462,11 +17177,20 @@ $response = $client-&gt;get(
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
+        'query' =&gt; [
+            'search' =&gt; 'tin-tuc',
+            'status' =&gt; 'architecto',
+            'from_date' =&gt; '2026-02-01',
+            'to_date' =&gt; '2026-02-17',
+            'sort_by' =&gt; 'sort_order',
+            'sort_order' =&gt; 'asc',
+            'limit' =&gt; '10',
+        ],
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:28',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:05',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
@@ -16581,7 +17305,92 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Example: <code>application/json</code></p>
             </div>
-                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-post-categories-stats"
+               value="tin-tuc"
+               data-component="query">
+    <br>
+<p>Từ khóa tìm kiếm (name). Example: <code>tin-tuc</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-post-categories-stats"
+               value="architecto"
+               data-component="query">
+    <br>
+<p>Lọc theo trạng thái: active, inactive. Example: <code>architecto</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>from_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="from_date"                data-endpoint="GETapi-post-categories-stats"
+               value="2026-02-01"
+               data-component="query">
+    <br>
+<p>date Lọc từ ngày tạo (created_at) (Y-m-d). Example: <code>2026-02-01</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="to_date"                data-endpoint="GETapi-post-categories-stats"
+               value="2026-02-17"
+               data-component="query">
+    <br>
+<p>date Lọc đến ngày tạo (created_at) (Y-m-d). Example: <code>2026-02-17</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_by"                data-endpoint="GETapi-post-categories-stats"
+               value="sort_order"
+               data-component="query">
+    <br>
+<p>Sắp xếp theo: id, name, sort_order, parent_id, created_at. Example: <code>sort_order</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_order"                data-endpoint="GETapi-post-categories-stats"
+               value="asc"
+               data-component="query">
+    <br>
+<p>Thứ tự: asc, desc. Example: <code>asc</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-post-categories-stats"
+               value="10"
+               data-component="query">
+    <br>
+<p>Số bản ghi mỗi trang (1-100). Example: <code>10</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
@@ -16613,10 +17422,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-post-categories-stats"
-               value="2026-02-17T11:15:28"
+               value="2026-02-18T08:05:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -16625,10 +17434,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-post-categories-stats"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -16670,13 +17479,13 @@ Must be one of:
         </div>
         </form>
 
-                    <h2 id="post-category-GETapi-post-categories-tree">Cây danh mục (toàn bộ cây, không phân trang)</h2>
+                    <h2 id="post-category-GETapi-post-categories-tree">Cây danh mục (toàn bộ cây, không phân trang). Cấu trúc parent_id, children đệ quy.</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
 </p>
 
-<p>Trả về cấu trúc parent-children để hiển thị tree.</p>
+
 
 <span id="example-requests-GETapi-post-categories-tree">
 <blockquote>Example request:</blockquote>
@@ -16850,13 +17659,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                 </form>
 
-                    <h2 id="post-category-GETapi-post-categories">Danh sách danh mục (dạng phẳng, phân trang)</h2>
+                    <h2 id="post-category-GETapi-post-categories">Danh sách danh mục (dạng phẳng, phân trang, thứ tự cây)</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
 </p>
 
-<p>Lấy danh sách có phân trang, lọc và sắp xếp (đồng bộ User/Post).</p>
+
 
 <span id="example-requests-GETapi-post-categories">
 <blockquote>Example request:</blockquote>
@@ -16864,15 +17673,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/post-categories?search=tin&amp;status=architecto&amp;sort_by=sort_order&amp;sort_order=asc&amp;limit=10" \
+    --get "http://localhost/api/post-categories?search=tin-tuc&amp;status=architecto&amp;from_date=2026-02-01&amp;to_date=2026-02-17&amp;sort_by=sort_order&amp;sort_order=asc&amp;limit=10" \
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-17T11:15:28\",
-    \"to_date\": \"2052-03-12\",
+    \"from_date\": \"2026-02-18T08:05:05\",
+    \"to_date\": \"2052-03-13\",
     \"sort_by\": \"n\",
     \"sort_order\": \"desc\",
     \"limit\": 7
@@ -16886,8 +17695,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const params = {
-    "search": "tin",
+    "search": "tin-tuc",
     "status": "architecto",
+    "from_date": "2026-02-01",
+    "to_date": "2026-02-17",
     "sort_by": "sort_order",
     "sort_order": "asc",
     "limit": "10",
@@ -16904,8 +17715,8 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-17T11:15:28",
-    "to_date": "2052-03-12",
+    "from_date": "2026-02-18T08:05:05",
+    "to_date": "2052-03-13",
     "sort_by": "n",
     "sort_order": "desc",
     "limit": 7
@@ -16930,8 +17741,10 @@ $response = $client-&gt;get(
             'Accept' =&gt; 'application/json',
         ],
         'query' =&gt; [
-            'search' =&gt; 'tin',
+            'search' =&gt; 'tin-tuc',
             'status' =&gt; 'architecto',
+            'from_date' =&gt; '2026-02-01',
+            'to_date' =&gt; '2026-02-17',
             'sort_by' =&gt; 'sort_order',
             'sort_order' =&gt; 'asc',
             'limit' =&gt; '10',
@@ -16939,8 +17752,8 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-17T11:15:28',
-            'to_date' =&gt; '2052-03-12',
+            'from_date' =&gt; '2026-02-18T08:05:05',
+            'to_date' =&gt; '2052-03-13',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
@@ -17096,10 +17909,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="search"                data-endpoint="GETapi-post-categories"
-               value="tin"
+               value="tin-tuc"
                data-component="query">
     <br>
-<p>Từ khóa tìm kiếm (tên). Example: <code>tin</code></p>
+<p>Từ khóa tìm kiếm (name). Example: <code>tin-tuc</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
@@ -17114,6 +17927,30 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Lọc theo trạng thái: active, inactive. Example: <code>architecto</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>from_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="from_date"                data-endpoint="GETapi-post-categories"
+               value="2026-02-01"
+               data-component="query">
+    <br>
+<p>date Lọc từ ngày tạo (created_at) (Y-m-d). Example: <code>2026-02-01</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="to_date"                data-endpoint="GETapi-post-categories"
+               value="2026-02-17"
+               data-component="query">
+    <br>
+<p>date Lọc đến ngày tạo (created_at) (Y-m-d). Example: <code>2026-02-17</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
 <i>optional</i> &nbsp;
@@ -17123,7 +17960,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="sort_order"
                data-component="query">
     <br>
-<p>Sắp xếp theo: id, name, sort_order, created_at. Example: <code>sort_order</code></p>
+<p>Sắp xếp theo: id, name, sort_order, parent_id, created_at. Example: <code>sort_order</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
@@ -17181,10 +18018,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-post-categories"
-               value="2026-02-17T11:15:28"
+               value="2026-02-18T08:05:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-17T11:15:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-18T08:05:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -17193,10 +18030,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="GETapi-post-categories"
-               value="2052-03-12"
+               value="2052-03-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
@@ -17311,58 +18148,58 @@ access-control-allow-origin: *
         &quot;id&quot;: 1,
         &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ&quot;,
         &quot;slug&quot;: &quot;tin-cong-nghe&quot;,
-        &quot;description&quot;: &quot;Fugit exercitationem natus alias asperiores itaque modi.&quot;,
+        &quot;description&quot;: null,
         &quot;status&quot;: &quot;inactive&quot;,
         &quot;sort_order&quot;: 1,
         &quot;parent_id&quot;: null,
         &quot;depth&quot;: 0,
-        &quot;created_by&quot;: &quot;Prof. Kaylee Prohaska&quot;,
-        &quot;updated_by&quot;: &quot;Prof. Kaylee Prohaska&quot;,
-        &quot;created_at&quot;: &quot;17/02/2026 10:46:01&quot;,
-        &quot;updated_at&quot;: &quot;17/02/2026 10:46:02&quot;,
+        &quot;created_by&quot;: &quot;Nelle Heidenreich&quot;,
+        &quot;updated_by&quot;: &quot;Nelle Heidenreich&quot;,
+        &quot;created_at&quot;: &quot;18/02/2026 07:31:52&quot;,
+        &quot;updated_at&quot;: &quot;18/02/2026 07:31:52&quot;,
         &quot;parent&quot;: null,
         &quot;children&quot;: [
             {
                 &quot;id&quot;: 6,
-                &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ - animi&quot;,
-                &quot;slug&quot;: &quot;tin-cong-nghe-animi-699446e9540a9&quot;,
-                &quot;description&quot;: &quot;Alias aut deleniti quia repellendus molestiae deserunt veniam.&quot;,
+                &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ - similique&quot;,
+                &quot;slug&quot;: &quot;tin-cong-nghe-magnam-69956ae88cc8b&quot;,
+                &quot;description&quot;: &quot;Non suscipit quibusdam temporibus temporibus corporis et at.&quot;,
                 &quot;status&quot;: &quot;active&quot;,
-                &quot;sort_order&quot;: 15,
+                &quot;sort_order&quot;: 1,
                 &quot;parent_id&quot;: 1,
-                &quot;depth&quot;: null,
-                &quot;created_by&quot;: &quot;Prof. Kaylee Prohaska&quot;,
-                &quot;updated_by&quot;: &quot;Prof. Kaylee Prohaska&quot;,
-                &quot;created_at&quot;: &quot;17/02/2026 10:46:01&quot;,
-                &quot;updated_at&quot;: &quot;17/02/2026 10:46:02&quot;
+                &quot;depth&quot;: 1,
+                &quot;created_by&quot;: &quot;Nelle Heidenreich&quot;,
+                &quot;updated_by&quot;: &quot;Nelle Heidenreich&quot;,
+                &quot;created_at&quot;: &quot;18/02/2026 07:31:52&quot;,
+                &quot;updated_at&quot;: &quot;18/02/2026 07:31:52&quot;
             },
             {
                 &quot;id&quot;: 7,
-                &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ - autem&quot;,
-                &quot;slug&quot;: &quot;tin-cong-nghe-autem-699446e95df27&quot;,
-                &quot;description&quot;: &quot;Ex et in voluptate eaque explicabo.&quot;,
-                &quot;status&quot;: &quot;inactive&quot;,
-                &quot;sort_order&quot;: 26,
+                &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ - veritatis&quot;,
+                &quot;slug&quot;: &quot;tin-cong-nghe-autem-69956ae891b84&quot;,
+                &quot;description&quot;: null,
+                &quot;status&quot;: &quot;active&quot;,
+                &quot;sort_order&quot;: 2,
                 &quot;parent_id&quot;: 1,
-                &quot;depth&quot;: null,
-                &quot;created_by&quot;: &quot;Prof. Kaylee Prohaska&quot;,
-                &quot;updated_by&quot;: &quot;Prof. Kaylee Prohaska&quot;,
-                &quot;created_at&quot;: &quot;17/02/2026 10:46:01&quot;,
-                &quot;updated_at&quot;: &quot;17/02/2026 10:46:02&quot;
+                &quot;depth&quot;: 1,
+                &quot;created_by&quot;: &quot;Nelle Heidenreich&quot;,
+                &quot;updated_by&quot;: &quot;Nelle Heidenreich&quot;,
+                &quot;created_at&quot;: &quot;18/02/2026 07:31:52&quot;,
+                &quot;updated_at&quot;: &quot;18/02/2026 07:31:52&quot;
             },
             {
                 &quot;id&quot;: 8,
-                &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ - laudantium&quot;,
-                &quot;slug&quot;: &quot;tin-cong-nghe-laudantium-699446e9696b8&quot;,
-                &quot;description&quot;: &quot;Non eos quam qui officia.&quot;,
+                &quot;name&quot;: &quot;Tin c&ocirc;ng nghệ - provident&quot;,
+                &quot;slug&quot;: &quot;tin-cong-nghe-aut-69956ae89777a&quot;,
+                &quot;description&quot;: &quot;Assumenda inventore omnis repellendus beatae.&quot;,
                 &quot;status&quot;: &quot;active&quot;,
-                &quot;sort_order&quot;: 49,
+                &quot;sort_order&quot;: 3,
                 &quot;parent_id&quot;: 1,
-                &quot;depth&quot;: null,
-                &quot;created_by&quot;: &quot;Prof. Kaylee Prohaska&quot;,
-                &quot;updated_by&quot;: &quot;Prof. Kaylee Prohaska&quot;,
-                &quot;created_at&quot;: &quot;17/02/2026 10:46:01&quot;,
-                &quot;updated_at&quot;: &quot;17/02/2026 10:46:02&quot;
+                &quot;depth&quot;: 1,
+                &quot;created_by&quot;: &quot;Nelle Heidenreich&quot;,
+                &quot;updated_by&quot;: &quot;Nelle Heidenreich&quot;,
+                &quot;created_at&quot;: &quot;18/02/2026 07:31:52&quot;,
+                &quot;updated_at&quot;: &quot;18/02/2026 07:31:52&quot;
             }
         ]
     }
@@ -17498,8 +18335,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"name\": \"Tin công nghệ\",
-    \"slug\": \"architecto\",
+    \"name\": \"Tin tức\",
+    \"slug\": \"tin-tuc\",
     \"description\": \"Eius et animi quos velit et.\",
     \"status\": \"active\",
     \"sort_order\": 0,
@@ -17520,8 +18357,8 @@ const headers = {
 };
 
 let body = {
-    "name": "Tin công nghệ",
-    "slug": "architecto",
+    "name": "Tin tức",
+    "slug": "tin-tuc",
     "description": "Eius et animi quos velit et.",
     "status": "active",
     "sort_order": 0,
@@ -17547,8 +18384,8 @@ $response = $client-&gt;post(
             'Accept' =&gt; 'application/json',
         ],
         'json' =&gt; [
-            'name' =&gt; 'Tin công nghệ',
-            'slug' =&gt; 'architecto',
+            'name' =&gt; 'Tin tức',
+            'slug' =&gt; 'tin-tuc',
             'description' =&gt; 'Eius et animi quos velit et.',
             'status' =&gt; 'active',
             'sort_order' =&gt; 0,
@@ -17654,10 +18491,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="name"                data-endpoint="POSTapi-post-categories"
-               value="Tin công nghệ"
+               value="Tin tức"
                data-component="body">
     <br>
-<p>Tên danh mục. Example: <code>Tin công nghệ</code></p>
+<p>Tên danh mục. Example: <code>Tin tức</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>slug</code></b>&nbsp;&nbsp;
@@ -17666,10 +18503,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="slug"                data-endpoint="POSTapi-post-categories"
-               value="architecto"
+               value="tin-tuc"
                data-component="body">
     <br>
-<p>Slug (nếu không gửi sẽ tự sinh từ name). Example: <code>architecto</code></p>
+<p>Slug (tự sinh từ name nếu không gửi). Example: <code>tin-tuc</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
@@ -17693,7 +18530,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="active"
                data-component="body">
     <br>
-<p>active, inactive. Example: <code>active</code></p>
+<p>Trạng thái: active, inactive. Example: <code>active</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
@@ -17717,7 +18554,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>ID danh mục cha (để tạo con).</p>
+<p>ID danh mục cha (null = gốc).</p>
         </div>
         </form>
 
@@ -17960,7 +18797,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="architecto"
                data-component="body">
     <br>
-<p>active, inactive. Example: <code>architecto</code></p>
+<p>Trạng thái: active, inactive. Example: <code>architecto</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
@@ -17984,7 +18821,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="16"
                data-component="body">
     <br>
-<p>ID danh mục cha (0 = chuyển thành gốc). Example: <code>16</code></p>
+<p>ID danh mục cha (null hoặc 0 = gốc). Example: <code>16</code></p>
         </div>
         </form>
 
@@ -18227,7 +19064,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="architecto"
                data-component="body">
     <br>
-<p>active, inactive. Example: <code>architecto</code></p>
+<p>Trạng thái: active, inactive. Example: <code>architecto</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
@@ -18251,7 +19088,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="16"
                data-component="body">
     <br>
-<p>ID danh mục cha (0 = chuyển thành gốc). Example: <code>16</code></p>
+<p>ID danh mục cha (null hoặc 0 = gốc). Example: <code>16</code></p>
         </div>
         </form>
 
@@ -18261,7 +19098,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <small class="badge badge-darkred">requires authentication</small>
 </p>
 
-<p>Xóa danh mục sẽ xóa luôn tất cả danh mục con (nested set).</p>
+
 
 <span id="example-requests-DELETEapi-post-categories--category_id-">
 <blockquote>Example request:</blockquote>

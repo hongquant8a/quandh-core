@@ -25,6 +25,7 @@ class PostCategoryFactory extends Factory
             'description' => fake()->optional(0.7)->sentence(),
             'status' => fake()->randomElement(['active', 'inactive']),
             'sort_order' => fake()->numberBetween(0, 100),
+            'parent_id' => null,
             'created_by' => null,
             'updated_by' => null,
         ];

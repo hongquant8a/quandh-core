@@ -1,85 +1,106 @@
 # API Permission (Core)
 
-Quản lý quyền (permission): stats, index, show, store, update, destroy, bulk delete, export, import.
+Quản lý quyền (permission): thống kê, danh sách, chi tiết, CRUD, xóa hàng loạt, xuất/nhập Excel. Permission không có bulk status / change status.
 
----
-
-## Xuất Excel
-
-- **Method:** GET
-- **Path:** `/api/permissions/export`
-- **Query:** Cùng bộ lọc với index: search, from_date, to_date, sort_by, sort_order, limit.
-- **Response:** File permissions.xlsx.
-
----
-
-## Nhập Excel
-
-- **Method:** POST
-- **Path:** `/api/permissions/import`
-- **Body:** file (required) — xlsx, xls, csv. Cột: name, guard_name.
-- **Response:** `{"message": "Import quyền thành công."}`
-
----
-
-## Xóa hàng loạt
-
-- **Method:** POST
-- **Path:** `/api/permissions/bulk-delete`
-- **Body:** ids (array) — danh sách ID permission.
-- **Response:** `{"message": "Đã xóa thành công các quyền được chọn!"}`
+**Base path:** `/api/permissions`
 
 ---
 
 ## Thống kê
 
-- **Method:** GET
-- **Path:** `/api/permissions/stats`
-- **Query:** Cùng bộ lọc với index.
-- **Response:** `{ "total": 50 }`
+| | |
+|---|---|
+| **Method** | GET |
+| **Path** | `/api/permissions/stats` |
+| **Query** | `search` (name, guard_name), `from_date` (Y-m-d), `to_date` (Y-m-d), `sort_by`, `sort_order`, `limit` (1-100). Cùng bộ lọc với index. |
+| **Response** | `{ "total": 50 }`. |
 
 ---
 
 ## Danh sách permission
 
-- **Method:** GET
-- **Path:** `/api/permissions`
-- **Query:** search (name, guard_name), from_date, to_date, sort_by (id, name, guard_name, created_at, updated_at), sort_order, limit (1-100).
-- **Response:** Paginated collection (PermissionResource).
+| | |
+|---|---|
+| **Method** | GET |
+| **Path** | `/api/permissions` |
+| **Query** | `search` (name, guard_name), `from_date`, `to_date`, `sort_by` (id \| name \| guard_name \| created_at \| updated_at), `sort_order` (asc \| desc), `limit` (1-100). |
+| **Response** | Paginated collection (PermissionResource). |
 
 ---
 
 ## Chi tiết permission
 
-- **Method:** GET
-- **Path:** `/api/permissions/{id}`
-- **Response:** Object permission (PermissionResource).
+| | |
+|---|---|
+| **Method** | GET |
+| **Path** | `/api/permissions/{id}` |
+| **UrlParam** | `id` — ID permission. |
+| **Response** | Object permission (PermissionResource). |
 
 ---
 
 ## Tạo permission
 
-- **Method:** POST
-- **Path:** `/api/permissions`
-- **Body:** name (required), guard_name (optional, mặc định guard web).
-- **Response:** 201 + object permission + message: "Quyền đã được tạo thành công!".
+| | |
+|---|---|
+| **Method** | POST |
+| **Path** | `/api/permissions` |
+| **Body** | `name` (required), `guard_name` (optional, mặc định api/web). |
+| **Response** | 201, object permission + `"message": "Quyền đã được tạo thành công!"`. |
 
 ---
 
 ## Cập nhật permission
 
-- **Method:** PUT / PATCH
-- **Path:** `/api/permissions/{id}`
-- **Body:** name, guard_name.
-- **Response:** Object permission + message: "Quyền đã được cập nhật!".
+| | |
+|---|---|
+| **Method** | PUT / PATCH |
+| **Path** | `/api/permissions/{id}` |
+| **Body** | `name`, `guard_name`. |
+| **Response** | Object permission + `"message": "Quyền đã được cập nhật!"`. |
 
 ---
 
 ## Xóa permission
 
-- **Method:** DELETE
-- **Path:** `/api/permissions/{id}`
-- **Response:** `{"message": "Quyền đã được xóa!"}`
+| | |
+|---|---|
+| **Method** | DELETE |
+| **Path** | `/api/permissions/{id}` |
+| **Response** | `{ "message": "Quyền đã được xóa!" }`. |
+
+---
+
+## Xóa hàng loạt
+
+| | |
+|---|---|
+| **Method** | POST |
+| **Path** | `/api/permissions/bulk-delete` |
+| **Body** | `ids` (array) — danh sách ID permission. |
+| **Response** | `{ "message": "Đã xóa thành công các quyền được chọn!" }`. |
+
+---
+
+## Xuất Excel
+
+| | |
+|---|---|
+| **Method** | GET |
+| **Path** | `/api/permissions/export` |
+| **Query** | Cùng bộ lọc với index: search, from_date, to_date, sort_by, sort_order, limit. |
+| **Response** | File `permissions.xlsx`. |
+
+---
+
+## Nhập Excel
+
+| | |
+|---|---|
+| **Method** | POST |
+| **Path** | `/api/permissions/import` |
+| **Body** | `file` (required) — xlsx, xls, csv. Cột: name, guard_name. |
+| **Response** | `{ "message": "Import quyền thành công." }`. |
 
 ---
 

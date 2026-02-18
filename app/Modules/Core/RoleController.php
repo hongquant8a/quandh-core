@@ -83,7 +83,7 @@ class RoleController extends Controller
      * Tạo role mới
      *
      * @bodyParam name string required Tên role. Example: admin
-     * @bodyParam guard_name string Guard name (mặc định theo auth.defaults.guard). Example: web
+     * @bodyParam guard_name string Guard name (mặc định api cho RESTful API). Example: api
      * @bodyParam team_id integer ID team (nullable). Example: 1
      * @bodyParam status string Trạng thái: active, inactive. Example: active
      * @bodyParam permission_ids array Danh sách ID permission để sync. Example: [1, 2, 3]
@@ -93,7 +93,7 @@ class RoleController extends Controller
         $data = $request->validated();
         $permissionIds = $data['permission_ids'] ?? null;
         unset($data['permission_ids']);
-        $data['guard_name'] = $data['guard_name'] ?? config('auth.defaults.guard', 'web');
+        $data['guard_name'] = $data['guard_name'] ?? config('auth.defaults.guard', 'api');
         $data['status'] = $data['status'] ?? 'active';
         $role = Role::create($data);
         if (!empty($permissionIds)) {
@@ -108,7 +108,7 @@ class RoleController extends Controller
      *
      * @urlParam role integer required ID role. Example: 1
      * @bodyParam name string Tên role. Example: editor
-     * @bodyParam guard_name string Guard name. Example: web
+     * @bodyParam guard_name string Guard name. Example: api
      * @bodyParam team_id integer ID team (nullable). Example: 1
      * @bodyParam status string Trạng thái: active, inactive. Example: inactive
      * @bodyParam permission_ids array Danh sách ID permission để sync (gửi mảng rỗng để bỏ hết). Example: [1, 2]

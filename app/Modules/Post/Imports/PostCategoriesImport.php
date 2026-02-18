@@ -12,9 +12,6 @@ class PostCategoriesImport implements ToModel, WithHeadingRow
     /**
      * Nhập danh mục theo thứ tự (dòng trước = cha, dòng sau = con khi cùng parent_slug).
      * Cột: name, slug, description, status, sort_order, parent_slug.
-     *
-     * @param array $row
-     * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function model(array $row)
     {
@@ -26,18 +23,13 @@ class PostCategoriesImport implements ToModel, WithHeadingRow
         $slug = $row['slug'] ?? Str::slug($row['name']);
         $slug = PostCategory::uniqueSlugForImport($slug);
 
-        $category = new PostCategory([
-            'name'        => $row['name'],
+        return new PostCategory([
+            'name'        => $row['name'] ?? '',
             'slug'        => $slug,
             'description' => $row['description'] ?? null,
             'status'      => $row['status'] ?? 'active',
             'sort_order'  => (int) ($row['sort_order'] ?? 0),
+            'parent_id'   => $parent?->id,
         ]);
-
-        if ($parent) {
-            $category->appendToNode($parent);
-        }
-
-        return $category;
     }
 }

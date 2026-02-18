@@ -17,7 +17,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Xuất danh sách bài viết'
-      description: 'Áp dụng cùng bộ lọc với index (search, status, category_id, ...).'
+      description: 'Áp dụng cùng bộ lọc với index. Trả về file Excel.'
       authenticated: true
       deprecated: false
     headers:
@@ -26,8 +26,68 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Từ khóa tìm kiếm (tiêu đề).'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Lọc theo trạng thái: draft, published, archived.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      category_id:
+        custom: []
+        name: category_id
+        description: 'Lọc bài viết thuộc danh mục (ID).'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: 'Sắp xếp theo: id, title, created_at, view_count.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự: asc, desc.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: architecto
+      status: architecto
+      category_id: 16
+      sort_by: architecto
+      sort_order: architecto
     bodyParameters:
       search:
         custom: []
@@ -56,7 +116,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-17T11:15:27'
+        example: '2026-02-18T08:05:05'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -67,7 +127,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-12'
+        example: '2052-03-13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -111,8 +171,8 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-17T11:15:27'
-      to_date: '2052-03-12'
+      from_date: '2026-02-18T08:05:05'
+      to_date: '2052-03-13'
       sort_by: 'n'
       sort_order: asc
       limit: 7
@@ -166,7 +226,7 @@ endpoints:
       file:
         custom: []
         name: file
-        description: 'File excel (xlsx, xls, csv).'
+        description: 'File Excel (xlsx, xls, csv). Cột theo chuẩn export.'
         required: true
         example: null
         type: file
@@ -327,10 +387,8 @@ endpoints:
         Quản lý bài viết: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
       subgroup: ''
       subgroupDescription: ''
-      title: 'Thống kê cơ bản'
-      description: |-
-        Tổng số bản ghi, bản ghi đang kích hoạt (published), bản ghi không kích hoạt (draft, archived).
-        Áp dụng cùng bộ lọc với index (search, status, category_id, ...).
+      title: 'Thống kê bài viết'
+      description: 'Tổng số, đang xuất bản (published), không xuất bản (draft, archived). Áp dụng cùng bộ lọc với index.'
       authenticated: true
       deprecated: false
     headers:
@@ -339,8 +397,80 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Từ khóa tìm kiếm (tiêu đề).'
+        required: false
+        example: hello
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Lọc theo trạng thái: draft, published, archived.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      category_id:
+        custom: []
+        name: category_id
+        description: 'Lọc bài viết thuộc danh mục (ID).'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: 'Sắp xếp theo: id, title, created_at, view_count.'
+        required: false
+        example: created_at
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự: asc, desc.'
+        required: false
+        example: desc
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Số bản ghi mỗi trang (1-100).'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: hello
+      status: architecto
+      category_id: 1
+      sort_by: created_at
+      sort_order: desc
+      limit: 10
     bodyParameters:
       search:
         custom: []
@@ -369,7 +499,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-17T11:15:27'
+        example: '2026-02-18T08:05:05'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -380,7 +510,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-12'
+        example: '2052-03-13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -402,7 +532,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: asc
+        example: desc
         type: string
         enumValues:
           - asc
@@ -424,10 +554,10 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-17T11:15:27'
-      to_date: '2052-03-12'
+      from_date: '2026-02-18T08:05:05'
+      to_date: '2052-03-13'
       sort_by: 'n'
-      sort_order: asc
+      sort_order: desc
       limit: 7
     fileParameters: []
     responses:
@@ -494,10 +624,21 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      category_id:
+        custom: []
+        name: category_id
+        description: 'Lọc bài viết thuộc danh mục (ID).'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
       sort_by:
         custom: []
         name: sort_by
-        description: 'Sắp xếp theo: id, title, name, created_at.'
+        description: 'Sắp xếp theo: id, title, created_at, view_count.'
         required: false
         example: created_at
         type: string
@@ -530,6 +671,7 @@ endpoints:
     cleanQueryParameters:
       search: hello
       status: architecto
+      category_id: 1
       sort_by: created_at
       sort_order: desc
       limit: 10
@@ -561,7 +703,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-17T11:15:28'
+        example: '2026-02-18T08:05:05'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -572,7 +714,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-12'
+        example: '2052-03-13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -594,7 +736,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: desc
+        example: asc
         type: string
         enumValues:
           - asc
@@ -616,10 +758,10 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-17T11:15:28'
-      to_date: '2052-03-12'
+      from_date: '2026-02-18T08:05:05'
+      to_date: '2052-03-13'
       sort_by: 'n'
-      sort_order: desc
+      sort_order: asc
       limit: 7
     fileParameters: []
     responses:
@@ -696,7 +838,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":1,"title":"Eveniet libero quas et quod praesentium.","slug":"eveniet-libero-quas-et-quod-praesentium","content":"Ut amet neque unde sit quia inventore ut. Est velit vitae neque aut sed. Sit ea cumque repudiandae aut id.\n\nMinima natus ipsum blanditiis cumque. Quos veritatis enim laudantium laudantium ab a illum. Voluptatibus velit totam laboriosam quae aperiam earum.\n\nId commodi sed alias est illo modi. Eos iste iste debitis ipsum debitis eligendi. Non at dolorum asperiores fuga amet ut nihil. Sed soluta voluptatem nostrum et fugit.","status":"published","view_count":0,"categories":[{"id":6,"name":"Tin c\u00f4ng ngh\u1ec7 - animi","slug":"tin-cong-nghe-animi-699446e9540a9","description":"Alias aut deleniti quia repellendus molestiae deserunt veniam.","status":"active","sort_order":15,"parent_id":1,"depth":null,"created_by":"Prof. Kaylee Prohaska","updated_by":"Prof. Kaylee Prohaska","created_at":"17\/02\/2026 10:46:01","updated_at":"17\/02\/2026 10:46:02"}],"attachments":[],"created_by":"Stefan Bednar DVM","updated_by":"Shannon Kunze","created_at":"17\/02\/2026 10:46:02","updated_at":"17\/02\/2026 10:46:02"}}'
+        content: '{"data":{"id":1,"title":"Culpa reiciendis quasi corrupti qui in sequi.","slug":"culpa-reiciendis-quasi-corrupti-qui-in-sequi","content":"Consequatur aut dolorum sed sed. Et explicabo molestiae et quam illum. Corrupti dicta architecto dignissimos alias ut et. Aut mollitia vel amet eos tempore dignissimos.\n\nEligendi autem eum nostrum culpa eveniet harum. Exercitationem excepturi doloremque et et. Voluptatem magnam asperiores enim totam tempore quisquam et. Suscipit magnam iure eum.\n\nQui suscipit qui et qui. Quibusdam nemo qui nulla ea. Illum qui unde eius.","status":"draft","view_count":0,"categories":[{"id":18,"name":"Gi\u00e1o d\u1ee5c - commodi","slug":"giao-duc-perspiciatis-69956ae8d4bcf","description":"Error est quidem enim quasi suscipit cumque repudiandae sit.","status":"inactive","sort_order":3,"parent_id":5,"depth":1,"created_by":"Nelle Heidenreich","updated_by":"Nelle Heidenreich","created_at":"18\/02\/2026 07:31:52","updated_at":"18\/02\/2026 07:31:52"}],"attachments":[],"created_by":"Dr. Margarette Klocko Jr.","updated_by":"April Reinger IV","created_at":"18\/02\/2026 07:31:52","updated_at":"18\/02\/2026 07:31:52"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -833,13 +975,14 @@ endpoints:
       category_ids:
         custom: []
         name: category_ids
-        description: 'The <code>id</code> of an existing record in the post_categories table.'
+        description: 'Mảng ID danh mục (tối đa 20).'
         required: false
         example:
-          - 16
-        type: 'integer[]'
+          - 1
+          - 2
+        type: 'string[]'
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: false
         deprecated: false
       images:
@@ -854,15 +997,28 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      'images[]':
+        custom: []
+        name: 'images[]'
+        description: 'Ảnh đính kèm (jpeg/png/gif/webp, tối đa 10 ảnh, mỗi ảnh ≤ 5MB).'
+        required: false
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
       title: 'Bài viết mẫu'
       content: 'Nội dung bài viết...'
       status: draft
       category_ids:
-        - 16
+        - 1
+        - 2
     fileParameters:
       images:
         - null
+      'images[]': null
     responses: []
     responseFields: []
     auth:
@@ -958,11 +1114,11 @@ endpoints:
       category_ids:
         custom: []
         name: category_ids
-        description: 'The <code>id</code> of an existing record in the post_categories table.'
+        description: 'Mảng ID danh mục (ghi đè danh sách hiện tại).'
         required: false
         example:
-          - 16
-        type: 'integer[]'
+          - architecto
+        type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
         nullable: false
@@ -982,11 +1138,22 @@ endpoints:
       remove_attachment_ids:
         custom: []
         name: remove_attachment_ids
-        description: 'The <code>id</code> of an existing record in the post_attachments table.'
+        description: 'Mảng ID đính kèm cần xóa.'
         required: false
         example:
-          - 16
-        type: 'integer[]'
+          - architecto
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'images[]':
+        custom: []
+        name: 'images[]'
+        description: 'Ảnh mới (append).'
+        required: false
+        example: null
+        type: file
         enumValues: []
         exampleWasSpecified: false
         nullable: false
@@ -996,12 +1163,13 @@ endpoints:
       content: architecto
       status: architecto
       category_ids:
-        - 16
+        - architecto
       remove_attachment_ids:
-        - 16
+        - architecto
     fileParameters:
       images:
         - null
+      'images[]': null
     responses: []
     responseFields: []
     auth:
@@ -1097,11 +1265,11 @@ endpoints:
       category_ids:
         custom: []
         name: category_ids
-        description: 'The <code>id</code> of an existing record in the post_categories table.'
+        description: 'Mảng ID danh mục (ghi đè danh sách hiện tại).'
         required: false
         example:
-          - 16
-        type: 'integer[]'
+          - architecto
+        type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
         nullable: false
@@ -1121,11 +1289,22 @@ endpoints:
       remove_attachment_ids:
         custom: []
         name: remove_attachment_ids
-        description: 'The <code>id</code> of an existing record in the post_attachments table.'
+        description: 'Mảng ID đính kèm cần xóa.'
         required: false
         example:
-          - 16
-        type: 'integer[]'
+          - architecto
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'images[]':
+        custom: []
+        name: 'images[]'
+        description: 'Ảnh mới (append).'
+        required: false
+        example: null
+        type: file
         enumValues: []
         exampleWasSpecified: false
         nullable: false
@@ -1135,12 +1314,13 @@ endpoints:
       content: architecto
       status: architecto
       category_ids:
-        - 16
+        - architecto
       remove_attachment_ids:
-        - 16
+        - architecto
     fileParameters:
       images:
         - null
+      'images[]': null
     responses: []
     responseFields: []
     auth:

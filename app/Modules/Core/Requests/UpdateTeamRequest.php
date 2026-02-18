@@ -14,12 +14,19 @@ class UpdateTeamRequest extends FormRequest
 
     public function rules(): array
     {
-        $teamId = $this->route('team')?->id;
+        $team = $this->route('team');
+        $teamId = is_object($team) ? $team->id : $team;
         return [
             'name'        => 'sometimes|string|max:255',
             'slug'        => ['nullable', 'string', 'max:255', Rule::unique('teams', 'slug')->ignore($teamId)],
             'description' => 'nullable|string',
             'status'      => 'nullable|in:active,inactive',
+            'parent_id'   => [
+                'nullable',
+                Rule::notIn([$teamId]),
+                Rule::when($this->filled('parent_id') && (int) $this->input('parent_id') !== 0, ['exists:teams,id']),
+            ],
+            'sort_order'  => 'nullable|integer|min:0',
         ];
     }
 }
