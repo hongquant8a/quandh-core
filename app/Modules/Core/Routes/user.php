@@ -3,15 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Modules\Core\UserController;
 
-Route::get('/export', [UserController::class, 'export']);
-Route::post('/import', [UserController::class, 'import']);
-Route::post('/bulk-delete', [UserController::class, 'bulkDestroy']);
-Route::patch('/bulk-status', [UserController::class, 'bulkUpdateStatus']);
-Route::get('/stats', [UserController::class, 'stats']);
-Route::get('/', [UserController::class, 'index']);
-Route::get('/{user}', [UserController::class, 'show']);
-Route::post('/', [UserController::class, 'store']);
-Route::put('/{user}', [UserController::class, 'update']);
-Route::patch('/{user}', [UserController::class, 'update']);
-Route::delete('/{user}', [UserController::class, 'destroy']);
-Route::patch('/{user}/status', [UserController::class, 'changeStatus']);
+Route::get('/export', [UserController::class, 'export'])->middleware('permission:users.export,web');
+Route::post('/import', [UserController::class, 'import'])->middleware('permission:users.import,web');
+Route::post('/bulk-delete', [UserController::class, 'bulkDestroy'])->middleware('permission:users.bulkDestroy,web');
+Route::patch('/bulk-status', [UserController::class, 'bulkUpdateStatus'])->middleware('permission:users.bulkUpdateStatus,web');
+Route::get('/stats', [UserController::class, 'stats'])->middleware('permission:users.stats,web');
+Route::get('/', [UserController::class, 'index'])->middleware('permission:users.index,web');
+Route::get('/{user}', [UserController::class, 'show'])->middleware('permission:users.show,web');
+Route::post('/', [UserController::class, 'store'])->middleware('permission:users.store,web');
+Route::put('/{user}', [UserController::class, 'update'])->middleware('permission:users.update,web');
+Route::patch('/{user}', [UserController::class, 'update'])->middleware('permission:users.update,web');
+Route::delete('/{user}', [UserController::class, 'destroy'])->middleware('permission:users.destroy,web');
+Route::patch('/{user}/status', [UserController::class, 'changeStatus'])->middleware('permission:users.changeStatus,web');

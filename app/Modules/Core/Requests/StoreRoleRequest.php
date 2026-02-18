@@ -14,11 +14,10 @@ class StoreRoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'          => 'required|string|max:255',
-            'guard_name'    => 'nullable|string|max:255',
-            'team_id'       => 'nullable|exists:teams,id',
-            'status'        => 'nullable|in:active,inactive',
-            'permission_ids'   => 'nullable|array',
+            'name'            => 'required|string|max:255',
+            'guard_name'      => 'nullable|string|max:255',
+            'team_id'         => 'nullable|exists:teams,id',
+            'permission_ids'  => 'nullable|array',
             'permission_ids.*' => 'exists:permissions,id',
         ];
     }
@@ -26,9 +25,8 @@ class StoreRoleRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required'  => 'Tên vai trò không được để trống.',
-            'team_id.exists' => 'Team không tồn tại.',
-            'status.in'      => 'Trạng thái chỉ chấp nhận active, inactive.',
+            'name.required'   => 'Tên vai trò không được để trống.',
+            'team_id.exists'  => 'Team không tồn tại.',
         ];
     }
 }

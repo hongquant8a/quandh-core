@@ -157,7 +157,7 @@ Quyền (Spatie Laravel Permission).
 | updated_at | timestamp | Yes | null | |
 
 ### `roles`
-Vai trò (Spatie Laravel Permission, bật teams).
+Vai trò (Spatie Laravel Permission, bật teams). Cấu trúc mặc định Spatie, không có cột status.
 
 | Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
 |-----|------|----------|----------|---------------------|
@@ -165,7 +165,6 @@ Vai trò (Spatie Laravel Permission, bật teams).
 | team_id | bigint unsigned | Yes | null | FK → teams.id (ngữ cảnh team) |
 | name | varchar(255) | No | — | UNIQUE(team_id, name, guard_name) |
 | guard_name | varchar(255) | No | — | |
-| status | varchar(255) | No | 'active' | active, inactive (mở rộng) |
 | created_at | timestamp | Yes | null | |
 | updated_at | timestamp | Yes | null | |
 

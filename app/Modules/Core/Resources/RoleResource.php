@@ -15,7 +15,6 @@ class RoleResource extends JsonResource
             'guard_name'  => $this->guard_name,
             'team_id'     => $this->team_id,
             'team'        => $this->whenLoaded('team', fn () => $this->team ? ['id' => $this->team->id, 'name' => $this->team->name] : null),
-            'status'      => $this->status ?? 'active',
             'permissions' => $this->whenLoaded('permissions', fn () => $this->permissions->pluck('name')),
             'created_at'  => $this->created_at?->format('H:i:s d/m/Y'),
             'updated_at'  => $this->updated_at?->format('H:i:s d/m/Y'),

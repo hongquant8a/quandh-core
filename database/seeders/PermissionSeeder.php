@@ -16,8 +16,8 @@ use Illuminate\Database\Seeder;
  */
 class PermissionSeeder extends Seeder
 {
-    /** Guard cho RESTful API (Spatie permission/role). Trùng với config auth.defaults.guard khi xây dựng API. */
-    protected const GUARD = 'api';
+    /** Guard thống nhất cho Spatie (web + API Sanctum), tránh nhân đôi permission trong DB. */
+    protected const GUARD = 'web';
 
     /**
      * Danh sách đầy đủ permission theo module và resource.
@@ -35,10 +35,10 @@ class PermissionSeeder extends Seeder
             'stats', 'index', 'show', 'store', 'update', 'destroy',
             'bulkDestroy', 'export', 'import',
         ],
-        // Core - Roles
+        // Core - Roles (bảng roles chuẩn Spatie, không có cột status)
         'roles' => [
             'stats', 'index', 'show', 'store', 'update', 'destroy',
-            'bulkDestroy', 'bulkUpdateStatus', 'changeStatus', 'export', 'import',
+            'bulkDestroy', 'export', 'import',
         ],
         // Core - Teams (cấu trúc cây parent_id)
         'teams' => [
@@ -60,11 +60,20 @@ class PermissionSeeder extends Seeder
 
     public function run(): void
     {
+        $this->migrateGuardApiToWeb();
         $this->seedTeams();
         $this->seedPermissions();
         $this->seedRoles();
         $this->assignPermissionsToRoles();
         $this->assignSuperAdminToFirstUser();
+    }
+
+    /** Chuyển permission/role từ guard api sang web (một lần khi đổi chiến lược guard). */
+    protected function migrateGuardApiToWeb(): void
+    {
+        Permission::where('guard_name', 'api')->update(['guard_name' => 'web']);
+        Role::where('guard_name', 'api')->update(['guard_name' => 'web']);
+        app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
     }
 
     /** Tạo team mặc định. */
@@ -103,20 +112,18 @@ class PermissionSeeder extends Seeder
         }
 
         // Tất cả role gắn với team mặc định (model_has_roles.team_id NOT NULL khi bật teams)
-        // Super Admin: toàn quyền, thuộc team mặc định
+        // Super Admin: toàn quyền, thuộc team mặc định (roles chuẩn Spatie, không có status)
         Role::firstOrCreate(
-            ['name' => 'Super Admin', 'guard_name' => self::GUARD, 'team_id' => $defaultTeam->id],
-            ['status' => 'active']
+            ['name' => 'Super Admin', 'guard_name' => self::GUARD, 'team_id' => $defaultTeam->id]
         );
-        // Admin: toàn quyền
         Role::firstOrCreate(
-            ['name' => 'Admin', 'guard_name' => self::GUARD, 'team_id' => $defaultTeam->id],
-            ['status' => 'active']
+            ['name' => 'Admin', 'guard_name' => self::GUARD, 'team_id' => $defaultTeam->id]
         );
-        // Editor: chỉ posts và post-categories
         Role::firstOrCreate(
-            ['name' => 'Editor', 'guard_name' => self::GUARD, 'team_id' => $defaultTeam->id],
-            ['status' => 'active']
+            ['name' => 'Editor', 'guard_name' => self::GUARD, 'team_id' => $defaultTeam->id]
+        );
+        Role::firstOrCreate(
+            ['name' => 'Vai trò mẫu', 'guard_name' => self::GUARD, 'team_id' => $defaultTeam->id]
         );
     }
 
@@ -144,21 +151,40 @@ class PermissionSeeder extends Seeder
         if ($editor) {
             $editor->syncPermissions($editorPermissionNames);
         }
+
+        $samplePermissionNames = $this->getSamplePermissionNames();
+        $sampleRole = Role::where('name', 'Vai trò mẫu')->where('team_id', $defaultTeam->id)->where('guard_name', self::GUARD)->first();
+        if ($sampleRole) {
+            $sampleRole->syncPermissions($samplePermissionNames);
+        }
     }
 
-    /** Gán role Super Admin cho user đầu tiên (id=1). */
+    /** Gán role cho user: user 1 = Super Admin, user 2 = Admin, user 3 = Vai trò mẫu. */
     protected function assignSuperAdminToFirstUser(): void
     {
         $defaultTeam = Team::where('slug', 'default')->first();
         if (! $defaultTeam) {
             return;
         }
-        // Spatie với teams: team_id trong pivot model_has_roles lấy từ setPermissionsTeamId(), không từ role
         setPermissionsTeamId($defaultTeam->id);
-        $user = User::find(1);
+
         $superAdmin = Role::where('name', 'Super Admin')->where('team_id', $defaultTeam->id)->where('guard_name', self::GUARD)->first();
-        if ($user && $superAdmin && ! $user->hasRole($superAdmin)) {
-            $user->assignRole($superAdmin);
+        $admin = Role::where('name', 'Admin')->where('team_id', $defaultTeam->id)->where('guard_name', self::GUARD)->first();
+        $sampleRole = Role::where('name', 'Vai trò mẫu')->where('team_id', $defaultTeam->id)->where('guard_name', self::GUARD)->first();
+
+        $user1 = User::find(1);
+        if ($user1 && $superAdmin && ! $user1->hasRole($superAdmin)) {
+            $user1->assignRole($superAdmin);
+        }
+
+        $user2 = User::find(2);
+        if ($user2 && $admin && ! $user2->hasRole($admin)) {
+            $user2->assignRole($admin);
+        }
+
+        $user3 = User::find(3);
+        if ($user3 && $sampleRole && ! $user3->hasRole($sampleRole)) {
+            $user3->assignRole($sampleRole);
         }
     }
 
@@ -184,5 +210,20 @@ class PermissionSeeder extends Seeder
             }
         }
         return $names;
+    }
+
+    /** Permission cho Vai trò mẫu: chỉ xem bài viết và danh mục (index, show, tree, stats, incrementView). */
+    protected function getSamplePermissionNames(): array
+    {
+        return [
+            'posts.stats',
+            'posts.index',
+            'posts.show',
+            'posts.incrementView',
+            'post-categories.stats',
+            'post-categories.index',
+            'post-categories.tree',
+            'post-categories.show',
+        ];
     }
 }

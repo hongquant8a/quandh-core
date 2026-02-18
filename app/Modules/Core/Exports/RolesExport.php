@@ -21,7 +21,6 @@ class RolesExport implements FromCollection, WithHeadings
             'guard_name' => $r->guard_name,
             'team_id'    => $r->team_id,
             'team_name'  => $r->team?->name ?? 'N/A',
-            'status'     => $r->status ?? 'active',
             'created_at' => $r->created_at?->format('H:i:s d/m/Y'),
             'updated_at' => $r->updated_at?->format('H:i:s d/m/Y'),
         ]);
@@ -29,6 +28,6 @@ class RolesExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ['ID', 'Name', 'Guard Name', 'Team ID', 'Team Name', 'Status', 'Created At', 'Updated At'];
+        return ['ID', 'Name', 'Guard Name', 'Team ID', 'Team Name', 'Created At', 'Updated At'];
     }
 }

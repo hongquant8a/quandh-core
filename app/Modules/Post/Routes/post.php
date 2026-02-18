@@ -3,17 +3,16 @@
 use Illuminate\Support\Facades\Route;
 use App\Modules\Post\PostController;
 
-Route::get('/export', [PostController::class, 'export']);
-Route::post('/import', [PostController::class, 'import']);
-
-Route::post('/bulk-delete', [PostController::class, 'bulkDestroy']);
-Route::patch('/bulk-status', [PostController::class, 'bulkUpdateStatus']);
-Route::get('/stats', [PostController::class, 'stats']);
-Route::get('/', [PostController::class, 'index']);
-Route::get('/{post}', [PostController::class, 'show']);
-Route::post('/{post}/view', [PostController::class, 'incrementView']);
-Route::post('/', [PostController::class, 'store']);
-Route::put('/{post}', [PostController::class, 'update']);
-Route::patch('/{post}', [PostController::class, 'update']);
-Route::delete('/{post}', [PostController::class, 'destroy']);
-Route::patch('/{post}/status', [PostController::class, 'changeStatus']);
+Route::get('/export', [PostController::class, 'export'])->middleware('permission:posts.export,web');
+Route::post('/import', [PostController::class, 'import'])->middleware('permission:posts.import,web');
+Route::post('/bulk-delete', [PostController::class, 'bulkDestroy'])->middleware('permission:posts.bulkDestroy,web');
+Route::patch('/bulk-status', [PostController::class, 'bulkUpdateStatus'])->middleware('permission:posts.bulkUpdateStatus,web');
+Route::get('/stats', [PostController::class, 'stats'])->middleware('permission:posts.stats,web');
+Route::get('/', [PostController::class, 'index'])->middleware('permission:posts.index,web');
+Route::get('/{post}', [PostController::class, 'show'])->middleware('permission:posts.show,web');
+Route::post('/{post}/view', [PostController::class, 'incrementView'])->middleware('permission:posts.incrementView,web');
+Route::post('/', [PostController::class, 'store'])->middleware('permission:posts.store,web');
+Route::put('/{post}', [PostController::class, 'update'])->middleware('permission:posts.update,web');
+Route::patch('/{post}', [PostController::class, 'update'])->middleware('permission:posts.update,web');
+Route::delete('/{post}', [PostController::class, 'destroy'])->middleware('permission:posts.destroy,web');
+Route::patch('/{post}/status', [PostController::class, 'changeStatus'])->middleware('permission:posts.changeStatus,web');

@@ -1,6 +1,6 @@
 # API Role (Core)
 
-Quản lý vai trò (role): thống kê, danh sách, chi tiết, CRUD, xóa/bulk status, đổi trạng thái, xuất/nhập Excel. Role gắn với team và danh sách permission.
+Quản lý vai trò (role) theo chuẩn Spatie Laravel Permission: thống kê, danh sách, chi tiết, CRUD, xóa hàng loạt, xuất/nhập Excel. Bảng roles chỉ có các cột mặc định (id, name, guard_name, team_id, timestamps), không có cột status.
 
 **Base path:** `/api/roles`
 
@@ -12,8 +12,8 @@ Quản lý vai trò (role): thống kê, danh sách, chi tiết, CRUD, xóa/bulk
 |---|---|
 | **Method** | GET |
 | **Path** | `/api/roles/stats` |
-| **Query** | `search` (name, guard_name), `status` (active \| inactive), `from_date` (Y-m-d), `to_date` (Y-m-d), `sort_by`, `sort_order`, `limit` (1-100). Cùng bộ lọc với index. |
-| **Response** | `{ "total": 20, "active": 18, "inactive": 2 }`. |
+| **Query** | `search` (name, guard_name), `from_date` (Y-m-d), `to_date` (Y-m-d), `sort_by`, `sort_order`, `limit` (1-100). Cùng bộ lọc với index. |
+| **Response** | `{ "total": 20 }`. |
 
 ---
 
@@ -23,7 +23,7 @@ Quản lý vai trò (role): thống kê, danh sách, chi tiết, CRUD, xóa/bulk
 |---|---|
 | **Method** | GET |
 | **Path** | `/api/roles` |
-| **Query** | `search`, `status`, `from_date`, `to_date`, `sort_by` (id \| name \| guard_name \| status \| created_at \| updated_at), `sort_order` (asc \| desc), `limit` (1-100). |
+| **Query** | `search`, `from_date`, `to_date`, `sort_by` (id \| name \| guard_name \| created_at \| updated_at), `sort_order` (asc \| desc), `limit` (1-100). |
 | **Response** | Paginated collection (RoleResource), mỗi item có `team`, `permissions`. |
 
 ---
@@ -45,7 +45,7 @@ Quản lý vai trò (role): thống kê, danh sách, chi tiết, CRUD, xóa/bulk
 |---|---|
 | **Method** | POST |
 | **Path** | `/api/roles` |
-| **Body** | `name` (required), `guard_name` (optional), `team_id` (optional), `status` (optional: active \| inactive), `permission_ids` (optional, array ID permission). |
+| **Body** | `name` (required), `guard_name` (optional), `team_id` (optional), `permission_ids` (optional, array ID permission). |
 | **Response** | 201, object role + `"message": "Vai trò đã được tạo thành công!"`. |
 
 ---
@@ -56,7 +56,7 @@ Quản lý vai trò (role): thống kê, danh sách, chi tiết, CRUD, xóa/bulk
 |---|---|
 | **Method** | PUT / PATCH |
 | **Path** | `/api/roles/{id}` |
-| **Body** | `name`, `guard_name`, `team_id`, `status`, `permission_ids` (sync danh sách quyền). |
+| **Body** | `name`, `guard_name`, `team_id`, `permission_ids` (sync danh sách quyền). |
 | **Response** | Object role + `"message": "Vai trò đã được cập nhật!"`. |
 
 ---
@@ -82,35 +82,13 @@ Quản lý vai trò (role): thống kê, danh sách, chi tiết, CRUD, xóa/bulk
 
 ---
 
-## Cập nhật trạng thái hàng loạt
-
-| | |
-|---|---|
-| **Method** | PATCH |
-| **Path** | `/api/roles/bulk-status` |
-| **Body** | `ids` (array), `status` (required: active \| inactive). |
-| **Response** | `{ "message": "Cập nhật trạng thái vai trò thành công." }`. |
-
----
-
-## Đổi trạng thái role
-
-| | |
-|---|---|
-| **Method** | PATCH |
-| **Path** | `/api/roles/{id}/status` |
-| **Body** | `status` (required: active \| inactive). |
-| **Response** | `{ "message": "Cập nhật trạng thái thành công!", "data": RoleResource }`. |
-
----
-
 ## Xuất Excel
 
 | | |
 |---|---|
 | **Method** | GET |
 | **Path** | `/api/roles/export` |
-| **Query** | Cùng bộ lọc với index: search, status, from_date, to_date, sort_by, sort_order, limit. |
+| **Query** | Cùng bộ lọc với index: search, from_date, to_date, sort_by, sort_order, limit. |
 | **Response** | File `roles.xlsx`. |
 
 ---
@@ -121,7 +99,7 @@ Quản lý vai trò (role): thống kê, danh sách, chi tiết, CRUD, xóa/bulk
 |---|---|
 | **Method** | POST |
 | **Path** | `/api/roles/import` |
-| **Body** | `file` (required) — xlsx, xls, csv. Cột: name, guard_name, team_id, status. |
+| **Body** | `file` (required) — xlsx, xls, csv. Cột: name, guard_name, team_id. |
 | **Response** | `{ "message": "Import vai trò thành công." }`. |
 
 ---
@@ -135,7 +113,6 @@ Quản lý vai trò (role): thống kê, danh sách, chi tiết, CRUD, xóa/bulk
   "guard_name": "web",
   "team_id": 1,
   "team": { "id": 1, "name": "Công ty A" },
-  "status": "active",
   "permissions": ["posts.create", "posts.update"],
   "created_at": "14:30:00 17/02/2026",
   "updated_at": "14:30:00 17/02/2026"

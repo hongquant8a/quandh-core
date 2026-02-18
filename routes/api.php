@@ -2,13 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Auth module - public routes
+// Auth module - public routes (đăng nhập, quên mật khẩu, đặt lại mật khẩu)
 Route::prefix('auth')->group(function () {
     require base_path('app/Modules/Auth/Routes/auth.php');
 });
 
-// Protected routes
-// Route::middleware('auth:sanctum')->group(function () {
+// Route yêu cầu đăng nhập (Bearer token) và đặt ngữ cảnh team cho Spatie Permission
+Route::middleware(['auth:sanctum', 'set.permissions.team'])->group(function () {
     Route::get('/user', fn (\Illuminate\Http\Request $request) => $request->user());
 
     Route::prefix('users')->group(function () {
@@ -29,4 +29,4 @@ Route::prefix('auth')->group(function () {
     Route::prefix('teams')->group(function () {
         require base_path('app/Modules/Core/Routes/team.php');
     });
-// });
+});
