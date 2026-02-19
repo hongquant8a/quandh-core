@@ -128,7 +128,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-18T08:05:06'
+        example: '2026-02-19T12:40:20'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -139,7 +139,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-13'
+        example: '2052-03-14'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -183,8 +183,8 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-18T08:05:06'
-      to_date: '2052-03-13'
+      from_date: '2026-02-19T12:40:20'
+      to_date: '2052-03-14'
       sort_by: 'n'
       sort_order: desc
       limit: 7
@@ -192,13 +192,11 @@ endpoints:
     responses:
       -
         custom: []
-        status: 200
-        content: ''
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
-          cache-control: public
-          content-disposition: 'attachment; filename=teams.xlsx'
-          content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-          accept-ranges: bytes
+          cache-control: 'no-cache, private'
+          content-type: application/json
           access-control-allow-origin: '*'
         description: null
     responseFields: []
@@ -517,7 +515,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-18T08:05:06'
+        example: '2026-02-19T12:40:20'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -528,7 +526,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-13'
+        example: '2052-03-14'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -572,8 +570,8 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-18T08:05:06'
-      to_date: '2052-03-13'
+      from_date: '2026-02-19T12:40:20'
+      to_date: '2052-03-14'
       sort_by: 'n'
       sort_order: asc
       limit: 7
@@ -581,8 +579,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 200
-        content: '{"total":0,"active":0,"inactive":0}'
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -639,8 +637,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 200
-        content: '{"data":[]}'
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -791,7 +789,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-18T08:05:06'
+        example: '2026-02-19T12:40:20'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -802,7 +800,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-13'
+        example: '2052-03-14'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -824,7 +822,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: asc
+        example: desc
         type: string
         enumValues:
           - asc
@@ -846,17 +844,17 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-18T08:05:06'
-      to_date: '2052-03-13'
+      from_date: '2026-02-19T12:40:20'
+      to_date: '2052-03-14'
       sort_by: 'n'
-      sort_order: asc
+      sort_order: desc
       limit: 7
     fileParameters: []
     responses:
       -
         custom: []
-        status: 200
-        content: '{"data":[],"links":{"first":"http:\/\/localhost\/api\/teams?page=1","last":"http:\/\/localhost\/api\/teams?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":null,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost\/api\/teams?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"http:\/\/localhost\/api\/teams","per_page":7,"to":null,"total":0}}'
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -925,8 +923,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 200
-        content: '{"data":{"id":1,"name":"Default","slug":"default","description":"Team m\u1eb7c \u0111\u1ecbnh c\u1ee7a h\u1ec7 th\u1ed1ng","status":"active","parent_id":null,"sort_order":0,"depth":0,"created_by":"N\/A","updated_by":"N\/A","created_at":"07:31:53 18\/02\/2026","updated_at":"07:31:53 18\/02\/2026","parent":null,"children":[]}}'
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json

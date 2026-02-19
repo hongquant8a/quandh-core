@@ -118,7 +118,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-18T08:05:04'
+        example: '2026-02-19T12:40:19'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -129,7 +129,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-13'
+        example: '2052-03-14'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -151,7 +151,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: desc
+        example: asc
         type: string
         enumValues:
           - asc
@@ -173,22 +173,20 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-18T08:05:04'
-      to_date: '2052-03-13'
+      from_date: '2026-02-19T12:40:19'
+      to_date: '2052-03-14'
       sort_by: 'n'
-      sort_order: desc
+      sort_order: asc
       limit: 7
     fileParameters: []
     responses:
       -
         custom: []
-        status: 200
-        content: ''
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
-          cache-control: public
-          content-disposition: 'attachment; filename=users.xlsx'
-          content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-          accept-ranges: bytes
+          cache-control: 'no-cache, private'
+          content-type: application/json
           access-control-allow-origin: '*'
         description: null
     responseFields: []
@@ -483,7 +481,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-18T08:05:05'
+        example: '2026-02-19T12:40:19'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -494,7 +492,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-13'
+        example: '2052-03-14'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -516,7 +514,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: asc
+        example: desc
         type: string
         enumValues:
           - asc
@@ -538,17 +536,17 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-18T08:05:05'
-      to_date: '2052-03-13'
+      from_date: '2026-02-19T12:40:19'
+      to_date: '2052-03-14'
       sort_by: 'n'
-      sort_order: asc
+      sort_order: desc
       limit: 7
     fileParameters: []
     responses:
       -
         custom: []
-        status: 200
-        content: '{"total":0,"active":0,"inactive":0}'
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -675,7 +673,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-18T08:05:05'
+        example: '2026-02-19T12:40:19'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -686,7 +684,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-13'
+        example: '2052-03-14'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -708,7 +706,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: desc
+        example: asc
         type: string
         enumValues:
           - asc
@@ -730,17 +728,17 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-18T08:05:05'
-      to_date: '2052-03-13'
+      from_date: '2026-02-19T12:40:19'
+      to_date: '2052-03-14'
       sort_by: 'n'
-      sort_order: desc
+      sort_order: asc
       limit: 7
     fileParameters: []
     responses:
       -
         custom: []
-        status: 200
-        content: '{"data":[],"links":{"first":"http:\/\/localhost\/api\/users?page=1","last":"http:\/\/localhost\/api\/users?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":null,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost\/api\/users?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"http:\/\/localhost\/api\/users","per_page":7,"to":null,"total":0}}'
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -809,8 +807,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 200
-        content: '{"data":{"id":1,"name":"Nelle Heidenreich","email":"flo.schiller@example.com","status":"active","created_by":"Nelle Heidenreich","updated_by":"Nelle Heidenreich","created_at":"18\/02\/2026 07:31:52","updated_at":"18\/02\/2026 07:31:52"}}'
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -976,7 +974,7 @@ endpoints:
         name: name
         description: 'Tên người dùng.'
         required: false
-        example: architecto
+        example: nihil
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1027,7 +1025,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: architecto
+      name: nihil
       email: gbailey@example.net
       password: '|]|{+-'
       status: architecto

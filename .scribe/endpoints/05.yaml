@@ -116,7 +116,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-18T08:05:05'
+        example: '2026-02-19T12:40:20'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -127,7 +127,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-13'
+        example: '2052-03-14'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -171,8 +171,8 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-18T08:05:05'
-      to_date: '2052-03-13'
+      from_date: '2026-02-19T12:40:20'
+      to_date: '2052-03-14'
       sort_by: 'n'
       sort_order: asc
       limit: 7
@@ -180,13 +180,11 @@ endpoints:
     responses:
       -
         custom: []
-        status: 200
-        content: ''
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
-          cache-control: public
-          content-disposition: 'attachment; filename=permissions.xlsx'
-          content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-          accept-ranges: bytes
+          cache-control: 'no-cache, private'
+          content-type: application/json
           access-control-allow-origin: '*'
         description: null
     responseFields: []
@@ -226,7 +224,7 @@ endpoints:
       file:
         custom: []
         name: file
-        description: 'File excel (xlsx, xls, csv). Cột: name, guard_name.'
+        description: 'File excel (xlsx, xls, csv). Cột: name, guard_name, description, sort_order, parent_id.'
         required: true
         example: null
         type: file
@@ -328,7 +326,7 @@ endpoints:
       search:
         custom: []
         name: search
-        description: 'Từ khóa tìm kiếm (name, guard_name).'
+        description: 'Từ khóa tìm kiếm (name, guard_name, description).'
         required: false
         example: posts
         type: string
@@ -426,7 +424,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-18T08:05:05'
+        example: '2026-02-19T12:40:20'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -437,7 +435,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-13'
+        example: '2052-03-14'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -481,8 +479,8 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-18T08:05:05'
-      to_date: '2052-03-13'
+      from_date: '2026-02-19T12:40:20'
+      to_date: '2052-03-14'
       sort_by: 'n'
       sort_order: desc
       limit: 7
@@ -490,8 +488,66 @@ endpoints:
     responses:
       -
         custom: []
-        status: 200
-        content: '{"total":0}'
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/permissions/tree
+    metadata:
+      custom: []
+      groupName: 'Core - Permission'
+      groupDescription: |-
+
+        Quản lý quyền (permission): stats, index, show, store, update, destroy, bulk delete, export, import.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Cây permission (toàn bộ cây, không phân trang). Để hiển thị nhóm quyền trên frontend.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      parent_id:
+        custom: []
+        name: parent_id
+        description: 'Lọc theo parent_id (null = gốc).'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      parent_id: null
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -532,7 +588,7 @@ endpoints:
       search:
         custom: []
         name: search
-        description: 'Từ khóa tìm kiếm (name, guard_name).'
+        description: 'Từ khóa tìm kiếm (name, guard_name, description).'
         required: false
         example: posts
         type: string
@@ -565,9 +621,9 @@ endpoints:
       sort_by:
         custom: []
         name: sort_by
-        description: 'Sắp xếp theo: id, name, guard_name, created_at, updated_at.'
+        description: 'Sắp xếp theo: id, name, guard_name, description, sort_order, parent_id, created_at, updated_at.'
         required: false
-        example: id
+        example: sort_order
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -578,7 +634,7 @@ endpoints:
         name: sort_order
         description: 'Thứ tự: asc, desc.'
         required: false
-        example: desc
+        example: asc
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -599,8 +655,8 @@ endpoints:
       search: posts
       from_date: '2026-02-01'
       to_date: '2026-02-17'
-      sort_by: id
-      sort_order: desc
+      sort_by: sort_order
+      sort_order: asc
       limit: 10
     bodyParameters:
       search:
@@ -630,7 +686,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-18T08:05:05'
+        example: '2026-02-19T12:40:20'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -641,7 +697,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-13'
+        example: '2052-03-14'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -663,7 +719,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: asc
+        example: desc
         type: string
         enumValues:
           - asc
@@ -685,17 +741,17 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-18T08:05:05'
-      to_date: '2052-03-13'
+      from_date: '2026-02-19T12:40:20'
+      to_date: '2052-03-14'
       sort_by: 'n'
-      sort_order: asc
+      sort_order: desc
       limit: 7
     fileParameters: []
     responses:
       -
         custom: []
-        status: 200
-        content: '{"data":[],"links":{"first":"http:\/\/localhost\/api\/permissions?page=1","last":"http:\/\/localhost\/api\/permissions?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":null,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost\/api\/permissions?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"http:\/\/localhost\/api\/permissions","per_page":7,"to":null,"total":0}}'
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -764,8 +820,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 200
-        content: '{"data":{"id":1,"name":"users.stats","guard_name":"api","created_at":"07:31:54 18\/02\/2026","updated_at":"07:31:54 18\/02\/2026"}}'
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -819,17 +875,53 @@ endpoints:
       guard_name:
         custom: []
         name: guard_name
-        description: 'Guard name (mặc định api cho RESTful API).'
+        description: 'Guard name (mặc định web).'
         required: false
-        example: api
+        example: web
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: true
         deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'Mô tả hiển thị trên frontend.'
+        required: false
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự sắp xếp.'
+        required: false
+        example: 0
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      parent_id:
+        custom: []
+        name: parent_id
+        description: 'ID permission cha (null = gốc/nhóm).'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       name: posts.create
-      guard_name: api
+      guard_name: web
+      description: 'Eius et animi quos velit et.'
+      sort_order: 0
+      parent_id: 16
     fileParameters: []
     responses: []
     responseFields: []
@@ -906,15 +998,51 @@ endpoints:
         name: guard_name
         description: 'Guard name.'
         required: false
-        example: api
+        example: web
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: true
         deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'Mô tả.'
+        required: false
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự sắp xếp.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      parent_id:
+        custom: []
+        name: parent_id
+        description: 'ID permission cha (null = gốc).'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       name: posts.update
-      guard_name: api
+      guard_name: web
+      description: 'Eius et animi quos velit et.'
+      sort_order: 16
+      parent_id: 16
     fileParameters: []
     responses: []
     responseFields: []
@@ -991,15 +1119,51 @@ endpoints:
         name: guard_name
         description: 'Guard name.'
         required: false
-        example: api
+        example: web
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: true
         deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'Mô tả.'
+        required: false
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự sắp xếp.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      parent_id:
+        custom: []
+        name: parent_id
+        description: 'ID permission cha (null = gốc).'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       name: posts.update
-      guard_name: api
+      guard_name: web
+      description: 'Eius et animi quos velit et.'
+      sort_order: 16
+      parent_id: 16
     fileParameters: []
     responses: []
     responseFields: []

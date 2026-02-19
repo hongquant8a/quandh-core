@@ -43,4 +43,5 @@
 - **Seed Permission (phân quyền)**:
     - Danh sách permission chuẩn nằm trong `database/seeders/PermissionSeeder.php` (mảng `PERMISSIONS`: resource => [actions]).
     - **Khi có thay đổi hoặc bổ sung chức năng**: thêm module mới (resource mới) hoặc thêm action mới vào controller (ví dụ: thêm action `duplicate`) thì **bắt buộc** cập nhật mảng permission trong PermissionSeeder cho đầy đủ (thêm resource hoặc thêm action vào resource tương ứng), sau đó chạy `sail artisan db:seed --class=PermissionSeeder` (hoặc migrate:fresh --seed) để đồng bộ quyền.
-    - Định dạng permission: `{resource}.{action}` (resource trùng prefix API: users, permissions, roles, teams, posts, post-categories; action: stats, index, show, store, update, destroy, bulkDestroy, bulkUpdateStatus, changeStatus, export, import, và action đặc thù như tree, incrementView).
+    - Định dạng permission: `{resource}.{action}` (resource trùng prefix API: users, permissions, roles, teams, posts, post-categories).
+    - **Guard**: Dùng guard 'web' cho cả web và API Sanctum (đồng bộ với Spatie Permission).

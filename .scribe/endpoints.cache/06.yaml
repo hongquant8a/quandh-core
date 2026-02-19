@@ -3,7 +3,7 @@
 name: 'Core - Role'
 description: |-
 
-  Quản lý vai trò (role): stats, index, show, store, update, destroy, bulk delete, bulk status, change status, export, import.
+  Quản lý vai trò (role) theo Spatie: stats, index, show, store, update, destroy, bulk delete, export, import.
 endpoints:
   -
     custom: []
@@ -15,7 +15,7 @@ endpoints:
       groupName: 'Core - Role'
       groupDescription: |-
 
-        Quản lý vai trò (role): stats, index, show, store, update, destroy, bulk delete, bulk status, change status, export, import.
+        Quản lý vai trò (role) theo Spatie: stats, index, show, store, update, destroy, bulk delete, export, import.
       subgroup: ''
       subgroupDescription: ''
       title: 'Xuất danh sách role'
@@ -33,17 +33,6 @@ endpoints:
         custom: []
         name: search
         description: 'Từ khóa tìm kiếm (name, guard_name).'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: 'Lọc theo trạng thái: active, inactive.'
         required: false
         example: architecto
         type: string
@@ -76,7 +65,7 @@ endpoints:
       sort_by:
         custom: []
         name: sort_by
-        description: 'Sắp xếp theo: id, name, guard_name, status, created_at, updated_at.'
+        description: 'Sắp xếp theo: id, name, guard_name, created_at, updated_at.'
         required: false
         example: architecto
         type: string
@@ -97,7 +86,6 @@ endpoints:
         deprecated: false
     cleanQueryParameters:
       search: architecto
-      status: architecto
       from_date: architecto
       to_date: architecto
       sort_by: architecto
@@ -130,7 +118,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-18T08:05:05'
+        example: '2026-02-19T12:40:20'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -141,7 +129,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-13'
+        example: '2052-03-14'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -163,7 +151,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: asc
+        example: desc
         type: string
         enumValues:
           - asc
@@ -185,22 +173,20 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-18T08:05:05'
-      to_date: '2052-03-13'
+      from_date: '2026-02-19T12:40:20'
+      to_date: '2052-03-14'
       sort_by: 'n'
-      sort_order: asc
+      sort_order: desc
       limit: 7
     fileParameters: []
     responses:
       -
         custom: []
-        status: 200
-        content: ''
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
-          cache-control: public
-          content-disposition: 'attachment; filename=roles.xlsx'
-          content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-          accept-ranges: bytes
+          cache-control: 'no-cache, private'
+          content-type: application/json
           access-control-allow-origin: '*'
         description: null
     responseFields: []
@@ -221,7 +207,7 @@ endpoints:
       groupName: 'Core - Role'
       groupDescription: |-
 
-        Quản lý vai trò (role): stats, index, show, store, update, destroy, bulk delete, bulk status, change status, export, import.
+        Quản lý vai trò (role) theo Spatie: stats, index, show, store, update, destroy, bulk delete, export, import.
       subgroup: ''
       subgroupDescription: ''
       title: 'Nhập danh sách role'
@@ -240,7 +226,7 @@ endpoints:
       file:
         custom: []
         name: file
-        description: 'File excel (xlsx, xls, csv). Cột: name, guard_name, team_id, status.'
+        description: 'File excel (xlsx, xls, csv). Cột: name, guard_name, team_id.'
         required: true
         example: null
         type: file
@@ -270,7 +256,7 @@ endpoints:
       groupName: 'Core - Role'
       groupDescription: |-
 
-        Quản lý vai trò (role): stats, index, show, store, update, destroy, bulk delete, bulk status, change status, export, import.
+        Quản lý vai trò (role) theo Spatie: stats, index, show, store, update, destroy, bulk delete, export, import.
       subgroup: ''
       subgroupDescription: ''
       title: 'Xóa hàng loạt role'
@@ -318,73 +304,6 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - PATCH
-    uri: api/roles/bulk-status
-    metadata:
-      custom: []
-      groupName: 'Core - Role'
-      groupDescription: |-
-
-        Quản lý vai trò (role): stats, index, show, store, update, destroy, bulk delete, bulk status, change status, export, import.
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Cập nhật trạng thái role hàng loạt'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      ids:
-        custom: []
-        name: ids
-        description: 'Danh sách ID.'
-        required: true
-        example:
-          - 1
-          - 2
-          - 3
-        type: 'string[]'
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: 'Trạng thái: active, inactive.'
-        required: true
-        example: active
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      ids:
-        - 1
-        - 2
-        - 3
-      status: active
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
       - GET
     uri: api/roles/stats
     metadata:
@@ -392,11 +311,11 @@ endpoints:
       groupName: 'Core - Role'
       groupDescription: |-
 
-        Quản lý vai trò (role): stats, index, show, store, update, destroy, bulk delete, bulk status, change status, export, import.
+        Quản lý vai trò (role) theo Spatie: stats, index, show, store, update, destroy, bulk delete, export, import.
       subgroup: ''
       subgroupDescription: ''
       title: 'Thống kê role'
-      description: 'Tổng số, đang kích hoạt (active), không kích hoạt (inactive). Áp dụng cùng bộ lọc với index.'
+      description: 'Tổng số bản ghi (áp dụng cùng bộ lọc với index). Role không có cột status (chuẩn Spatie).'
       authenticated: true
       deprecated: false
     headers:
@@ -415,17 +334,6 @@ endpoints:
         type: string
         enumValues: []
         exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: 'Lọc theo trạng thái: active, inactive.'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
         nullable: false
         deprecated: false
       from_date:
@@ -453,7 +361,7 @@ endpoints:
       sort_by:
         custom: []
         name: sort_by
-        description: 'Sắp xếp theo: id, name, guard_name, status, created_at, updated_at.'
+        description: 'Sắp xếp theo: id, name, guard_name, created_at, updated_at.'
         required: false
         example: created_at
         type: string
@@ -485,7 +393,6 @@ endpoints:
         deprecated: false
     cleanQueryParameters:
       search: admin
-      status: architecto
       from_date: '2026-02-01'
       to_date: '2026-02-17'
       sort_by: created_at
@@ -519,7 +426,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-18T08:05:05'
+        example: '2026-02-19T12:40:20'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -530,7 +437,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-13'
+        example: '2052-03-14'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -574,8 +481,8 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-18T08:05:05'
-      to_date: '2052-03-13'
+      from_date: '2026-02-19T12:40:20'
+      to_date: '2052-03-14'
       sort_by: 'n'
       sort_order: asc
       limit: 7
@@ -583,8 +490,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 200
-        content: '{"total":0,"active":0,"inactive":0}'
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -608,7 +515,7 @@ endpoints:
       groupName: 'Core - Role'
       groupDescription: |-
 
-        Quản lý vai trò (role): stats, index, show, store, update, destroy, bulk delete, bulk status, change status, export, import.
+        Quản lý vai trò (role) theo Spatie: stats, index, show, store, update, destroy, bulk delete, export, import.
       subgroup: ''
       subgroupDescription: ''
       title: 'Danh sách role'
@@ -631,17 +538,6 @@ endpoints:
         type: string
         enumValues: []
         exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: 'Lọc theo trạng thái: active, inactive.'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
         nullable: false
         deprecated: false
       from_date:
@@ -669,7 +565,7 @@ endpoints:
       sort_by:
         custom: []
         name: sort_by
-        description: 'Sắp xếp theo: id, name, guard_name, status, created_at, updated_at.'
+        description: 'Sắp xếp theo: id, name, guard_name, created_at, updated_at.'
         required: false
         example: id
         type: string
@@ -701,7 +597,6 @@ endpoints:
         deprecated: false
     cleanQueryParameters:
       search: admin
-      status: architecto
       from_date: '2026-02-01'
       to_date: '2026-02-17'
       sort_by: id
@@ -735,7 +630,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-18T08:05:05'
+        example: '2026-02-19T12:40:20'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -746,7 +641,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-13'
+        example: '2052-03-14'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -768,7 +663,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: desc
+        example: asc
         type: string
         enumValues:
           - asc
@@ -790,17 +685,17 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-18T08:05:05'
-      to_date: '2052-03-13'
+      from_date: '2026-02-19T12:40:20'
+      to_date: '2052-03-14'
       sort_by: 'n'
-      sort_order: desc
+      sort_order: asc
       limit: 7
     fileParameters: []
     responses:
       -
         custom: []
-        status: 200
-        content: '{"data":[],"links":{"first":"http:\/\/localhost\/api\/roles?page=1","last":"http:\/\/localhost\/api\/roles?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":null,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost\/api\/roles?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"http:\/\/localhost\/api\/roles","per_page":7,"to":null,"total":0}}'
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -824,7 +719,7 @@ endpoints:
       groupName: 'Core - Role'
       groupDescription: |-
 
-        Quản lý vai trò (role): stats, index, show, store, update, destroy, bulk delete, bulk status, change status, export, import.
+        Quản lý vai trò (role) theo Spatie: stats, index, show, store, update, destroy, bulk delete, export, import.
       subgroup: ''
       subgroupDescription: ''
       title: 'Chi tiết role'
@@ -869,8 +764,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 200
-        content: '{"data":{"id":1,"name":"Super Admin","guard_name":"api","team_id":1,"team":{"id":1,"name":"Default"},"status":"active","permissions":["users.stats","users.index","users.show","users.store","users.update","users.destroy","users.bulkDestroy","users.bulkUpdateStatus","users.changeStatus","users.export","users.import","permissions.stats","permissions.index","permissions.show","permissions.store","permissions.update","permissions.destroy","permissions.bulkDestroy","permissions.export","permissions.import","roles.stats","roles.index","roles.show","roles.store","roles.update","roles.destroy","roles.bulkDestroy","roles.bulkUpdateStatus","roles.changeStatus","roles.export","roles.import","teams.stats","teams.index","teams.tree","teams.show","teams.store","teams.update","teams.destroy","teams.bulkDestroy","teams.bulkUpdateStatus","teams.changeStatus","teams.export","teams.import","posts.stats","posts.index","posts.show","posts.store","posts.update","posts.destroy","posts.bulkDestroy","posts.bulkUpdateStatus","posts.changeStatus","posts.export","posts.import","posts.incrementView","post-categories.stats","post-categories.index","post-categories.tree","post-categories.show","post-categories.store","post-categories.update","post-categories.destroy","post-categories.bulkDestroy","post-categories.bulkUpdateStatus","post-categories.changeStatus","post-categories.export","post-categories.import"],"created_at":"07:31:54 18\/02\/2026","updated_at":"07:31:54 18\/02\/2026"}}'
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -894,7 +789,7 @@ endpoints:
       groupName: 'Core - Role'
       groupDescription: |-
 
-        Quản lý vai trò (role): stats, index, show, store, update, destroy, bulk delete, bulk status, change status, export, import.
+        Quản lý vai trò (role) theo Spatie: stats, index, show, store, update, destroy, bulk delete, export, import.
       subgroup: ''
       subgroupDescription: ''
       title: 'Tạo role mới'
@@ -924,9 +819,9 @@ endpoints:
       guard_name:
         custom: []
         name: guard_name
-        description: 'Guard name (mặc định api cho RESTful API).'
+        description: 'Guard name (mặc định web).'
         required: false
-        example: api
+        example: web
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -935,21 +830,10 @@ endpoints:
       team_id:
         custom: []
         name: team_id
-        description: 'ID team (nullable).'
+        description: 'ID team (nullable khi bật teams).'
         required: false
         example: 1
         type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: 'Trạng thái: active, inactive.'
-        required: false
-        example: active
-        type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: true
@@ -970,9 +854,8 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       name: admin
-      guard_name: api
+      guard_name: web
       team_id: 1
-      status: active
       permission_ids:
         - 1
         - 2
@@ -997,7 +880,7 @@ endpoints:
       groupName: 'Core - Role'
       groupDescription: |-
 
-        Quản lý vai trò (role): stats, index, show, store, update, destroy, bulk delete, bulk status, change status, export, import.
+        Quản lý vai trò (role) theo Spatie: stats, index, show, store, update, destroy, bulk delete, export, import.
       subgroup: ''
       subgroupDescription: ''
       title: 'Cập nhật role'
@@ -1053,7 +936,7 @@ endpoints:
         name: guard_name
         description: 'Guard name.'
         required: false
-        example: api
+        example: web
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -1066,17 +949,6 @@ endpoints:
         required: false
         example: 1
         type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: 'Trạng thái: active, inactive.'
-        required: false
-        example: inactive
-        type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: true
@@ -1096,9 +968,8 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       name: editor
-      guard_name: api
+      guard_name: web
       team_id: 1
-      status: inactive
       permission_ids:
         - 1
         - 2
@@ -1122,7 +993,7 @@ endpoints:
       groupName: 'Core - Role'
       groupDescription: |-
 
-        Quản lý vai trò (role): stats, index, show, store, update, destroy, bulk delete, bulk status, change status, export, import.
+        Quản lý vai trò (role) theo Spatie: stats, index, show, store, update, destroy, bulk delete, export, import.
       subgroup: ''
       subgroupDescription: ''
       title: 'Cập nhật role'
@@ -1178,7 +1049,7 @@ endpoints:
         name: guard_name
         description: 'Guard name.'
         required: false
-        example: api
+        example: web
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -1191,17 +1062,6 @@ endpoints:
         required: false
         example: 1
         type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: 'Trạng thái: active, inactive.'
-        required: false
-        example: inactive
-        type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: true
@@ -1221,9 +1081,8 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       name: editor
-      guard_name: api
+      guard_name: web
       team_id: 1
-      status: inactive
       permission_ids:
         - 1
         - 2
@@ -1247,7 +1106,7 @@ endpoints:
       groupName: 'Core - Role'
       groupDescription: |-
 
-        Quản lý vai trò (role): stats, index, show, store, update, destroy, bulk delete, bulk status, change status, export, import.
+        Quản lý vai trò (role) theo Spatie: stats, index, show, store, update, destroy, bulk delete, export, import.
       subgroup: ''
       subgroupDescription: ''
       title: 'Xóa role'
@@ -1288,79 +1147,6 @@ endpoints:
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - PATCH
-    uri: 'api/roles/{role_id}/status'
-    metadata:
-      custom: []
-      groupName: 'Core - Role'
-      groupDescription: |-
-
-        Quản lý vai trò (role): stats, index, show, store, update, destroy, bulk delete, bulk status, change status, export, import.
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Thay đổi trạng thái role'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      role_id:
-        custom: []
-        name: role_id
-        description: 'The ID of the role.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      role:
-        custom: []
-        name: role
-        description: 'ID role.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      role_id: 1
-      role: 1
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      status:
-        custom: []
-        name: status
-        description: 'Trạng thái mới: active, inactive.'
-        required: true
-        example: inactive
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      status: inactive
     fileParameters: []
     responses: []
     responseFields: []

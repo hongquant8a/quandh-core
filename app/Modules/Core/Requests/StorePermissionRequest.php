@@ -14,8 +14,11 @@ class StorePermissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'       => 'required|string|max:255',
-            'guard_name' => 'nullable|string|max:255',
+            'name'        => 'required|string|max:255',
+            'guard_name'  => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:500',
+            'sort_order'  => 'nullable|integer|min:0',
+            'parent_id'   => 'nullable|exists:permissions,id',
         ];
     }
 

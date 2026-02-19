@@ -146,13 +146,16 @@ Bảng team (nhóm) dùng cho Spatie Laravel Permission; cấu trúc cây theo p
 | updated_at | timestamp | Yes | null | |
 
 ### `permissions`
-Quyền (Spatie Laravel Permission).
+Quyền (Spatie Laravel Permission). Bổ sung description, sort_order, parent_id để nhóm và sắp xếp hiển thị frontend.
 
 | Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
 |-----|------|----------|----------|---------------------|
 | id | bigint unsigned | No | — | PK, auto increment |
 | name | varchar(255) | No | — | UNIQUE(name, guard_name) |
 | guard_name | varchar(255) | No | — | |
+| description | text | Yes | null | Mô tả hiển thị frontend |
+| sort_order | int unsigned | No | 0 | Thứ tự sắp xếp |
+| parent_id | bigint unsigned | Yes | null | FK → permissions.id (nhóm cấp cha) |
 | created_at | timestamp | Yes | null | |
 | updated_at | timestamp | Yes | null | |
 

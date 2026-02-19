@@ -30,9 +30,9 @@ class PermissionSeeder extends Seeder
             'stats', 'index', 'show', 'store', 'update', 'destroy',
             'bulkDestroy', 'bulkUpdateStatus', 'changeStatus', 'export', 'import',
         ],
-        // Core - Permissions
+        // Core - Permissions (có description, sort_order, parent_id để nhóm frontend)
         'permissions' => [
-            'stats', 'index', 'show', 'store', 'update', 'destroy',
+            'stats', 'index', 'tree', 'show', 'store', 'update', 'destroy',
             'bulkDestroy', 'export', 'import',
         ],
         // Core - Roles (bảng roles chuẩn Spatie, không có cột status)
@@ -89,18 +89,60 @@ class PermissionSeeder extends Seeder
         );
     }
 
-    /** Tạo đầy đủ permission từ danh sách PERMISSIONS. */
+    /** Nhãn nhóm permission theo resource (để description). */
+    protected static array $RESOURCE_LABELS = [
+        'users'          => 'Người dùng',
+        'permissions'    => 'Quyền',
+        'roles'          => 'Vai trò',
+        'teams'          => 'Team',
+        'posts'          => 'Bài viết',
+        'post-categories' => 'Danh mục bài viết',
+    ];
+
+    /** Nhãn action (để description). */
+    protected static array $ACTION_LABELS = [
+        'stats'            => 'Thống kê',
+        'index'            => 'Danh sách',
+        'tree'             => 'Cây',
+        'show'             => 'Chi tiết',
+        'store'            => 'Tạo mới',
+        'update'           => 'Cập nhật',
+        'destroy'          => 'Xóa',
+        'bulkDestroy'      => 'Xóa hàng loạt',
+        'bulkUpdateStatus' => 'Cập nhật trạng thái hàng loạt',
+        'changeStatus'     => 'Đổi trạng thái',
+        'export'           => 'Xuất Excel',
+        'import'           => 'Nhập Excel',
+        'incrementView'    => 'Tăng lượt xem',
+    ];
+
+    /** Tạo đầy đủ permission từ danh sách PERMISSIONS (kèm description, sort_order, parent_id). */
     protected function seedPermissions(): void
     {
+        $sortOrder = 0;
+        $parentIds = [];
+
         foreach (self::$PERMISSIONS as $resource => $actions) {
-            foreach ($actions as $action) {
+            $groupName = "group:{$resource}";
+            $groupLabel = self::$RESOURCE_LABELS[$resource] ?? ucfirst($resource);
+            $group = Permission::firstOrCreate(
+                ['name' => $groupName, 'guard_name' => self::GUARD],
+                ['name' => $groupName, 'guard_name' => self::GUARD, 'description' => $groupLabel, 'sort_order' => $sortOrder++, 'parent_id' => null]
+            );
+            $parentIds[$resource] = $group->id;
+
+            foreach ($actions as $idx => $action) {
                 $name = "{$resource}.{$action}";
-                Permission::firstOrCreate(
+                $actionLabel = self::$ACTION_LABELS[$action] ?? $action;
+                $desc = ($groupLabel ?? '') . ' - ' . $actionLabel;
+                Permission::updateOrCreate(
                     ['name' => $name, 'guard_name' => self::GUARD],
-                    ['name' => $name, 'guard_name' => self::GUARD]
+                    ['description' => $desc, 'sort_order' => $idx, 'parent_id' => $group->id]
                 );
             }
         }
+
+        app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
     }
 
     /** Tạo các role mặc định. */
