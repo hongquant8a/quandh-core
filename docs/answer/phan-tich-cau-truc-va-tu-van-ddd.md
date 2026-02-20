@@ -48,7 +48,7 @@ app/
 - **Routes:** Đăng ký thủ công trong `routes/api.php`: từng module được `require` theo prefix (`auth`, `users`, `posts`).
 - **Controller:** Mỗi module có một controller chính (PostController, UserController), gọi trực tiếp `Model::...` và dùng Request/Resource của module.
 - **Models:** Đặt chung trong `app/Models`, có scope `filter()`, quan hệ và logic boot (vd: `created_by`/`updated_by`).
-- **Request dùng chung:** `App\Http\Requests\FilterRequest` dùng cho index (search, sort, limit) của User và Post.
+- **Request dùng chung:** `App\Modules\Core\Requests\FilterRequest` dùng cho index (search, sort, limit) của User và Post.
 
 ---
 

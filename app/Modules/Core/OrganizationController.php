@@ -3,7 +3,7 @@
 namespace App\Modules\Core;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FilterRequest;
+use App\Modules\Core\Requests\FilterRequest;
 use App\Modules\Core\Enums\StatusEnum;
 use App\Modules\Core\Models\Organization;
 use App\Modules\Core\Requests\StoreOrganizationRequest;
@@ -43,7 +43,7 @@ class OrganizationController extends Controller
     public function stats(FilterRequest $request)
     {
         $base = Organization::filter($request->all());
-        return response()->json([
+        return $this->success([
             'total'    => (clone $base)->count(),
             'active'   => (clone $base)->where('status', StatusEnum::Active->value)->count(),
             'inactive' => (clone $base)->where('status', '!=', StatusEnum::Active->value)->count(),
@@ -69,7 +69,7 @@ class OrganizationController extends Controller
             ->filter($request->all())
             ->treeOrder()
             ->paginate($request->limit ?? 10);
-        return new OrganizationCollection($items);
+        return $this->successCollection(new OrganizationCollection($items));
     }
 
     /**
@@ -83,7 +83,7 @@ class OrganizationController extends Controller
             ->when($request->status, fn ($q, $v) => $q->where('status', $v));
         $items = $query->orderBy('sort_order')->orderBy('id')->get();
         $tree = Organization::buildTree($items);
-        return OrganizationTreeResource::collection($tree);
+        return $this->successCollection(OrganizationTreeResource::collection($tree));
     }
 
     /**
@@ -94,7 +94,7 @@ class OrganizationController extends Controller
     public function show(Organization $organization)
     {
         $organization->load(['creator', 'editor', 'parent', 'children' => fn ($q) => $q->orderBy('sort_order')]);
-        return new OrganizationResource($organization);
+        return $this->successResource(new OrganizationResource($organization));
     }
 
     /**
@@ -110,8 +110,7 @@ class OrganizationController extends Controller
     public function store(StoreOrganizationRequest $request)
     {
         $organization = Organization::create($request->validated());
-        return (new OrganizationResource($organization))
-            ->additional(['message' => 'Organization đã được tạo thành công!']);
+        return $this->successResource(new OrganizationResource($organization), 'Organization đã được tạo thành công!', 201);
     }
 
     /**
@@ -130,15 +129,14 @@ class OrganizationController extends Controller
         $data = $request->validated();
         if (isset($data['parent_id']) && (int) $data['parent_id'] !== 0) {
             if (static::isDescendantOf($data['parent_id'], $organization->id)) {
-                return response()->json(['message' => 'Không thể chọn organization con làm organization cha.'], 422);
+                return $this->error('Không thể chọn organization con làm organization cha.', 422, null, 'CONFLICT');
             }
         }
         if (array_key_exists('parent_id', $data) && (int) $data['parent_id'] === 0) {
             $data['parent_id'] = null;
         }
         $organization->update($data);
-        return (new OrganizationResource($organization->fresh(['parent', 'children'])))
-            ->additional(['message' => 'Organization đã được cập nhật!']);
+        return $this->successResource(new OrganizationResource($organization->fresh(['parent', 'children'])), 'Organization đã được cập nhật!');
     }
 
     protected static function isDescendantOf(int $candidateId, int $id): bool
@@ -161,7 +159,7 @@ class OrganizationController extends Controller
     public function destroy(Organization $organization)
     {
         $organization->delete();
-        return response()->json(['message' => 'Organization đã được xóa!']);
+        return $this->success(null, 'Organization đã được xóa!');
     }
 
     /**
@@ -172,7 +170,7 @@ class OrganizationController extends Controller
     public function bulkDestroy(BulkDestroyOrganizationRequest $request)
     {
         Organization::whereIn('id', $request->ids)->delete();
-        return response()->json(['message' => 'Đã xóa thành công các organization được chọn!']);
+        return $this->success(null, 'Đã xóa thành công các organization được chọn!');
     }
 
     /**
@@ -184,7 +182,7 @@ class OrganizationController extends Controller
     public function bulkUpdateStatus(BulkUpdateStatusOrganizationRequest $request)
     {
         Organization::whereIn('id', $request->ids)->update(['status' => $request->status]);
-        return response()->json(['message' => 'Cập nhật trạng thái organization thành công.']);
+        return $this->success(null, 'Cập nhật trạng thái organization thành công.');
     }
 
     /**
@@ -196,10 +194,7 @@ class OrganizationController extends Controller
     public function changeStatus(ChangeStatusOrganizationRequest $request, Organization $organization)
     {
         $organization->update(['status' => $request->status]);
-        return response()->json([
-            'message' => 'Cập nhật trạng thái thành công!',
-            'data'    => new OrganizationResource($organization),
-        ]);
+        return $this->successResource(new OrganizationResource($organization->load(['parent', 'children'])), 'Cập nhật trạng thái thành công!');
     }
 
     /**
@@ -227,6 +222,6 @@ class OrganizationController extends Controller
     public function import(ImportOrganizationRequest $request)
     {
         Excel::import(new OrganizationsImport, $request->file('file'));
-        return response()->json(['message' => 'Import organization thành công.']);
+        return $this->success(null, 'Import organization thành công.');
     }
 }

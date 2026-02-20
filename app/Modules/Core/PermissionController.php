@@ -3,7 +3,7 @@
 namespace App\Modules\Core;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FilterRequest;
+use App\Modules\Core\Requests\FilterRequest;
 use App\Modules\Core\Models\Permission;
 use App\Modules\Core\Requests\StorePermissionRequest;
 use App\Modules\Core\Requests\UpdatePermissionRequest;
@@ -39,9 +39,7 @@ class PermissionController extends Controller
     public function stats(FilterRequest $request)
     {
         $base = Permission::filter($request->all());
-        return response()->json([
-            'total' => (clone $base)->count(),
-        ]);
+        return $this->success(['total' => (clone $base)->count()]);
     }
 
     /**
@@ -62,7 +60,7 @@ class PermissionController extends Controller
             ->filter($request->all())
             ->treeOrder()
             ->paginate($request->limit ?? 10);
-        return new PermissionCollection($items);
+        return $this->successCollection(new PermissionCollection($items));
     }
 
     /**
@@ -76,7 +74,7 @@ class PermissionController extends Controller
             ->when($request->has('parent_id'), fn ($q) => $q->where('parent_id', $request->parent_id));
         $items = $query->orderBy('sort_order')->orderBy('id')->get();
         $tree = Permission::buildTree($items);
-        return PermissionTreeResource::collection($tree);
+        return $this->successCollection(PermissionTreeResource::collection($tree));
     }
 
     /**
@@ -87,7 +85,7 @@ class PermissionController extends Controller
     public function show(Permission $permission)
     {
         $permission->load(['parent', 'children']);
-        return new PermissionResource($permission);
+        return $this->successResource(new PermissionResource($permission));
     }
 
     /**
@@ -104,8 +102,7 @@ class PermissionController extends Controller
         $data = $request->validated();
         $data['guard_name'] = $data['guard_name'] ?? config('auth.defaults.guard', 'web');
         $permission = Permission::create($data);
-        return (new PermissionResource($permission))
-            ->additional(['message' => 'Quyền đã được tạo thành công!']);
+        return $this->successResource(new PermissionResource($permission), 'Quyền đã được tạo thành công!', 201);
     }
 
     /**
@@ -122,8 +119,7 @@ class PermissionController extends Controller
     {
         $data = $request->validated();
         $permission->update($data);
-        return (new PermissionResource($permission))
-            ->additional(['message' => 'Quyền đã được cập nhật!']);
+        return $this->successResource(new PermissionResource($permission), 'Quyền đã được cập nhật!');
     }
 
     /**
@@ -134,7 +130,7 @@ class PermissionController extends Controller
     public function destroy(Permission $permission)
     {
         $permission->delete();
-        return response()->json(['message' => 'Quyền đã được xóa!']);
+        return $this->success(null, 'Quyền đã được xóa!');
     }
 
     /**
@@ -145,7 +141,7 @@ class PermissionController extends Controller
     public function bulkDestroy(BulkDestroyPermissionRequest $request)
     {
         Permission::whereIn('id', $request->ids)->delete();
-        return response()->json(['message' => 'Đã xóa thành công các quyền được chọn!']);
+        return $this->success(null, 'Đã xóa thành công các quyền được chọn!');
     }
 
     /**
@@ -172,6 +168,6 @@ class PermissionController extends Controller
     public function import(ImportPermissionRequest $request)
     {
         Excel::import(new PermissionsImport, $request->file('file'));
-        return response()->json(['message' => 'Import quyền thành công.']);
+        return $this->success(null, 'Import quyền thành công.');
     }
 }

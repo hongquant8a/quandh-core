@@ -3,7 +3,7 @@
 namespace App\Modules\Post;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FilterRequest;
+use App\Modules\Core\Requests\FilterRequest;
 use App\Modules\Post\Enums\PostStatusEnum;
 use App\Modules\Post\Models\Post;
 use App\Modules\Post\Requests\StorePostRequest;
@@ -44,7 +44,7 @@ class PostController extends Controller
     {
         $base = Post::filter($request->all());
 
-        return response()->json([
+        return $this->success([
             'total'    => (clone $base)->count(),
             'active'   => (clone $base)->where('status', PostStatusEnum::Published->value)->count(),
             'inactive' => (clone $base)->where('status', '!=', PostStatusEnum::Published->value)->count(),
@@ -67,7 +67,7 @@ class PostController extends Controller
     {
         $posts = Post::with('categories')->filter($request->all())
             ->paginate($request->limit ?? 10);
-        return new PostCollection($posts);
+        return $this->successCollection(new PostCollection($posts));
     }
 
     /**
@@ -78,7 +78,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $post->load(['categories', 'attachments']);
-        return new PostResource($post);
+        return $this->successResource(new PostResource($post));
     }
 
     /**
@@ -97,8 +97,7 @@ class PostController extends Controller
         $this->syncPostCategories($post, $request->validated());
         $this->savePostAttachments($post, $request->file('images', []));
         $post->load(['categories', 'attachments']);
-        return (new PostResource($post))
-            ->additional(['message' => 'Bài viết đã được tạo thành công!']);
+        return $this->successResource(new PostResource($post), 'Bài viết đã được tạo thành công!', 201);
     }
 
     /**
@@ -124,7 +123,7 @@ class PostController extends Controller
         }
         $this->savePostAttachments($post, $request->file('images', []));
         $post->load(['categories', 'attachments']);
-        return new PostResource($post);
+        return $this->successResource(new PostResource($post), 'Bài viết đã được cập nhật!');
     }
 
     /**
@@ -135,7 +134,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return response()->json(['message' => 'Bài viết đã được xóa thành công!']);
+        return $this->success(null, 'Bài viết đã được xóa thành công!');
     }
 
     /**
@@ -146,7 +145,7 @@ class PostController extends Controller
     public function bulkDestroy(BulkDestroyPostRequest $request)
     {
         Post::destroy($request->ids);
-        return response()->json(['message' => 'Đã xóa thành công các bài viết được chọn!']);
+        return $this->success(null, 'Đã xóa thành công các bài viết được chọn!');
     }
 
     /**
@@ -158,7 +157,7 @@ class PostController extends Controller
     public function bulkUpdateStatus(BulkUpdateStatusPostRequest $request)
     {
         Post::whereIn('id', $request->ids)->update(['status' => $request->status]);
-        return response()->json(['message' => 'Cập nhật trạng thái thành công các bài viết được chọn!']);
+        return $this->success(null, 'Cập nhật trạng thái thành công các bài viết được chọn!');
     }
 
     /**
@@ -186,8 +185,7 @@ class PostController extends Controller
     public function import(ImportPostRequest $request)
     {
         Excel::import(new PostsImport, $request->file('file'));
-
-        return response()->json(['message' => 'Posts imported successfully.']);
+        return $this->success(null, 'Import bài viết thành công.');
     }
 
     /**
@@ -199,11 +197,7 @@ class PostController extends Controller
     public function changeStatus(ChangeStatusPostRequest $request, Post $post)
     {
         $post->update(['status' => $request->status]);
-
-        return response()->json([
-            'message' => 'Cập nhật trạng thái thành công!',
-            'data' => new PostResource($post)
-        ]);
+        return $this->successResource(new PostResource($post->load(['categories', 'attachments'])), 'Cập nhật trạng thái thành công!');
     }
 
     /**
@@ -214,10 +208,7 @@ class PostController extends Controller
     public function incrementView(Post $post)
     {
         $post->increment('view_count');
-        return response()->json([
-            'message' => 'Đã cập nhật lượt xem.',
-            'view_count' => $post->fresh()->view_count,
-        ]);
+        return $this->success(['view_count' => $post->fresh()->view_count], 'Đã cập nhật lượt xem.');
     }
 
     /**

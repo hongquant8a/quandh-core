@@ -33,21 +33,21 @@ class AuthController extends Controller
     {
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Thông tin đăng nhập không chính xác'], 401);
+        if (! $user || ! Hash::check($request->password, $user->password)) {
+            return $this->unauthorized('Thông tin đăng nhập không chính xác');
         }
 
         if ($user->status !== UserStatusEnum::Active->value) {
-            return response()->json(['message' => 'Tài khoản của bạn đã bị khóa'], 403);
+            return $this->forbidden('Tài khoản của bạn đã bị khóa');
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json([
+        $data = [
             'access_token' => $token,
             'token_type'   => 'Bearer',
-            'user'         => new UserResource($user),
-        ]);
+            'user'         => (new UserResource($user))->resolve(),
+        ];
+        return $this->success($data, 'Đăng nhập thành công.');
     }
 
     /**
@@ -58,7 +58,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
-        return response()->json(['message' => 'Đã đăng xuất']);
+        return $this->success(null, 'Đã đăng xuất');
     }
 
     /**
@@ -74,8 +74,8 @@ class AuthController extends Controller
         $status = Password::sendResetLink($request->only('email'));
 
         return $status === Password::RESET_LINK_SENT
-            ? response()->json(['message' => 'Link reset đã được gửi vào Email'])
-            : response()->json(['message' => 'Không thể gửi mail'], 400);
+            ? $this->success(null, 'Link reset đã được gửi vào Email')
+            : $this->error('Không thể gửi mail', 400);
     }
 
     /**
@@ -96,7 +96,7 @@ class AuthController extends Controller
         });
 
         return $status === Password::PASSWORD_RESET
-            ? response()->json(['message' => 'Mật khẩu đã được đặt lại'])
-            : response()->json(['message' => 'Không thể đặt lại mật khẩu'], 400);
+            ? $this->success(null, 'Mật khẩu đã được đặt lại')
+            : $this->error('Không thể đặt lại mật khẩu', 400);
     }
 }

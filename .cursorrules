@@ -16,6 +16,14 @@
     - Khi export Excel, luôn xuất đầy đủ các trường thông tin giống danh sách index (Resource).
     - Các trường quan hệ (created_by, created_at, updated_by, updated_at, status, categories, ...) phải có trong export tương ứng index.
 
+- **API Response (Trait RespondsWithJson)**:
+    - Trait tại `App\Modules\Core\Traits\RespondsWithJson`, dùng qua Controller base. Chuẩn response: `success` (bool), `message` (optional), `data` (optional).
+    - `$this->success($data, $message)` – stats, destroy, bulk, import.
+    - `$this->successResource(JsonResource, $message)` – show, store, update, changeStatus.
+    - `$this->successCollection(ResourceCollection, $message)` – index, tree.
+    - `$this->error($message, $code, $errors, $errorCode)` – lỗi chung.
+    - `$this->unauthorized()`, `$this->forbidden()`, `$this->notFound()`, `$this->conflict()` – shortcuts.
+
 - **API Resource & Localization**:
     - Luôn sử dụng Resource để trả về dữ liệu API.
     - **Định dạng ngày tháng**: Trong Resource, bắt buộc chuyển đổi dữ liệu thời gian về định dạng Việt Nam:

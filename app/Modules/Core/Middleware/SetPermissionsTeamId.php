@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Modules\Core\Middleware;
 
 use App\Modules\Core\Models\Organization;
 use Closure;

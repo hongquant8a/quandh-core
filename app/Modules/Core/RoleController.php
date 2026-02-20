@@ -3,7 +3,7 @@
 namespace App\Modules\Core;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FilterRequest;
+use App\Modules\Core\Requests\FilterRequest;
 use App\Modules\Core\Models\Role;
 use App\Modules\Core\Requests\StoreRoleRequest;
 use App\Modules\Core\Requests\UpdateRoleRequest;
@@ -37,7 +37,7 @@ class RoleController extends Controller
     public function stats(FilterRequest $request)
     {
         $base = Role::with('organization')->filter($request->all());
-        return response()->json(['total' => (clone $base)->count()]);
+        return $this->success(['total' => (clone $base)->count()]);
     }
 
     /**
@@ -57,7 +57,7 @@ class RoleController extends Controller
         $items = Role::with(['organization', 'permissions'])
             ->filter($request->all())
             ->paginate($request->limit ?? 10);
-        return new RoleCollection($items);
+        return $this->successCollection(new RoleCollection($items));
     }
 
     /**
@@ -68,7 +68,7 @@ class RoleController extends Controller
     public function show(Role $role)
     {
         $role->load(['organization', 'permissions']);
-        return new RoleResource($role);
+        return $this->successResource(new RoleResource($role));
     }
 
     /**
@@ -89,8 +89,7 @@ class RoleController extends Controller
         if (!empty($permissionIds)) {
             $role->syncPermissions($permissionIds);
         }
-        return (new RoleResource($role->load('permissions')))
-            ->additional(['message' => 'Vai trò đã được tạo thành công!']);
+        return $this->successResource(new RoleResource($role->load('permissions')), 'Vai trò đã được tạo thành công!', 201);
     }
 
     /**
@@ -111,8 +110,7 @@ class RoleController extends Controller
         if ($permissionIds !== null) {
             $role->syncPermissions($permissionIds);
         }
-        return (new RoleResource($role->load('permissions')))
-            ->additional(['message' => 'Vai trò đã được cập nhật!']);
+        return $this->successResource(new RoleResource($role->load('permissions')), 'Vai trò đã được cập nhật!');
     }
 
     /**
@@ -123,7 +121,7 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         $role->delete();
-        return response()->json(['message' => 'Vai trò đã được xóa!']);
+        return $this->success(null, 'Vai trò đã được xóa!');
     }
 
     /**
@@ -134,7 +132,7 @@ class RoleController extends Controller
     public function bulkDestroy(BulkDestroyRoleRequest $request)
     {
         Role::whereIn('id', $request->ids)->delete();
-        return response()->json(['message' => 'Đã xóa thành công các vai trò được chọn!']);
+        return $this->success(null, 'Đã xóa thành công các vai trò được chọn!');
     }
 
     /**
@@ -161,6 +159,6 @@ class RoleController extends Controller
     public function import(ImportRoleRequest $request)
     {
         Excel::import(new RolesImport, $request->file('file'));
-        return response()->json(['message' => 'Import vai trò thành công.']);
+        return $this->success(null, 'Import vai trò thành công.');
     }
 }

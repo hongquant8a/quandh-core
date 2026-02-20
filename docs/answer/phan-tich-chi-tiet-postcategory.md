@@ -98,7 +98,7 @@ PostCategory quản lý **danh mục tin tức phân cấp** (cấu trúc cây c
 
 ### 5.1 index (danh sách phẳng)
 
-- **Request:** `FilterRequest` — query: `search`, `status`, `sort_by`, `sort_order`, `limit` (1–100).
+- **Request:** `App\Modules\Core\Requests\FilterRequest` — query: `search`, `status`, `sort_by`, `sort_order`, `limit` (1–100).
 - **Logic:** `PostCategory::with(['creator','editor'])->withDepth()->filter($request->all())->paginate($request->limit ?? 10)`.
 - **Response:** `PostCategoryCollection` (paginated), mỗi item có `depth`, `created_by`/`updated_by` (tên user).
 

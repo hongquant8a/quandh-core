@@ -14,13 +14,27 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
-            'set.permissions.team' => \App\Http\Middleware\SetPermissionsTeamId::class,
+            'set.permissions.team' => \App\Modules\Core\Middleware\SetPermissionsTeamId::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->renderable(function (\Illuminate\Validation\ValidationException $e, $request) {
+            if ($request->expectsJson() || $request->is('api/*')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(),
+                    'errors'  => $e->errors(),
+                    'code'    => 'VALIDATION_ERROR',
+                ], 422);
+            }
+        });
         $exceptions->renderable(function (\Spatie\Permission\Exceptions\UnauthorizedException $e, $request) {
             if ($request->expectsJson() || $request->is('api/*')) {
-                return response()->json(['message' => $e->getMessage()], 403);
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(),
+                    'code'    => 'FORBIDDEN',
+                ], 403);
             }
         });
     })->create();

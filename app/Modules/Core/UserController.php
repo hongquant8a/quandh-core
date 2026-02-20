@@ -3,7 +3,7 @@
 namespace App\Modules\Core;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FilterRequest;
+use App\Modules\Core\Requests\FilterRequest;
 use App\Modules\Core\Enums\UserStatusEnum;
 use App\Modules\Core\Models\User;
 use App\Modules\Core\Requests\StoreUserRequest;
@@ -40,7 +40,7 @@ class UserController extends Controller
     public function stats(FilterRequest $request)
     {
         $base = User::filter($request->all());
-        return response()->json([
+        return $this->success([
             'total'    => (clone $base)->count(),
             'active'   => (clone $base)->where('status', UserStatusEnum::Active->value)->count(),
             'inactive' => (clone $base)->where('status', '!=', UserStatusEnum::Active->value)->count(),
@@ -62,7 +62,7 @@ class UserController extends Controller
     {
         $users = User::filter($request->all())
             ->paginate($request->limit ?? 10);
-        return new UserCollection($users);
+        return $this->successCollection(new UserCollection($users));
     }
 
     /**
@@ -72,7 +72,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return new UserResource($user);
+        return $this->successResource(new UserResource($user));
     }
 
     /**
@@ -89,8 +89,7 @@ class UserController extends Controller
         $data = $request->validated();
         $data['password'] = Hash::make($data['password']);
         $user = User::create($data);
-        return (new UserResource($user))
-            ->additional(['message' => 'Tài khoản đã được tạo thành công!']);
+        return $this->successResource(new UserResource($user), 'Tài khoản đã được tạo thành công!', 201);
     }
 
     /**
@@ -110,7 +109,7 @@ class UserController extends Controller
             $data['password'] = Hash::make($data['password']);
         }
         $user->update($data);
-        return new UserResource($user);
+        return $this->successResource(new UserResource($user), 'Tài khoản đã được cập nhật!');
     }
 
     /**
@@ -121,7 +120,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return response()->json(['message' => 'Tài khoản đã được xóa thành công!']);
+        return $this->success(null, 'Tài khoản đã được xóa thành công!');
     }
 
     /**
@@ -132,7 +131,7 @@ class UserController extends Controller
     public function bulkDestroy(BulkDestroyUserRequest $request)
     {
         User::destroy($request->ids);
-        return response()->json(['message' => 'Đã xóa thành công các tài khoản được chọn!']);
+        return $this->success(null, 'Đã xóa thành công các tài khoản được chọn!');
     }
 
     /**
@@ -144,7 +143,7 @@ class UserController extends Controller
     public function bulkUpdateStatus(BulkUpdateStatusUserRequest $request)
     {
         User::whereIn('id', $request->ids)->update(['status' => $request->status]);
-        return response()->json(['message' => 'Cập nhật trạng thái thành công']);
+        return $this->success(null, 'Cập nhật trạng thái thành công.');
     }
 
     /**
@@ -171,7 +170,7 @@ class UserController extends Controller
     public function import(ImportUserRequest $request)
     {
         Excel::import(new UsersImport, $request->file('file'));
-        return response()->json(['message' => 'Users imported successfully.']);
+        return $this->success(null, 'Import người dùng thành công.');
     }
 
     /**
@@ -183,9 +182,6 @@ class UserController extends Controller
     public function changeStatus(ChangeStatusUserRequest $request, User $user)
     {
         $user->update(['status' => $request->status]);
-        return response()->json([
-            'message' => 'Cập nhật trạng thái thành công!',
-            'data'    => new UserResource($user),
-        ]);
+        return $this->successResource(new UserResource($user), 'Cập nhật trạng thái thành công!');
     }
 }
