@@ -1147,7 +1147,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:27\",
+    \"from_date\": \"2026-02-20T11:16:08\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"desc\",
@@ -1180,7 +1180,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:27",
+    "from_date": "2026-02-20T11:16:08",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "desc",
@@ -1215,7 +1215,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:27',
+            'from_date' =&gt; '2026-02-20T11:16:08',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'desc',
@@ -1422,10 +1422,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-posts-export"
-               value="2026-02-20T09:55:27"
+               value="2026-02-20T11:16:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:27</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:08</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -1497,7 +1497,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpgp04bl8i8cvveHoWGpw" </code></pre></div>
+    --form "file=@/tmp/phpm251seqa85245BbHJTm" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1535,7 +1535,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/phpgp04bl8i8cvveHoWGpw', 'r')
+                'contents' =&gt; fopen('/tmp/phpm251seqa85245BbHJTm', 'r')
             ],
         ],
     ]
@@ -1651,7 +1651,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File Excel (xlsx, xls, csv). Cột theo chuẩn export. Example: <code>/tmp/phpgp04bl8i8cvveHoWGpw</code></p>
+<p>File Excel (xlsx, xls, csv). Cột theo chuẩn export. Example: <code>/tmp/phpm251seqa85245BbHJTm</code></p>
         </div>
         </form>
 
@@ -2073,10 +2073,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:27\",
+    \"from_date\": \"2026-02-20T11:16:08\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -2107,10 +2107,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:27",
+    "from_date": "2026-02-20T11:16:08",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -2143,10 +2143,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:27',
+            'from_date' =&gt; '2026-02-20T11:16:08',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -2360,10 +2360,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-posts-stats"
-               value="2026-02-20T09:55:27"
+               value="2026-02-20T11:16:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:27</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:08</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -2396,10 +2396,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-posts-stats"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -2438,10 +2438,10 @@ Must be one of:
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:27\",
+    \"from_date\": \"2026-02-20T11:16:08\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -2472,10 +2472,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:27",
+    "from_date": "2026-02-20T11:16:08",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -2508,10 +2508,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:27',
+            'from_date' =&gt; '2026-02-20T11:16:08',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -2530,7 +2530,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 21,
+            &quot;id&quot;: 27,
             &quot;title&quot;: &quot;Quos velit et fugiat sunt nihil accusantium harum.&quot;,
             &quot;slug&quot;: &quot;quos-velit-et-fugiat-sunt-nihil-accusantium-harum&quot;,
             &quot;content&quot;: &quot;Deserunt aut ab provident perspiciatis quo omnis nostrum. Adipisci quidem nostrum qui commodi incidunt iure. Et et modi ipsum nostrum.\n\nEt consequatur aut dolores enim. Facere tempora ex voluptatem laboriosam. Quis adipisci molestias fugit deleniti distinctio eum. Id aut libero aliquam veniam. Dolorem mollitia deleniti nemo.\n\nOfficia est dignissimos neque blanditiis odio veritatis excepturi. Delectus fugit qui repudiandae laboriosam. Alias tenetur ratione nemo voluptate accusamus ut et.&quot;,
@@ -2538,11 +2538,11 @@ print_r(json_decode((string) $body));</code></pre></div>
             &quot;view_count&quot;: 0,
             &quot;created_by&quot;: &quot;N/A&quot;,
             &quot;updated_by&quot;: &quot;N/A&quot;,
-            &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
-            &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+            &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;
         },
         {
-            &quot;id&quot;: 22,
+            &quot;id&quot;: 28,
             &quot;title&quot;: &quot;Rerum ex repellendus assumenda et.&quot;,
             &quot;slug&quot;: &quot;rerum-ex-repellendus-assumenda-et&quot;,
             &quot;content&quot;: &quot;Reiciendis quia perspiciatis deserunt ducimus corrupti et. Quia maiores assumenda odit. Repellat officiis corporis nesciunt ut. Iure impedit molestiae ut rem est esse sint.\n\nSunt suscipit doloribus fugiat ut aut deserunt et. Neque recusandae et ipsam dolorem et ut dicta. Assumenda consequatur ut et sunt quisquam. Repellendus ut eaque alias ratione dolores.\n\nEa ut aut deserunt sint quis. Quod id aspernatur consectetur id a consectetur assumenda. Neque sit sunt nihil accusantium odit ut perspiciatis.&quot;,
@@ -2550,8 +2550,8 @@ print_r(json_decode((string) $body));</code></pre></div>
             &quot;view_count&quot;: 0,
             &quot;created_by&quot;: &quot;N/A&quot;,
             &quot;updated_by&quot;: &quot;N/A&quot;,
-            &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
-            &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+            &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;
         }
     ],
     &quot;links&quot;: {
@@ -2781,10 +2781,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-posts"
-               value="2026-02-20T09:55:27"
+               value="2026-02-20T11:16:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:27</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:08</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -2817,10 +2817,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-posts"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -3245,8 +3245,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "content=Nội dung bài viết..."\
     --form "status=draft"\
     --form "category_ids[]=1"\
-    --form "images[]=@/tmp/phpjorgfcbcvuaobVbPaCo" \
-    --form "images[]=@/tmp/phpq8v23dbbbbo113fBpVh" </code></pre></div>
+    --form "images[]=@/tmp/php0rkv6go89tq96f5FGhH" \
+    --form "images[]=@/tmp/phpeb06hteaq2dj7itXYH5" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3305,11 +3305,11 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpjorgfcbcvuaobVbPaCo', 'r')
+                'contents' =&gt; fopen('/tmp/php0rkv6go89tq96f5FGhH', 'r')
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpq8v23dbbbbo113fBpVh', 'r')
+                'contents' =&gt; fopen('/tmp/phpeb06hteaq2dj7itXYH5', 'r')
             ],
         ],
     ]
@@ -3518,7 +3518,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Ảnh đính kèm (jpeg/png/gif/webp, tối đa 10 ảnh, mỗi ảnh ≤ 5MB). Example: <code>/tmp/phpq8v23dbbbbo113fBpVh</code></p>
+<p>Ảnh đính kèm (jpeg/png/gif/webp, tối đa 10 ảnh, mỗi ảnh ≤ 5MB). Example: <code>/tmp/phpeb06hteaq2dj7itXYH5</code></p>
         </div>
         </form>
 
@@ -3545,8 +3545,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "status=architecto"\
     --form "category_ids[]=architecto"\
     --form "remove_attachment_ids[]=architecto"\
-    --form "images[]=@/tmp/phpf8brgd76e68q5wtHwsa" \
-    --form "images[]=@/tmp/php9fbpa0ii0r6ofrkM2zr" </code></pre></div>
+    --form "images[]=@/tmp/phphnb7tntjtfdgbd2z7Tw" \
+    --form "images[]=@/tmp/phpqdijf3onsl7q5yY9Ftt" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3610,11 +3610,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpf8brgd76e68q5wtHwsa', 'r')
+                'contents' =&gt; fopen('/tmp/phphnb7tntjtfdgbd2z7Tw', 'r')
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/php9fbpa0ii0r6ofrkM2zr', 'r')
+                'contents' =&gt; fopen('/tmp/phpqdijf3onsl7q5yY9Ftt', 'r')
             ],
         ],
     ]
@@ -3862,7 +3862,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Ảnh mới (append). Example: <code>/tmp/php9fbpa0ii0r6ofrkM2zr</code></p>
+<p>Ảnh mới (append). Example: <code>/tmp/phpqdijf3onsl7q5yY9Ftt</code></p>
         </div>
         </form>
 
@@ -3889,8 +3889,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "status=architecto"\
     --form "category_ids[]=architecto"\
     --form "remove_attachment_ids[]=architecto"\
-    --form "images[]=@/tmp/phppvrtlt21625fehr8Gfl" \
-    --form "images[]=@/tmp/phphdvkjse7o85h1tJktUl" </code></pre></div>
+    --form "images[]=@/tmp/phpdaq67gqq3d78fQL2xZ8" \
+    --form "images[]=@/tmp/phpsk22t3l96j6b8FtZ37R" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3954,11 +3954,11 @@ $response = $client-&gt;patch(
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phppvrtlt21625fehr8Gfl', 'r')
+                'contents' =&gt; fopen('/tmp/phpdaq67gqq3d78fQL2xZ8', 'r')
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phphdvkjse7o85h1tJktUl', 'r')
+                'contents' =&gt; fopen('/tmp/phpsk22t3l96j6b8FtZ37R', 'r')
             ],
         ],
     ]
@@ -4206,7 +4206,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Ảnh mới (append). Example: <code>/tmp/phphdvkjse7o85h1tJktUl</code></p>
+<p>Ảnh mới (append). Example: <code>/tmp/phpsk22t3l96j6b8FtZ37R</code></p>
         </div>
         </form>
 
@@ -4643,10 +4643,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:28\",
+    \"from_date\": \"2026-02-20T11:16:09\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -4679,10 +4679,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:28",
+    "from_date": "2026-02-20T11:16:09",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -4717,10 +4717,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:28',
+            'from_date' =&gt; '2026-02-20T11:16:09',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -4956,10 +4956,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-log-activities-stats"
-               value="2026-02-20T09:55:28"
+               value="2026-02-20T11:16:09"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:09</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -4992,10 +4992,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-log-activities-stats"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -5569,7 +5569,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:28\",
+    \"from_date\": \"2026-02-20T11:16:10\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"asc\",
@@ -5605,7 +5605,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:28",
+    "from_date": "2026-02-20T11:16:10",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "asc",
@@ -5643,7 +5643,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:28',
+            'from_date' =&gt; '2026-02-20T11:16:10',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'asc',
@@ -5950,10 +5950,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-log-activities"
-               value="2026-02-20T09:55:28"
+               value="2026-02-20T11:16:10"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:10</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -6402,10 +6402,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:28\",
+    \"from_date\": \"2026-02-20T11:16:09\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -6436,10 +6436,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:28",
+    "from_date": "2026-02-20T11:16:09",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -6472,10 +6472,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:28',
+            'from_date' =&gt; '2026-02-20T11:16:09',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -6691,10 +6691,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-organizations-export"
-               value="2026-02-20T09:55:28"
+               value="2026-02-20T11:16:09"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:09</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -6727,10 +6727,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-organizations-export"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -6766,7 +6766,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpv5ggs4vv65l16Ho7LVq" </code></pre></div>
+    --form "file=@/tmp/php9kiv3gncfqss5DMe7JZ" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -6804,7 +6804,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/phpv5ggs4vv65l16Ho7LVq', 'r')
+                'contents' =&gt; fopen('/tmp/php9kiv3gncfqss5DMe7JZ', 'r')
             ],
         ],
     ]
@@ -6920,7 +6920,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, slug, description, status. Example: <code>/tmp/phpv5ggs4vv65l16Ho7LVq</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, slug, description, status. Example: <code>/tmp/php9kiv3gncfqss5DMe7JZ</code></p>
         </div>
         </form>
 
@@ -7342,10 +7342,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:28\",
+    \"from_date\": \"2026-02-20T11:16:09\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -7377,10 +7377,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:28",
+    "from_date": "2026-02-20T11:16:09",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -7414,10 +7414,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:28',
+            'from_date' =&gt; '2026-02-20T11:16:09',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -7643,10 +7643,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-organizations-stats"
-               value="2026-02-20T09:55:28"
+               value="2026-02-20T11:16:09"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:09</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -7679,10 +7679,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-organizations-stats"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -7904,7 +7904,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:28\",
+    \"from_date\": \"2026-02-20T11:16:09\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"asc\",
@@ -7939,7 +7939,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:28",
+    "from_date": "2026-02-20T11:16:09",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "asc",
@@ -7976,7 +7976,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:28',
+            'from_date' =&gt; '2026-02-20T11:16:09',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'asc',
@@ -8265,10 +8265,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-organizations"
-               value="2026-02-20T09:55:28"
+               value="2026-02-20T11:16:09"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:09</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -9786,10 +9786,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:28\",
+    \"from_date\": \"2026-02-20T11:16:09\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -9819,10 +9819,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:28",
+    "from_date": "2026-02-20T11:16:09",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -9854,10 +9854,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:28',
+            'from_date' =&gt; '2026-02-20T11:16:09',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -10061,10 +10061,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-permissions-export"
-               value="2026-02-20T09:55:28"
+               value="2026-02-20T11:16:09"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:09</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -10097,10 +10097,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-permissions-export"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -10136,7 +10136,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpk8ob66tqtombdpPuOZK" </code></pre></div>
+    --form "file=@/tmp/php1763jmvo2svvd6hdydp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -10174,7 +10174,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/phpk8ob66tqtombdpPuOZK', 'r')
+                'contents' =&gt; fopen('/tmp/php1763jmvo2svvd6hdydp', 'r')
             ],
         ],
     ]
@@ -10290,7 +10290,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, guard_name, description, sort_order, parent_id. Example: <code>/tmp/phpk8ob66tqtombdpPuOZK</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, guard_name, description, sort_order, parent_id. Example: <code>/tmp/php1763jmvo2svvd6hdydp</code></p>
         </div>
         </form>
 
@@ -10506,7 +10506,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:28\",
+    \"from_date\": \"2026-02-20T11:16:09\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"asc\",
@@ -10540,7 +10540,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:28",
+    "from_date": "2026-02-20T11:16:09",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "asc",
@@ -10576,7 +10576,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:28',
+            'from_date' =&gt; '2026-02-20T11:16:09',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'asc',
@@ -10791,10 +10791,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-permissions-stats"
-               value="2026-02-20T09:55:28"
+               value="2026-02-20T11:16:09"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:09</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -11053,7 +11053,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:28\",
+    \"from_date\": \"2026-02-20T11:16:09\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"asc\",
@@ -11087,7 +11087,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:28",
+    "from_date": "2026-02-20T11:16:09",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "asc",
@@ -11123,7 +11123,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:28',
+            'from_date' =&gt; '2026-02-20T11:16:09',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'asc',
@@ -11392,10 +11392,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-permissions"
-               value="2026-02-20T09:55:28"
+               value="2026-02-20T11:16:09"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:09</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -12741,7 +12741,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:28\",
+    \"from_date\": \"2026-02-20T11:16:09\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"desc\",
@@ -12774,7 +12774,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:28",
+    "from_date": "2026-02-20T11:16:09",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "desc",
@@ -12809,7 +12809,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:28',
+            'from_date' =&gt; '2026-02-20T11:16:09',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'desc',
@@ -13016,10 +13016,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-roles-export"
-               value="2026-02-20T09:55:28"
+               value="2026-02-20T11:16:09"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:09</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -13091,7 +13091,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php1ev5qblfso3b6UR6nAe" </code></pre></div>
+    --form "file=@/tmp/php1c910g8p7deq1V9h925" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -13129,7 +13129,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/php1ev5qblfso3b6UR6nAe', 'r')
+                'contents' =&gt; fopen('/tmp/php1c910g8p7deq1V9h925', 'r')
             ],
         ],
     ]
@@ -13245,7 +13245,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, guard_name, organization_id. Example: <code>/tmp/php1ev5qblfso3b6UR6nAe</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, guard_name, organization_id. Example: <code>/tmp/php1c910g8p7deq1V9h925</code></p>
         </div>
         </form>
 
@@ -13461,10 +13461,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:28\",
+    \"from_date\": \"2026-02-20T11:16:09\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -13495,10 +13495,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:28",
+    "from_date": "2026-02-20T11:16:09",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -13531,10 +13531,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:28',
+            'from_date' =&gt; '2026-02-20T11:16:09',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -13746,10 +13746,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-roles-stats"
-               value="2026-02-20T09:55:28"
+               value="2026-02-20T11:16:09"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:09</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -13782,10 +13782,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-roles-stats"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -13824,7 +13824,7 @@ Must be one of:
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:28\",
+    \"from_date\": \"2026-02-20T11:16:09\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"asc\",
@@ -13858,7 +13858,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:28",
+    "from_date": "2026-02-20T11:16:09",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "asc",
@@ -13894,7 +13894,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:28',
+            'from_date' =&gt; '2026-02-20T11:16:09',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'asc',
@@ -14159,10 +14159,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-roles"
-               value="2026-02-20T09:55:28"
+               value="2026-02-20T11:16:09"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:09</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -15682,7 +15682,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:26\",
+    \"from_date\": \"2026-02-20T11:16:07\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"desc\",
@@ -15715,7 +15715,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:26",
+    "from_date": "2026-02-20T11:16:07",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "desc",
@@ -15750,7 +15750,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:26',
+            'from_date' =&gt; '2026-02-20T11:16:07',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'desc',
@@ -15957,10 +15957,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-users-export"
-               value="2026-02-20T09:55:26"
+               value="2026-02-20T11:16:07"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:26</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:07</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -16032,7 +16032,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpvrurtofeom0b1sJgmE1" </code></pre></div>
+    --form "file=@/tmp/phpd3r1v8ibfqq9dThz8a9" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -16070,7 +16070,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/phpvrurtofeom0b1sJgmE1', 'r')
+                'contents' =&gt; fopen('/tmp/phpd3r1v8ibfqq9dThz8a9', 'r')
             ],
         ],
     ]
@@ -16186,7 +16186,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, email, password, status. Example: <code>/tmp/phpvrurtofeom0b1sJgmE1</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, email, password, status. Example: <code>/tmp/phpd3r1v8ibfqq9dThz8a9</code></p>
         </div>
         </form>
 
@@ -16608,10 +16608,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:27\",
+    \"from_date\": \"2026-02-20T11:16:07\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -16641,10 +16641,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:27",
+    "from_date": "2026-02-20T11:16:07",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -16676,10 +16676,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:27',
+            'from_date' =&gt; '2026-02-20T11:16:07',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -16881,10 +16881,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-users-stats"
-               value="2026-02-20T09:55:27"
+               value="2026-02-20T11:16:07"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:27</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:07</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -16917,10 +16917,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-users-stats"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -16959,7 +16959,7 @@ Must be one of:
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:27\",
+    \"from_date\": \"2026-02-20T11:16:07\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"asc\",
@@ -16992,7 +16992,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:27",
+    "from_date": "2026-02-20T11:16:07",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "asc",
@@ -17027,7 +17027,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:27',
+            'from_date' =&gt; '2026-02-20T11:16:07',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'asc',
@@ -17049,24 +17049,24 @@ print_r(json_decode((string) $body));</code></pre></div>
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 11,
+            &quot;id&quot;: 32,
             &quot;name&quot;: &quot;Macey Rempel PhD&quot;,
             &quot;email&quot;: &quot;justina.gaylord@example.org&quot;,
             &quot;status&quot;: &quot;inactive&quot;,
             &quot;created_by&quot;: &quot;N/A&quot;,
             &quot;updated_by&quot;: &quot;N/A&quot;,
-            &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
-            &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+            &quot;created_at&quot;: &quot;20/02/2026 11:16:07&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 11:16:07&quot;
         },
         {
-            &quot;id&quot;: 12,
-            &quot;name&quot;: &quot;Madaline Strosin PhD&quot;,
-            &quot;email&quot;: &quot;lisandro47@example.org&quot;,
-            &quot;status&quot;: &quot;banned&quot;,
+            &quot;id&quot;: 33,
+            &quot;name&quot;: &quot;Vesta Schuster PhD&quot;,
+            &quot;email&quot;: &quot;breitenberg.gilbert@example.com&quot;,
+            &quot;status&quot;: &quot;active&quot;,
             &quot;created_by&quot;: &quot;N/A&quot;,
             &quot;updated_by&quot;: &quot;N/A&quot;,
-            &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
-            &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+            &quot;created_at&quot;: &quot;20/02/2026 11:16:07&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 11:16:07&quot;
         }
     ],
     &quot;links&quot;: {
@@ -17284,10 +17284,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-users"
-               value="2026-02-20T09:55:27"
+               value="2026-02-20T11:16:07"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:27</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:07</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -17404,14 +17404,14 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: 13,
+        &quot;id&quot;: 34,
         &quot;name&quot;: &quot;Morgan Hirthe&quot;,
         &quot;email&quot;: &quot;dare.emelie@example.com&quot;,
         &quot;status&quot;: &quot;banned&quot;,
         &quot;created_by&quot;: &quot;N/A&quot;,
         &quot;updated_by&quot;: &quot;N/A&quot;,
-        &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
-        &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+        &quot;created_at&quot;: &quot;20/02/2026 11:16:07&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 11:16:07&quot;
     },
     &quot;success&quot;: &quot;true&quot;
 }</code>
@@ -17614,14 +17614,14 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: 14,
+        &quot;id&quot;: 35,
         &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
         &quot;email&quot;: &quot;gulgowski.asia@example.com&quot;,
         &quot;status&quot;: &quot;active&quot;,
         &quot;created_by&quot;: &quot;N/A&quot;,
         &quot;updated_by&quot;: &quot;N/A&quot;,
-        &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
-        &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+        &quot;created_at&quot;: &quot;20/02/2026 11:16:07&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 11:16:07&quot;
     },
     &quot;success&quot;: &quot;true&quot;,
     &quot;message&quot;: &quot;T&agrave;i khoản đ&atilde; được tạo th&agrave;nh c&ocirc;ng!&quot;
@@ -17861,14 +17861,14 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: 15,
+        &quot;id&quot;: 36,
         &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
         &quot;email&quot;: &quot;idickens@example.org&quot;,
         &quot;status&quot;: &quot;active&quot;,
         &quot;created_by&quot;: &quot;N/A&quot;,
         &quot;updated_by&quot;: &quot;N/A&quot;,
-        &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
-        &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+        &quot;created_at&quot;: &quot;20/02/2026 11:16:07&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 11:16:07&quot;
     },
     &quot;success&quot;: &quot;true&quot;,
     &quot;message&quot;: &quot;T&agrave;i khoản đ&atilde; được cập nhật!&quot;
@@ -18133,14 +18133,14 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: 16,
+        &quot;id&quot;: 37,
         &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
         &quot;email&quot;: &quot;aschuster@example.com&quot;,
         &quot;status&quot;: &quot;active&quot;,
         &quot;created_by&quot;: &quot;N/A&quot;,
         &quot;updated_by&quot;: &quot;N/A&quot;,
-        &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
-        &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+        &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;
     },
     &quot;success&quot;: &quot;true&quot;,
     &quot;message&quot;: &quot;T&agrave;i khoản đ&atilde; được cập nhật!&quot;
@@ -18570,14 +18570,14 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: 17,
+        &quot;id&quot;: 38,
         &quot;name&quot;: &quot;Morgan Hirthe&quot;,
         &quot;email&quot;: &quot;imclaughlin@example.org&quot;,
         &quot;status&quot;: &quot;active&quot;,
         &quot;created_by&quot;: &quot;N/A&quot;,
         &quot;updated_by&quot;: &quot;N/A&quot;,
-        &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
-        &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+        &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;
     },
     &quot;success&quot;: &quot;true&quot;,
     &quot;message&quot;: &quot;Cập nhật trạng th&aacute;i th&agrave;nh c&ocirc;ng!&quot;
@@ -18894,10 +18894,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:27\",
+    \"from_date\": \"2026-02-20T11:16:08\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -18928,10 +18928,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:27",
+    "from_date": "2026-02-20T11:16:08",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -18964,10 +18964,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:27',
+            'from_date' =&gt; '2026-02-20T11:16:08',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -19183,10 +19183,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-post-categories-export"
-               value="2026-02-20T09:55:27"
+               value="2026-02-20T11:16:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:27</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:08</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -19219,10 +19219,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-post-categories-export"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -19258,7 +19258,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php9422l3rofk0595xD9jw" </code></pre></div>
+    --form "file=@/tmp/phpub9gihjuka38bWg4HiR" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -19296,7 +19296,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/php9422l3rofk0595xD9jw', 'r')
+                'contents' =&gt; fopen('/tmp/phpub9gihjuka38bWg4HiR', 'r')
             ],
         ],
     ]
@@ -19412,7 +19412,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File Excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug. Example: <code>/tmp/php9422l3rofk0595xD9jw</code></p>
+<p>File Excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug. Example: <code>/tmp/phpub9gihjuka38bWg4HiR</code></p>
         </div>
         </form>
 
@@ -19834,7 +19834,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:27\",
+    \"from_date\": \"2026-02-20T11:16:08\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"desc\",
@@ -19869,7 +19869,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:27",
+    "from_date": "2026-02-20T11:16:08",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "desc",
@@ -19906,7 +19906,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:27',
+            'from_date' =&gt; '2026-02-20T11:16:08',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'desc',
@@ -20135,10 +20135,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-post-categories-stats"
-               value="2026-02-20T09:55:27"
+               value="2026-02-20T11:16:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:27</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:08</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -20398,7 +20398,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:55:27\",
+    \"from_date\": \"2026-02-20T11:16:08\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"asc\",
@@ -20433,7 +20433,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:55:27",
+    "from_date": "2026-02-20T11:16:08",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "asc",
@@ -20470,7 +20470,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:55:27',
+            'from_date' =&gt; '2026-02-20T11:16:08',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'asc',
@@ -20492,7 +20492,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 19,
+            &quot;id&quot;: 64,
             &quot;name&quot;: &quot;Animi Quos&quot;,
             &quot;slug&quot;: &quot;animi-quos&quot;,
             &quot;description&quot;: &quot;Fugiat sunt nihil accusantium harum mollitia.&quot;,
@@ -20502,11 +20502,11 @@ print_r(json_decode((string) $body));</code></pre></div>
             &quot;depth&quot;: 0,
             &quot;created_by&quot;: &quot;N/A&quot;,
             &quot;updated_by&quot;: &quot;N/A&quot;,
-            &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
-            &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+            &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;
         },
         {
-            &quot;id&quot;: 20,
+            &quot;id&quot;: 65,
             &quot;name&quot;: &quot;Aut Ab&quot;,
             &quot;slug&quot;: &quot;aut-ab&quot;,
             &quot;description&quot;: &quot;Quo omnis nostrum aut adipisci.&quot;,
@@ -20516,8 +20516,8 @@ print_r(json_decode((string) $body));</code></pre></div>
             &quot;depth&quot;: 0,
             &quot;created_by&quot;: &quot;N/A&quot;,
             &quot;updated_by&quot;: &quot;N/A&quot;,
-            &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
-            &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+            &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;
         }
     ],
     &quot;links&quot;: {
@@ -20759,10 +20759,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-post-categories"
-               value="2026-02-20T09:55:27"
+               value="2026-02-20T11:16:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:55:27</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T11:16:08</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -20879,20 +20879,20 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: 22,
+        &quot;id&quot;: 67,
         &quot;name&quot;: &quot;Aut Adipisci&quot;,
         &quot;slug&quot;: &quot;aut-adipisci&quot;,
         &quot;description&quot;: &quot;Qui commodi incidunt iure odit.&quot;,
         &quot;status&quot;: &quot;active&quot;,
         &quot;sort_order&quot;: 20,
-        &quot;parent_id&quot;: 21,
+        &quot;parent_id&quot;: 66,
         &quot;depth&quot;: 1,
         &quot;created_by&quot;: &quot;N/A&quot;,
         &quot;updated_by&quot;: &quot;N/A&quot;,
-        &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
-        &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;,
         &quot;parent&quot;: {
-            &quot;id&quot;: 21,
+            &quot;id&quot;: 66,
             &quot;name&quot;: &quot;Modi Ipsum&quot;,
             &quot;slug&quot;: &quot;modi-ipsum&quot;,
             &quot;description&quot;: &quot;Autem et consequatur aut dolores enim non facere tempora.&quot;,
@@ -20902,23 +20902,23 @@ print_r(json_decode((string) $body));</code></pre></div>
             &quot;depth&quot;: 0,
             &quot;created_by&quot;: &quot;N/A&quot;,
             &quot;updated_by&quot;: &quot;N/A&quot;,
-            &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
-            &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+            &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;
         },
         &quot;children&quot;: [
             {
-                &quot;id&quot;: 23,
+                &quot;id&quot;: 68,
                 &quot;name&quot;: &quot;Laboriosam Praesentium&quot;,
                 &quot;slug&quot;: &quot;laboriosam-praesentium&quot;,
                 &quot;description&quot;: &quot;Molestias fugit deleniti distinctio eum doloremque id.&quot;,
                 &quot;status&quot;: &quot;active&quot;,
                 &quot;sort_order&quot;: 61,
-                &quot;parent_id&quot;: 22,
+                &quot;parent_id&quot;: 67,
                 &quot;depth&quot;: 2,
                 &quot;created_by&quot;: &quot;N/A&quot;,
                 &quot;updated_by&quot;: &quot;N/A&quot;,
-                &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
-                &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+                &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+                &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;
             }
         ]
     },
@@ -21126,7 +21126,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: 24,
+        &quot;id&quot;: 69,
         &quot;name&quot;: &quot;Fugiat Sunt&quot;,
         &quot;slug&quot;: &quot;fugiat-sunt&quot;,
         &quot;description&quot;: &quot;Harum mollitia modi deserunt aut ab provident perspiciatis quo.&quot;,
@@ -21136,8 +21136,8 @@ print_r(json_decode((string) $body));</code></pre></div>
         &quot;depth&quot;: 0,
         &quot;created_by&quot;: &quot;N/A&quot;,
         &quot;updated_by&quot;: &quot;N/A&quot;,
-        &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
-        &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;
+        &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;
     },
     &quot;success&quot;: &quot;true&quot;,
     &quot;message&quot;: &quot;Danh mục đ&atilde; được tạo th&agrave;nh c&ocirc;ng!&quot;
@@ -21392,20 +21392,20 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: 26,
+        &quot;id&quot;: 71,
         &quot;name&quot;: &quot;Eius Et&quot;,
         &quot;slug&quot;: &quot;eius-et&quot;,
         &quot;description&quot;: &quot;Velit et fugiat sunt nihil accusantium.&quot;,
         &quot;status&quot;: &quot;inactive&quot;,
         &quot;sort_order&quot;: 70,
-        &quot;parent_id&quot;: 25,
+        &quot;parent_id&quot;: 70,
         &quot;depth&quot;: 1,
         &quot;created_by&quot;: &quot;N/A&quot;,
         &quot;updated_by&quot;: &quot;N/A&quot;,
-        &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
-        &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;,
         &quot;parent&quot;: {
-            &quot;id&quot;: 25,
+            &quot;id&quot;: 70,
             &quot;name&quot;: &quot;Modi Deserunt&quot;,
             &quot;slug&quot;: &quot;modi-deserunt&quot;,
             &quot;description&quot;: &quot;Provident perspiciatis quo omnis nostrum aut adipisci quidem.&quot;,
@@ -21415,23 +21415,23 @@ print_r(json_decode((string) $body));</code></pre></div>
             &quot;depth&quot;: 0,
             &quot;created_by&quot;: &quot;N/A&quot;,
             &quot;updated_by&quot;: &quot;N/A&quot;,
-            &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
-            &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;
+            &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;
         },
         &quot;children&quot;: [
             {
-                &quot;id&quot;: 27,
+                &quot;id&quot;: 72,
                 &quot;name&quot;: &quot;Commodi Incidunt&quot;,
                 &quot;slug&quot;: &quot;commodi-incidunt&quot;,
                 &quot;description&quot;: &quot;Et et modi ipsum nostrum.&quot;,
                 &quot;status&quot;: &quot;active&quot;,
                 &quot;sort_order&quot;: 41,
-                &quot;parent_id&quot;: 26,
+                &quot;parent_id&quot;: 71,
                 &quot;depth&quot;: 2,
                 &quot;created_by&quot;: &quot;N/A&quot;,
                 &quot;updated_by&quot;: &quot;N/A&quot;,
-                &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
-                &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;
+                &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+                &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;
             }
         ]
     },
@@ -21713,20 +21713,20 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: 29,
+        &quot;id&quot;: 74,
         &quot;name&quot;: &quot;Velit Et&quot;,
         &quot;slug&quot;: &quot;velit-et&quot;,
         &quot;description&quot;: &quot;Nihil accusantium harum mollitia modi deserunt.&quot;,
         &quot;status&quot;: &quot;active&quot;,
         &quot;sort_order&quot;: 68,
-        &quot;parent_id&quot;: 28,
+        &quot;parent_id&quot;: 73,
         &quot;depth&quot;: 1,
         &quot;created_by&quot;: &quot;N/A&quot;,
         &quot;updated_by&quot;: &quot;N/A&quot;,
-        &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
-        &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;,
         &quot;parent&quot;: {
-            &quot;id&quot;: 28,
+            &quot;id&quot;: 73,
             &quot;name&quot;: &quot;Provident Perspiciatis&quot;,
             &quot;slug&quot;: &quot;provident-perspiciatis&quot;,
             &quot;description&quot;: null,
@@ -21736,23 +21736,23 @@ print_r(json_decode((string) $body));</code></pre></div>
             &quot;depth&quot;: 0,
             &quot;created_by&quot;: &quot;N/A&quot;,
             &quot;updated_by&quot;: &quot;N/A&quot;,
-            &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
-            &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;
+            &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;
         },
         &quot;children&quot;: [
             {
-                &quot;id&quot;: 30,
+                &quot;id&quot;: 75,
                 &quot;name&quot;: &quot;Quidem Nostrum&quot;,
                 &quot;slug&quot;: &quot;quidem-nostrum&quot;,
                 &quot;description&quot;: null,
                 &quot;status&quot;: &quot;inactive&quot;,
                 &quot;sort_order&quot;: 0,
-                &quot;parent_id&quot;: 29,
+                &quot;parent_id&quot;: 74,
                 &quot;depth&quot;: 2,
                 &quot;created_by&quot;: &quot;N/A&quot;,
                 &quot;updated_by&quot;: &quot;N/A&quot;,
-                &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
-                &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;
+                &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+                &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;
             }
         ]
     },
@@ -22196,20 +22196,20 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;id&quot;: 32,
+        &quot;id&quot;: 77,
         &quot;name&quot;: &quot;Qui Commodi&quot;,
         &quot;slug&quot;: &quot;qui-commodi&quot;,
         &quot;description&quot;: &quot;Odit et et modi.&quot;,
         &quot;status&quot;: &quot;active&quot;,
         &quot;sort_order&quot;: 8,
-        &quot;parent_id&quot;: 31,
+        &quot;parent_id&quot;: 76,
         &quot;depth&quot;: 1,
         &quot;created_by&quot;: &quot;N/A&quot;,
         &quot;updated_by&quot;: &quot;N/A&quot;,
-        &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
-        &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;,
         &quot;parent&quot;: {
-            &quot;id&quot;: 31,
+            &quot;id&quot;: 76,
             &quot;name&quot;: &quot;Omnis Autem&quot;,
             &quot;slug&quot;: &quot;omnis-autem&quot;,
             &quot;description&quot;: &quot;Aut dolores enim non facere tempora ex voluptatem.&quot;,
@@ -22219,23 +22219,23 @@ print_r(json_decode((string) $body));</code></pre></div>
             &quot;depth&quot;: 0,
             &quot;created_by&quot;: &quot;N/A&quot;,
             &quot;updated_by&quot;: &quot;N/A&quot;,
-            &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
-            &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;
+            &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;
         },
         &quot;children&quot;: [
             {
-                &quot;id&quot;: 33,
+                &quot;id&quot;: 78,
                 &quot;name&quot;: &quot;Quis Adipisci&quot;,
                 &quot;slug&quot;: &quot;quis-adipisci&quot;,
                 &quot;description&quot;: null,
                 &quot;status&quot;: &quot;inactive&quot;,
                 &quot;sort_order&quot;: 72,
-                &quot;parent_id&quot;: 32,
+                &quot;parent_id&quot;: 77,
                 &quot;depth&quot;: 2,
                 &quot;created_by&quot;: &quot;N/A&quot;,
                 &quot;updated_by&quot;: &quot;N/A&quot;,
-                &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
-                &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;
+                &quot;created_at&quot;: &quot;20/02/2026 11:16:08&quot;,
+                &quot;updated_at&quot;: &quot;20/02/2026 11:16:08&quot;
             }
         ]
     },
