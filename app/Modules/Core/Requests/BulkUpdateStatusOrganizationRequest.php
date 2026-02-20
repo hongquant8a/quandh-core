@@ -4,7 +4,7 @@ namespace App\Modules\Core\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BulkUpdateStatusTeamRequest extends FormRequest
+class BulkUpdateStatusOrganizationRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -15,7 +15,7 @@ class BulkUpdateStatusTeamRequest extends FormRequest
     {
         return [
             'ids'    => 'required|array|min:1',
-            'ids.*'  => 'exists:teams,id',
+            'ids.*'  => 'exists:organizations,id',
             'status' => 'required|in:active,inactive',
         ];
     }

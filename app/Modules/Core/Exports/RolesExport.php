@@ -14,13 +14,13 @@ class RolesExport implements FromCollection, WithHeadings
 
     public function collection()
     {
-        $items = Role::with('team')->filter($this->filters)->get();
+        $items = Role::with('organization')->filter($this->filters)->get();
         return $items->map(fn ($r) => [
             'id'         => $r->id,
             'name'       => $r->name,
             'guard_name' => $r->guard_name,
-            'team_id'    => $r->team_id,
-            'team_name'  => $r->team?->name ?? 'N/A',
+            'organization_id' => $r->organization_id,
+            'organization_name' => $r->organization?->name ?? 'N/A',
             'created_at' => $r->created_at?->format('H:i:s d/m/Y'),
             'updated_at' => $r->updated_at?->format('H:i:s d/m/Y'),
         ]);
@@ -28,6 +28,6 @@ class RolesExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ['ID', 'Name', 'Guard Name', 'Team ID', 'Team Name', 'Created At', 'Updated At'];
+        return ['ID', 'Name', 'Guard Name', 'Organization ID', 'Organization Name', 'Created At', 'Updated At'];
     }
 }

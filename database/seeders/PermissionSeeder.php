@@ -4,12 +4,12 @@ namespace Database\Seeders;
 
 use App\Modules\Core\Models\Permission;
 use App\Modules\Core\Models\Role;
-use App\Modules\Core\Models\Team;
+use App\Modules\Core\Models\Organization;
 use App\Modules\Core\Models\User;
 use Illuminate\Database\Seeder;
 
 /**
- * Seed permission, role, team và phân quyền cho dự án.
+ * Seed permission, role, organization và phân quyền cho dự án.
  *
  * Khi thêm module mới hoặc thêm action (stats, index, show, store, ...) vào module,
  * bắt buộc cập nhật danh sách PERMISSIONS bên dưới cho đầy đủ, sau đó chạy lại seed.
@@ -21,7 +21,7 @@ class PermissionSeeder extends Seeder
 
     /**
      * Danh sách đầy đủ permission theo module và resource.
-     * Định dạng: 'resource.action' — resource trùng prefix API (users, permissions, roles, teams, posts, post-categories).
+     * Định dạng: 'resource.action' — resource trùng prefix API (users, permissions, roles, organizations, posts, post-categories).
      * Khi thêm module/chức năng: bổ sung vào đúng nhóm và chạy sail artisan db:seed --class=PermissionSeeder.
      */
     protected static array $PERMISSIONS = [
@@ -40,8 +40,8 @@ class PermissionSeeder extends Seeder
             'stats', 'index', 'show', 'store', 'update', 'destroy',
             'bulkDestroy', 'export', 'import',
         ],
-        // Core - Teams (cấu trúc cây parent_id)
-        'teams' => [
+        // Core - Organizations (cấu trúc cây parent_id)
+        'organizations' => [
             'stats', 'index', 'tree', 'show', 'store', 'update', 'destroy',
             'bulkDestroy', 'bulkUpdateStatus', 'changeStatus', 'export', 'import',
         ],
@@ -61,7 +61,7 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $this->migrateGuardApiToWeb();
-        $this->seedTeams();
+        $this->seedOrganizations();
         $this->seedPermissions();
         $this->seedRoles();
         $this->assignPermissionsToRoles();
@@ -76,14 +76,14 @@ class PermissionSeeder extends Seeder
         app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
     }
 
-    /** Tạo team mặc định. */
-    protected function seedTeams(): void
+    /** Tạo organization mặc định. */
+    protected function seedOrganizations(): void
     {
-        Team::firstOrCreate(
+        Organization::firstOrCreate(
             ['slug' => 'default'],
             [
                 'name'        => 'Default',
-                'description' => 'Team mặc định của hệ thống',
+                'description' => 'Organization mặc định của hệ thống',
                 'status'      => 'active',
             ]
         );
@@ -94,7 +94,7 @@ class PermissionSeeder extends Seeder
         'users'          => 'Người dùng',
         'permissions'    => 'Quyền',
         'roles'          => 'Vai trò',
-        'teams'          => 'Team',
+        'organizations'  => 'Tổ chức',
         'posts'          => 'Bài viết',
         'post-categories' => 'Danh mục bài viết',
     ];
@@ -148,54 +148,54 @@ class PermissionSeeder extends Seeder
     /** Tạo các role mặc định. */
     protected function seedRoles(): void
     {
-        $defaultTeam = Team::where('slug', 'default')->first();
-        if (! $defaultTeam) {
+        $defaultOrganization = Organization::where('slug', 'default')->first();
+        if (! $defaultOrganization) {
             return;
         }
 
-        // Tất cả role gắn với team mặc định (model_has_roles.team_id NOT NULL khi bật teams)
+        // Tất cả role gắn với team mặc định (model_has_roles.organization_id NOT NULL khi bật teams)
         // Super Admin: toàn quyền, thuộc team mặc định (roles chuẩn Spatie, không có status)
         Role::firstOrCreate(
-            ['name' => 'Super Admin', 'guard_name' => self::GUARD, 'team_id' => $defaultTeam->id]
+            ['name' => 'Super Admin', 'guard_name' => self::GUARD, 'organization_id' => $defaultOrganization->id]
         );
         Role::firstOrCreate(
-            ['name' => 'Admin', 'guard_name' => self::GUARD, 'team_id' => $defaultTeam->id]
+            ['name' => 'Admin', 'guard_name' => self::GUARD, 'organization_id' => $defaultOrganization->id]
         );
         Role::firstOrCreate(
-            ['name' => 'Editor', 'guard_name' => self::GUARD, 'team_id' => $defaultTeam->id]
+            ['name' => 'Editor', 'guard_name' => self::GUARD, 'organization_id' => $defaultOrganization->id]
         );
         Role::firstOrCreate(
-            ['name' => 'Vai trò mẫu', 'guard_name' => self::GUARD, 'team_id' => $defaultTeam->id]
+            ['name' => 'Vai trò mẫu', 'guard_name' => self::GUARD, 'organization_id' => $defaultOrganization->id]
         );
     }
 
     /** Gán permission cho từng role. */
     protected function assignPermissionsToRoles(): void
     {
-        $defaultTeam = Team::where('slug', 'default')->first();
-        if (! $defaultTeam) {
+        $defaultOrganization = Organization::where('slug', 'default')->first();
+        if (! $defaultOrganization) {
             return;
         }
 
         $allPermissionNames = $this->getAllPermissionNames();
-        $superAdmin = Role::where('name', 'Super Admin')->where('team_id', $defaultTeam->id)->where('guard_name', self::GUARD)->first();
+        $superAdmin = Role::where('name', 'Super Admin')->where('organization_id', $defaultOrganization->id)->where('guard_name', self::GUARD)->first();
         if ($superAdmin) {
             $superAdmin->syncPermissions($allPermissionNames);
         }
 
-        $admin = Role::where('name', 'Admin')->where('team_id', $defaultTeam->id)->where('guard_name', self::GUARD)->first();
+        $admin = Role::where('name', 'Admin')->where('organization_id', $defaultOrganization->id)->where('guard_name', self::GUARD)->first();
         if ($admin) {
             $admin->syncPermissions($allPermissionNames);
         }
 
         $editorPermissionNames = $this->getEditorPermissionNames();
-        $editor = Role::where('name', 'Editor')->where('team_id', $defaultTeam->id)->where('guard_name', self::GUARD)->first();
+        $editor = Role::where('name', 'Editor')->where('organization_id', $defaultOrganization->id)->where('guard_name', self::GUARD)->first();
         if ($editor) {
             $editor->syncPermissions($editorPermissionNames);
         }
 
         $samplePermissionNames = $this->getSamplePermissionNames();
-        $sampleRole = Role::where('name', 'Vai trò mẫu')->where('team_id', $defaultTeam->id)->where('guard_name', self::GUARD)->first();
+        $sampleRole = Role::where('name', 'Vai trò mẫu')->where('organization_id', $defaultOrganization->id)->where('guard_name', self::GUARD)->first();
         if ($sampleRole) {
             $sampleRole->syncPermissions($samplePermissionNames);
         }
@@ -204,15 +204,15 @@ class PermissionSeeder extends Seeder
     /** Gán role cho user: user 1 = Super Admin, user 2 = Admin, user 3 = Vai trò mẫu. */
     protected function assignSuperAdminToFirstUser(): void
     {
-        $defaultTeam = Team::where('slug', 'default')->first();
-        if (! $defaultTeam) {
+        $defaultOrganization = Organization::where('slug', 'default')->first();
+        if (! $defaultOrganization) {
             return;
         }
-        setPermissionsTeamId($defaultTeam->id);
+        setPermissionsTeamId($defaultOrganization->id);
 
-        $superAdmin = Role::where('name', 'Super Admin')->where('team_id', $defaultTeam->id)->where('guard_name', self::GUARD)->first();
-        $admin = Role::where('name', 'Admin')->where('team_id', $defaultTeam->id)->where('guard_name', self::GUARD)->first();
-        $sampleRole = Role::where('name', 'Vai trò mẫu')->where('team_id', $defaultTeam->id)->where('guard_name', self::GUARD)->first();
+        $superAdmin = Role::where('name', 'Super Admin')->where('organization_id', $defaultOrganization->id)->where('guard_name', self::GUARD)->first();
+        $admin = Role::where('name', 'Admin')->where('organization_id', $defaultOrganization->id)->where('guard_name', self::GUARD)->first();
+        $sampleRole = Role::where('name', 'Vai trò mẫu')->where('organization_id', $defaultOrganization->id)->where('guard_name', self::GUARD)->first();
 
         $user1 = User::find(1);
         if ($user1 && $superAdmin && ! $user1->hasRole($superAdmin)) {

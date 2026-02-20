@@ -36,14 +36,14 @@ class RoleController extends Controller
      */
     public function stats(FilterRequest $request)
     {
-        $base = Role::with('team')->filter($request->all());
+        $base = Role::with('organization')->filter($request->all());
         return response()->json(['total' => (clone $base)->count()]);
     }
 
     /**
      * Danh sách role
      *
-     * Lấy danh sách có phân trang, lọc và sắp xếp. Có kèm team và permissions.
+     * Lấy danh sách có phân trang, lọc và sắp xếp. Có kèm organization và permissions.
      *
      * @queryParam search string Từ khóa tìm kiếm (name, guard_name). Example: admin
      * @queryParam from_date date Lọc từ ngày tạo (created_at) (Y-m-d). Example: 2026-02-01
@@ -54,7 +54,7 @@ class RoleController extends Controller
      */
     public function index(FilterRequest $request)
     {
-        $items = Role::with(['team', 'permissions'])
+        $items = Role::with(['organization', 'permissions'])
             ->filter($request->all())
             ->paginate($request->limit ?? 10);
         return new RoleCollection($items);
@@ -67,7 +67,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        $role->load(['team', 'permissions']);
+        $role->load(['organization', 'permissions']);
         return new RoleResource($role);
     }
 
@@ -76,7 +76,7 @@ class RoleController extends Controller
      *
      * @bodyParam name string required Tên role. Example: admin
      * @bodyParam guard_name string Guard name (mặc định web). Example: web
-     * @bodyParam team_id integer ID team (nullable khi bật teams). Example: 1
+     * @bodyParam organization_id integer ID organization (nullable). Example: 1
      * @bodyParam permission_ids array Danh sách ID permission để sync. Example: [1, 2, 3]
      */
     public function store(StoreRoleRequest $request)
@@ -99,7 +99,7 @@ class RoleController extends Controller
      * @urlParam role integer required ID role. Example: 1
      * @bodyParam name string Tên role. Example: editor
      * @bodyParam guard_name string Guard name. Example: web
-     * @bodyParam team_id integer ID team (nullable). Example: 1
+     * @bodyParam organization_id integer ID organization (nullable). Example: 1
      * @bodyParam permission_ids array Danh sách ID permission để sync (gửi mảng rỗng để bỏ hết). Example: [1, 2]
      */
     public function update(UpdateRoleRequest $request, Role $role)
@@ -156,7 +156,7 @@ class RoleController extends Controller
     /**
      * Nhập danh sách role
      *
-     * @bodyParam file file required File excel (xlsx, xls, csv). Cột: name, guard_name, team_id.
+     * @bodyParam file file required File excel (xlsx, xls, csv). Cột: name, guard_name, organization_id.
      */
     public function import(ImportRoleRequest $request)
     {

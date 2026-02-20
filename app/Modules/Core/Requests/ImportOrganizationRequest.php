@@ -4,7 +4,7 @@ namespace App\Modules\Core\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BulkDestroyTeamRequest extends FormRequest
+class ImportOrganizationRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,8 +14,7 @@ class BulkDestroyTeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'ids'   => 'required|array|min:1',
-            'ids.*' => 'exists:teams,id',
+            'file' => 'required|file|mimes:xlsx,xls,csv|max:10240',
         ];
     }
 }

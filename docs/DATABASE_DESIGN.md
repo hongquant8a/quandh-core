@@ -126,10 +126,10 @@ Job thất bại.
 
 ---
 
-## 3. Core – Permission, Role, Team (Spatie Laravel Permission)
+## 3. Core – Permission, Role, Organization (Spatie Laravel Permission)
 
-### `teams`
-Bảng team (nhóm) dùng cho Spatie Laravel Permission; cấu trúc cây theo parent_id.
+### `organizations`
+Bảng tổ chức (organization) dùng cho Spatie Laravel Permission; cấu trúc cây theo parent_id.
 
 | Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
 |-----|------|----------|----------|---------------------|
@@ -138,7 +138,7 @@ Bảng team (nhóm) dùng cho Spatie Laravel Permission; cấu trúc cây theo p
 | slug | varchar(255) | Yes | null | UNIQUE |
 | description | text | Yes | null | |
 | status | varchar(255) | No | 'active' | active, inactive |
-| parent_id | bigint unsigned | Yes | null | FK → teams.id (cha) |
+| parent_id | bigint unsigned | Yes | null | FK → organizations.id (cha) |
 | sort_order | int unsigned | No | 0 | Thứ tự trong cây |
 | created_by | bigint unsigned | Yes | null | FK → users.id |
 | updated_by | bigint unsigned | Yes | null | FK → users.id |
@@ -160,38 +160,38 @@ Quyền (Spatie Laravel Permission). Bổ sung description, sort_order, parent_i
 | updated_at | timestamp | Yes | null | |
 
 ### `roles`
-Vai trò (Spatie Laravel Permission, bật teams). Cấu trúc mặc định Spatie, không có cột status.
+Vai trò (Spatie Laravel Permission, bật teams/organizations). Cấu trúc mặc định Spatie, không có cột status.
 
 | Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
 |-----|------|----------|----------|---------------------|
 | id | bigint unsigned | No | — | PK, auto increment |
-| team_id | bigint unsigned | Yes | null | FK → teams.id (ngữ cảnh team) |
-| name | varchar(255) | No | — | UNIQUE(team_id, name, guard_name) |
+| organization_id | bigint unsigned | Yes | null | FK → organizations.id (ngữ cảnh organization) |
+| name | varchar(255) | No | — | UNIQUE(organization_id, name, guard_name) |
 | guard_name | varchar(255) | No | — | |
 | created_at | timestamp | Yes | null | |
 | updated_at | timestamp | Yes | null | |
 
 ### `model_has_permissions`
-Pivot: model (user) ↔ permission (Spatie, bật teams).
+Pivot: model (user) ↔ permission (Spatie, bật organizations).
 
 | Cột | Kiểu | Ràng buộc / Ghi chú |
 |-----|------|---------------------|
 | permission_id | bigint unsigned | FK → permissions.id |
 | model_type | varchar(255) | Polymorphic |
 | model_id | bigint unsigned | Polymorphic |
-| team_id | bigint unsigned | FK team (khi bật teams) |
-| — | — | PK(team_id, permission_id, model_id, model_type) |
+| organization_id | bigint unsigned | FK organization (khi bật teams) |
+| — | — | PK(organization_id, permission_id, model_id, model_type) |
 
 ### `model_has_roles`
-Pivot: model (user) ↔ role (Spatie, bật teams).
+Pivot: model (user) ↔ role (Spatie, bật organizations).
 
 | Cột | Kiểu | Ràng buộc / Ghi chú |
 |-----|------|---------------------|
 | role_id | bigint unsigned | FK → roles.id |
 | model_type | varchar(255) | Polymorphic |
 | model_id | bigint unsigned | Polymorphic |
-| team_id | bigint unsigned | FK team (khi bật teams) |
-| — | — | PK(team_id, role_id, model_id, model_type) |
+| organization_id | bigint unsigned | FK organization (khi bật teams) |
+| — | — | PK(organization_id, role_id, model_id, model_type) |
 
 ### `role_has_permissions`
 Pivot: role ↔ permission (Spatie).

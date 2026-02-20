@@ -4,7 +4,7 @@ namespace App\Modules\Core\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ImportTeamRequest extends FormRequest
+class ChangeStatusOrganizationRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,7 +14,7 @@ class ImportTeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => 'required|file|mimes:xlsx,xls,csv|max:10240',
+            'status' => 'required|in:active,inactive',
         ];
     }
 }

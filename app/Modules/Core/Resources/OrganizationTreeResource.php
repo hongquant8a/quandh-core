@@ -5,8 +5,8 @@ namespace App\Modules\Core\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** Resource cho API tree team (cấu trúc cây parent_id). */
-class TeamTreeResource extends JsonResource
+/** Resource cho API tree organization (cấu trúc cây parent_id). */
+class OrganizationTreeResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
@@ -21,7 +21,7 @@ class TeamTreeResource extends JsonResource
             'depth'       => $this->depth,
             'children'    => $this->whenLoaded(
                 'children',
-                fn () => TeamTreeResource::collection($this->children),
+                fn () => OrganizationTreeResource::collection($this->children),
                 []
             ),
         ];

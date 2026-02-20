@@ -5,7 +5,7 @@ namespace App\Modules\Core\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateTeamRequest extends FormRequest
+class UpdateOrganizationRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,17 +14,17 @@ class UpdateTeamRequest extends FormRequest
 
     public function rules(): array
     {
-        $team = $this->route('team');
-        $teamId = is_object($team) ? $team->id : $team;
+        $organization = $this->route('organization');
+        $organizationId = is_object($organization) ? $organization->id : $organization;
         return [
             'name'        => 'sometimes|string|max:255',
-            'slug'        => ['nullable', 'string', 'max:255', Rule::unique('teams', 'slug')->ignore($teamId)],
+            'slug'        => ['nullable', 'string', 'max:255', Rule::unique('organizations', 'slug')->ignore($organizationId)],
             'description' => 'nullable|string',
             'status'      => 'nullable|in:active,inactive',
             'parent_id'   => [
                 'nullable',
-                Rule::notIn([$teamId]),
-                Rule::when($this->filled('parent_id') && (int) $this->input('parent_id') !== 0, ['exists:teams,id']),
+                Rule::notIn([$organizationId]),
+                Rule::when($this->filled('parent_id') && (int) $this->input('parent_id') !== 0, ['exists:organizations,id']),
             ],
             'sort_order'  => 'nullable|integer|min:0',
         ];

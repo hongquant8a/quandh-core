@@ -12,7 +12,7 @@ class Role extends SpatieRole
     protected $fillable = [
         'name',
         'guard_name',
-        'team_id',
+        'organization_id',
     ];
 
     /**
@@ -35,9 +35,9 @@ class Role extends SpatieRole
         return $query;
     }
 
-    /** Quan hệ team (nếu dùng bảng teams). */
-    public function team()
+    /** Quan hệ organization (bảng organizations). */
+    public function organization()
     {
-        return $this->belongsTo(Team::class, 'team_id');
+        return $this->belongsTo(Organization::class, 'organization_id');
     }
 }

@@ -6,10 +6,12 @@ use App\Modules\Core\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Model Team – nhóm/quyền theo ngữ cảnh (Spatie Permission teams).
+ * Model Organization – tổ chức (thay thế teams, dùng cho Spatie Permission teams).
  */
-class Team extends Model
+class Organization extends Model
 {
+    protected $table = 'organizations';
+
     protected $fillable = [
         'name',
         'slug',
@@ -27,30 +29,30 @@ class Team extends Model
 
     public function parent()
     {
-        return $this->belongsTo(Team::class, 'parent_id');
+        return $this->belongsTo(Organization::class, 'parent_id');
     }
 
     public function children()
     {
-        return $this->hasMany(Team::class, 'parent_id')->orderBy('sort_order');
+        return $this->hasMany(Organization::class, 'parent_id')->orderBy('sort_order');
     }
 
     protected static function booted()
     {
-        static::creating(function (Team $team) {
-            $team->created_by = $team->updated_by = auth()->id();
-            if (empty($team->slug)) {
-                $team->slug = static::uniqueSlug(\Illuminate\Support\Str::slug($team->name));
+        static::creating(function (Organization $organization) {
+            $organization->created_by = $organization->updated_by = auth()->id();
+            if (empty($organization->slug)) {
+                $organization->slug = static::uniqueSlug(\Illuminate\Support\Str::slug($organization->name));
             }
         });
-        static::updating(function (Team $team) {
-            $team->updated_by = auth()->id();
-            if ($team->isDirty('name') && ! $team->isDirty('slug')) {
-                $team->slug = static::uniqueSlug(\Illuminate\Support\Str::slug($team->name), $team->id);
+        static::updating(function (Organization $organization) {
+            $organization->updated_by = auth()->id();
+            if ($organization->isDirty('name') && ! $organization->isDirty('slug')) {
+                $organization->slug = static::uniqueSlug(\Illuminate\Support\Str::slug($organization->name), $organization->id);
             }
         });
-        static::deleting(function (Team $team) {
-            foreach ($team->children as $child) {
+        static::deleting(function (Organization $organization) {
+            foreach ($organization->children as $child) {
                 $child->delete();
             }
         });
@@ -87,18 +89,11 @@ class Team extends Model
         return $query;
     }
 
-    /** Sắp xếp theo cây: cha trước con. */
     public function scopeTreeOrder($query)
     {
         return $query->orderByRaw('COALESCE(parent_id, 0), sort_order, id');
     }
 
-    /**
-     * Xây cây từ collection (parent_id).
-     *
-     * @param  \Illuminate\Support\Collection  $items
-     * @return \Illuminate\Support\Collection
-     */
     public static function buildTree($items)
     {
         $grouped = $items->groupBy('parent_id');
@@ -111,7 +106,6 @@ class Team extends Model
         return $builder(null);
     }
 
-    /** Danh sách phẳng theo thứ tự cây (để export). */
     public static function getFlatTreeOrdered(array $filters = [])
     {
         $query = static::with(['creator', 'editor'])->filter($filters);
@@ -128,7 +122,6 @@ class Team extends Model
         return $result;
     }
 
-    /** Độ sâu (0 = gốc). */
     public function getDepthAttribute(): int
     {
         $d = 0;

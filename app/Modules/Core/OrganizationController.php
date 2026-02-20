@@ -4,30 +4,30 @@ namespace App\Modules\Core;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FilterRequest;
-use App\Modules\Core\Models\Team;
-use App\Modules\Core\Requests\StoreTeamRequest;
-use App\Modules\Core\Requests\UpdateTeamRequest;
-use App\Modules\Core\Requests\BulkDestroyTeamRequest;
-use App\Modules\Core\Requests\BulkUpdateStatusTeamRequest;
-use App\Modules\Core\Requests\ChangeStatusTeamRequest;
-use App\Modules\Core\Requests\ImportTeamRequest;
-use App\Modules\Core\Resources\TeamResource;
-use App\Modules\Core\Resources\TeamCollection;
-use App\Modules\Core\Resources\TeamTreeResource;
+use App\Modules\Core\Models\Organization;
+use App\Modules\Core\Requests\StoreOrganizationRequest;
+use App\Modules\Core\Requests\UpdateOrganizationRequest;
+use App\Modules\Core\Requests\BulkDestroyOrganizationRequest;
+use App\Modules\Core\Requests\BulkUpdateStatusOrganizationRequest;
+use App\Modules\Core\Requests\ChangeStatusOrganizationRequest;
+use App\Modules\Core\Requests\ImportOrganizationRequest;
+use App\Modules\Core\Resources\OrganizationResource;
+use App\Modules\Core\Resources\OrganizationCollection;
+use App\Modules\Core\Resources\OrganizationTreeResource;
 use Illuminate\Http\Request;
-use App\Modules\Core\Exports\TeamsExport;
-use App\Modules\Core\Imports\TeamsImport;
+use App\Modules\Core\Exports\OrganizationsExport;
+use App\Modules\Core\Imports\OrganizationsImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 /**
- * @group Core - Team
+ * @group Core - Organization
  *
- * Quản lý team (nhóm): stats, index, show, store, update, destroy, bulk delete, bulk status, change status, export, import.
+ * Quản lý tổ chức (organization): stats, index, show, store, update, destroy, bulk delete, bulk status, change status, export, import.
  */
-class TeamController extends Controller
+class OrganizationController extends Controller
 {
     /**
-     * Thống kê team
+     * Thống kê organization
      *
      * Tổng số, đang kích hoạt (active), không kích hoạt (inactive). Áp dụng cùng bộ lọc với index.
      *
@@ -41,7 +41,7 @@ class TeamController extends Controller
      */
     public function stats(FilterRequest $request)
     {
-        $base = Team::filter($request->all());
+        $base = Organization::filter($request->all());
         return response()->json([
             'total'    => (clone $base)->count(),
             'active'   => (clone $base)->where('status', 'active')->count(),
@@ -50,7 +50,7 @@ class TeamController extends Controller
     }
 
     /**
-     * Danh sách team
+     * Danh sách organization
      *
      * Lấy danh sách có phân trang, lọc và sắp xếp.
      *
@@ -64,145 +64,145 @@ class TeamController extends Controller
      */
     public function index(FilterRequest $request)
     {
-        $items = Team::with(['creator', 'editor', 'parent'])
+        $items = Organization::with(['creator', 'editor', 'parent'])
             ->filter($request->all())
             ->treeOrder()
             ->paginate($request->limit ?? 10);
-        return new TeamCollection($items);
+        return new OrganizationCollection($items);
     }
 
     /**
-     * Cây team (toàn bộ cây, không phân trang). Cấu trúc parent_id.
+     * Cây organization (toàn bộ cây, không phân trang). Cấu trúc parent_id.
      *
      * @queryParam status string Lọc theo trạng thái: active, inactive.
      */
     public function tree(Request $request)
     {
-        $query = Team::query()
+        $query = Organization::query()
             ->when($request->status, fn ($q, $v) => $q->where('status', $v));
         $items = $query->orderBy('sort_order')->orderBy('id')->get();
-        $tree = Team::buildTree($items);
-        return TeamTreeResource::collection($tree);
+        $tree = Organization::buildTree($items);
+        return OrganizationTreeResource::collection($tree);
     }
 
     /**
-     * Chi tiết team
+     * Chi tiết organization
      *
-     * @urlParam team integer required ID team. Example: 1
+     * @urlParam organization integer required ID organization. Example: 1
      */
-    public function show(Team $team)
+    public function show(Organization $organization)
     {
-        $team->load(['creator', 'editor', 'parent', 'children' => fn ($q) => $q->orderBy('sort_order')]);
-        return new TeamResource($team);
+        $organization->load(['creator', 'editor', 'parent', 'children' => fn ($q) => $q->orderBy('sort_order')]);
+        return new OrganizationResource($organization);
     }
 
     /**
-     * Tạo team mới
+     * Tạo organization mới
      *
-     * @bodyParam name string required Tên team. Example: Công ty A
+     * @bodyParam name string required Tên organization. Example: Công ty A
      * @bodyParam slug string Slug (nếu không gửi sẽ tự sinh từ name). Example: cong-ty-a
-     * @bodyParam description string Mô tả. Example: Team quản trị
+     * @bodyParam description string Mô tả. Example: Tổ chức quản trị
      * @bodyParam status string required Trạng thái: active, inactive. Example: active
-     * @bodyParam parent_id integer ID team cha (null = gốc). Example: null
+     * @bodyParam parent_id integer ID organization cha (null = gốc). Example: null
      * @bodyParam sort_order integer Thứ tự. Example: 0
      */
-    public function store(StoreTeamRequest $request)
+    public function store(StoreOrganizationRequest $request)
     {
-        $team = Team::create($request->validated());
-        return (new TeamResource($team))
-            ->additional(['message' => 'Team đã được tạo thành công!']);
+        $organization = Organization::create($request->validated());
+        return (new OrganizationResource($organization))
+            ->additional(['message' => 'Organization đã được tạo thành công!']);
     }
 
     /**
-     * Cập nhật team
+     * Cập nhật organization
      *
-     * @urlParam team integer required ID team. Example: 1
-     * @bodyParam name string Tên team. Example: Công ty A
+     * @urlParam organization integer required ID organization. Example: 1
+     * @bodyParam name string Tên organization. Example: Công ty A
      * @bodyParam slug string Slug. Example: cong-ty-a
-     * @bodyParam description string Mô tả. Example: Team quản trị
+     * @bodyParam description string Mô tả. Example: Tổ chức quản trị
      * @bodyParam status string Trạng thái: active, inactive. Example: inactive
-     * @bodyParam parent_id integer ID team cha (null = gốc). Example: null
+     * @bodyParam parent_id integer ID organization cha (null = gốc). Example: null
      * @bodyParam sort_order integer Thứ tự. Example: 0
      */
-    public function update(UpdateTeamRequest $request, Team $team)
+    public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
         $data = $request->validated();
         if (isset($data['parent_id']) && (int) $data['parent_id'] !== 0) {
-            if (static::isDescendantOf($data['parent_id'], $team->id)) {
-                return response()->json(['message' => 'Không thể chọn team con làm team cha.'], 422);
+            if (static::isDescendantOf($data['parent_id'], $organization->id)) {
+                return response()->json(['message' => 'Không thể chọn organization con làm organization cha.'], 422);
             }
         }
         if (array_key_exists('parent_id', $data) && (int) $data['parent_id'] === 0) {
             $data['parent_id'] = null;
         }
-        $team->update($data);
-        return (new TeamResource($team->fresh(['parent', 'children'])))
-            ->additional(['message' => 'Team đã được cập nhật!']);
+        $organization->update($data);
+        return (new OrganizationResource($organization->fresh(['parent', 'children'])))
+            ->additional(['message' => 'Organization đã được cập nhật!']);
     }
 
     protected static function isDescendantOf(int $candidateId, int $id): bool
     {
-        $current = Team::find($id);
+        $current = Organization::find($id);
         while ($current && $current->parent_id) {
             if ($current->parent_id === $candidateId) {
                 return true;
             }
-            $current = Team::find($current->parent_id);
+            $current = Organization::find($current->parent_id);
         }
         return false;
     }
 
     /**
-     * Xóa team
+     * Xóa organization
      *
-     * @urlParam team integer required ID team. Example: 1
+     * @urlParam organization integer required ID organization. Example: 1
      */
-    public function destroy(Team $team)
+    public function destroy(Organization $organization)
     {
-        $team->delete();
-        return response()->json(['message' => 'Team đã được xóa!']);
+        $organization->delete();
+        return response()->json(['message' => 'Organization đã được xóa!']);
     }
 
     /**
-     * Xóa hàng loạt team
+     * Xóa hàng loạt organization
      *
      * @bodyParam ids array required Danh sách ID. Example: [1, 2, 3]
      */
-    public function bulkDestroy(BulkDestroyTeamRequest $request)
+    public function bulkDestroy(BulkDestroyOrganizationRequest $request)
     {
-        Team::whereIn('id', $request->ids)->delete();
-        return response()->json(['message' => 'Đã xóa thành công các team được chọn!']);
+        Organization::whereIn('id', $request->ids)->delete();
+        return response()->json(['message' => 'Đã xóa thành công các organization được chọn!']);
     }
 
     /**
-     * Cập nhật trạng thái team hàng loạt
+     * Cập nhật trạng thái organization hàng loạt
      *
      * @bodyParam ids array required Danh sách ID. Example: [1, 2, 3]
      * @bodyParam status string required Trạng thái: active, inactive. Example: active
      */
-    public function bulkUpdateStatus(BulkUpdateStatusTeamRequest $request)
+    public function bulkUpdateStatus(BulkUpdateStatusOrganizationRequest $request)
     {
-        Team::whereIn('id', $request->ids)->update(['status' => $request->status]);
-        return response()->json(['message' => 'Cập nhật trạng thái team thành công.']);
+        Organization::whereIn('id', $request->ids)->update(['status' => $request->status]);
+        return response()->json(['message' => 'Cập nhật trạng thái organization thành công.']);
     }
 
     /**
-     * Thay đổi trạng thái team
+     * Thay đổi trạng thái organization
      *
-     * @urlParam team integer required ID team. Example: 1
+     * @urlParam organization integer required ID organization. Example: 1
      * @bodyParam status string required Trạng thái mới: active, inactive. Example: inactive
      */
-    public function changeStatus(ChangeStatusTeamRequest $request, Team $team)
+    public function changeStatus(ChangeStatusOrganizationRequest $request, Organization $organization)
     {
-        $team->update(['status' => $request->status]);
+        $organization->update(['status' => $request->status]);
         return response()->json([
             'message' => 'Cập nhật trạng thái thành công!',
-            'data'    => new TeamResource($team),
+            'data'    => new OrganizationResource($organization),
         ]);
     }
 
     /**
-     * Xuất danh sách team
+     * Xuất danh sách organization
      *
      * Áp dụng cùng bộ lọc với index. Trả về file Excel.
      *
@@ -215,17 +215,17 @@ class TeamController extends Controller
      */
     public function export(FilterRequest $request)
     {
-        return Excel::download(new TeamsExport($request->all()), 'teams.xlsx');
+        return Excel::download(new OrganizationsExport($request->all()), 'organizations.xlsx');
     }
 
     /**
-     * Nhập danh sách team
+     * Nhập danh sách organization
      *
      * @bodyParam file file required File excel (xlsx, xls, csv). Cột: name, slug, description, status.
      */
-    public function import(ImportTeamRequest $request)
+    public function import(ImportOrganizationRequest $request)
     {
-        Excel::import(new TeamsImport, $request->file('file'));
-        return response()->json(['message' => 'Import team thành công.']);
+        Excel::import(new OrganizationsImport, $request->file('file'));
+        return response()->json(['message' => 'Import organization thành công.']);
     }
 }

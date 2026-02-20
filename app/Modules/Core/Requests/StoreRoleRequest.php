@@ -16,7 +16,7 @@ class StoreRoleRequest extends FormRequest
         return [
             'name'            => 'required|string|max:255',
             'guard_name'      => 'nullable|string|max:255',
-            'team_id'         => 'nullable|exists:teams,id',
+            'organization_id' => 'nullable|exists:organizations,id',
             'permission_ids'  => 'nullable|array',
             'permission_ids.*' => 'exists:permissions,id',
         ];
@@ -26,7 +26,7 @@ class StoreRoleRequest extends FormRequest
     {
         return [
             'name.required'   => 'Tên vai trò không được để trống.',
-            'team_id.exists'  => 'Team không tồn tại.',
+            'organization_id.exists' => 'Organization không tồn tại.',
         ];
     }
 }

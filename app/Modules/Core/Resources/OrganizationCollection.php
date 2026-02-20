@@ -5,9 +5,9 @@ namespace App\Modules\Core\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class TeamCollection extends ResourceCollection
+class OrganizationCollection extends ResourceCollection
 {
-    public $collects = TeamResource::class;
+    public $collects = OrganizationResource::class;
 
     public function toArray(Request $request): array
     {

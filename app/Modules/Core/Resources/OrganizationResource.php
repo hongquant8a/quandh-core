@@ -5,7 +5,7 @@ namespace App\Modules\Core\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TeamResource extends JsonResource
+class OrganizationResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
@@ -22,8 +22,8 @@ class TeamResource extends JsonResource
             'updated_by' => $this->editor?->name ?? 'N/A',
             'created_at' => $this->created_at?->format('H:i:s d/m/Y'),
             'updated_at' => $this->updated_at?->format('H:i:s d/m/Y'),
-            'parent'     => $this->whenLoaded('parent', fn () => new TeamResource($this->parent)),
-            'children'   => $this->whenLoaded('children', fn () => TeamResource::collection($this->children)),
+            'parent'     => $this->whenLoaded('parent', fn () => new OrganizationResource($this->parent)),
+            'children'   => $this->whenLoaded('children', fn () => OrganizationResource::collection($this->children)),
         ];
     }
 }

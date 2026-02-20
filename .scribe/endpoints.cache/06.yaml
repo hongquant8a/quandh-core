@@ -118,7 +118,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-19T12:40:20'
+        example: '2026-02-20T03:35:12'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -129,7 +129,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-14'
+        example: '2052-03-15'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -173,8 +173,8 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-19T12:40:20'
-      to_date: '2052-03-14'
+      from_date: '2026-02-20T03:35:12'
+      to_date: '2052-03-15'
       sort_by: 'n'
       sort_order: desc
       limit: 7
@@ -226,7 +226,7 @@ endpoints:
       file:
         custom: []
         name: file
-        description: 'File excel (xlsx, xls, csv). Cột: name, guard_name, team_id.'
+        description: 'File excel (xlsx, xls, csv). Cột: name, guard_name, organization_id.'
         required: true
         example: null
         type: file
@@ -426,7 +426,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-19T12:40:20'
+        example: '2026-02-20T03:35:12'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -437,7 +437,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-14'
+        example: '2052-03-15'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -459,7 +459,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: asc
+        example: desc
         type: string
         enumValues:
           - asc
@@ -481,10 +481,10 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-19T12:40:20'
-      to_date: '2052-03-14'
+      from_date: '2026-02-20T03:35:12'
+      to_date: '2052-03-15'
       sort_by: 'n'
-      sort_order: asc
+      sort_order: desc
       limit: 7
     fileParameters: []
     responses:
@@ -519,7 +519,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Danh sách role'
-      description: 'Lấy danh sách có phân trang, lọc và sắp xếp. Có kèm team và permissions.'
+      description: 'Lấy danh sách có phân trang, lọc và sắp xếp. Có kèm organization và permissions.'
       authenticated: true
       deprecated: false
     headers:
@@ -630,7 +630,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-19T12:40:20'
+        example: '2026-02-20T03:35:12'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -641,7 +641,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-14'
+        example: '2052-03-15'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -685,8 +685,8 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-19T12:40:20'
-      to_date: '2052-03-14'
+      from_date: '2026-02-20T03:35:12'
+      to_date: '2052-03-15'
       sort_by: 'n'
       sort_order: asc
       limit: 7
@@ -827,10 +827,10 @@ endpoints:
         exampleWasSpecified: true
         nullable: true
         deprecated: false
-      team_id:
+      organization_id:
         custom: []
-        name: team_id
-        description: 'ID team (nullable khi bật teams).'
+        name: organization_id
+        description: 'ID organization (nullable).'
         required: false
         example: 1
         type: integer
@@ -855,7 +855,7 @@ endpoints:
     cleanBodyParameters:
       name: admin
       guard_name: web
-      team_id: 1
+      organization_id: 1
       permission_ids:
         - 1
         - 2
@@ -942,10 +942,10 @@ endpoints:
         exampleWasSpecified: true
         nullable: true
         deprecated: false
-      team_id:
+      organization_id:
         custom: []
-        name: team_id
-        description: 'ID team (nullable).'
+        name: organization_id
+        description: 'ID organization (nullable).'
         required: false
         example: 1
         type: integer
@@ -969,7 +969,7 @@ endpoints:
     cleanBodyParameters:
       name: editor
       guard_name: web
-      team_id: 1
+      organization_id: 1
       permission_ids:
         - 1
         - 2
@@ -1055,10 +1055,10 @@ endpoints:
         exampleWasSpecified: true
         nullable: true
         deprecated: false
-      team_id:
+      organization_id:
         custom: []
-        name: team_id
-        description: 'ID team (nullable).'
+        name: organization_id
+        description: 'ID organization (nullable).'
         required: false
         example: 1
         type: integer
@@ -1082,7 +1082,7 @@ endpoints:
     cleanBodyParameters:
       name: editor
       guard_name: web
-      team_id: 1
+      organization_id: 1
       permission_ids:
         - 1
         - 2

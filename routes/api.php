@@ -26,7 +26,7 @@ Route::middleware(['auth:sanctum', 'set.permissions.team'])->group(function () {
     Route::prefix('roles')->group(function () {
         require base_path('app/Modules/Core/Routes/role.php');
     });
-    Route::prefix('teams')->group(function () {
-        require base_path('app/Modules/Core/Routes/team.php');
+    Route::prefix('organizations')->group(function () {
+        require base_path('app/Modules/Core/Routes/organization.php');
     });
 });

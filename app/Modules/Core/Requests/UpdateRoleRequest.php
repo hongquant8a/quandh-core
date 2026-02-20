@@ -16,7 +16,7 @@ class UpdateRoleRequest extends FormRequest
         return [
             'name'            => 'sometimes|string|max:255',
             'guard_name'      => 'nullable|string|max:255',
-            'team_id'         => 'nullable|exists:teams,id',
+            'organization_id' => 'nullable|exists:organizations,id',
             'permission_ids'  => 'nullable|array',
             'permission_ids.*' => 'exists:permissions,id',
         ];

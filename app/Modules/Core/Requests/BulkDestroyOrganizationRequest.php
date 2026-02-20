@@ -4,7 +4,7 @@ namespace App\Modules\Core\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ChangeStatusTeamRequest extends FormRequest
+class BulkDestroyOrganizationRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,7 +14,8 @@ class ChangeStatusTeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => 'required|in:active,inactive',
+            'ids'   => 'required|array|min:1',
+            'ids.*' => 'exists:organizations,id',
         ];
     }
 }
