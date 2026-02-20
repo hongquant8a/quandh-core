@@ -21,7 +21,7 @@ class UpdatePostCategoryRequest extends FormRequest
             'name'        => 'sometimes|string|max:255',
             'slug'        => 'sometimes|string|max:255|unique:post_categories,slug,' . $categoryId,
             'description' => 'nullable|string|max:65535',
-            'status'      => 'sometimes|in:active,inactive',
+            'status'      => ['sometimes', StatusEnum::rule()],
             'sort_order'  => 'nullable|integer|min:0',
             'parent_id'   => [
                 'nullable',

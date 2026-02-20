@@ -4,6 +4,7 @@ namespace App\Modules\Post;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FilterRequest;
+use App\Modules\Core\Enums\StatusEnum;
 use App\Modules\Post\Models\PostCategory;
 use App\Modules\Post\Requests\StorePostCategoryRequest;
 use App\Modules\Post\Requests\UpdatePostCategoryRequest;
@@ -44,8 +45,8 @@ class PostCategoryController extends Controller
         $base = PostCategory::filter($request->all());
         return response()->json([
             'total'    => (clone $base)->count(),
-            'active'   => (clone $base)->where('status', 'active')->count(),
-            'inactive' => (clone $base)->where('status', '!=', 'active')->count(),
+            'active'   => (clone $base)->where('status', StatusEnum::Active->value)->count(),
+            'inactive' => (clone $base)->where('status', '!=', StatusEnum::Active->value)->count(),
         ]);
     }
 

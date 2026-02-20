@@ -2,6 +2,7 @@
 
 namespace App\Modules\Core\Requests;
 
+use App\Modules\Core\Enums\UserStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BulkUpdateStatusUserRequest extends FormRequest
@@ -16,7 +17,7 @@ class BulkUpdateStatusUserRequest extends FormRequest
         return [
             'ids'    => 'required|array|min:1',
             'ids.*'  => 'exists:users,id',
-            'status' => 'required|in:active,inactive,banned',
+            'status' => ['required', 'in:' . implode(',', UserStatusEnum::values())],
         ];
     }
 

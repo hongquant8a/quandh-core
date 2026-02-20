@@ -4,6 +4,7 @@ namespace App\Modules\Post;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FilterRequest;
+use App\Modules\Post\Enums\PostStatusEnum;
 use App\Modules\Post\Models\Post;
 use App\Modules\Post\Requests\StorePostRequest;
 use App\Modules\Post\Requests\UpdatePostRequest;
@@ -45,8 +46,8 @@ class PostController extends Controller
 
         return response()->json([
             'total'    => (clone $base)->count(),
-            'active'   => (clone $base)->where('status', 'published')->count(),
-            'inactive' => (clone $base)->where('status', '!=', 'published')->count(),
+            'active'   => (clone $base)->where('status', PostStatusEnum::Published->value)->count(),
+            'inactive' => (clone $base)->where('status', '!=', PostStatusEnum::Published->value)->count(),
         ]);
     }
 

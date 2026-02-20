@@ -2,6 +2,7 @@
 
 namespace App\Modules\Post\Requests;
 
+use App\Modules\Post\Enums\PostStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BulkUpdateStatusPostRequest extends FormRequest
@@ -16,7 +17,7 @@ class BulkUpdateStatusPostRequest extends FormRequest
         return [
             'ids'    => 'required|array|min:1',
             'ids.*'  => 'exists:posts,id',
-            'status' => 'required|in:draft,published,archived',
+            'status' => ['required', PostStatusEnum::rule()],
         ];
     }
 

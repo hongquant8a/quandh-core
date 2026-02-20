@@ -2,6 +2,7 @@
 
 namespace App\Modules\Core\Requests;
 
+use App\Modules\Core\Enums\StatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ChangeStatusOrganizationRequest extends FormRequest
@@ -14,7 +15,7 @@ class ChangeStatusOrganizationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => 'required|in:active,inactive',
+            'status' => ['required', StatusEnum::rule()],
         ];
     }
 }

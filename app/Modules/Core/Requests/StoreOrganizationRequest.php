@@ -2,6 +2,7 @@
 
 namespace App\Modules\Core\Requests;
 
+use App\Modules\Core\Enums\StatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreOrganizationRequest extends FormRequest
@@ -17,7 +18,7 @@ class StoreOrganizationRequest extends FormRequest
             'name'        => 'required|string|max:255',
             'slug'        => 'nullable|string|max:255|unique:organizations,slug',
             'description' => 'nullable|string',
-            'status'      => 'required|in:active,inactive',
+            'status'      => ['required', StatusEnum::rule()],
             'parent_id'   => 'nullable|exists:organizations,id',
             'sort_order'  => 'nullable|integer|min:0',
         ];

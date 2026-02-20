@@ -2,6 +2,7 @@
 
 namespace App\Modules\Post\Requests;
 
+use App\Modules\Post\Enums\PostStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorePostRequest extends FormRequest
@@ -16,7 +17,7 @@ class StorePostRequest extends FormRequest
         return [
             'title'        => 'required|string|max:255|unique:posts,title',
             'content'      => 'required|string|min:10',
-            'status'       => 'required|in:draft,published,archived',
+            'status'       => ['required', PostStatusEnum::rule()],
             'category_ids' => 'nullable|array|max:20',
             'category_ids.*' => 'integer|exists:post_categories,id',
             'images'       => 'nullable|array|max:10',

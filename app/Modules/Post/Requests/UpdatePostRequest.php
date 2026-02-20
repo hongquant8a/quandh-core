@@ -2,6 +2,7 @@
 
 namespace App\Modules\Post\Requests;
 
+use App\Modules\Post\Enums\PostStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdatePostRequest extends FormRequest
@@ -16,7 +17,7 @@ class UpdatePostRequest extends FormRequest
         return [
             'title'                 => 'sometimes|string|max:255|unique:posts,title,' . $this->route('post'),
             'content'               => 'sometimes|string|min:10',
-            'status'                => 'sometimes|in:draft,published,archived',
+            'status'                => ['sometimes', PostStatusEnum::rule()],
             'category_ids'          => 'nullable|array|max:20',
             'category_ids.*'         => 'integer|exists:post_categories,id',
             'images'                => 'nullable|array|max:10',

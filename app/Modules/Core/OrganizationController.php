@@ -4,6 +4,7 @@ namespace App\Modules\Core;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FilterRequest;
+use App\Modules\Core\Enums\StatusEnum;
 use App\Modules\Core\Models\Organization;
 use App\Modules\Core\Requests\StoreOrganizationRequest;
 use App\Modules\Core\Requests\UpdateOrganizationRequest;
@@ -44,8 +45,8 @@ class OrganizationController extends Controller
         $base = Organization::filter($request->all());
         return response()->json([
             'total'    => (clone $base)->count(),
-            'active'   => (clone $base)->where('status', 'active')->count(),
-            'inactive' => (clone $base)->where('status', '!=', 'active')->count(),
+            'active'   => (clone $base)->where('status', StatusEnum::Active->value)->count(),
+            'inactive' => (clone $base)->where('status', '!=', StatusEnum::Active->value)->count(),
         ]);
     }
 

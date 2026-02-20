@@ -4,6 +4,7 @@ namespace App\Modules\Core;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FilterRequest;
+use App\Modules\Core\Enums\UserStatusEnum;
 use App\Modules\Core\Models\User;
 use App\Modules\Core\Requests\StoreUserRequest;
 use App\Modules\Core\Requests\UpdateUserRequest;
@@ -41,8 +42,8 @@ class UserController extends Controller
         $base = User::filter($request->all());
         return response()->json([
             'total'    => (clone $base)->count(),
-            'active'   => (clone $base)->where('status', 'active')->count(),
-            'inactive' => (clone $base)->where('status', '!=', 'active')->count(),
+            'active'   => (clone $base)->where('status', UserStatusEnum::Active->value)->count(),
+            'inactive' => (clone $base)->where('status', '!=', UserStatusEnum::Active->value)->count(),
         ]);
     }
 

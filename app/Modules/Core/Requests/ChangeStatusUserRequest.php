@@ -2,6 +2,7 @@
 
 namespace App\Modules\Core\Requests;
 
+use App\Modules\Core\Enums\UserStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ChangeStatusUserRequest extends FormRequest
@@ -14,7 +15,7 @@ class ChangeStatusUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => 'required|in:active,inactive,banned',
+            'status' => ['required', 'in:' . implode(',', UserStatusEnum::values())],
         ];
     }
 

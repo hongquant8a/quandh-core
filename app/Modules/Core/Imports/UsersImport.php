@@ -2,6 +2,7 @@
 
 namespace App\Modules\Core\Imports;
 
+use App\Modules\Core\Enums\UserStatusEnum;
 use App\Modules\Core\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -16,7 +17,7 @@ class UsersImport implements ToModel, WithHeadingRow
             'name'     => $row['name'] ?? $row['name_'] ?? '',
             'email'    => $row['email'] ?? '',
             'password' => Hash::make($password),
-            'status'   => $row['status'] ?? 'active',
+            'status'   => $row['status'] ?? UserStatusEnum::Active->value,
         ]);
     }
 }

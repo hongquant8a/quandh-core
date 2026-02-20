@@ -2,6 +2,7 @@
 
 namespace App\Modules\Core\Requests;
 
+use App\Modules\Core\Enums\UserStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
@@ -17,7 +18,7 @@ class UpdateUserRequest extends FormRequest
             'name'     => 'sometimes|string|max:255',
             'email'    => 'sometimes|email|unique:users,email,' . $this->route('user'),
             'password' => 'sometimes|string|min:6|confirmed',
-            'status'   => 'sometimes|in:active,inactive,banned',
+            'status'   => ['sometimes', 'in:' . implode(',', UserStatusEnum::values())],
         ];
     }
 

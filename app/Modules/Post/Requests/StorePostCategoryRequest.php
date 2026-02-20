@@ -2,6 +2,7 @@
 
 namespace App\Modules\Post\Requests;
 
+use App\Modules\Core\Enums\StatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -18,7 +19,7 @@ class StorePostCategoryRequest extends FormRequest
             'name'        => 'required|string|max:255',
             'slug'        => 'nullable|string|max:255|unique:post_categories,slug',
             'description' => 'nullable|string|max:65535',
-            'status'      => 'required|in:active,inactive',
+            'status'      => ['required', StatusEnum::rule()],
             'sort_order'  => 'nullable|integer|min:0',
             'parent_id'   => 'nullable|exists:post_categories,id',
         ];

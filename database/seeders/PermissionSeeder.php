@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Modules\Core\Models\Permission;
 use App\Modules\Core\Models\Role;
+use App\Modules\Core\Enums\StatusEnum;
 use App\Modules\Core\Models\Organization;
 use App\Modules\Core\Models\User;
 use Illuminate\Database\Seeder;
@@ -84,7 +85,7 @@ class PermissionSeeder extends Seeder
             [
                 'name'        => 'Default',
                 'description' => 'Organization mặc định của hệ thống',
-                'status'      => 'active',
+                'status'      => StatusEnum::Active->value,
             ]
         );
     }

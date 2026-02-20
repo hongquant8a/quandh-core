@@ -2,6 +2,7 @@
 
 namespace App\Modules\Post\Requests;
 
+use App\Modules\Post\Enums\PostStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ChangeStatusPostRequest extends FormRequest
@@ -14,7 +15,7 @@ class ChangeStatusPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => 'required|in:draft,published,archived',
+            'status' => ['required', PostStatusEnum::rule()],
         ];
     }
 

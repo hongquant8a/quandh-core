@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Auth\Requests\LoginRequest;
 use App\Modules\Auth\Requests\ForgotPasswordRequest;
 use App\Modules\Auth\Requests\ResetPasswordRequest;
+use App\Modules\Core\Enums\UserStatusEnum;
 use App\Modules\Core\Models\User;
 use App\Modules\Core\Resources\UserResource;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Thông tin đăng nhập không chính xác'], 401);
         }
 
-        if ($user->status !== 'active') {
+        if ($user->status !== UserStatusEnum::Active->value) {
             return response()->json(['message' => 'Tài khoản của bạn đã bị khóa'], 403);
         }
 

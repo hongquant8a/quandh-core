@@ -2,6 +2,7 @@
 
 namespace App\Modules\Post\Imports;
 
+use App\Modules\Core\Enums\StatusEnum;
 use App\Modules\Post\Models\PostCategory;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -27,7 +28,7 @@ class PostCategoriesImport implements ToModel, WithHeadingRow
             'name'        => $row['name'] ?? '',
             'slug'        => $slug,
             'description' => $row['description'] ?? null,
-            'status'      => $row['status'] ?? 'active',
+            'status'      => $row['status'] ?? StatusEnum::Active->value,
             'sort_order'  => (int) ($row['sort_order'] ?? 0),
             'parent_id'   => $parent?->id,
         ]);
