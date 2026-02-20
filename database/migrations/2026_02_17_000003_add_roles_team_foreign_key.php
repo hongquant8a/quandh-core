@@ -5,21 +5,26 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Thêm khóa ngoại roles.team_id -> teams.id (tùy chọn, đảm bảo toàn vẹn dữ liệu).
+ * Thêm khóa ngoại roles.{team_foreign_key} -> teams.id (tùy chọn, đảm bảo toàn vẹn dữ liệu).
+ * Dùng cột từ config vì create_permission_tables có thể tạo organization_id hoặc team_id.
  */
 return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('roles', function (Blueprint $table) {
-            $table->foreign('team_id')->references('id')->on('teams')->nullOnDelete();
+        $columnName = config('permission.column_names.team_foreign_key', 'team_id');
+
+        Schema::table('roles', function (Blueprint $table) use ($columnName) {
+            $table->foreign($columnName)->references('id')->on('teams')->nullOnDelete();
         });
     }
 
     public function down(): void
     {
-        Schema::table('roles', function (Blueprint $table) {
-            $table->dropForeign(['team_id']);
+        $columnName = config('permission.column_names.team_foreign_key', 'team_id');
+
+        Schema::table('roles', function (Blueprint $table) use ($columnName) {
+            $table->dropForeign([$columnName]);
         });
     }
 };

@@ -6,26 +6,32 @@ use Illuminate\Support\Facades\Schema;
 
 /**
  * Đổi bảng teams thành organizations, team_id thành organization_id trong toàn bộ hệ thống.
+ * Hỗ trợ cả config team_foreign_key = 'team_id' hoặc 'organization_id'.
  */
 return new class extends Migration
 {
     public function up(): void
     {
+        $columnName = config('permission.column_names.team_foreign_key', 'team_id');
+        $needRenameColumn = ($columnName === 'team_id');
+
         Schema::table('teams', function (Blueprint $table) {
             $table->dropForeign(['parent_id']);
         });
-        Schema::table('roles', function (Blueprint $table) {
-            $table->dropForeign(['team_id']);
+        Schema::table('roles', function (Blueprint $table) use ($columnName) {
+            $table->dropForeign([$columnName]);
         });
         Schema::rename('teams', 'organizations');
 
-        Schema::table('roles', function (Blueprint $table) {
-            $table->dropUnique(['team_id', 'name', 'guard_name']);
+        Schema::table('roles', function (Blueprint $table) use ($columnName) {
+            $table->dropUnique([$columnName, 'name', 'guard_name']);
             $table->dropIndex('roles_team_foreign_key_index');
         });
-        Schema::table('roles', function (Blueprint $table) {
-            $table->renameColumn('team_id', 'organization_id');
-        });
+        if ($needRenameColumn) {
+            Schema::table('roles', function (Blueprint $table) {
+                $table->renameColumn('team_id', 'organization_id');
+            });
+        }
         Schema::table('roles', function (Blueprint $table) {
             $table->index('organization_id', 'roles_organization_foreign_key_index');
             $table->unique(['organization_id', 'name', 'guard_name']);
@@ -35,9 +41,11 @@ return new class extends Migration
         Schema::table('model_has_roles', function (Blueprint $table) {
             $table->dropPrimary('model_has_roles_role_model_type_primary');
         });
-        Schema::table('model_has_roles', function (Blueprint $table) {
-            $table->renameColumn('team_id', 'organization_id');
-        });
+        if ($needRenameColumn) {
+            Schema::table('model_has_roles', function (Blueprint $table) {
+                $table->renameColumn('team_id', 'organization_id');
+            });
+        }
         Schema::table('model_has_roles', function (Blueprint $table) {
             $table->dropIndex('model_has_roles_team_foreign_key_index');
         });
@@ -49,9 +57,11 @@ return new class extends Migration
         Schema::table('model_has_permissions', function (Blueprint $table) {
             $table->dropPrimary('model_has_permissions_permission_model_type_primary');
         });
-        Schema::table('model_has_permissions', function (Blueprint $table) {
-            $table->renameColumn('team_id', 'organization_id');
-        });
+        if ($needRenameColumn) {
+            Schema::table('model_has_permissions', function (Blueprint $table) {
+                $table->renameColumn('team_id', 'organization_id');
+            });
+        }
         Schema::table('model_has_permissions', function (Blueprint $table) {
             $table->dropIndex('model_has_permissions_team_foreign_key_index');
         });
