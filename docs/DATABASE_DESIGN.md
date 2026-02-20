@@ -202,6 +202,28 @@ Pivot: role ↔ permission (Spatie).
 | role_id | bigint unsigned | FK → roles.id |
 | — | — | PK(permission_id, role_id) |
 
+### `log_activities`
+Nhật ký truy cập của người dùng.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK, auto increment |
+| description | varchar(255) | No | — | Mô tả hành động (vd: Xem chi tiết bài viết #10) |
+| user_type | varchar(255) | No | 'Guest' | Loại user (Guest, User, ...) |
+| user_id | bigint unsigned | Yes | null | FK → users.id |
+| organization_id | bigint unsigned | Yes | null | FK → organizations.id |
+| route | varchar(255) | No | — | URL đầy đủ |
+| method_type | varchar(255) | No | — | GET, POST, PUT, ... |
+| status_code | int | No | — | 200, 400, 500, ... |
+| ip_address | varchar(255) | No | — | |
+| country | varchar(255) | Yes | null | |
+| user_agent | text | Yes | null | |
+| request_data | json | Yes | null | Dữ liệu request (đã loại trừ password, token) |
+| created_at | timestamp | Yes | null | |
+| updated_at | timestamp | Yes | null | |
+
+**Quan hệ:** belongsTo user, organization. Index: user_id+created_at, organization_id+created_at, created_at.
+
 ---
 
 ## 4. Bài viết & Danh mục (Module Post)

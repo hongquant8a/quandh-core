@@ -133,6 +133,34 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-core-logactivity" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="core-logactivity">
+                    <a href="#core-logactivity">Core - LogActivity</a>
+                </li>
+                                    <ul id="tocify-subheader-core-logactivity" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="core-logactivity-GETapi-log-activities-stats">
+                                <a href="#core-logactivity-GETapi-log-activities-stats">Thống kê nhật ký</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="core-logactivity-POSTapi-log-activities-delete-by-date">
+                                <a href="#core-logactivity-POSTapi-log-activities-delete-by-date">Xóa nhật ký theo khoảng thời gian</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="core-logactivity-POSTapi-log-activities-clear">
+                                <a href="#core-logactivity-POSTapi-log-activities-clear">Xóa toàn bộ nhật ký</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="core-logactivity-POSTapi-log-activities-bulk-delete">
+                                <a href="#core-logactivity-POSTapi-log-activities-bulk-delete">Xóa hàng loạt nhật ký</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="core-logactivity-GETapi-log-activities">
+                                <a href="#core-logactivity-GETapi-log-activities">Danh sách nhật ký</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="core-logactivity-GETapi-log-activities--logActivity_id-">
+                                <a href="#core-logactivity-GETapi-log-activities--logActivity_id-">Chi tiết nhật ký</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="core-logactivity-DELETEapi-log-activities--logActivity_id-">
+                                <a href="#core-logactivity-DELETEapi-log-activities--logActivity_id-">Xóa nhật ký</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-core-organization" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="core-organization">
                     <a href="#core-organization">Core - Organization</a>
@@ -1069,7 +1097,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:11\",
+    \"from_date\": \"2026-02-20T09:40:27\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"desc\",
@@ -1102,7 +1130,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:11",
+    "from_date": "2026-02-20T09:40:27",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "desc",
@@ -1137,7 +1165,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:11',
+            'from_date' =&gt; '2026-02-20T09:40:27',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'desc',
@@ -1344,10 +1372,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-posts-export"
-               value="2026-02-20T03:35:11"
+               value="2026-02-20T09:40:27"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:11</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:27</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -1419,7 +1447,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php38d2i7msq8us39nj80Z" </code></pre></div>
+    --form "file=@/tmp/php8l9o4vm3b7prfCwGbH2" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1457,7 +1485,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/php38d2i7msq8us39nj80Z', 'r')
+                'contents' =&gt; fopen('/tmp/php8l9o4vm3b7prfCwGbH2', 'r')
             ],
         ],
     ]
@@ -1572,7 +1600,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File Excel (xlsx, xls, csv). Cột theo chuẩn export. Example: <code>/tmp/php38d2i7msq8us39nj80Z</code></p>
+<p>File Excel (xlsx, xls, csv). Cột theo chuẩn export. Example: <code>/tmp/php8l9o4vm3b7prfCwGbH2</code></p>
         </div>
         </form>
 
@@ -1974,7 +2002,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:11\",
+    \"from_date\": \"2026-02-20T09:40:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"desc\",
@@ -2008,7 +2036,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:11",
+    "from_date": "2026-02-20T09:40:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "desc",
@@ -2044,7 +2072,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:11',
+            'from_date' =&gt; '2026-02-20T09:40:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'desc',
@@ -2263,10 +2291,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-posts-stats"
-               value="2026-02-20T03:35:11"
+               value="2026-02-20T09:40:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:11</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -2341,7 +2369,7 @@ Must be one of:
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:11\",
+    \"from_date\": \"2026-02-20T09:40:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"asc\",
@@ -2375,7 +2403,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:11",
+    "from_date": "2026-02-20T09:40:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "asc",
@@ -2411,7 +2439,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:11',
+            'from_date' =&gt; '2026-02-20T09:40:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'asc',
@@ -2630,10 +2658,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-posts"
-               value="2026-02-20T03:35:11"
+               value="2026-02-20T09:40:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:11</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -3059,8 +3087,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "content=Nội dung bài viết..."\
     --form "status=draft"\
     --form "category_ids[]=1"\
-    --form "images[]=@/tmp/phphirobh0bak016xlUK4y" \
-    --form "images[]=@/tmp/php3dhf0ddeo4rt9DAZKy0" </code></pre></div>
+    --form "images[]=@/tmp/php5stjemsmsruq3mSNi5e" \
+    --form "images[]=@/tmp/phpu3p2t0t5i6urdCrBHpA" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3119,11 +3147,11 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phphirobh0bak016xlUK4y', 'r')
+                'contents' =&gt; fopen('/tmp/php5stjemsmsruq3mSNi5e', 'r')
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/php3dhf0ddeo4rt9DAZKy0', 'r')
+                'contents' =&gt; fopen('/tmp/phpu3p2t0t5i6urdCrBHpA', 'r')
             ],
         ],
     ]
@@ -3293,7 +3321,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Ảnh đính kèm (jpeg/png/gif/webp, tối đa 10 ảnh, mỗi ảnh ≤ 5MB). Example: <code>/tmp/php3dhf0ddeo4rt9DAZKy0</code></p>
+<p>Ảnh đính kèm (jpeg/png/gif/webp, tối đa 10 ảnh, mỗi ảnh ≤ 5MB). Example: <code>/tmp/phpu3p2t0t5i6urdCrBHpA</code></p>
         </div>
         </form>
 
@@ -3320,8 +3348,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "status=architecto"\
     --form "category_ids[]=architecto"\
     --form "remove_attachment_ids[]=architecto"\
-    --form "images[]=@/tmp/phpskb46ofh8l7eeDAE1gq" \
-    --form "images[]=@/tmp/phphtc0agtcectfcK3dSGv" </code></pre></div>
+    --form "images[]=@/tmp/php1kj3gd8797un6Y0KudK" \
+    --form "images[]=@/tmp/phpa7psmoql5thp5sUKzGE" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3385,11 +3413,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpskb46ofh8l7eeDAE1gq', 'r')
+                'contents' =&gt; fopen('/tmp/php1kj3gd8797un6Y0KudK', 'r')
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phphtc0agtcectfcK3dSGv', 'r')
+                'contents' =&gt; fopen('/tmp/phpa7psmoql5thp5sUKzGE', 'r')
             ],
         ],
     ]
@@ -3598,7 +3626,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Ảnh mới (append). Example: <code>/tmp/phphtc0agtcectfcK3dSGv</code></p>
+<p>Ảnh mới (append). Example: <code>/tmp/phpa7psmoql5thp5sUKzGE</code></p>
         </div>
         </form>
 
@@ -3625,8 +3653,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "status=architecto"\
     --form "category_ids[]=architecto"\
     --form "remove_attachment_ids[]=architecto"\
-    --form "images[]=@/tmp/phpea4evn2q99b6cuiguML" \
-    --form "images[]=@/tmp/phpfvdi4t1nho3l7F7loS0" </code></pre></div>
+    --form "images[]=@/tmp/phpi8tb2iurun3tdtm4sMP" \
+    --form "images[]=@/tmp/phpbkto5nnqspmreEgLXjv" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3690,11 +3718,11 @@ $response = $client-&gt;patch(
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpea4evn2q99b6cuiguML', 'r')
+                'contents' =&gt; fopen('/tmp/phpi8tb2iurun3tdtm4sMP', 'r')
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpfvdi4t1nho3l7F7loS0', 'r')
+                'contents' =&gt; fopen('/tmp/phpbkto5nnqspmreEgLXjv', 'r')
             ],
         ],
     ]
@@ -3903,7 +3931,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Ảnh mới (append). Example: <code>/tmp/phpfvdi4t1nho3l7F7loS0</code></p>
+<p>Ảnh mới (append). Example: <code>/tmp/phpbkto5nnqspmreEgLXjv</code></p>
         </div>
         </form>
 
@@ -4266,6 +4294,1655 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
+                <h1 id="core-logactivity">Core - LogActivity</h1>
+
+    <p>Quản lý nhật ký truy cập: danh sách, chi tiết, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.</p>
+
+                                <h2 id="core-logactivity-GETapi-log-activities-stats">Thống kê nhật ký</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Tổng số bản ghi sau khi áp dụng bộ lọc.</p>
+
+<span id="example-requests-GETapi-log-activities-stats">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/log-activities/stats?search=127.0.0.1&amp;from_date=2026-01-01&amp;to_date=2026-12-31&amp;method_type=GET&amp;status_code=200&amp;sort_by=created_at&amp;sort_order=desc&amp;limit=10" \
+    --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"search\": \"b\",
+    \"status\": \"architecto\",
+    \"from_date\": \"2026-02-20T09:40:29\",
+    \"to_date\": \"2052-03-15\",
+    \"sort_by\": \"n\",
+    \"sort_order\": \"desc\",
+    \"limit\": 7
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/log-activities/stats"
+);
+
+const params = {
+    "search": "127.0.0.1",
+    "from_date": "2026-01-01",
+    "to_date": "2026-12-31",
+    "method_type": "GET",
+    "status_code": "200",
+    "sort_by": "created_at",
+    "sort_order": "desc",
+    "limit": "10",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer Bearer {YOUR_ACCESS_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "search": "b",
+    "status": "architecto",
+    "from_date": "2026-02-20T09:40:29",
+    "to_date": "2052-03-15",
+    "sort_by": "n",
+    "sort_order": "desc",
+    "limit": 7
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost/api/log-activities/stats';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer Bearer {YOUR_ACCESS_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'search' =&gt; '127.0.0.1',
+            'from_date' =&gt; '2026-01-01',
+            'to_date' =&gt; '2026-12-31',
+            'method_type' =&gt; 'GET',
+            'status_code' =&gt; '200',
+            'sort_by' =&gt; 'created_at',
+            'sort_order' =&gt; 'desc',
+            'limit' =&gt; '10',
+        ],
+        'json' =&gt; [
+            'search' =&gt; 'b',
+            'status' =&gt; 'architecto',
+            'from_date' =&gt; '2026-02-20T09:40:29',
+            'to_date' =&gt; '2052-03-15',
+            'sort_by' =&gt; 'n',
+            'sort_order' =&gt; 'desc',
+            'limit' =&gt; 7,
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-log-activities-stats">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-log-activities-stats" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-log-activities-stats"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-log-activities-stats"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-log-activities-stats" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-log-activities-stats">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-log-activities-stats" data-method="GET"
+      data-path="api/log-activities/stats"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-log-activities-stats', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-log-activities-stats"
+                    onclick="tryItOut('GETapi-log-activities-stats');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-log-activities-stats"
+                    onclick="cancelTryOut('GETapi-log-activities-stats');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-log-activities-stats"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/log-activities/stats</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-log-activities-stats"
+               value="Bearer Bearer {YOUR_ACCESS_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer Bearer {YOUR_ACCESS_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-log-activities-stats"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-log-activities-stats"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-log-activities-stats"
+               value="127.0.0.1"
+               data-component="query">
+    <br>
+<p>Tìm kiếm (description, route, ip_address, country, user_type). Example: <code>127.0.0.1</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>from_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="from_date"                data-endpoint="GETapi-log-activities-stats"
+               value="2026-01-01"
+               data-component="query">
+    <br>
+<p>date Lọc từ ngày (Y-m-d). Example: <code>2026-01-01</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="to_date"                data-endpoint="GETapi-log-activities-stats"
+               value="2026-12-31"
+               data-component="query">
+    <br>
+<p>date Lọc đến ngày (Y-m-d). Example: <code>2026-12-31</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>method_type</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="method_type"                data-endpoint="GETapi-log-activities-stats"
+               value="GET"
+               data-component="query">
+    <br>
+<p>GET, POST, PUT, PATCH, DELETE. Example: <code>GET</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>status_code</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="status_code"                data-endpoint="GETapi-log-activities-stats"
+               value="200"
+               data-component="query">
+    <br>
+<p>Mã HTTP (200, 400, 500...). Example: <code>200</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_by"                data-endpoint="GETapi-log-activities-stats"
+               value="created_at"
+               data-component="query">
+    <br>
+<p>id, description, route, method_type, status_code, ip_address, country, created_at. Example: <code>created_at</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_order"                data-endpoint="GETapi-log-activities-stats"
+               value="desc"
+               data-component="query">
+    <br>
+<p>asc, desc. Example: <code>desc</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-log-activities-stats"
+               value="10"
+               data-component="query">
+    <br>
+<p>1-100. Example: <code>10</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-log-activities-stats"
+               value="b"
+               data-component="body">
+    <br>
+<p>Must not be greater than 100 characters. Example: <code>b</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-log-activities-stats"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>from_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="from_date"                data-endpoint="GETapi-log-activities-stats"
+               value="2026-02-20T09:40:29"
+               data-component="body">
+    <br>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:29</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="to_date"                data-endpoint="GETapi-log-activities-stats"
+               value="2052-03-15"
+               data-component="body">
+    <br>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-15</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_by"                data-endpoint="GETapi-log-activities-stats"
+               value="n"
+               data-component="body">
+    <br>
+<p>Must not be greater than 50 characters. Example: <code>n</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_order"                data-endpoint="GETapi-log-activities-stats"
+               value="desc"
+               data-component="body">
+    <br>
+<p>Example: <code>desc</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-log-activities-stats"
+               value="7"
+               data-component="body">
+    <br>
+<p>Must be at least 1. Must not be greater than 100. Example: <code>7</code></p>
+        </div>
+        </form>
+
+                    <h2 id="core-logactivity-POSTapi-log-activities-delete-by-date">Xóa nhật ký theo khoảng thời gian</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-log-activities-delete-by-date">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/api/log-activities/delete-by-date" \
+    --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"from_date\": \"2026-01-01\",
+    \"to_date\": \"2026-01-31\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/log-activities/delete-by-date"
+);
+
+const headers = {
+    "Authorization": "Bearer Bearer {YOUR_ACCESS_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "from_date": "2026-01-01",
+    "to_date": "2026-01-31"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost/api/log-activities/delete-by-date';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer Bearer {YOUR_ACCESS_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'from_date' =&gt; '2026-01-01',
+            'to_date' =&gt; '2026-01-31',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-log-activities-delete-by-date">
+</span>
+<span id="execution-results-POSTapi-log-activities-delete-by-date" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-log-activities-delete-by-date"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-log-activities-delete-by-date"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-log-activities-delete-by-date" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-log-activities-delete-by-date">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-log-activities-delete-by-date" data-method="POST"
+      data-path="api/log-activities/delete-by-date"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-log-activities-delete-by-date', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-log-activities-delete-by-date"
+                    onclick="tryItOut('POSTapi-log-activities-delete-by-date');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-log-activities-delete-by-date"
+                    onclick="cancelTryOut('POSTapi-log-activities-delete-by-date');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-log-activities-delete-by-date"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/log-activities/delete-by-date</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-log-activities-delete-by-date"
+               value="Bearer Bearer {YOUR_ACCESS_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer Bearer {YOUR_ACCESS_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-log-activities-delete-by-date"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-log-activities-delete-by-date"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>from_date</code></b>&nbsp;&nbsp;
+<small>date</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="from_date"                data-endpoint="POSTapi-log-activities-delete-by-date"
+               value="2026-01-01"
+               data-component="body">
+    <br>
+<p>Từ ngày (Y-m-d). Example: <code>2026-01-01</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
+<small>date</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="to_date"                data-endpoint="POSTapi-log-activities-delete-by-date"
+               value="2026-01-31"
+               data-component="body">
+    <br>
+<p>Đến ngày (Y-m-d). Example: <code>2026-01-31</code></p>
+        </div>
+        </form>
+
+                    <h2 id="core-logactivity-POSTapi-log-activities-clear">Xóa toàn bộ nhật ký</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-log-activities-clear">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/api/log-activities/clear" \
+    --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/log-activities/clear"
+);
+
+const headers = {
+    "Authorization": "Bearer Bearer {YOUR_ACCESS_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost/api/log-activities/clear';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer Bearer {YOUR_ACCESS_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-log-activities-clear">
+</span>
+<span id="execution-results-POSTapi-log-activities-clear" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-log-activities-clear"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-log-activities-clear"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-log-activities-clear" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-log-activities-clear">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-log-activities-clear" data-method="POST"
+      data-path="api/log-activities/clear"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-log-activities-clear', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-log-activities-clear"
+                    onclick="tryItOut('POSTapi-log-activities-clear');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-log-activities-clear"
+                    onclick="cancelTryOut('POSTapi-log-activities-clear');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-log-activities-clear"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/log-activities/clear</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-log-activities-clear"
+               value="Bearer Bearer {YOUR_ACCESS_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer Bearer {YOUR_ACCESS_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-log-activities-clear"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-log-activities-clear"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="core-logactivity-POSTapi-log-activities-bulk-delete">Xóa hàng loạt nhật ký</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-log-activities-bulk-delete">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/api/log-activities/bulk-delete" \
+    --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"ids\": [
+        1,
+        2,
+        3
+    ]
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/log-activities/bulk-delete"
+);
+
+const headers = {
+    "Authorization": "Bearer Bearer {YOUR_ACCESS_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "ids": [
+        1,
+        2,
+        3
+    ]
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost/api/log-activities/bulk-delete';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer Bearer {YOUR_ACCESS_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'ids' =&gt; [
+                1,
+                2,
+                3,
+            ],
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-log-activities-bulk-delete">
+</span>
+<span id="execution-results-POSTapi-log-activities-bulk-delete" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-log-activities-bulk-delete"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-log-activities-bulk-delete"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-log-activities-bulk-delete" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-log-activities-bulk-delete">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-log-activities-bulk-delete" data-method="POST"
+      data-path="api/log-activities/bulk-delete"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-log-activities-bulk-delete', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-log-activities-bulk-delete"
+                    onclick="tryItOut('POSTapi-log-activities-bulk-delete');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-log-activities-bulk-delete"
+                    onclick="cancelTryOut('POSTapi-log-activities-bulk-delete');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-log-activities-bulk-delete"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/log-activities/bulk-delete</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-log-activities-bulk-delete"
+               value="Bearer Bearer {YOUR_ACCESS_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer Bearer {YOUR_ACCESS_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-log-activities-bulk-delete"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-log-activities-bulk-delete"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>ids</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="ids[0]"                data-endpoint="POSTapi-log-activities-bulk-delete"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="ids[1]"                data-endpoint="POSTapi-log-activities-bulk-delete"
+               data-component="body">
+    <br>
+<p>Danh sách ID.</p>
+        </div>
+        </form>
+
+                    <h2 id="core-logactivity-GETapi-log-activities">Danh sách nhật ký</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-log-activities">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/log-activities?search=login&amp;from_date=2026-01-01&amp;to_date=2026-12-31&amp;method_type=architecto&amp;status_code=16&amp;sort_by=created_at&amp;sort_order=desc&amp;limit=10" \
+    --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"search\": \"b\",
+    \"status\": \"architecto\",
+    \"from_date\": \"2026-02-20T09:40:29\",
+    \"to_date\": \"2052-03-15\",
+    \"sort_by\": \"n\",
+    \"sort_order\": \"desc\",
+    \"limit\": 7
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/log-activities"
+);
+
+const params = {
+    "search": "login",
+    "from_date": "2026-01-01",
+    "to_date": "2026-12-31",
+    "method_type": "architecto",
+    "status_code": "16",
+    "sort_by": "created_at",
+    "sort_order": "desc",
+    "limit": "10",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer Bearer {YOUR_ACCESS_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "search": "b",
+    "status": "architecto",
+    "from_date": "2026-02-20T09:40:29",
+    "to_date": "2052-03-15",
+    "sort_by": "n",
+    "sort_order": "desc",
+    "limit": 7
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost/api/log-activities';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer Bearer {YOUR_ACCESS_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'search' =&gt; 'login',
+            'from_date' =&gt; '2026-01-01',
+            'to_date' =&gt; '2026-12-31',
+            'method_type' =&gt; 'architecto',
+            'status_code' =&gt; '16',
+            'sort_by' =&gt; 'created_at',
+            'sort_order' =&gt; 'desc',
+            'limit' =&gt; '10',
+        ],
+        'json' =&gt; [
+            'search' =&gt; 'b',
+            'status' =&gt; 'architecto',
+            'from_date' =&gt; '2026-02-20T09:40:29',
+            'to_date' =&gt; '2052-03-15',
+            'sort_by' =&gt; 'n',
+            'sort_order' =&gt; 'desc',
+            'limit' =&gt; 7,
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-log-activities">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-log-activities" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-log-activities"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-log-activities"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-log-activities" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-log-activities">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-log-activities" data-method="GET"
+      data-path="api/log-activities"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-log-activities', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-log-activities"
+                    onclick="tryItOut('GETapi-log-activities');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-log-activities"
+                    onclick="cancelTryOut('GETapi-log-activities');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-log-activities"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/log-activities</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-log-activities"
+               value="Bearer Bearer {YOUR_ACCESS_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer Bearer {YOUR_ACCESS_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-log-activities"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-log-activities"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-log-activities"
+               value="login"
+               data-component="query">
+    <br>
+<p>Tìm kiếm. Example: <code>login</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>from_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="from_date"                data-endpoint="GETapi-log-activities"
+               value="2026-01-01"
+               data-component="query">
+    <br>
+<p>date Từ ngày. Example: <code>2026-01-01</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="to_date"                data-endpoint="GETapi-log-activities"
+               value="2026-12-31"
+               data-component="query">
+    <br>
+<p>date Đến ngày. Example: <code>2026-12-31</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>method_type</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="method_type"                data-endpoint="GETapi-log-activities"
+               value="architecto"
+               data-component="query">
+    <br>
+<p>GET, POST, PUT, PATCH, DELETE. Example: <code>architecto</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>status_code</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="status_code"                data-endpoint="GETapi-log-activities"
+               value="16"
+               data-component="query">
+    <br>
+<p>Mã HTTP. Example: <code>16</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_by"                data-endpoint="GETapi-log-activities"
+               value="created_at"
+               data-component="query">
+    <br>
+<p>Example: <code>created_at</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_order"                data-endpoint="GETapi-log-activities"
+               value="desc"
+               data-component="query">
+    <br>
+<p>asc, desc. Example: <code>desc</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-log-activities"
+               value="10"
+               data-component="query">
+    <br>
+<p>Example: <code>10</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-log-activities"
+               value="b"
+               data-component="body">
+    <br>
+<p>Must not be greater than 100 characters. Example: <code>b</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-log-activities"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>from_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="from_date"                data-endpoint="GETapi-log-activities"
+               value="2026-02-20T09:40:29"
+               data-component="body">
+    <br>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:29</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="to_date"                data-endpoint="GETapi-log-activities"
+               value="2052-03-15"
+               data-component="body">
+    <br>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-03-15</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_by</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_by"                data-endpoint="GETapi-log-activities"
+               value="n"
+               data-component="body">
+    <br>
+<p>Must not be greater than 50 characters. Example: <code>n</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sort_order</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sort_order"                data-endpoint="GETapi-log-activities"
+               value="desc"
+               data-component="body">
+    <br>
+<p>Example: <code>desc</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-log-activities"
+               value="7"
+               data-component="body">
+    <br>
+<p>Must be at least 1. Must not be greater than 100. Example: <code>7</code></p>
+        </div>
+        </form>
+
+                    <h2 id="core-logactivity-GETapi-log-activities--logActivity_id-">Chi tiết nhật ký</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-log-activities--logActivity_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/log-activities/16" \
+    --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/log-activities/16"
+);
+
+const headers = {
+    "Authorization": "Bearer Bearer {YOUR_ACCESS_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost/api/log-activities/16';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer Bearer {YOUR_ACCESS_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-log-activities--logActivity_id-">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-log-activities--logActivity_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-log-activities--logActivity_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-log-activities--logActivity_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-log-activities--logActivity_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-log-activities--logActivity_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-log-activities--logActivity_id-" data-method="GET"
+      data-path="api/log-activities/{logActivity_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-log-activities--logActivity_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-log-activities--logActivity_id-"
+                    onclick="tryItOut('GETapi-log-activities--logActivity_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-log-activities--logActivity_id-"
+                    onclick="cancelTryOut('GETapi-log-activities--logActivity_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-log-activities--logActivity_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/log-activities/{logActivity_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-log-activities--logActivity_id-"
+               value="Bearer Bearer {YOUR_ACCESS_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer Bearer {YOUR_ACCESS_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-log-activities--logActivity_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-log-activities--logActivity_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>logActivity_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="logActivity_id"                data-endpoint="GETapi-log-activities--logActivity_id-"
+               value="16"
+               data-component="url">
+    <br>
+<p>The ID of the logActivity. Example: <code>16</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>logActivity</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="logActivity"                data-endpoint="GETapi-log-activities--logActivity_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>ID nhật ký. Example: <code>1</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="core-logactivity-DELETEapi-log-activities--logActivity_id-">Xóa nhật ký</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-DELETEapi-log-activities--logActivity_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost/api/log-activities/16" \
+    --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/log-activities/16"
+);
+
+const headers = {
+    "Authorization": "Bearer Bearer {YOUR_ACCESS_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost/api/log-activities/16';
+$response = $client-&gt;delete(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer Bearer {YOUR_ACCESS_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-log-activities--logActivity_id-">
+</span>
+<span id="execution-results-DELETEapi-log-activities--logActivity_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-log-activities--logActivity_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-log-activities--logActivity_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-log-activities--logActivity_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-log-activities--logActivity_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-log-activities--logActivity_id-" data-method="DELETE"
+      data-path="api/log-activities/{logActivity_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-log-activities--logActivity_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-log-activities--logActivity_id-"
+                    onclick="tryItOut('DELETEapi-log-activities--logActivity_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-log-activities--logActivity_id-"
+                    onclick="cancelTryOut('DELETEapi-log-activities--logActivity_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-log-activities--logActivity_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/log-activities/{logActivity_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-log-activities--logActivity_id-"
+               value="Bearer Bearer {YOUR_ACCESS_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer Bearer {YOUR_ACCESS_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-log-activities--logActivity_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-log-activities--logActivity_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>logActivity_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="logActivity_id"                data-endpoint="DELETEapi-log-activities--logActivity_id-"
+               value="16"
+               data-component="url">
+    <br>
+<p>The ID of the logActivity. Example: <code>16</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>logActivity</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="logActivity"                data-endpoint="DELETEapi-log-activities--logActivity_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>ID nhật ký. Example: <code>1</code></p>
+            </div>
+                    </form>
+
                 <h1 id="core-organization">Core - Organization</h1>
 
     <p>Quản lý tổ chức (organization): stats, index, show, store, update, destroy, bulk delete, bulk status, change status, export, import.</p>
@@ -4291,10 +5968,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:12\",
+    \"from_date\": \"2026-02-20T09:40:29\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -4325,10 +6002,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:12",
+    "from_date": "2026-02-20T09:40:29",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -4361,10 +6038,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:12',
+            'from_date' =&gt; '2026-02-20T09:40:29',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -4580,10 +6257,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-organizations-export"
-               value="2026-02-20T03:35:12"
+               value="2026-02-20T09:40:29"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:12</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:29</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -4616,10 +6293,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-organizations-export"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -4655,7 +6332,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php529a9n6mduvt7NFB8qh" </code></pre></div>
+    --form "file=@/tmp/php3vt7lje5dgcndadynpq" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -4693,7 +6370,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/php529a9n6mduvt7NFB8qh', 'r')
+                'contents' =&gt; fopen('/tmp/php3vt7lje5dgcndadynpq', 'r')
             ],
         ],
     ]
@@ -4799,7 +6476,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, slug, description, status. Example: <code>/tmp/php529a9n6mduvt7NFB8qh</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, slug, description, status. Example: <code>/tmp/php3vt7lje5dgcndadynpq</code></p>
         </div>
         </form>
 
@@ -5201,10 +6878,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:12\",
+    \"from_date\": \"2026-02-20T09:40:29\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -5236,10 +6913,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:12",
+    "from_date": "2026-02-20T09:40:29",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -5273,10 +6950,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:12',
+            'from_date' =&gt; '2026-02-20T09:40:29',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -5504,10 +7181,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-organizations-stats"
-               value="2026-02-20T03:35:12"
+               value="2026-02-20T09:40:29"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:12</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:29</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -5540,10 +7217,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-organizations-stats"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -5762,7 +7439,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:12\",
+    \"from_date\": \"2026-02-20T09:40:29\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"desc\",
@@ -5797,7 +7474,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:12",
+    "from_date": "2026-02-20T09:40:29",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "desc",
@@ -5834,7 +7511,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:12',
+            'from_date' =&gt; '2026-02-20T09:40:29',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'desc',
@@ -6065,10 +7742,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-organizations"
-               value="2026-02-20T03:35:12"
+               value="2026-02-20T09:40:29"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:12</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:29</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -7465,7 +9142,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:12\",
+    \"from_date\": \"2026-02-20T09:40:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"asc\",
@@ -7498,7 +9175,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:12",
+    "from_date": "2026-02-20T09:40:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "asc",
@@ -7533,7 +9210,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:12',
+            'from_date' =&gt; '2026-02-20T09:40:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'asc',
@@ -7740,10 +9417,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-permissions-export"
-               value="2026-02-20T03:35:12"
+               value="2026-02-20T09:40:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:12</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -7815,7 +9492,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpdo10s1v8d0d30a3EaXi" </code></pre></div>
+    --form "file=@/tmp/phpe9mv4gjus3el4tuYBZo" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -7853,7 +9530,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/phpdo10s1v8d0d30a3EaXi', 'r')
+                'contents' =&gt; fopen('/tmp/phpe9mv4gjus3el4tuYBZo', 'r')
             ],
         ],
     ]
@@ -7959,7 +9636,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, guard_name, description, sort_order, parent_id. Example: <code>/tmp/phpdo10s1v8d0d30a3EaXi</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, guard_name, description, sort_order, parent_id. Example: <code>/tmp/phpe9mv4gjus3el4tuYBZo</code></p>
         </div>
         </form>
 
@@ -8165,7 +9842,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:12\",
+    \"from_date\": \"2026-02-20T09:40:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"desc\",
@@ -8199,7 +9876,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:12",
+    "from_date": "2026-02-20T09:40:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "desc",
@@ -8235,7 +9912,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:12',
+            'from_date' =&gt; '2026-02-20T09:40:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'desc',
@@ -8454,10 +10131,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-permissions-stats"
-               value="2026-02-20T03:35:12"
+               value="2026-02-20T09:40:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:12</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -8712,10 +10389,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:12\",
+    \"from_date\": \"2026-02-20T09:40:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -8746,10 +10423,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:12",
+    "from_date": "2026-02-20T09:40:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -8782,10 +10459,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:12',
+            'from_date' =&gt; '2026-02-20T09:40:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -9001,10 +10678,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-permissions"
-               value="2026-02-20T03:35:12"
+               value="2026-02-20T09:40:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:12</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -9037,10 +10714,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-permissions"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -10164,7 +11841,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:12\",
+    \"from_date\": \"2026-02-20T09:40:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"desc\",
@@ -10197,7 +11874,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:12",
+    "from_date": "2026-02-20T09:40:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "desc",
@@ -10232,7 +11909,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:12',
+            'from_date' =&gt; '2026-02-20T09:40:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'desc',
@@ -10439,10 +12116,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-roles-export"
-               value="2026-02-20T03:35:12"
+               value="2026-02-20T09:40:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:12</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -10514,7 +12191,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpr2ia8jcuj3au1QGXiHu" </code></pre></div>
+    --form "file=@/tmp/php1ahgn1nj7drg7bsWMsV" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -10552,7 +12229,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/phpr2ia8jcuj3au1QGXiHu', 'r')
+                'contents' =&gt; fopen('/tmp/php1ahgn1nj7drg7bsWMsV', 'r')
             ],
         ],
     ]
@@ -10658,7 +12335,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, guard_name, organization_id. Example: <code>/tmp/phpr2ia8jcuj3au1QGXiHu</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, guard_name, organization_id. Example: <code>/tmp/php1ahgn1nj7drg7bsWMsV</code></p>
         </div>
         </form>
 
@@ -10864,7 +12541,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:12\",
+    \"from_date\": \"2026-02-20T09:40:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"desc\",
@@ -10898,7 +12575,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:12",
+    "from_date": "2026-02-20T09:40:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "desc",
@@ -10934,7 +12611,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:12',
+            'from_date' =&gt; '2026-02-20T09:40:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'desc',
@@ -11153,10 +12830,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-roles-stats"
-               value="2026-02-20T03:35:12"
+               value="2026-02-20T09:40:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:12</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -11231,10 +12908,10 @@ Must be one of:
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:12\",
+    \"from_date\": \"2026-02-20T09:40:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -11265,10 +12942,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:12",
+    "from_date": "2026-02-20T09:40:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -11301,10 +12978,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:12',
+            'from_date' =&gt; '2026-02-20T09:40:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -11520,10 +13197,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-roles"
-               value="2026-02-20T03:35:12"
+               value="2026-02-20T09:40:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:12</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -11556,10 +13233,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-roles"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -12674,7 +14351,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:11\",
+    \"from_date\": \"2026-02-20T09:40:27\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"asc\",
@@ -12707,7 +14384,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:11",
+    "from_date": "2026-02-20T09:40:27",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "asc",
@@ -12742,7 +14419,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:11',
+            'from_date' =&gt; '2026-02-20T09:40:27',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'asc',
@@ -12949,10 +14626,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-users-export"
-               value="2026-02-20T03:35:11"
+               value="2026-02-20T09:40:27"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:11</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:27</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -13024,7 +14701,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php50u7r4tul3tlbIZqlc9" </code></pre></div>
+    --form "file=@/tmp/php298qpek03g9cf62Kv1O" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -13062,7 +14739,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/php50u7r4tul3tlbIZqlc9', 'r')
+                'contents' =&gt; fopen('/tmp/php298qpek03g9cf62Kv1O', 'r')
             ],
         ],
     ]
@@ -13168,7 +14845,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, email, password, status. Example: <code>/tmp/php50u7r4tul3tlbIZqlc9</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, email, password, status. Example: <code>/tmp/php298qpek03g9cf62Kv1O</code></p>
         </div>
         </form>
 
@@ -13570,10 +15247,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:11\",
+    \"from_date\": \"2026-02-20T09:40:27\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -13603,10 +15280,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:11",
+    "from_date": "2026-02-20T09:40:27",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -13638,10 +15315,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:11',
+            'from_date' =&gt; '2026-02-20T09:40:27',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -13845,10 +15522,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-users-stats"
-               value="2026-02-20T03:35:11"
+               value="2026-02-20T09:40:27"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:11</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:27</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -13881,10 +15558,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-users-stats"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -13923,10 +15600,10 @@ Must be one of:
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:11\",
+    \"from_date\": \"2026-02-20T09:40:27\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -13956,10 +15633,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:11",
+    "from_date": "2026-02-20T09:40:27",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -13991,10 +15668,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:11',
+            'from_date' =&gt; '2026-02-20T09:40:27',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -14198,10 +15875,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-users"
-               value="2026-02-20T03:35:11"
+               value="2026-02-20T09:40:27"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:11</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:27</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -14234,10 +15911,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-users"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -15715,10 +17392,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:11\",
+    \"from_date\": \"2026-02-20T09:40:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -15749,10 +17426,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:11",
+    "from_date": "2026-02-20T09:40:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -15785,10 +17462,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:11',
+            'from_date' =&gt; '2026-02-20T09:40:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -16004,10 +17681,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-post-categories-export"
-               value="2026-02-20T03:35:11"
+               value="2026-02-20T09:40:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:11</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -16040,10 +17717,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-post-categories-export"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -16079,7 +17756,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php39vdfh9h2e6i5ZxuJnI" </code></pre></div>
+    --form "file=@/tmp/phpe41i6rrd45aa1i9i10U" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -16117,7 +17794,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/php39vdfh9h2e6i5ZxuJnI', 'r')
+                'contents' =&gt; fopen('/tmp/phpe41i6rrd45aa1i9i10U', 'r')
             ],
         ],
     ]
@@ -16232,7 +17909,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File Excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug. Example: <code>/tmp/php39vdfh9h2e6i5ZxuJnI</code></p>
+<p>File Excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug. Example: <code>/tmp/phpe41i6rrd45aa1i9i10U</code></p>
         </div>
         </form>
 
@@ -16634,10 +18311,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:11\",
+    \"from_date\": \"2026-02-20T09:40:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -16669,10 +18346,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:11",
+    "from_date": "2026-02-20T09:40:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -16706,10 +18383,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:11',
+            'from_date' =&gt; '2026-02-20T09:40:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -16937,10 +18614,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-post-categories-stats"
-               value="2026-02-20T03:35:11"
+               value="2026-02-20T09:40:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:11</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -16973,10 +18650,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-post-categories-stats"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -17195,10 +18872,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T03:35:11\",
+    \"from_date\": \"2026-02-20T09:40:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -17230,10 +18907,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T03:35:11",
+    "from_date": "2026-02-20T09:40:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -17267,10 +18944,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T03:35:11',
+            'from_date' =&gt; '2026-02-20T09:40:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -17498,10 +19175,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-post-categories"
-               value="2026-02-20T03:35:11"
+               value="2026-02-20T09:40:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T03:35:11</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -17534,10 +19211,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-post-categories"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>

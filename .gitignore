@@ -19,6 +19,9 @@
 /storage/*.key
 /storage/pail
 /vendor
+
+# MaxMind GeoLite2 database (tải bằng sail artisan location:update)
+/database/maxmind/*.mmdb
 Homestead.json
 Homestead.yaml
 Thumbs.db

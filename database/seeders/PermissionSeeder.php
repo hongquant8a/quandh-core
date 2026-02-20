@@ -57,6 +57,11 @@ class PermissionSeeder extends Seeder
             'stats', 'index', 'tree', 'show', 'store', 'update', 'destroy',
             'bulkDestroy', 'bulkUpdateStatus', 'changeStatus', 'export', 'import',
         ],
+        // Core - Nhật ký truy cập
+        'log-activities' => [
+            'stats', 'index', 'show', 'destroy', 'bulkDestroy',
+            'destroyByDate', 'destroyAll',
+        ],
     ];
 
     public function run(): void
@@ -92,12 +97,13 @@ class PermissionSeeder extends Seeder
 
     /** Nhãn nhóm permission theo resource (để description). */
     protected static array $RESOURCE_LABELS = [
-        'users'          => 'Người dùng',
-        'permissions'    => 'Quyền',
-        'roles'          => 'Vai trò',
-        'organizations'  => 'Tổ chức',
-        'posts'          => 'Bài viết',
+        'users'           => 'Người dùng',
+        'permissions'     => 'Quyền',
+        'roles'           => 'Vai trò',
+        'organizations'   => 'Tổ chức',
+        'posts'           => 'Bài viết',
         'post-categories' => 'Danh mục bài viết',
+        'log-activities'  => 'Nhật ký truy cập',
     ];
 
     /** Nhãn action (để description). */
@@ -115,6 +121,8 @@ class PermissionSeeder extends Seeder
         'export'           => 'Xuất Excel',
         'import'           => 'Nhập Excel',
         'incrementView'    => 'Tăng lượt xem',
+        'destroyByDate'    => 'Xóa theo khoảng thời gian',
+        'destroyAll'       => 'Xóa toàn bộ',
     ];
 
     /** Tạo đầy đủ permission từ danh sách PERMISSIONS (kèm description, sort_order, parent_id). */
