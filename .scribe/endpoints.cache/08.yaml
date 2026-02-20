@@ -154,7 +154,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-20T11:16:09'
+        example: '2026-02-20T14:22:34'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -209,7 +209,7 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-20T11:16:09'
+      from_date: '2026-02-20T14:22:34'
       to_date: '2052-03-15'
       sort_by: 'n'
       sort_order: desc
@@ -550,7 +550,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-20T11:16:10'
+        example: '2026-02-20T14:22:34'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -583,7 +583,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: asc
+        example: desc
         type: string
         enumValues:
           - asc
@@ -605,10 +605,10 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-20T11:16:10'
+      from_date: '2026-02-20T14:22:34'
       to_date: '2052-03-15'
       sort_by: 'n'
-      sort_order: asc
+      sort_order: desc
       limit: 7
     fileParameters: []
     responses:

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 /**
@@ -77,9 +78,13 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('organizations', function (Blueprint $table) {
-            $table->dropForeign(['parent_id']);
-        });
+        $fk = DB::selectOne(
+            "SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'organizations' AND COLUMN_NAME = 'parent_id' AND REFERENCED_TABLE_NAME IS NOT NULL LIMIT 1",
+            [DB::getDatabaseName()]
+        );
+        if ($fk) {
+            Schema::table('organizations', fn (Blueprint $table) => $table->dropForeign($fk->CONSTRAINT_NAME));
+        }
 
         Schema::table('model_has_permissions', function (Blueprint $table) {
             $table->dropPrimary('model_has_permissions_permission_model_type_primary');
@@ -113,13 +118,15 @@ return new class extends Migration
             $table->dropUnique(['organization_id', 'name', 'guard_name']);
             $table->renameColumn('organization_id', 'team_id');
         });
+
+        // Đổi tên organizations -> teams TRƯỚC khi thêm FK tham chiếu bảng teams
+        Schema::rename('organizations', 'teams');
+
         Schema::table('roles', function (Blueprint $table) {
             $table->index('team_id', 'roles_team_foreign_key_index');
             $table->unique(['team_id', 'name', 'guard_name']);
             $table->foreign('team_id')->references('id')->on('teams')->nullOnDelete();
         });
-
-        Schema::rename('organizations', 'teams');
 
         Schema::table('teams', function (Blueprint $table) {
             $table->foreign('parent_id')->references('id')->on('teams')->nullOnDelete();

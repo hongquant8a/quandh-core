@@ -14,6 +14,7 @@ Bảng người dùng (Laravel Auth).
 | id | bigint unsigned | No | — | PK, auto increment |
 | name | varchar(255) | No | — | |
 | email | varchar(255) | No | — | UNIQUE |
+| user_name | varchar(100) | Yes | null | UNIQUE, dùng để đăng nhập cùng email |
 | email_verified_at | timestamp | Yes | null | |
 | password | varchar(255) | No | — | |
 | remember_token | varchar(100) | Yes | null | |

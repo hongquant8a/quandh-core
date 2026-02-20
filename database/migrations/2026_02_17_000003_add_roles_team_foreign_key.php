@@ -21,7 +21,9 @@ return new class extends Migration
 
     public function down(): void
     {
-        $columnName = config('permission.column_names.team_foreign_key', 'team_id');
+        $columnName = Schema::hasColumn('roles', 'organization_id')
+            ? 'organization_id'
+            : (Schema::hasColumn('roles', 'team_id') ? 'team_id' : config('permission.column_names.team_foreign_key', 'team_id'));
 
         Schema::table('roles', function (Blueprint $table) use ($columnName) {
             $table->dropForeign([$columnName]);

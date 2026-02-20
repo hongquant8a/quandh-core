@@ -14,10 +14,11 @@ class UsersImport implements ToModel, WithHeadingRow
     {
         $password = $row['password'] ?? 'password';
         return new User([
-            'name'     => $row['name'] ?? $row['name_'] ?? '',
-            'email'    => $row['email'] ?? '',
-            'password' => Hash::make($password),
-            'status'   => $row['status'] ?? UserStatusEnum::Active->value,
+            'name'      => $row['name'] ?? $row['name_'] ?? '',
+            'email'     => $row['email'] ?? '',
+            'user_name' => $row['user_name'] ?? $row['user_name_'] ?? null,
+            'password'  => Hash::make($password),
+            'status'    => $row['status'] ?? UserStatusEnum::Active->value,
         ]);
     }
 }

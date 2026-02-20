@@ -31,9 +31,9 @@ class UserController extends Controller
      *
      * Tổng số, đang kích hoạt (active), không kích hoạt (inactive, banned). Áp dụng cùng bộ lọc với index.
      *
-     * @queryParam search string Từ khóa tìm kiếm (name, email). Example: john
+     * @queryParam search string Từ khóa tìm kiếm (name, email, user_name). Example: john
      * @queryParam status string Lọc theo trạng thái: active, inactive, banned.
-     * @queryParam sort_by string Sắp xếp theo: id, name, email, created_at. Example: created_at
+     * @queryParam sort_by string Sắp xếp theo: id, name, email, user_name, created_at. Example: created_at
      * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
      * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
      * @response 200 {"success": true, "data": {"total": 10, "active": 5, "inactive": 5}}
@@ -53,9 +53,9 @@ class UserController extends Controller
      *
      * Lấy danh sách có phân trang, lọc và sắp xếp.
      *
-     * @queryParam search string Từ khóa tìm kiếm (name, email). Example: john
+     * @queryParam search string Từ khóa tìm kiếm (name, email, user_name). Example: john
      * @queryParam status string Lọc theo trạng thái: active, inactive, banned.
-     * @queryParam sort_by string Sắp xếp theo: id, name, email, created_at. Example: created_at
+     * @queryParam sort_by string Sắp xếp theo: id, name, email, user_name, created_at. Example: created_at
      * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
      * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
      * @apiResourceCollection App\Modules\Core\Resources\UserCollection

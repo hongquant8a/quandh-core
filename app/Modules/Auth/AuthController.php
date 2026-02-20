@@ -26,13 +26,16 @@ class AuthController extends Controller
      * Trả về access_token và thông tin user dùng cho các request cần xác thực.
      *
      * @unauthenticated
-     * @bodyParam email string required Email đăng nhập. Example: admin@example.com
+     * @bodyParam email string required Email hoặc tên đăng nhập (user_name). Example: admin@example.com
      * @bodyParam password string required Mật khẩu. Example: password
      * @response 200 {"success": true, "message": "Đăng nhập thành công.", "data": {"access_token": "1|xxx...", "token_type": "Bearer", "user": {"id": 1, "name": "Admin", "email": "admin@example.com", "status": "active"}}}
      */
     public function login(LoginRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $login = $request->email;
+        $user = User::where('email', $login)
+            ->orWhere('user_name', $login)
+            ->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
             return $this->unauthorized('Thông tin đăng nhập không chính xác');

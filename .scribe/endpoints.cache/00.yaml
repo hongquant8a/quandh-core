@@ -33,7 +33,7 @@ endpoints:
       email:
         custom: []
         name: email
-        description: 'Email đăng nhập.'
+        description: 'Email hoặc tên đăng nhập (user_name).'
         required: true
         example: admin@example.com
         type: string

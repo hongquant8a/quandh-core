@@ -12,7 +12,7 @@
 |---|---|
 | **Method** | POST |
 | **Path** | `/api/auth/login` |
-| **Body** | `email` (required, email), `password` (required). |
+| **Body** | `email` (required, email hoặc user_name), `password` (required). |
 | **Response 200** | `{ "access_token": "...", "token_type": "Bearer", "user": { "id", "name", "email", "status", "created_at", "updated_at", ... } }`. |
 | **Response 401** | `{ "message": "Thông tin đăng nhập không chính xác" }`. |
 | **Response 403** | `{ "message": "Tài khoản của bạn đã bị khóa" }`. |

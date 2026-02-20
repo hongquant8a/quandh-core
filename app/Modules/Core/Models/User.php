@@ -23,6 +23,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'user_name',
         'password',
         'status',
         'created_by',
@@ -63,12 +64,13 @@ class User extends Authenticatable
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('email', 'like', '%' . $search . '%');
+                    ->orWhere('email', 'like', '%' . $search . '%')
+                    ->orWhere('user_name', 'like', '%' . $search . '%');
             });
         })->when($filters['status'] ?? null, function ($query, $status) {
             $query->where('status', $status);
         })->when($filters['sort_by'] ?? 'created_at', function ($query, $sortBy) use ($filters) {
-            $allowed = ['id', 'name', 'email', 'created_at'];
+            $allowed = ['id', 'name', 'email', 'user_name', 'created_at'];
             $column = in_array($sortBy, $allowed) ? $sortBy : 'created_at';
             $query->orderBy($column, $filters['sort_order'] ?? 'desc');
         });
