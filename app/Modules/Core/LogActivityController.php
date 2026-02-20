@@ -30,6 +30,7 @@ class LogActivityController extends Controller
      * @queryParam sort_by string id, description, route, method_type, status_code, ip_address, country, created_at. Example: created_at
      * @queryParam sort_order string asc, desc. Example: desc
      * @queryParam limit integer 1-100. Example: 10
+     * @response 200 {"success": true, "data": {"total": 100}}
      */
     public function stats(FilterRequest $request)
     {
@@ -48,6 +49,9 @@ class LogActivityController extends Controller
      * @queryParam sort_by string Example: created_at
      * @queryParam sort_order string asc, desc. Example: desc
      * @queryParam limit integer Example: 10
+     * @apiResourceCollection App\Modules\Core\Resources\LogActivityCollection
+     * @apiResourceModel App\Modules\Core\Models\LogActivity paginate=10
+     * @apiResourceAdditional success=true
      */
     public function index(FilterRequest $request)
     {
@@ -61,6 +65,9 @@ class LogActivityController extends Controller
      * Chi tiết nhật ký
      *
      * @urlParam logActivity integer required ID nhật ký. Example: 1
+     * @apiResource App\Modules\Core\Resources\LogActivityResource
+     * @apiResourceModel App\Modules\Core\Models\LogActivity with=user,organization
+     * @apiResourceAdditional success=true
      */
     public function show(LogActivity $logActivity)
     {
@@ -72,6 +79,7 @@ class LogActivityController extends Controller
      * Xóa nhật ký
      *
      * @urlParam logActivity integer required ID nhật ký. Example: 1
+     * @response 200 {"success": true, "message": "Đã xóa nhật ký thành công!"}
      */
     public function destroy(LogActivity $logActivity)
     {
@@ -83,6 +91,7 @@ class LogActivityController extends Controller
      * Xóa hàng loạt nhật ký
      *
      * @bodyParam ids array required Danh sách ID. Example: [1, 2, 3]
+     * @response 200 {"success": true, "message": "Đã xóa thành công 3 nhật ký!"}
      */
     public function bulkDestroy(BulkDestroyLogActivityRequest $request)
     {
@@ -95,6 +104,7 @@ class LogActivityController extends Controller
      *
      * @bodyParam from_date date required Từ ngày (Y-m-d). Example: 2026-01-01
      * @bodyParam to_date date required Đến ngày (Y-m-d). Example: 2026-01-31
+     * @response 200 {"success": true, "message": "Đã xóa thành công 10 nhật ký trong khoảng thời gian!"}
      */
     public function destroyByDate(DestroyByDateLogActivityRequest $request)
     {
@@ -106,6 +116,8 @@ class LogActivityController extends Controller
 
     /**
      * Xóa toàn bộ nhật ký
+     *
+     * @response 200 {"success": true, "message": "Đã xóa toàn bộ 100 nhật ký!"}
      */
     public function destroyAll()
     {

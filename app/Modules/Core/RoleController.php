@@ -33,6 +33,7 @@ class RoleController extends Controller
      * @queryParam sort_by string Sắp xếp theo: id, name, guard_name, created_at, updated_at. Example: created_at
      * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
      * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     * @response 200 {"success": true, "data": {"total": 5}}
      */
     public function stats(FilterRequest $request)
     {
@@ -51,6 +52,9 @@ class RoleController extends Controller
      * @queryParam sort_by string Sắp xếp theo: id, name, guard_name, created_at, updated_at. Example: id
      * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
      * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     * @apiResourceCollection App\Modules\Core\Resources\RoleCollection
+     * @apiResourceModel App\Modules\Core\Models\Role paginate=10
+     * @apiResourceAdditional success=true
      */
     public function index(FilterRequest $request)
     {
@@ -64,6 +68,9 @@ class RoleController extends Controller
      * Chi tiết role
      *
      * @urlParam role integer required ID role. Example: 1
+     * @apiResource App\Modules\Core\Resources\RoleResource
+     * @apiResourceModel App\Modules\Core\Models\Role with=organization,permissions
+     * @apiResourceAdditional success=true
      */
     public function show(Role $role)
     {
@@ -78,6 +85,9 @@ class RoleController extends Controller
      * @bodyParam guard_name string Guard name (mặc định web). Example: web
      * @bodyParam organization_id integer ID organization (nullable). Example: 1
      * @bodyParam permission_ids array Danh sách ID permission để sync. Example: [1, 2, 3]
+     * @apiResource App\Modules\Core\Resources\RoleResource status=201
+     * @apiResourceModel App\Modules\Core\Models\Role with=permissions
+     * @apiResourceAdditional success=true message="Vai trò đã được tạo thành công!"
      */
     public function store(StoreRoleRequest $request)
     {
@@ -100,6 +110,9 @@ class RoleController extends Controller
      * @bodyParam guard_name string Guard name. Example: web
      * @bodyParam organization_id integer ID organization (nullable). Example: 1
      * @bodyParam permission_ids array Danh sách ID permission để sync (gửi mảng rỗng để bỏ hết). Example: [1, 2]
+     * @apiResource App\Modules\Core\Resources\RoleResource
+     * @apiResourceModel App\Modules\Core\Models\Role with=permissions
+     * @apiResourceAdditional success=true message="Vai trò đã được cập nhật!"
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
@@ -117,6 +130,7 @@ class RoleController extends Controller
      * Xóa role
      *
      * @urlParam role integer required ID role. Example: 1
+     * @response 200 {"success": true, "message": "Vai trò đã được xóa!"}
      */
     public function destroy(Role $role)
     {
@@ -128,6 +142,7 @@ class RoleController extends Controller
      * Xóa hàng loạt role
      *
      * @bodyParam ids array required Danh sách ID. Example: [1, 2, 3]
+     * @response 200 {"success": true, "message": "Đã xóa thành công các vai trò được chọn!"}
      */
     public function bulkDestroy(BulkDestroyRoleRequest $request)
     {
@@ -155,6 +170,7 @@ class RoleController extends Controller
      * Nhập danh sách role
      *
      * @bodyParam file file required File excel (xlsx, xls, csv). Cột: name, guard_name, organization_id.
+     * @response 200 {"success": true, "message": "Import vai trò thành công."}
      */
     public function import(ImportRoleRequest $request)
     {

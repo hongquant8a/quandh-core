@@ -39,6 +39,7 @@ class PostCategoryController extends Controller
      * @queryParam sort_by string Sắp xếp theo: id, name, sort_order, parent_id, created_at. Example: sort_order
      * @queryParam sort_order string Thứ tự: asc, desc. Example: asc
      * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     * @response 200 {"success": true, "data": {"total": 10, "active": 5, "inactive": 5}}
      */
     public function stats(FilterRequest $request)
     {
@@ -60,6 +61,9 @@ class PostCategoryController extends Controller
      * @queryParam sort_by string Sắp xếp theo: id, name, sort_order, parent_id, created_at. Example: sort_order
      * @queryParam sort_order string Thứ tự: asc, desc. Example: asc
      * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     * @apiResourceCollection App\Modules\Post\Resources\PostCategoryCollection
+     * @apiResourceModel App\Modules\Post\Models\PostCategory paginate=10
+     * @apiResourceAdditional success=true
      */
     public function index(FilterRequest $request)
     {
@@ -74,6 +78,7 @@ class PostCategoryController extends Controller
      * Cây danh mục (toàn bộ cây, không phân trang). Cấu trúc parent_id, children đệ quy.
      *
      * @queryParam status string Lọc theo trạng thái: active, inactive.
+     * @response 200 {"success": true, "data": [{"id": 1, "name": "Tin tức", "slug": "tin-tuc", "status": "active", "sort_order": 0, "parent_id": null, "depth": 0, "children": []}]}
      */
     public function tree(Request $request)
     {
@@ -88,6 +93,9 @@ class PostCategoryController extends Controller
      * Chi tiết danh mục
      *
      * @urlParam category integer required ID danh mục. Example: 1
+     * @apiResource App\Modules\Post\Resources\PostCategoryResource
+     * @apiResourceModel App\Modules\Post\Models\PostCategory with=parent,children
+     * @apiResourceAdditional success=true
      */
     public function show(PostCategory $category)
     {
@@ -104,6 +112,9 @@ class PostCategoryController extends Controller
      * @bodyParam status string required Trạng thái: active, inactive. Example: active
      * @bodyParam parent_id integer ID danh mục cha (null = gốc). Example: null
      * @bodyParam sort_order integer Thứ tự. Example: 0
+     * @apiResource App\Modules\Post\Resources\PostCategoryResource status=201
+     * @apiResourceModel App\Modules\Post\Models\PostCategory
+     * @apiResourceAdditional success=true message="Danh mục đã được tạo thành công!"
      */
     public function store(StorePostCategoryRequest $request)
     {
@@ -126,6 +137,9 @@ class PostCategoryController extends Controller
      * @bodyParam status string Trạng thái: active, inactive.
      * @bodyParam parent_id integer ID danh mục cha (null hoặc 0 = gốc).
      * @bodyParam sort_order integer Thứ tự.
+     * @apiResource App\Modules\Post\Resources\PostCategoryResource
+     * @apiResourceModel App\Modules\Post\Models\PostCategory with=parent,children
+     * @apiResourceAdditional success=true message="Danh mục đã được cập nhật!"
      */
     public function update(UpdatePostCategoryRequest $request, PostCategory $category)
     {
@@ -161,6 +175,7 @@ class PostCategoryController extends Controller
      * Xóa danh mục
      *
      * @urlParam category integer required ID danh mục. Example: 1
+     * @response 200 {"success": true, "message": "Danh mục đã được xóa!"}
      */
     public function destroy(PostCategory $category)
     {
@@ -172,6 +187,7 @@ class PostCategoryController extends Controller
      * Xóa hàng loạt danh mục
      *
      * @bodyParam ids array required Danh sách ID. Example: [1, 2, 3]
+     * @response 200 {"success": true, "message": "Đã xóa thành công các danh mục được chọn!"}
      */
     public function bulkDestroy(BulkDestroyPostCategoryRequest $request)
     {
@@ -184,6 +200,7 @@ class PostCategoryController extends Controller
      *
      * @bodyParam ids array required Danh sách ID. Example: [1, 2, 3]
      * @bodyParam status string required Trạng thái: active, inactive. Example: active
+     * @response 200 {"success": true, "message": "Cập nhật trạng thái thành công các danh mục được chọn!"}
      */
     public function bulkUpdateStatus(BulkUpdateStatusPostCategoryRequest $request)
     {
@@ -212,7 +229,7 @@ class PostCategoryController extends Controller
      * Nhập danh sách danh mục
      *
      * @bodyParam file file required File Excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug.
-     * @response 200 {"message": "Post categories imported successfully."}
+     * @response 200 {"success": true, "message": "Import danh mục bài viết thành công."}
      */
     public function import(ImportPostCategoryRequest $request)
     {
@@ -225,6 +242,9 @@ class PostCategoryController extends Controller
      *
      * @urlParam category integer required ID danh mục. Example: 1
      * @bodyParam status string required Trạng thái mới: active, inactive. Example: active
+     * @apiResource App\Modules\Post\Resources\PostCategoryResource
+     * @apiResourceModel App\Modules\Post\Models\PostCategory with=parent,children
+     * @apiResourceAdditional success=true message="Cập nhật trạng thái thành công!"
      */
     public function changeStatus(ChangeStatusPostCategoryRequest $request, PostCategory $category)
     {

@@ -484,7 +484,27 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-auth-login">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Đăng nhập th&agrave;nh c&ocirc;ng.&quot;,
+    &quot;data&quot;: {
+        &quot;access_token&quot;: &quot;1|xxx...&quot;,
+        &quot;token_type&quot;: &quot;Bearer&quot;,
+        &quot;user&quot;: {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;Admin&quot;,
+            &quot;email&quot;: &quot;admin@example.com&quot;,
+            &quot;status&quot;: &quot;active&quot;
+        }
+    }
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-auth-login" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-auth-login"></span>:
@@ -647,7 +667,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-auth-forgot-password">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Link reset đ&atilde; được gửi v&agrave;o Email&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-auth-forgot-password" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-auth-forgot-password"></span>:
@@ -807,7 +837,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-auth-reset-password">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Mật khẩu đ&atilde; được đặt lại&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-auth-reset-password" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-auth-reset-password"></span>:
@@ -986,7 +1026,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-auth-logout">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Đ&atilde; đăng xuất&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-auth-logout" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-auth-logout"></span>:
@@ -1097,7 +1147,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:27\",
+    \"from_date\": \"2026-02-20T09:55:27\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"desc\",
@@ -1130,7 +1180,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:27",
+    "from_date": "2026-02-20T09:55:27",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "desc",
@@ -1165,7 +1215,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:27',
+            'from_date' =&gt; '2026-02-20T09:55:27',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'desc',
@@ -1372,10 +1422,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-posts-export"
-               value="2026-02-20T09:40:27"
+               value="2026-02-20T09:55:27"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:27</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:27</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -1447,7 +1497,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php8l9o4vm3b7prfCwGbH2" </code></pre></div>
+    --form "file=@/tmp/phpgp04bl8i8cvveHoWGpw" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1485,7 +1535,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/php8l9o4vm3b7prfCwGbH2', 'r')
+                'contents' =&gt; fopen('/tmp/phpgp04bl8i8cvveHoWGpw', 'r')
             ],
         ],
     ]
@@ -1502,7 +1552,8 @@ print_r(json_decode((string) $body));</code></pre></div>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Posts imported successfully.&quot;
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Import b&agrave;i viết th&agrave;nh c&ocirc;ng.&quot;
 }</code>
  </pre>
     </span>
@@ -1600,7 +1651,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File Excel (xlsx, xls, csv). Cột theo chuẩn export. Example: <code>/tmp/php8l9o4vm3b7prfCwGbH2</code></p>
+<p>File Excel (xlsx, xls, csv). Cột theo chuẩn export. Example: <code>/tmp/phpgp04bl8i8cvveHoWGpw</code></p>
         </div>
         </form>
 
@@ -1684,7 +1735,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-posts-bulk-delete">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Đ&atilde; x&oacute;a th&agrave;nh c&ocirc;ng c&aacute;c b&agrave;i viết được chọn!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-posts-bulk-delete" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-posts-bulk-delete"></span>:
@@ -1868,7 +1929,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PATCHapi-posts-bulk-status">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Cập nhật trạng th&aacute;i th&agrave;nh c&ocirc;ng c&aacute;c b&agrave;i viết được chọn!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PATCHapi-posts-bulk-status" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PATCHapi-posts-bulk-status"></span>:
@@ -2002,10 +2073,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:28\",
+    \"from_date\": \"2026-02-20T09:55:27\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -2036,10 +2107,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:28",
+    "from_date": "2026-02-20T09:55:27",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -2072,10 +2143,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:28',
+            'from_date' =&gt; '2026-02-20T09:55:27',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -2087,19 +2158,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-posts-stats">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;total&quot;: 10,
+        &quot;active&quot;: 5,
+        &quot;inactive&quot;: 5
+    }
 }</code>
  </pre>
     </span>
@@ -2291,10 +2360,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-posts-stats"
-               value="2026-02-20T09:40:28"
+               value="2026-02-20T09:55:27"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:27</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -2327,10 +2396,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-posts-stats"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -2369,7 +2438,7 @@ Must be one of:
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:28\",
+    \"from_date\": \"2026-02-20T09:55:27\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"asc\",
@@ -2403,7 +2472,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:28",
+    "from_date": "2026-02-20T09:55:27",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "asc",
@@ -2439,7 +2508,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:28',
+            'from_date' =&gt; '2026-02-20T09:55:27',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'asc',
@@ -2454,19 +2523,73 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-posts">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 21,
+            &quot;title&quot;: &quot;Quos velit et fugiat sunt nihil accusantium harum.&quot;,
+            &quot;slug&quot;: &quot;quos-velit-et-fugiat-sunt-nihil-accusantium-harum&quot;,
+            &quot;content&quot;: &quot;Deserunt aut ab provident perspiciatis quo omnis nostrum. Adipisci quidem nostrum qui commodi incidunt iure. Et et modi ipsum nostrum.\n\nEt consequatur aut dolores enim. Facere tempora ex voluptatem laboriosam. Quis adipisci molestias fugit deleniti distinctio eum. Id aut libero aliquam veniam. Dolorem mollitia deleniti nemo.\n\nOfficia est dignissimos neque blanditiis odio veritatis excepturi. Delectus fugit qui repudiandae laboriosam. Alias tenetur ratione nemo voluptate accusamus ut et.&quot;,
+            &quot;status&quot;: &quot;published&quot;,
+            &quot;view_count&quot;: 0,
+            &quot;created_by&quot;: &quot;N/A&quot;,
+            &quot;updated_by&quot;: &quot;N/A&quot;,
+            &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+        },
+        {
+            &quot;id&quot;: 22,
+            &quot;title&quot;: &quot;Rerum ex repellendus assumenda et.&quot;,
+            &quot;slug&quot;: &quot;rerum-ex-repellendus-assumenda-et&quot;,
+            &quot;content&quot;: &quot;Reiciendis quia perspiciatis deserunt ducimus corrupti et. Quia maiores assumenda odit. Repellat officiis corporis nesciunt ut. Iure impedit molestiae ut rem est esse sint.\n\nSunt suscipit doloribus fugiat ut aut deserunt et. Neque recusandae et ipsam dolorem et ut dicta. Assumenda consequatur ut et sunt quisquam. Repellendus ut eaque alias ratione dolores.\n\nEa ut aut deserunt sint quis. Quod id aspernatur consectetur id a consectetur assumenda. Neque sit sunt nihil accusantium odit ut perspiciatis.&quot;,
+            &quot;status&quot;: &quot;draft&quot;,
+            &quot;view_count&quot;: 0,
+            &quot;created_by&quot;: &quot;N/A&quot;,
+            &quot;updated_by&quot;: &quot;N/A&quot;,
+            &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+        }
+    ],
+    &quot;links&quot;: {
+        &quot;first&quot;: &quot;/?page=1&quot;,
+        &quot;last&quot;: &quot;/?page=1&quot;,
+        &quot;prev&quot;: null,
+        &quot;next&quot;: null
+    },
+    &quot;meta&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;from&quot;: 1,
+        &quot;last_page&quot;: 1,
+        &quot;links&quot;: [
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            },
+            {
+                &quot;url&quot;: &quot;/?page=1&quot;,
+                &quot;label&quot;: &quot;1&quot;,
+                &quot;page&quot;: 1,
+                &quot;active&quot;: true
+            },
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            }
+        ],
+        &quot;path&quot;: &quot;/&quot;,
+        &quot;per_page&quot;: 10,
+        &quot;to&quot;: 2,
+        &quot;total&quot;: 2
+    },
+    &quot;success&quot;: &quot;true&quot;
 }</code>
  </pre>
     </span>
@@ -2658,10 +2781,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-posts"
-               value="2026-02-20T09:40:28"
+               value="2026-02-20T09:55:27"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:27</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -2772,19 +2895,41 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-posts--post_id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;title&quot;: &quot;Doloribus incidunt beatae error placeat sequi et velit.&quot;,
+        &quot;slug&quot;: &quot;doloribus-incidunt-beatae-error-placeat-sequi-et-velit&quot;,
+        &quot;content&quot;: &quot;Aut unde modi numquam ut. Ex possimus delectus nihil mollitia. Odit error laborum dolores. Velit dolor soluta iste eum sit.\n\nMaxime amet iste aut officia cumque. Modi provident qui voluptatibus in nostrum aut. Deleniti sapiente molestiae ut aut quam.\n\nAccusamus aliquam explicabo ut consequatur quos sit vel et. Unde expedita rerum atque rerum. Totam consequatur facilis tenetur nemo ad.&quot;,
+        &quot;status&quot;: &quot;published&quot;,
+        &quot;view_count&quot;: 0,
+        &quot;categories&quot;: [
+            {
+                &quot;id&quot;: 3,
+                &quot;name&quot;: &quot;Tin kinh tế&quot;,
+                &quot;slug&quot;: &quot;tin-kinh-te&quot;,
+                &quot;description&quot;: null,
+                &quot;status&quot;: &quot;inactive&quot;,
+                &quot;sort_order&quot;: 3,
+                &quot;parent_id&quot;: null,
+                &quot;depth&quot;: 0,
+                &quot;created_by&quot;: &quot;Harrison Stokes Sr.&quot;,
+                &quot;updated_by&quot;: &quot;Harrison Stokes Sr.&quot;,
+                &quot;created_at&quot;: &quot;20/02/2026 09:40:15&quot;,
+                &quot;updated_at&quot;: &quot;20/02/2026 09:40:15&quot;
+            }
+        ],
+        &quot;attachments&quot;: [],
+        &quot;created_by&quot;: &quot;Jed Windler&quot;,
+        &quot;updated_by&quot;: &quot;Elyssa Leffler V&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 09:40:15&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 09:40:15&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;
 }</code>
  </pre>
     </span>
@@ -2954,7 +3099,20 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-posts--post_id--view">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;view_count&quot;: 1
+    },
+    &quot;message&quot;: &quot;Đ&atilde; cập nhật lượt xem.&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-posts--post_id--view" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-posts--post_id--view"></span>:
@@ -3087,8 +3245,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "content=Nội dung bài viết..."\
     --form "status=draft"\
     --form "category_ids[]=1"\
-    --form "images[]=@/tmp/php5stjemsmsruq3mSNi5e" \
-    --form "images[]=@/tmp/phpu3p2t0t5i6urdCrBHpA" </code></pre></div>
+    --form "images[]=@/tmp/phpjorgfcbcvuaobVbPaCo" \
+    --form "images[]=@/tmp/phpq8v23dbbbbo113fBpVh" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3147,11 +3305,11 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/php5stjemsmsruq3mSNi5e', 'r')
+                'contents' =&gt; fopen('/tmp/phpjorgfcbcvuaobVbPaCo', 'r')
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpu3p2t0t5i6urdCrBHpA', 'r')
+                'contents' =&gt; fopen('/tmp/phpq8v23dbbbbo113fBpVh', 'r')
             ],
         ],
     ]
@@ -3162,7 +3320,46 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-posts">
-</span>
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;title&quot;: &quot;Doloribus incidunt beatae error placeat sequi et velit.&quot;,
+        &quot;slug&quot;: &quot;doloribus-incidunt-beatae-error-placeat-sequi-et-velit&quot;,
+        &quot;content&quot;: &quot;Aut unde modi numquam ut. Ex possimus delectus nihil mollitia. Odit error laborum dolores. Velit dolor soluta iste eum sit.\n\nMaxime amet iste aut officia cumque. Modi provident qui voluptatibus in nostrum aut. Deleniti sapiente molestiae ut aut quam.\n\nAccusamus aliquam explicabo ut consequatur quos sit vel et. Unde expedita rerum atque rerum. Totam consequatur facilis tenetur nemo ad.&quot;,
+        &quot;status&quot;: &quot;published&quot;,
+        &quot;view_count&quot;: 0,
+        &quot;categories&quot;: [
+            {
+                &quot;id&quot;: 3,
+                &quot;name&quot;: &quot;Tin kinh tế&quot;,
+                &quot;slug&quot;: &quot;tin-kinh-te&quot;,
+                &quot;description&quot;: null,
+                &quot;status&quot;: &quot;inactive&quot;,
+                &quot;sort_order&quot;: 3,
+                &quot;parent_id&quot;: null,
+                &quot;depth&quot;: 0,
+                &quot;created_by&quot;: &quot;Harrison Stokes Sr.&quot;,
+                &quot;updated_by&quot;: &quot;Harrison Stokes Sr.&quot;,
+                &quot;created_at&quot;: &quot;20/02/2026 09:40:15&quot;,
+                &quot;updated_at&quot;: &quot;20/02/2026 09:40:15&quot;
+            }
+        ],
+        &quot;attachments&quot;: [],
+        &quot;created_by&quot;: &quot;Jed Windler&quot;,
+        &quot;updated_by&quot;: &quot;Elyssa Leffler V&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 09:40:15&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 09:40:15&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;B&agrave;i viết đ&atilde; được tạo th&agrave;nh c&ocirc;ng!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-posts" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-posts"></span>:
@@ -3321,7 +3518,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Ảnh đính kèm (jpeg/png/gif/webp, tối đa 10 ảnh, mỗi ảnh ≤ 5MB). Example: <code>/tmp/phpu3p2t0t5i6urdCrBHpA</code></p>
+<p>Ảnh đính kèm (jpeg/png/gif/webp, tối đa 10 ảnh, mỗi ảnh ≤ 5MB). Example: <code>/tmp/phpq8v23dbbbbo113fBpVh</code></p>
         </div>
         </form>
 
@@ -3348,8 +3545,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "status=architecto"\
     --form "category_ids[]=architecto"\
     --form "remove_attachment_ids[]=architecto"\
-    --form "images[]=@/tmp/php1kj3gd8797un6Y0KudK" \
-    --form "images[]=@/tmp/phpa7psmoql5thp5sUKzGE" </code></pre></div>
+    --form "images[]=@/tmp/phpf8brgd76e68q5wtHwsa" \
+    --form "images[]=@/tmp/php9fbpa0ii0r6ofrkM2zr" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3413,11 +3610,11 @@ $response = $client-&gt;put(
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/php1kj3gd8797un6Y0KudK', 'r')
+                'contents' =&gt; fopen('/tmp/phpf8brgd76e68q5wtHwsa', 'r')
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpa7psmoql5thp5sUKzGE', 'r')
+                'contents' =&gt; fopen('/tmp/php9fbpa0ii0r6ofrkM2zr', 'r')
             ],
         ],
     ]
@@ -3428,7 +3625,46 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PUTapi-posts--post_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;title&quot;: &quot;Doloribus incidunt beatae error placeat sequi et velit.&quot;,
+        &quot;slug&quot;: &quot;doloribus-incidunt-beatae-error-placeat-sequi-et-velit&quot;,
+        &quot;content&quot;: &quot;Aut unde modi numquam ut. Ex possimus delectus nihil mollitia. Odit error laborum dolores. Velit dolor soluta iste eum sit.\n\nMaxime amet iste aut officia cumque. Modi provident qui voluptatibus in nostrum aut. Deleniti sapiente molestiae ut aut quam.\n\nAccusamus aliquam explicabo ut consequatur quos sit vel et. Unde expedita rerum atque rerum. Totam consequatur facilis tenetur nemo ad.&quot;,
+        &quot;status&quot;: &quot;published&quot;,
+        &quot;view_count&quot;: 0,
+        &quot;categories&quot;: [
+            {
+                &quot;id&quot;: 3,
+                &quot;name&quot;: &quot;Tin kinh tế&quot;,
+                &quot;slug&quot;: &quot;tin-kinh-te&quot;,
+                &quot;description&quot;: null,
+                &quot;status&quot;: &quot;inactive&quot;,
+                &quot;sort_order&quot;: 3,
+                &quot;parent_id&quot;: null,
+                &quot;depth&quot;: 0,
+                &quot;created_by&quot;: &quot;Harrison Stokes Sr.&quot;,
+                &quot;updated_by&quot;: &quot;Harrison Stokes Sr.&quot;,
+                &quot;created_at&quot;: &quot;20/02/2026 09:40:15&quot;,
+                &quot;updated_at&quot;: &quot;20/02/2026 09:40:15&quot;
+            }
+        ],
+        &quot;attachments&quot;: [],
+        &quot;created_by&quot;: &quot;Jed Windler&quot;,
+        &quot;updated_by&quot;: &quot;Elyssa Leffler V&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 09:40:15&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 09:40:15&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;B&agrave;i viết đ&atilde; được cập nhật!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PUTapi-posts--post_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PUTapi-posts--post_id-"></span>:
@@ -3626,7 +3862,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Ảnh mới (append). Example: <code>/tmp/phpa7psmoql5thp5sUKzGE</code></p>
+<p>Ảnh mới (append). Example: <code>/tmp/php9fbpa0ii0r6ofrkM2zr</code></p>
         </div>
         </form>
 
@@ -3653,8 +3889,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "status=architecto"\
     --form "category_ids[]=architecto"\
     --form "remove_attachment_ids[]=architecto"\
-    --form "images[]=@/tmp/phpi8tb2iurun3tdtm4sMP" \
-    --form "images[]=@/tmp/phpbkto5nnqspmreEgLXjv" </code></pre></div>
+    --form "images[]=@/tmp/phppvrtlt21625fehr8Gfl" \
+    --form "images[]=@/tmp/phphdvkjse7o85h1tJktUl" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3718,11 +3954,11 @@ $response = $client-&gt;patch(
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpi8tb2iurun3tdtm4sMP', 'r')
+                'contents' =&gt; fopen('/tmp/phppvrtlt21625fehr8Gfl', 'r')
             ],
             [
                 'name' =&gt; 'images[]',
-                'contents' =&gt; fopen('/tmp/phpbkto5nnqspmreEgLXjv', 'r')
+                'contents' =&gt; fopen('/tmp/phphdvkjse7o85h1tJktUl', 'r')
             ],
         ],
     ]
@@ -3733,7 +3969,46 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PATCHapi-posts--post_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;title&quot;: &quot;Doloribus incidunt beatae error placeat sequi et velit.&quot;,
+        &quot;slug&quot;: &quot;doloribus-incidunt-beatae-error-placeat-sequi-et-velit&quot;,
+        &quot;content&quot;: &quot;Aut unde modi numquam ut. Ex possimus delectus nihil mollitia. Odit error laborum dolores. Velit dolor soluta iste eum sit.\n\nMaxime amet iste aut officia cumque. Modi provident qui voluptatibus in nostrum aut. Deleniti sapiente molestiae ut aut quam.\n\nAccusamus aliquam explicabo ut consequatur quos sit vel et. Unde expedita rerum atque rerum. Totam consequatur facilis tenetur nemo ad.&quot;,
+        &quot;status&quot;: &quot;published&quot;,
+        &quot;view_count&quot;: 0,
+        &quot;categories&quot;: [
+            {
+                &quot;id&quot;: 3,
+                &quot;name&quot;: &quot;Tin kinh tế&quot;,
+                &quot;slug&quot;: &quot;tin-kinh-te&quot;,
+                &quot;description&quot;: null,
+                &quot;status&quot;: &quot;inactive&quot;,
+                &quot;sort_order&quot;: 3,
+                &quot;parent_id&quot;: null,
+                &quot;depth&quot;: 0,
+                &quot;created_by&quot;: &quot;Harrison Stokes Sr.&quot;,
+                &quot;updated_by&quot;: &quot;Harrison Stokes Sr.&quot;,
+                &quot;created_at&quot;: &quot;20/02/2026 09:40:15&quot;,
+                &quot;updated_at&quot;: &quot;20/02/2026 09:40:15&quot;
+            }
+        ],
+        &quot;attachments&quot;: [],
+        &quot;created_by&quot;: &quot;Jed Windler&quot;,
+        &quot;updated_by&quot;: &quot;Elyssa Leffler V&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 09:40:15&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 09:40:15&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;B&agrave;i viết đ&atilde; được cập nhật!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PATCHapi-posts--post_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PATCHapi-posts--post_id-"></span>:
@@ -3931,7 +4206,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Ảnh mới (append). Example: <code>/tmp/phpbkto5nnqspmreEgLXjv</code></p>
+<p>Ảnh mới (append). Example: <code>/tmp/phphdvkjse7o85h1tJktUl</code></p>
         </div>
         </form>
 
@@ -3991,7 +4266,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-DELETEapi-posts--post_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;B&agrave;i viết đ&atilde; được x&oacute;a th&agrave;nh c&ocirc;ng!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-DELETEapi-posts--post_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-DELETEapi-posts--post_id-"></span>:
@@ -4170,7 +4455,46 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PATCHapi-posts--post_id--status">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;title&quot;: &quot;Doloribus incidunt beatae error placeat sequi et velit.&quot;,
+        &quot;slug&quot;: &quot;doloribus-incidunt-beatae-error-placeat-sequi-et-velit&quot;,
+        &quot;content&quot;: &quot;Aut unde modi numquam ut. Ex possimus delectus nihil mollitia. Odit error laborum dolores. Velit dolor soluta iste eum sit.\n\nMaxime amet iste aut officia cumque. Modi provident qui voluptatibus in nostrum aut. Deleniti sapiente molestiae ut aut quam.\n\nAccusamus aliquam explicabo ut consequatur quos sit vel et. Unde expedita rerum atque rerum. Totam consequatur facilis tenetur nemo ad.&quot;,
+        &quot;status&quot;: &quot;published&quot;,
+        &quot;view_count&quot;: 0,
+        &quot;categories&quot;: [
+            {
+                &quot;id&quot;: 3,
+                &quot;name&quot;: &quot;Tin kinh tế&quot;,
+                &quot;slug&quot;: &quot;tin-kinh-te&quot;,
+                &quot;description&quot;: null,
+                &quot;status&quot;: &quot;inactive&quot;,
+                &quot;sort_order&quot;: 3,
+                &quot;parent_id&quot;: null,
+                &quot;depth&quot;: 0,
+                &quot;created_by&quot;: &quot;Harrison Stokes Sr.&quot;,
+                &quot;updated_by&quot;: &quot;Harrison Stokes Sr.&quot;,
+                &quot;created_at&quot;: &quot;20/02/2026 09:40:15&quot;,
+                &quot;updated_at&quot;: &quot;20/02/2026 09:40:15&quot;
+            }
+        ],
+        &quot;attachments&quot;: [],
+        &quot;created_by&quot;: &quot;Jed Windler&quot;,
+        &quot;updated_by&quot;: &quot;Elyssa Leffler V&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 09:40:15&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 09:40:15&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;Cập nhật trạng th&aacute;i th&agrave;nh c&ocirc;ng!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PATCHapi-posts--post_id--status" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PATCHapi-posts--post_id--status"></span>:
@@ -4319,10 +4643,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:29\",
+    \"from_date\": \"2026-02-20T09:55:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -4355,10 +4679,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:29",
+    "from_date": "2026-02-20T09:55:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -4393,10 +4717,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:29',
+            'from_date' =&gt; '2026-02-20T09:55:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -4408,19 +4732,15 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-log-activities-stats">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;total&quot;: 100
+    }
 }</code>
  </pre>
     </span>
@@ -4636,10 +4956,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-log-activities-stats"
-               value="2026-02-20T09:40:29"
+               value="2026-02-20T09:55:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:29</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -4672,10 +4992,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-log-activities-stats"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -4764,7 +5084,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-log-activities-delete-by-date">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Đ&atilde; x&oacute;a th&agrave;nh c&ocirc;ng 10 nhật k&yacute; trong khoảng thời gian!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-log-activities-delete-by-date" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-log-activities-delete-by-date"></span>:
@@ -4931,7 +5261,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-log-activities-clear">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Đ&atilde; x&oacute;a to&agrave;n bộ 100 nhật k&yacute;!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-log-activities-clear" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-log-activities-clear"></span>:
@@ -5097,7 +5437,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-log-activities-bulk-delete">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Đ&atilde; x&oacute;a th&agrave;nh c&ocirc;ng 3 nhật k&yacute;!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-log-activities-bulk-delete" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-log-activities-bulk-delete"></span>:
@@ -5219,10 +5569,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:29\",
+    \"from_date\": \"2026-02-20T09:55:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -5255,10 +5605,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:29",
+    "from_date": "2026-02-20T09:55:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -5293,10 +5643,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:29',
+            'from_date' =&gt; '2026-02-20T09:55:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -5308,19 +5658,83 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-log-activities">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: null,
+            &quot;description&quot;: null,
+            &quot;user_type&quot;: null,
+            &quot;user_id&quot;: null,
+            &quot;user_name&quot;: &quot;Guest&quot;,
+            &quot;organization_id&quot;: null,
+            &quot;route&quot;: null,
+            &quot;method_type&quot;: null,
+            &quot;status_code&quot;: null,
+            &quot;ip_address&quot;: null,
+            &quot;country&quot;: null,
+            &quot;user_agent&quot;: null,
+            &quot;request_data&quot;: null,
+            &quot;created_at&quot;: null,
+            &quot;updated_at&quot;: null
+        },
+        {
+            &quot;id&quot;: null,
+            &quot;description&quot;: null,
+            &quot;user_type&quot;: null,
+            &quot;user_id&quot;: null,
+            &quot;user_name&quot;: &quot;Guest&quot;,
+            &quot;organization_id&quot;: null,
+            &quot;route&quot;: null,
+            &quot;method_type&quot;: null,
+            &quot;status_code&quot;: null,
+            &quot;ip_address&quot;: null,
+            &quot;country&quot;: null,
+            &quot;user_agent&quot;: null,
+            &quot;request_data&quot;: null,
+            &quot;created_at&quot;: null,
+            &quot;updated_at&quot;: null
+        }
+    ],
+    &quot;links&quot;: {
+        &quot;first&quot;: &quot;/?page=1&quot;,
+        &quot;last&quot;: &quot;/?page=1&quot;,
+        &quot;prev&quot;: null,
+        &quot;next&quot;: null
+    },
+    &quot;meta&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;from&quot;: 1,
+        &quot;last_page&quot;: 1,
+        &quot;links&quot;: [
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            },
+            {
+                &quot;url&quot;: &quot;/?page=1&quot;,
+                &quot;label&quot;: &quot;1&quot;,
+                &quot;page&quot;: 1,
+                &quot;active&quot;: true
+            },
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            }
+        ],
+        &quot;path&quot;: &quot;/&quot;,
+        &quot;per_page&quot;: 10,
+        &quot;to&quot;: 2,
+        &quot;total&quot;: 2
+    },
+    &quot;success&quot;: &quot;true&quot;
 }</code>
  </pre>
     </span>
@@ -5536,10 +5950,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-log-activities"
-               value="2026-02-20T09:40:29"
+               value="2026-02-20T09:55:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:29</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -5572,10 +5986,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-log-activities"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -5650,19 +6064,29 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-log-activities--logActivity_id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;data&quot;: {
+        &quot;id&quot;: null,
+        &quot;description&quot;: null,
+        &quot;user_type&quot;: null,
+        &quot;user_id&quot;: null,
+        &quot;user_name&quot;: &quot;Guest&quot;,
+        &quot;organization_id&quot;: null,
+        &quot;route&quot;: null,
+        &quot;method_type&quot;: null,
+        &quot;status_code&quot;: null,
+        &quot;ip_address&quot;: null,
+        &quot;country&quot;: null,
+        &quot;user_agent&quot;: null,
+        &quot;request_data&quot;: null,
+        &quot;created_at&quot;: null,
+        &quot;updated_at&quot;: null
+    },
+    &quot;success&quot;: &quot;true&quot;
 }</code>
  </pre>
     </span>
@@ -5832,7 +6256,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-DELETEapi-log-activities--logActivity_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Đ&atilde; x&oacute;a nhật k&yacute; th&agrave;nh c&ocirc;ng!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-DELETEapi-log-activities--logActivity_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-DELETEapi-log-activities--logActivity_id-"></span>:
@@ -5968,10 +6402,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:29\",
+    \"from_date\": \"2026-02-20T09:55:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -6002,10 +6436,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:29",
+    "from_date": "2026-02-20T09:55:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -6038,10 +6472,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:29',
+            'from_date' =&gt; '2026-02-20T09:55:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -6257,10 +6691,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-organizations-export"
-               value="2026-02-20T09:40:29"
+               value="2026-02-20T09:55:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:29</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -6293,10 +6727,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-organizations-export"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -6332,7 +6766,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php3vt7lje5dgcndadynpq" </code></pre></div>
+    --form "file=@/tmp/phpv5ggs4vv65l16Ho7LVq" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -6370,7 +6804,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/php3vt7lje5dgcndadynpq', 'r')
+                'contents' =&gt; fopen('/tmp/phpv5ggs4vv65l16Ho7LVq', 'r')
             ],
         ],
     ]
@@ -6381,7 +6815,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-organizations-import">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Import organization th&agrave;nh c&ocirc;ng.&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-organizations-import" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-organizations-import"></span>:
@@ -6476,7 +6920,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, slug, description, status. Example: <code>/tmp/php3vt7lje5dgcndadynpq</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, slug, description, status. Example: <code>/tmp/phpv5ggs4vv65l16Ho7LVq</code></p>
         </div>
         </form>
 
@@ -6560,7 +7004,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-organizations-bulk-delete">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Đ&atilde; x&oacute;a th&agrave;nh c&ocirc;ng c&aacute;c organization được chọn!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-organizations-bulk-delete" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-organizations-bulk-delete"></span>:
@@ -6744,7 +7198,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PATCHapi-organizations-bulk-status">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Cập nhật trạng th&aacute;i organization th&agrave;nh c&ocirc;ng.&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PATCHapi-organizations-bulk-status" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PATCHapi-organizations-bulk-status"></span>:
@@ -6878,10 +7342,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:29\",
+    \"from_date\": \"2026-02-20T09:55:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -6913,10 +7377,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:29",
+    "from_date": "2026-02-20T09:55:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -6950,10 +7414,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:29',
+            'from_date' =&gt; '2026-02-20T09:55:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -6965,19 +7429,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-organizations-stats">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;total&quot;: 10,
+        &quot;active&quot;: 5,
+        &quot;inactive&quot;: 5
+    }
 }</code>
  </pre>
     </span>
@@ -7181,10 +7643,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-organizations-stats"
-               value="2026-02-20T09:40:29"
+               value="2026-02-20T09:55:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:29</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -7217,10 +7679,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-organizations-stats"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -7304,19 +7766,22 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-organizations-tree">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;success&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;C&ocirc;ng ty A&quot;,
+            &quot;slug&quot;: &quot;cong-ty-a&quot;,
+            &quot;status&quot;: &quot;active&quot;,
+            &quot;parent_id&quot;: null,
+            &quot;children&quot;: []
+        }
+    ]
 }</code>
  </pre>
     </span>
@@ -7439,10 +7904,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:29\",
+    \"from_date\": \"2026-02-20T09:55:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -7474,10 +7939,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:29",
+    "from_date": "2026-02-20T09:55:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -7511,10 +7976,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:29',
+            'from_date' =&gt; '2026-02-20T09:55:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -7526,19 +7991,77 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-organizations">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;Default&quot;,
+            &quot;slug&quot;: &quot;default&quot;,
+            &quot;description&quot;: &quot;Organization mặc định của hệ thống&quot;,
+            &quot;status&quot;: &quot;active&quot;,
+            &quot;parent_id&quot;: null,
+            &quot;sort_order&quot;: 0,
+            &quot;depth&quot;: 0,
+            &quot;created_by&quot;: &quot;N/A&quot;,
+            &quot;updated_by&quot;: &quot;N/A&quot;,
+            &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+            &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+        },
+        {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;Default&quot;,
+            &quot;slug&quot;: &quot;default&quot;,
+            &quot;description&quot;: &quot;Organization mặc định của hệ thống&quot;,
+            &quot;status&quot;: &quot;active&quot;,
+            &quot;parent_id&quot;: null,
+            &quot;sort_order&quot;: 0,
+            &quot;depth&quot;: 0,
+            &quot;created_by&quot;: &quot;N/A&quot;,
+            &quot;updated_by&quot;: &quot;N/A&quot;,
+            &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+            &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+        }
+    ],
+    &quot;links&quot;: {
+        &quot;first&quot;: &quot;/?page=1&quot;,
+        &quot;last&quot;: &quot;/?page=1&quot;,
+        &quot;prev&quot;: null,
+        &quot;next&quot;: null
+    },
+    &quot;meta&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;from&quot;: 1,
+        &quot;last_page&quot;: 1,
+        &quot;links&quot;: [
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            },
+            {
+                &quot;url&quot;: &quot;/?page=1&quot;,
+                &quot;label&quot;: &quot;1&quot;,
+                &quot;page&quot;: 1,
+                &quot;active&quot;: true
+            },
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            }
+        ],
+        &quot;path&quot;: &quot;/&quot;,
+        &quot;per_page&quot;: 10,
+        &quot;to&quot;: 2,
+        &quot;total&quot;: 2
+    },
+    &quot;success&quot;: &quot;true&quot;
 }</code>
  </pre>
     </span>
@@ -7742,10 +8265,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-organizations"
-               value="2026-02-20T09:40:29"
+               value="2026-02-20T09:55:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:29</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -7778,10 +8301,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-organizations"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -7856,19 +8379,28 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-organizations--organization_id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Default&quot;,
+        &quot;slug&quot;: &quot;default&quot;,
+        &quot;description&quot;: &quot;Organization mặc định của hệ thống&quot;,
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;parent_id&quot;: null,
+        &quot;sort_order&quot;: 0,
+        &quot;depth&quot;: 0,
+        &quot;created_by&quot;: &quot;N/A&quot;,
+        &quot;updated_by&quot;: &quot;N/A&quot;,
+        &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+        &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+        &quot;parent&quot;: null,
+        &quot;children&quot;: []
+    },
+    &quot;success&quot;: &quot;true&quot;
 }</code>
  </pre>
     </span>
@@ -8065,7 +8597,31 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-organizations">
-</span>
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Default&quot;,
+        &quot;slug&quot;: &quot;default&quot;,
+        &quot;description&quot;: &quot;Organization mặc định của hệ thống&quot;,
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;parent_id&quot;: null,
+        &quot;sort_order&quot;: 0,
+        &quot;depth&quot;: 0,
+        &quot;created_by&quot;: &quot;N/A&quot;,
+        &quot;updated_by&quot;: &quot;N/A&quot;,
+        &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+        &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;Organization đ&atilde; được tạo th&agrave;nh c&ocirc;ng!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-organizations" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-organizations"></span>:
@@ -8307,7 +8863,33 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PUTapi-organizations--organization_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Default&quot;,
+        &quot;slug&quot;: &quot;default&quot;,
+        &quot;description&quot;: &quot;Organization mặc định của hệ thống&quot;,
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;parent_id&quot;: null,
+        &quot;sort_order&quot;: 0,
+        &quot;depth&quot;: 0,
+        &quot;created_by&quot;: &quot;N/A&quot;,
+        &quot;updated_by&quot;: &quot;N/A&quot;,
+        &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+        &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+        &quot;parent&quot;: null,
+        &quot;children&quot;: []
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;Organization đ&atilde; được cập nhật!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PUTapi-organizations--organization_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PUTapi-organizations--organization_id-"></span>:
@@ -8574,7 +9156,33 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PATCHapi-organizations--organization_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Default&quot;,
+        &quot;slug&quot;: &quot;default&quot;,
+        &quot;description&quot;: &quot;Organization mặc định của hệ thống&quot;,
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;parent_id&quot;: null,
+        &quot;sort_order&quot;: 0,
+        &quot;depth&quot;: 0,
+        &quot;created_by&quot;: &quot;N/A&quot;,
+        &quot;updated_by&quot;: &quot;N/A&quot;,
+        &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+        &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+        &quot;parent&quot;: null,
+        &quot;children&quot;: []
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;Organization đ&atilde; được cập nhật!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PATCHapi-organizations--organization_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PATCHapi-organizations--organization_id-"></span>:
@@ -8814,7 +9422,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-DELETEapi-organizations--organization_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Organization đ&atilde; được x&oacute;a!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-DELETEapi-organizations--organization_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-DELETEapi-organizations--organization_id-"></span>:
@@ -8993,7 +9611,33 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PATCHapi-organizations--organization_id--status">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Default&quot;,
+        &quot;slug&quot;: &quot;default&quot;,
+        &quot;description&quot;: &quot;Organization mặc định của hệ thống&quot;,
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;parent_id&quot;: null,
+        &quot;sort_order&quot;: 0,
+        &quot;depth&quot;: 0,
+        &quot;created_by&quot;: &quot;N/A&quot;,
+        &quot;updated_by&quot;: &quot;N/A&quot;,
+        &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+        &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+        &quot;parent&quot;: null,
+        &quot;children&quot;: []
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;Cập nhật trạng th&aacute;i th&agrave;nh c&ocirc;ng!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PATCHapi-organizations--organization_id--status" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PATCHapi-organizations--organization_id--status"></span>:
@@ -9142,10 +9786,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:28\",
+    \"from_date\": \"2026-02-20T09:55:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -9175,10 +9819,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:28",
+    "from_date": "2026-02-20T09:55:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -9210,10 +9854,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:28',
+            'from_date' =&gt; '2026-02-20T09:55:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -9417,10 +10061,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-permissions-export"
-               value="2026-02-20T09:40:28"
+               value="2026-02-20T09:55:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -9453,10 +10097,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-permissions-export"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -9492,7 +10136,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpe9mv4gjus3el4tuYBZo" </code></pre></div>
+    --form "file=@/tmp/phpk8ob66tqtombdpPuOZK" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -9530,7 +10174,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/phpe9mv4gjus3el4tuYBZo', 'r')
+                'contents' =&gt; fopen('/tmp/phpk8ob66tqtombdpPuOZK', 'r')
             ],
         ],
     ]
@@ -9541,7 +10185,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-permissions-import">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Import quyền th&agrave;nh c&ocirc;ng.&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-permissions-import" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-permissions-import"></span>:
@@ -9636,7 +10290,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, guard_name, description, sort_order, parent_id. Example: <code>/tmp/phpe9mv4gjus3el4tuYBZo</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, guard_name, description, sort_order, parent_id. Example: <code>/tmp/phpk8ob66tqtombdpPuOZK</code></p>
         </div>
         </form>
 
@@ -9720,7 +10374,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-permissions-bulk-delete">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Đ&atilde; x&oacute;a th&agrave;nh c&ocirc;ng c&aacute;c quyền được chọn!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-permissions-bulk-delete" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-permissions-bulk-delete"></span>:
@@ -9842,10 +10506,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:28\",
+    \"from_date\": \"2026-02-20T09:55:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -9876,10 +10540,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:28",
+    "from_date": "2026-02-20T09:55:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -9912,10 +10576,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:28',
+            'from_date' =&gt; '2026-02-20T09:55:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -9927,19 +10591,15 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-permissions-stats">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;total&quot;: 20
+    }
 }</code>
  </pre>
     </span>
@@ -10131,10 +10791,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-permissions-stats"
-               value="2026-02-20T09:40:28"
+               value="2026-02-20T09:55:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -10167,10 +10827,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-permissions-stats"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -10254,19 +10914,23 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-permissions-tree">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;success&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;posts&quot;,
+            &quot;guard_name&quot;: &quot;web&quot;,
+            &quot;description&quot;: &quot;Quản l&yacute; b&agrave;i viết&quot;,
+            &quot;sort_order&quot;: 0,
+            &quot;parent_id&quot;: null,
+            &quot;children&quot;: []
+        }
+    ]
 }</code>
  </pre>
     </span>
@@ -10389,10 +11053,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:28\",
+    \"from_date\": \"2026-02-20T09:55:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -10423,10 +11087,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:28",
+    "from_date": "2026-02-20T09:55:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -10459,10 +11123,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:28',
+            'from_date' =&gt; '2026-02-20T09:55:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -10474,19 +11138,69 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-permissions">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;group:users&quot;,
+            &quot;guard_name&quot;: &quot;web&quot;,
+            &quot;description&quot;: &quot;Người d&ugrave;ng&quot;,
+            &quot;sort_order&quot;: 0,
+            &quot;parent_id&quot;: null,
+            &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+            &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+        },
+        {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;group:users&quot;,
+            &quot;guard_name&quot;: &quot;web&quot;,
+            &quot;description&quot;: &quot;Người d&ugrave;ng&quot;,
+            &quot;sort_order&quot;: 0,
+            &quot;parent_id&quot;: null,
+            &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+            &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+        }
+    ],
+    &quot;links&quot;: {
+        &quot;first&quot;: &quot;/?page=1&quot;,
+        &quot;last&quot;: &quot;/?page=1&quot;,
+        &quot;prev&quot;: null,
+        &quot;next&quot;: null
+    },
+    &quot;meta&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;from&quot;: 1,
+        &quot;last_page&quot;: 1,
+        &quot;links&quot;: [
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            },
+            {
+                &quot;url&quot;: &quot;/?page=1&quot;,
+                &quot;label&quot;: &quot;1&quot;,
+                &quot;page&quot;: 1,
+                &quot;active&quot;: true
+            },
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            }
+        ],
+        &quot;path&quot;: &quot;/&quot;,
+        &quot;per_page&quot;: 10,
+        &quot;to&quot;: 2,
+        &quot;total&quot;: 2
+    },
+    &quot;success&quot;: &quot;true&quot;
 }</code>
  </pre>
     </span>
@@ -10678,10 +11392,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-permissions"
-               value="2026-02-20T09:40:28"
+               value="2026-02-20T09:55:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -10714,10 +11428,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-permissions"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -10792,19 +11506,135 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-permissions--permission_id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;group:users&quot;,
+        &quot;guard_name&quot;: &quot;web&quot;,
+        &quot;description&quot;: &quot;Người d&ugrave;ng&quot;,
+        &quot;sort_order&quot;: 0,
+        &quot;parent_id&quot;: null,
+        &quot;parent&quot;: null,
+        &quot;children&quot;: [
+            {
+                &quot;id&quot;: 2,
+                &quot;name&quot;: &quot;users.stats&quot;,
+                &quot;guard_name&quot;: &quot;web&quot;,
+                &quot;description&quot;: &quot;Người d&ugrave;ng - Thống k&ecirc;&quot;,
+                &quot;sort_order&quot;: 0,
+                &quot;parent_id&quot;: 1,
+                &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+                &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+            },
+            {
+                &quot;id&quot;: 3,
+                &quot;name&quot;: &quot;users.index&quot;,
+                &quot;guard_name&quot;: &quot;web&quot;,
+                &quot;description&quot;: &quot;Người d&ugrave;ng - Danh s&aacute;ch&quot;,
+                &quot;sort_order&quot;: 1,
+                &quot;parent_id&quot;: 1,
+                &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+                &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+            },
+            {
+                &quot;id&quot;: 4,
+                &quot;name&quot;: &quot;users.show&quot;,
+                &quot;guard_name&quot;: &quot;web&quot;,
+                &quot;description&quot;: &quot;Người d&ugrave;ng - Chi tiết&quot;,
+                &quot;sort_order&quot;: 2,
+                &quot;parent_id&quot;: 1,
+                &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+                &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+            },
+            {
+                &quot;id&quot;: 5,
+                &quot;name&quot;: &quot;users.store&quot;,
+                &quot;guard_name&quot;: &quot;web&quot;,
+                &quot;description&quot;: &quot;Người d&ugrave;ng - Tạo mới&quot;,
+                &quot;sort_order&quot;: 3,
+                &quot;parent_id&quot;: 1,
+                &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+                &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+            },
+            {
+                &quot;id&quot;: 6,
+                &quot;name&quot;: &quot;users.update&quot;,
+                &quot;guard_name&quot;: &quot;web&quot;,
+                &quot;description&quot;: &quot;Người d&ugrave;ng - Cập nhật&quot;,
+                &quot;sort_order&quot;: 4,
+                &quot;parent_id&quot;: 1,
+                &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+                &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+            },
+            {
+                &quot;id&quot;: 7,
+                &quot;name&quot;: &quot;users.destroy&quot;,
+                &quot;guard_name&quot;: &quot;web&quot;,
+                &quot;description&quot;: &quot;Người d&ugrave;ng - X&oacute;a&quot;,
+                &quot;sort_order&quot;: 5,
+                &quot;parent_id&quot;: 1,
+                &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+                &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+            },
+            {
+                &quot;id&quot;: 8,
+                &quot;name&quot;: &quot;users.bulkDestroy&quot;,
+                &quot;guard_name&quot;: &quot;web&quot;,
+                &quot;description&quot;: &quot;Người d&ugrave;ng - X&oacute;a h&agrave;ng loạt&quot;,
+                &quot;sort_order&quot;: 6,
+                &quot;parent_id&quot;: 1,
+                &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+                &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+            },
+            {
+                &quot;id&quot;: 9,
+                &quot;name&quot;: &quot;users.bulkUpdateStatus&quot;,
+                &quot;guard_name&quot;: &quot;web&quot;,
+                &quot;description&quot;: &quot;Người d&ugrave;ng - Cập nhật trạng th&aacute;i h&agrave;ng loạt&quot;,
+                &quot;sort_order&quot;: 7,
+                &quot;parent_id&quot;: 1,
+                &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+                &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+            },
+            {
+                &quot;id&quot;: 10,
+                &quot;name&quot;: &quot;users.changeStatus&quot;,
+                &quot;guard_name&quot;: &quot;web&quot;,
+                &quot;description&quot;: &quot;Người d&ugrave;ng - Đổi trạng th&aacute;i&quot;,
+                &quot;sort_order&quot;: 8,
+                &quot;parent_id&quot;: 1,
+                &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+                &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+            },
+            {
+                &quot;id&quot;: 11,
+                &quot;name&quot;: &quot;users.export&quot;,
+                &quot;guard_name&quot;: &quot;web&quot;,
+                &quot;description&quot;: &quot;Người d&ugrave;ng - Xuất Excel&quot;,
+                &quot;sort_order&quot;: 9,
+                &quot;parent_id&quot;: 1,
+                &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+                &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+            },
+            {
+                &quot;id&quot;: 12,
+                &quot;name&quot;: &quot;users.import&quot;,
+                &quot;guard_name&quot;: &quot;web&quot;,
+                &quot;description&quot;: &quot;Người d&ugrave;ng - Nhập Excel&quot;,
+                &quot;sort_order&quot;: 10,
+                &quot;parent_id&quot;: 1,
+                &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+                &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+            }
+        ],
+        &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+        &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;
 }</code>
  </pre>
     </span>
@@ -10998,7 +11828,27 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-permissions">
-</span>
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;group:users&quot;,
+        &quot;guard_name&quot;: &quot;web&quot;,
+        &quot;description&quot;: &quot;Người d&ugrave;ng&quot;,
+        &quot;sort_order&quot;: 0,
+        &quot;parent_id&quot;: null,
+        &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+        &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;Quyền đ&atilde; được tạo th&agrave;nh c&ocirc;ng!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-permissions" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-permissions"></span>:
@@ -11225,7 +12075,27 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PUTapi-permissions--permission_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;group:users&quot;,
+        &quot;guard_name&quot;: &quot;web&quot;,
+        &quot;description&quot;: &quot;Người d&ugrave;ng&quot;,
+        &quot;sort_order&quot;: 0,
+        &quot;parent_id&quot;: null,
+        &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+        &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;Quyền đ&atilde; được cập nhật!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PUTapi-permissions--permission_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PUTapi-permissions--permission_id-"></span>:
@@ -11477,7 +12347,27 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PATCHapi-permissions--permission_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;group:users&quot;,
+        &quot;guard_name&quot;: &quot;web&quot;,
+        &quot;description&quot;: &quot;Người d&ugrave;ng&quot;,
+        &quot;sort_order&quot;: 0,
+        &quot;parent_id&quot;: null,
+        &quot;created_at&quot;: &quot;09:40:16 20/02/2026&quot;,
+        &quot;updated_at&quot;: &quot;09:40:16 20/02/2026&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;Quyền đ&atilde; được cập nhật!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PATCHapi-permissions--permission_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PATCHapi-permissions--permission_id-"></span>:
@@ -11705,7 +12595,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-DELETEapi-permissions--permission_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Quyền đ&atilde; được x&oacute;a!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-DELETEapi-permissions--permission_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-DELETEapi-permissions--permission_id-"></span>:
@@ -11841,7 +12741,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:28\",
+    \"from_date\": \"2026-02-20T09:55:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"desc\",
@@ -11874,7 +12774,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:28",
+    "from_date": "2026-02-20T09:55:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "desc",
@@ -11909,7 +12809,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:28',
+            'from_date' =&gt; '2026-02-20T09:55:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'desc',
@@ -12116,10 +13016,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-roles-export"
-               value="2026-02-20T09:40:28"
+               value="2026-02-20T09:55:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -12191,7 +13091,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php1ahgn1nj7drg7bsWMsV" </code></pre></div>
+    --form "file=@/tmp/php1ev5qblfso3b6UR6nAe" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -12229,7 +13129,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/php1ahgn1nj7drg7bsWMsV', 'r')
+                'contents' =&gt; fopen('/tmp/php1ev5qblfso3b6UR6nAe', 'r')
             ],
         ],
     ]
@@ -12240,7 +13140,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-roles-import">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Import vai tr&ograve; th&agrave;nh c&ocirc;ng.&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-roles-import" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-roles-import"></span>:
@@ -12335,7 +13245,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, guard_name, organization_id. Example: <code>/tmp/php1ahgn1nj7drg7bsWMsV</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, guard_name, organization_id. Example: <code>/tmp/php1ev5qblfso3b6UR6nAe</code></p>
         </div>
         </form>
 
@@ -12419,7 +13329,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-roles-bulk-delete">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Đ&atilde; x&oacute;a th&agrave;nh c&ocirc;ng c&aacute;c vai tr&ograve; được chọn!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-roles-bulk-delete" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-roles-bulk-delete"></span>:
@@ -12541,7 +13461,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:28\",
+    \"from_date\": \"2026-02-20T09:55:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"desc\",
@@ -12575,7 +13495,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:28",
+    "from_date": "2026-02-20T09:55:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "desc",
@@ -12611,7 +13531,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:28',
+            'from_date' =&gt; '2026-02-20T09:55:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'desc',
@@ -12626,19 +13546,15 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-roles-stats">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;total&quot;: 5
+    }
 }</code>
  </pre>
     </span>
@@ -12830,10 +13746,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-roles-stats"
-               value="2026-02-20T09:40:28"
+               value="2026-02-20T09:55:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -12908,10 +13824,10 @@ Must be one of:
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:28\",
+    \"from_date\": \"2026-02-20T09:55:28\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -12942,10 +13858,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:28",
+    "from_date": "2026-02-20T09:55:28",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -12978,10 +13894,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:28',
+            'from_date' =&gt; '2026-02-20T09:55:28',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -12993,19 +13909,65 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-roles">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;Super Admin&quot;,
+            &quot;guard_name&quot;: &quot;web&quot;,
+            &quot;organization_id&quot;: 1,
+            &quot;created_at&quot;: &quot;09:40:18 20/02/2026&quot;,
+            &quot;updated_at&quot;: &quot;09:40:18 20/02/2026&quot;
+        },
+        {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;Super Admin&quot;,
+            &quot;guard_name&quot;: &quot;web&quot;,
+            &quot;organization_id&quot;: 1,
+            &quot;created_at&quot;: &quot;09:40:18 20/02/2026&quot;,
+            &quot;updated_at&quot;: &quot;09:40:18 20/02/2026&quot;
+        }
+    ],
+    &quot;links&quot;: {
+        &quot;first&quot;: &quot;/?page=1&quot;,
+        &quot;last&quot;: &quot;/?page=1&quot;,
+        &quot;prev&quot;: null,
+        &quot;next&quot;: null
+    },
+    &quot;meta&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;from&quot;: 1,
+        &quot;last_page&quot;: 1,
+        &quot;links&quot;: [
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            },
+            {
+                &quot;url&quot;: &quot;/?page=1&quot;,
+                &quot;label&quot;: &quot;1&quot;,
+                &quot;page&quot;: 1,
+                &quot;active&quot;: true
+            },
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            }
+        ],
+        &quot;path&quot;: &quot;/&quot;,
+        &quot;per_page&quot;: 10,
+        &quot;to&quot;: 2,
+        &quot;total&quot;: 2
+    },
+    &quot;success&quot;: &quot;true&quot;
 }</code>
  </pre>
     </span>
@@ -13197,10 +14159,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-roles"
-               value="2026-02-20T09:40:28"
+               value="2026-02-20T09:55:28"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -13233,10 +14195,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-roles"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -13311,19 +14273,99 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-roles--role_id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Super Admin&quot;,
+        &quot;guard_name&quot;: &quot;web&quot;,
+        &quot;organization_id&quot;: 1,
+        &quot;organization&quot;: {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;Default&quot;
+        },
+        &quot;permissions&quot;: [
+            &quot;users.stats&quot;,
+            &quot;users.index&quot;,
+            &quot;users.show&quot;,
+            &quot;users.store&quot;,
+            &quot;users.update&quot;,
+            &quot;users.destroy&quot;,
+            &quot;users.bulkDestroy&quot;,
+            &quot;users.bulkUpdateStatus&quot;,
+            &quot;users.changeStatus&quot;,
+            &quot;users.export&quot;,
+            &quot;users.import&quot;,
+            &quot;permissions.stats&quot;,
+            &quot;permissions.index&quot;,
+            &quot;permissions.tree&quot;,
+            &quot;permissions.show&quot;,
+            &quot;permissions.store&quot;,
+            &quot;permissions.update&quot;,
+            &quot;permissions.destroy&quot;,
+            &quot;permissions.bulkDestroy&quot;,
+            &quot;permissions.export&quot;,
+            &quot;permissions.import&quot;,
+            &quot;roles.stats&quot;,
+            &quot;roles.index&quot;,
+            &quot;roles.show&quot;,
+            &quot;roles.store&quot;,
+            &quot;roles.update&quot;,
+            &quot;roles.destroy&quot;,
+            &quot;roles.bulkDestroy&quot;,
+            &quot;roles.export&quot;,
+            &quot;roles.import&quot;,
+            &quot;organizations.stats&quot;,
+            &quot;organizations.index&quot;,
+            &quot;organizations.tree&quot;,
+            &quot;organizations.show&quot;,
+            &quot;organizations.store&quot;,
+            &quot;organizations.update&quot;,
+            &quot;organizations.destroy&quot;,
+            &quot;organizations.bulkDestroy&quot;,
+            &quot;organizations.bulkUpdateStatus&quot;,
+            &quot;organizations.changeStatus&quot;,
+            &quot;organizations.export&quot;,
+            &quot;organizations.import&quot;,
+            &quot;posts.stats&quot;,
+            &quot;posts.index&quot;,
+            &quot;posts.show&quot;,
+            &quot;posts.store&quot;,
+            &quot;posts.update&quot;,
+            &quot;posts.destroy&quot;,
+            &quot;posts.bulkDestroy&quot;,
+            &quot;posts.bulkUpdateStatus&quot;,
+            &quot;posts.changeStatus&quot;,
+            &quot;posts.export&quot;,
+            &quot;posts.import&quot;,
+            &quot;posts.incrementView&quot;,
+            &quot;post-categories.stats&quot;,
+            &quot;post-categories.index&quot;,
+            &quot;post-categories.tree&quot;,
+            &quot;post-categories.show&quot;,
+            &quot;post-categories.store&quot;,
+            &quot;post-categories.update&quot;,
+            &quot;post-categories.destroy&quot;,
+            &quot;post-categories.bulkDestroy&quot;,
+            &quot;post-categories.bulkUpdateStatus&quot;,
+            &quot;post-categories.changeStatus&quot;,
+            &quot;post-categories.export&quot;,
+            &quot;post-categories.import&quot;,
+            &quot;log-activities.stats&quot;,
+            &quot;log-activities.index&quot;,
+            &quot;log-activities.show&quot;,
+            &quot;log-activities.destroy&quot;,
+            &quot;log-activities.bulkDestroy&quot;,
+            &quot;log-activities.destroyByDate&quot;,
+            &quot;log-activities.destroyAll&quot;
+        ],
+        &quot;created_at&quot;: &quot;09:40:18 20/02/2026&quot;,
+        &quot;updated_at&quot;: &quot;09:40:18 20/02/2026&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;
 }</code>
  </pre>
     </span>
@@ -13526,7 +14568,100 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-roles">
-</span>
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Super Admin&quot;,
+        &quot;guard_name&quot;: &quot;web&quot;,
+        &quot;organization_id&quot;: 1,
+        &quot;permissions&quot;: [
+            &quot;users.stats&quot;,
+            &quot;users.index&quot;,
+            &quot;users.show&quot;,
+            &quot;users.store&quot;,
+            &quot;users.update&quot;,
+            &quot;users.destroy&quot;,
+            &quot;users.bulkDestroy&quot;,
+            &quot;users.bulkUpdateStatus&quot;,
+            &quot;users.changeStatus&quot;,
+            &quot;users.export&quot;,
+            &quot;users.import&quot;,
+            &quot;permissions.stats&quot;,
+            &quot;permissions.index&quot;,
+            &quot;permissions.tree&quot;,
+            &quot;permissions.show&quot;,
+            &quot;permissions.store&quot;,
+            &quot;permissions.update&quot;,
+            &quot;permissions.destroy&quot;,
+            &quot;permissions.bulkDestroy&quot;,
+            &quot;permissions.export&quot;,
+            &quot;permissions.import&quot;,
+            &quot;roles.stats&quot;,
+            &quot;roles.index&quot;,
+            &quot;roles.show&quot;,
+            &quot;roles.store&quot;,
+            &quot;roles.update&quot;,
+            &quot;roles.destroy&quot;,
+            &quot;roles.bulkDestroy&quot;,
+            &quot;roles.export&quot;,
+            &quot;roles.import&quot;,
+            &quot;organizations.stats&quot;,
+            &quot;organizations.index&quot;,
+            &quot;organizations.tree&quot;,
+            &quot;organizations.show&quot;,
+            &quot;organizations.store&quot;,
+            &quot;organizations.update&quot;,
+            &quot;organizations.destroy&quot;,
+            &quot;organizations.bulkDestroy&quot;,
+            &quot;organizations.bulkUpdateStatus&quot;,
+            &quot;organizations.changeStatus&quot;,
+            &quot;organizations.export&quot;,
+            &quot;organizations.import&quot;,
+            &quot;posts.stats&quot;,
+            &quot;posts.index&quot;,
+            &quot;posts.show&quot;,
+            &quot;posts.store&quot;,
+            &quot;posts.update&quot;,
+            &quot;posts.destroy&quot;,
+            &quot;posts.bulkDestroy&quot;,
+            &quot;posts.bulkUpdateStatus&quot;,
+            &quot;posts.changeStatus&quot;,
+            &quot;posts.export&quot;,
+            &quot;posts.import&quot;,
+            &quot;posts.incrementView&quot;,
+            &quot;post-categories.stats&quot;,
+            &quot;post-categories.index&quot;,
+            &quot;post-categories.tree&quot;,
+            &quot;post-categories.show&quot;,
+            &quot;post-categories.store&quot;,
+            &quot;post-categories.update&quot;,
+            &quot;post-categories.destroy&quot;,
+            &quot;post-categories.bulkDestroy&quot;,
+            &quot;post-categories.bulkUpdateStatus&quot;,
+            &quot;post-categories.changeStatus&quot;,
+            &quot;post-categories.export&quot;,
+            &quot;post-categories.import&quot;,
+            &quot;log-activities.stats&quot;,
+            &quot;log-activities.index&quot;,
+            &quot;log-activities.show&quot;,
+            &quot;log-activities.destroy&quot;,
+            &quot;log-activities.bulkDestroy&quot;,
+            &quot;log-activities.destroyByDate&quot;,
+            &quot;log-activities.destroyAll&quot;
+        ],
+        &quot;created_at&quot;: &quot;09:40:18 20/02/2026&quot;,
+        &quot;updated_at&quot;: &quot;09:40:18 20/02/2026&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;Vai tr&ograve; đ&atilde; được tạo th&agrave;nh c&ocirc;ng!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-roles" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-roles"></span>:
@@ -13749,7 +14884,100 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PUTapi-roles--role_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Super Admin&quot;,
+        &quot;guard_name&quot;: &quot;web&quot;,
+        &quot;organization_id&quot;: 1,
+        &quot;permissions&quot;: [
+            &quot;users.stats&quot;,
+            &quot;users.index&quot;,
+            &quot;users.show&quot;,
+            &quot;users.store&quot;,
+            &quot;users.update&quot;,
+            &quot;users.destroy&quot;,
+            &quot;users.bulkDestroy&quot;,
+            &quot;users.bulkUpdateStatus&quot;,
+            &quot;users.changeStatus&quot;,
+            &quot;users.export&quot;,
+            &quot;users.import&quot;,
+            &quot;permissions.stats&quot;,
+            &quot;permissions.index&quot;,
+            &quot;permissions.tree&quot;,
+            &quot;permissions.show&quot;,
+            &quot;permissions.store&quot;,
+            &quot;permissions.update&quot;,
+            &quot;permissions.destroy&quot;,
+            &quot;permissions.bulkDestroy&quot;,
+            &quot;permissions.export&quot;,
+            &quot;permissions.import&quot;,
+            &quot;roles.stats&quot;,
+            &quot;roles.index&quot;,
+            &quot;roles.show&quot;,
+            &quot;roles.store&quot;,
+            &quot;roles.update&quot;,
+            &quot;roles.destroy&quot;,
+            &quot;roles.bulkDestroy&quot;,
+            &quot;roles.export&quot;,
+            &quot;roles.import&quot;,
+            &quot;organizations.stats&quot;,
+            &quot;organizations.index&quot;,
+            &quot;organizations.tree&quot;,
+            &quot;organizations.show&quot;,
+            &quot;organizations.store&quot;,
+            &quot;organizations.update&quot;,
+            &quot;organizations.destroy&quot;,
+            &quot;organizations.bulkDestroy&quot;,
+            &quot;organizations.bulkUpdateStatus&quot;,
+            &quot;organizations.changeStatus&quot;,
+            &quot;organizations.export&quot;,
+            &quot;organizations.import&quot;,
+            &quot;posts.stats&quot;,
+            &quot;posts.index&quot;,
+            &quot;posts.show&quot;,
+            &quot;posts.store&quot;,
+            &quot;posts.update&quot;,
+            &quot;posts.destroy&quot;,
+            &quot;posts.bulkDestroy&quot;,
+            &quot;posts.bulkUpdateStatus&quot;,
+            &quot;posts.changeStatus&quot;,
+            &quot;posts.export&quot;,
+            &quot;posts.import&quot;,
+            &quot;posts.incrementView&quot;,
+            &quot;post-categories.stats&quot;,
+            &quot;post-categories.index&quot;,
+            &quot;post-categories.tree&quot;,
+            &quot;post-categories.show&quot;,
+            &quot;post-categories.store&quot;,
+            &quot;post-categories.update&quot;,
+            &quot;post-categories.destroy&quot;,
+            &quot;post-categories.bulkDestroy&quot;,
+            &quot;post-categories.bulkUpdateStatus&quot;,
+            &quot;post-categories.changeStatus&quot;,
+            &quot;post-categories.export&quot;,
+            &quot;post-categories.import&quot;,
+            &quot;log-activities.stats&quot;,
+            &quot;log-activities.index&quot;,
+            &quot;log-activities.show&quot;,
+            &quot;log-activities.destroy&quot;,
+            &quot;log-activities.bulkDestroy&quot;,
+            &quot;log-activities.destroyByDate&quot;,
+            &quot;log-activities.destroyAll&quot;
+        ],
+        &quot;created_at&quot;: &quot;09:40:18 20/02/2026&quot;,
+        &quot;updated_at&quot;: &quot;09:40:18 20/02/2026&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;Vai tr&ograve; đ&atilde; được cập nhật!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PUTapi-roles--role_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PUTapi-roles--role_id-"></span>:
@@ -13997,7 +15225,100 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PATCHapi-roles--role_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Super Admin&quot;,
+        &quot;guard_name&quot;: &quot;web&quot;,
+        &quot;organization_id&quot;: 1,
+        &quot;permissions&quot;: [
+            &quot;users.stats&quot;,
+            &quot;users.index&quot;,
+            &quot;users.show&quot;,
+            &quot;users.store&quot;,
+            &quot;users.update&quot;,
+            &quot;users.destroy&quot;,
+            &quot;users.bulkDestroy&quot;,
+            &quot;users.bulkUpdateStatus&quot;,
+            &quot;users.changeStatus&quot;,
+            &quot;users.export&quot;,
+            &quot;users.import&quot;,
+            &quot;permissions.stats&quot;,
+            &quot;permissions.index&quot;,
+            &quot;permissions.tree&quot;,
+            &quot;permissions.show&quot;,
+            &quot;permissions.store&quot;,
+            &quot;permissions.update&quot;,
+            &quot;permissions.destroy&quot;,
+            &quot;permissions.bulkDestroy&quot;,
+            &quot;permissions.export&quot;,
+            &quot;permissions.import&quot;,
+            &quot;roles.stats&quot;,
+            &quot;roles.index&quot;,
+            &quot;roles.show&quot;,
+            &quot;roles.store&quot;,
+            &quot;roles.update&quot;,
+            &quot;roles.destroy&quot;,
+            &quot;roles.bulkDestroy&quot;,
+            &quot;roles.export&quot;,
+            &quot;roles.import&quot;,
+            &quot;organizations.stats&quot;,
+            &quot;organizations.index&quot;,
+            &quot;organizations.tree&quot;,
+            &quot;organizations.show&quot;,
+            &quot;organizations.store&quot;,
+            &quot;organizations.update&quot;,
+            &quot;organizations.destroy&quot;,
+            &quot;organizations.bulkDestroy&quot;,
+            &quot;organizations.bulkUpdateStatus&quot;,
+            &quot;organizations.changeStatus&quot;,
+            &quot;organizations.export&quot;,
+            &quot;organizations.import&quot;,
+            &quot;posts.stats&quot;,
+            &quot;posts.index&quot;,
+            &quot;posts.show&quot;,
+            &quot;posts.store&quot;,
+            &quot;posts.update&quot;,
+            &quot;posts.destroy&quot;,
+            &quot;posts.bulkDestroy&quot;,
+            &quot;posts.bulkUpdateStatus&quot;,
+            &quot;posts.changeStatus&quot;,
+            &quot;posts.export&quot;,
+            &quot;posts.import&quot;,
+            &quot;posts.incrementView&quot;,
+            &quot;post-categories.stats&quot;,
+            &quot;post-categories.index&quot;,
+            &quot;post-categories.tree&quot;,
+            &quot;post-categories.show&quot;,
+            &quot;post-categories.store&quot;,
+            &quot;post-categories.update&quot;,
+            &quot;post-categories.destroy&quot;,
+            &quot;post-categories.bulkDestroy&quot;,
+            &quot;post-categories.bulkUpdateStatus&quot;,
+            &quot;post-categories.changeStatus&quot;,
+            &quot;post-categories.export&quot;,
+            &quot;post-categories.import&quot;,
+            &quot;log-activities.stats&quot;,
+            &quot;log-activities.index&quot;,
+            &quot;log-activities.show&quot;,
+            &quot;log-activities.destroy&quot;,
+            &quot;log-activities.bulkDestroy&quot;,
+            &quot;log-activities.destroyByDate&quot;,
+            &quot;log-activities.destroyAll&quot;
+        ],
+        &quot;created_at&quot;: &quot;09:40:18 20/02/2026&quot;,
+        &quot;updated_at&quot;: &quot;09:40:18 20/02/2026&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;Vai tr&ograve; đ&atilde; được cập nhật!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PATCHapi-roles--role_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PATCHapi-roles--role_id-"></span>:
@@ -14215,7 +15536,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-DELETEapi-roles--role_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Vai tr&ograve; đ&atilde; được x&oacute;a!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-DELETEapi-roles--role_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-DELETEapi-roles--role_id-"></span>:
@@ -14351,10 +15682,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:27\",
+    \"from_date\": \"2026-02-20T09:55:26\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -14384,10 +15715,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:27",
+    "from_date": "2026-02-20T09:55:26",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -14419,10 +15750,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:27',
+            'from_date' =&gt; '2026-02-20T09:55:26',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -14626,10 +15957,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-users-export"
-               value="2026-02-20T09:40:27"
+               value="2026-02-20T09:55:26"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:27</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:26</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -14662,10 +15993,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-users-export"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -14701,7 +16032,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/php298qpek03g9cf62Kv1O" </code></pre></div>
+    --form "file=@/tmp/phpvrurtofeom0b1sJgmE1" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -14739,7 +16070,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/php298qpek03g9cf62Kv1O', 'r')
+                'contents' =&gt; fopen('/tmp/phpvrurtofeom0b1sJgmE1', 'r')
             ],
         ],
     ]
@@ -14750,7 +16081,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-users-import">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Import người d&ugrave;ng th&agrave;nh c&ocirc;ng.&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-users-import" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-users-import"></span>:
@@ -14845,7 +16186,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File excel (xlsx, xls, csv). Cột: name, email, password, status. Example: <code>/tmp/php298qpek03g9cf62Kv1O</code></p>
+<p>File excel (xlsx, xls, csv). Cột: name, email, password, status. Example: <code>/tmp/phpvrurtofeom0b1sJgmE1</code></p>
         </div>
         </form>
 
@@ -14929,7 +16270,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-users-bulk-delete">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Đ&atilde; x&oacute;a th&agrave;nh c&ocirc;ng c&aacute;c t&agrave;i khoản được chọn!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-users-bulk-delete" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-users-bulk-delete"></span>:
@@ -15113,7 +16464,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PATCHapi-users-bulk-status">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Cập nhật trạng th&aacute;i th&agrave;nh c&ocirc;ng.&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PATCHapi-users-bulk-status" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PATCHapi-users-bulk-status"></span>:
@@ -15247,7 +16608,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:27\",
+    \"from_date\": \"2026-02-20T09:55:27\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
     \"sort_order\": \"desc\",
@@ -15280,7 +16641,7 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:27",
+    "from_date": "2026-02-20T09:55:27",
     "to_date": "2052-03-15",
     "sort_by": "n",
     "sort_order": "desc",
@@ -15315,7 +16676,7 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:27',
+            'from_date' =&gt; '2026-02-20T09:55:27',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
             'sort_order' =&gt; 'desc',
@@ -15330,19 +16691,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-users-stats">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;total&quot;: 10,
+        &quot;active&quot;: 5,
+        &quot;inactive&quot;: 5
+    }
 }</code>
  </pre>
     </span>
@@ -15522,10 +16881,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-users-stats"
-               value="2026-02-20T09:40:27"
+               value="2026-02-20T09:55:27"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:27</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:27</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -15600,10 +16959,10 @@ Must be one of:
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:27\",
+    \"from_date\": \"2026-02-20T09:55:27\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -15633,10 +16992,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:27",
+    "from_date": "2026-02-20T09:55:27",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -15668,10 +17027,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:27',
+            'from_date' =&gt; '2026-02-20T09:55:27',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -15683,19 +17042,69 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-users">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 11,
+            &quot;name&quot;: &quot;Macey Rempel PhD&quot;,
+            &quot;email&quot;: &quot;justina.gaylord@example.org&quot;,
+            &quot;status&quot;: &quot;inactive&quot;,
+            &quot;created_by&quot;: &quot;N/A&quot;,
+            &quot;updated_by&quot;: &quot;N/A&quot;,
+            &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+        },
+        {
+            &quot;id&quot;: 12,
+            &quot;name&quot;: &quot;Madaline Strosin PhD&quot;,
+            &quot;email&quot;: &quot;lisandro47@example.org&quot;,
+            &quot;status&quot;: &quot;banned&quot;,
+            &quot;created_by&quot;: &quot;N/A&quot;,
+            &quot;updated_by&quot;: &quot;N/A&quot;,
+            &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+        }
+    ],
+    &quot;links&quot;: {
+        &quot;first&quot;: &quot;/?page=1&quot;,
+        &quot;last&quot;: &quot;/?page=1&quot;,
+        &quot;prev&quot;: null,
+        &quot;next&quot;: null
+    },
+    &quot;meta&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;from&quot;: 1,
+        &quot;last_page&quot;: 1,
+        &quot;links&quot;: [
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            },
+            {
+                &quot;url&quot;: &quot;/?page=1&quot;,
+                &quot;label&quot;: &quot;1&quot;,
+                &quot;page&quot;: 1,
+                &quot;active&quot;: true
+            },
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            }
+        ],
+        &quot;path&quot;: &quot;/&quot;,
+        &quot;per_page&quot;: 10,
+        &quot;to&quot;: 2,
+        &quot;total&quot;: 2
+    },
+    &quot;success&quot;: &quot;true&quot;
 }</code>
  </pre>
     </span>
@@ -15875,10 +17284,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-users"
-               value="2026-02-20T09:40:27"
+               value="2026-02-20T09:55:27"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:27</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:27</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -15911,10 +17320,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-users"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -15989,19 +17398,22 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-users--user_id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;data&quot;: {
+        &quot;id&quot;: 13,
+        &quot;name&quot;: &quot;Morgan Hirthe&quot;,
+        &quot;email&quot;: &quot;dare.emelie@example.com&quot;,
+        &quot;status&quot;: &quot;banned&quot;,
+        &quot;created_by&quot;: &quot;N/A&quot;,
+        &quot;updated_by&quot;: &quot;N/A&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;
 }</code>
  </pre>
     </span>
@@ -16195,7 +17607,27 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-users">
-</span>
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 14,
+        &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
+        &quot;email&quot;: &quot;gulgowski.asia@example.com&quot;,
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;created_by&quot;: &quot;N/A&quot;,
+        &quot;updated_by&quot;: &quot;N/A&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;T&agrave;i khoản đ&atilde; được tạo th&agrave;nh c&ocirc;ng!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-users" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-users"></span>:
@@ -16422,7 +17854,27 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PUTapi-users--user_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 15,
+        &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
+        &quot;email&quot;: &quot;idickens@example.org&quot;,
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;created_by&quot;: &quot;N/A&quot;,
+        &quot;updated_by&quot;: &quot;N/A&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;T&agrave;i khoản đ&atilde; được cập nhật!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PUTapi-users--user_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PUTapi-users--user_id-"></span>:
@@ -16674,7 +18126,27 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PATCHapi-users--user_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 16,
+        &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
+        &quot;email&quot;: &quot;aschuster@example.com&quot;,
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;created_by&quot;: &quot;N/A&quot;,
+        &quot;updated_by&quot;: &quot;N/A&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;T&agrave;i khoản đ&atilde; được cập nhật!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PATCHapi-users--user_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PATCHapi-users--user_id-"></span>:
@@ -16902,7 +18374,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-DELETEapi-users--user_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;T&agrave;i khoản đ&atilde; được x&oacute;a th&agrave;nh c&ocirc;ng!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-DELETEapi-users--user_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-DELETEapi-users--user_id-"></span>:
@@ -17081,7 +18563,27 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PATCHapi-users--user_id--status">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 17,
+        &quot;name&quot;: &quot;Morgan Hirthe&quot;,
+        &quot;email&quot;: &quot;imclaughlin@example.org&quot;,
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;created_by&quot;: &quot;N/A&quot;,
+        &quot;updated_by&quot;: &quot;N/A&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;Cập nhật trạng th&aacute;i th&agrave;nh c&ocirc;ng!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PATCHapi-users--user_id--status" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PATCHapi-users--user_id--status"></span>:
@@ -17392,10 +18894,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:28\",
+    \"from_date\": \"2026-02-20T09:55:27\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -17426,10 +18928,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:28",
+    "from_date": "2026-02-20T09:55:27",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -17462,10 +18964,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:28',
+            'from_date' =&gt; '2026-02-20T09:55:27',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -17681,10 +19183,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-post-categories-export"
-               value="2026-02-20T09:40:28"
+               value="2026-02-20T09:55:27"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:27</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -17717,10 +19219,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-post-categories-export"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -17756,7 +19258,7 @@ Must be one of:
     --header "Authorization: Bearer Bearer {YOUR_ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpe41i6rrd45aa1i9i10U" </code></pre></div>
+    --form "file=@/tmp/php9422l3rofk0595xD9jw" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -17794,7 +19296,7 @@ $response = $client-&gt;post(
         'multipart' =&gt; [
             [
                 'name' =&gt; 'file',
-                'contents' =&gt; fopen('/tmp/phpe41i6rrd45aa1i9i10U', 'r')
+                'contents' =&gt; fopen('/tmp/php9422l3rofk0595xD9jw', 'r')
             ],
         ],
     ]
@@ -17811,7 +19313,8 @@ print_r(json_decode((string) $body));</code></pre></div>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Post categories imported successfully.&quot;
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Import danh mục b&agrave;i viết th&agrave;nh c&ocirc;ng.&quot;
 }</code>
  </pre>
     </span>
@@ -17909,7 +19412,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>File Excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug. Example: <code>/tmp/phpe41i6rrd45aa1i9i10U</code></p>
+<p>File Excel (xlsx, xls, csv). Cột: name, slug, description, status, sort_order, parent_slug. Example: <code>/tmp/php9422l3rofk0595xD9jw</code></p>
         </div>
         </form>
 
@@ -17993,7 +19496,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-post-categories-bulk-delete">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Đ&atilde; x&oacute;a th&agrave;nh c&ocirc;ng c&aacute;c danh mục được chọn!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-post-categories-bulk-delete" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-post-categories-bulk-delete"></span>:
@@ -18177,7 +19690,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PATCHapi-post-categories-bulk-status">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Cập nhật trạng th&aacute;i th&agrave;nh c&ocirc;ng c&aacute;c danh mục được chọn!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PATCHapi-post-categories-bulk-status" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PATCHapi-post-categories-bulk-status"></span>:
@@ -18311,10 +19834,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:28\",
+    \"from_date\": \"2026-02-20T09:55:27\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"asc\",
+    \"sort_order\": \"desc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -18346,10 +19869,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:28",
+    "from_date": "2026-02-20T09:55:27",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "asc",
+    "sort_order": "desc",
     "limit": 7
 };
 
@@ -18383,10 +19906,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:28',
+            'from_date' =&gt; '2026-02-20T09:55:27',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'asc',
+            'sort_order' =&gt; 'desc',
             'limit' =&gt; 7,
         ],
     ]
@@ -18398,19 +19921,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-post-categories-stats">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;total&quot;: 10,
+        &quot;active&quot;: 5,
+        &quot;inactive&quot;: 5
+    }
 }</code>
  </pre>
     </span>
@@ -18614,10 +20135,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-post-categories-stats"
-               value="2026-02-20T09:40:28"
+               value="2026-02-20T09:55:27"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:27</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -18650,10 +20171,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-post-categories-stats"
-               value="asc"
+               value="desc"
                data-component="body">
     <br>
-<p>Example: <code>asc</code></p>
+<p>Example: <code>desc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -18737,19 +20258,24 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-post-categories-tree">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;success&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;Tin tức&quot;,
+            &quot;slug&quot;: &quot;tin-tuc&quot;,
+            &quot;status&quot;: &quot;active&quot;,
+            &quot;sort_order&quot;: 0,
+            &quot;parent_id&quot;: null,
+            &quot;depth&quot;: 0,
+            &quot;children&quot;: []
+        }
+    ]
 }</code>
  </pre>
     </span>
@@ -18872,10 +20398,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"search\": \"b\",
     \"status\": \"architecto\",
-    \"from_date\": \"2026-02-20T09:40:28\",
+    \"from_date\": \"2026-02-20T09:55:27\",
     \"to_date\": \"2052-03-15\",
     \"sort_by\": \"n\",
-    \"sort_order\": \"desc\",
+    \"sort_order\": \"asc\",
     \"limit\": 7
 }"
 </code></pre></div>
@@ -18907,10 +20433,10 @@ const headers = {
 let body = {
     "search": "b",
     "status": "architecto",
-    "from_date": "2026-02-20T09:40:28",
+    "from_date": "2026-02-20T09:55:27",
     "to_date": "2052-03-15",
     "sort_by": "n",
-    "sort_order": "desc",
+    "sort_order": "asc",
     "limit": 7
 };
 
@@ -18944,10 +20470,10 @@ $response = $client-&gt;get(
         'json' =&gt; [
             'search' =&gt; 'b',
             'status' =&gt; 'architecto',
-            'from_date' =&gt; '2026-02-20T09:40:28',
+            'from_date' =&gt; '2026-02-20T09:55:27',
             'to_date' =&gt; '2052-03-15',
             'sort_by' =&gt; 'n',
-            'sort_order' =&gt; 'desc',
+            'sort_order' =&gt; 'asc',
             'limit' =&gt; 7,
         ],
     ]
@@ -18959,19 +20485,77 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-post-categories">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 19,
+            &quot;name&quot;: &quot;Animi Quos&quot;,
+            &quot;slug&quot;: &quot;animi-quos&quot;,
+            &quot;description&quot;: &quot;Fugiat sunt nihil accusantium harum mollitia.&quot;,
+            &quot;status&quot;: &quot;active&quot;,
+            &quot;sort_order&quot;: 7,
+            &quot;parent_id&quot;: null,
+            &quot;depth&quot;: 0,
+            &quot;created_by&quot;: &quot;N/A&quot;,
+            &quot;updated_by&quot;: &quot;N/A&quot;,
+            &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+        },
+        {
+            &quot;id&quot;: 20,
+            &quot;name&quot;: &quot;Aut Ab&quot;,
+            &quot;slug&quot;: &quot;aut-ab&quot;,
+            &quot;description&quot;: &quot;Quo omnis nostrum aut adipisci.&quot;,
+            &quot;status&quot;: &quot;inactive&quot;,
+            &quot;sort_order&quot;: 91,
+            &quot;parent_id&quot;: null,
+            &quot;depth&quot;: 0,
+            &quot;created_by&quot;: &quot;N/A&quot;,
+            &quot;updated_by&quot;: &quot;N/A&quot;,
+            &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+        }
+    ],
+    &quot;links&quot;: {
+        &quot;first&quot;: &quot;/?page=1&quot;,
+        &quot;last&quot;: &quot;/?page=1&quot;,
+        &quot;prev&quot;: null,
+        &quot;next&quot;: null
+    },
+    &quot;meta&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;from&quot;: 1,
+        &quot;last_page&quot;: 1,
+        &quot;links&quot;: [
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            },
+            {
+                &quot;url&quot;: &quot;/?page=1&quot;,
+                &quot;label&quot;: &quot;1&quot;,
+                &quot;page&quot;: 1,
+                &quot;active&quot;: true
+            },
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            }
+        ],
+        &quot;path&quot;: &quot;/&quot;,
+        &quot;per_page&quot;: 10,
+        &quot;to&quot;: 2,
+        &quot;total&quot;: 2
+    },
+    &quot;success&quot;: &quot;true&quot;
 }</code>
  </pre>
     </span>
@@ -19175,10 +20759,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="GETapi-post-categories"
-               value="2026-02-20T09:40:28"
+               value="2026-02-20T09:55:27"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-02-20T09:40:28</code></p>
+<p>Must be a valid date. Example: <code>2026-02-20T09:55:27</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -19211,10 +20795,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sort_order"                data-endpoint="GETapi-post-categories"
-               value="desc"
+               value="asc"
                data-component="body">
     <br>
-<p>Example: <code>desc</code></p>
+<p>Example: <code>asc</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>asc</code></li> <li><code>desc</code></li></ul>
         </div>
@@ -19289,19 +20873,56 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <span id="example-responses-GETapi-post-categories--category_id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;data&quot;: {
+        &quot;id&quot;: 22,
+        &quot;name&quot;: &quot;Aut Adipisci&quot;,
+        &quot;slug&quot;: &quot;aut-adipisci&quot;,
+        &quot;description&quot;: &quot;Qui commodi incidunt iure odit.&quot;,
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;sort_order&quot;: 20,
+        &quot;parent_id&quot;: 21,
+        &quot;depth&quot;: 1,
+        &quot;created_by&quot;: &quot;N/A&quot;,
+        &quot;updated_by&quot;: &quot;N/A&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;,
+        &quot;parent&quot;: {
+            &quot;id&quot;: 21,
+            &quot;name&quot;: &quot;Modi Ipsum&quot;,
+            &quot;slug&quot;: &quot;modi-ipsum&quot;,
+            &quot;description&quot;: &quot;Autem et consequatur aut dolores enim non facere tempora.&quot;,
+            &quot;status&quot;: &quot;inactive&quot;,
+            &quot;sort_order&quot;: 78,
+            &quot;parent_id&quot;: null,
+            &quot;depth&quot;: 0,
+            &quot;created_by&quot;: &quot;N/A&quot;,
+            &quot;updated_by&quot;: &quot;N/A&quot;,
+            &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+        },
+        &quot;children&quot;: [
+            {
+                &quot;id&quot;: 23,
+                &quot;name&quot;: &quot;Laboriosam Praesentium&quot;,
+                &quot;slug&quot;: &quot;laboriosam-praesentium&quot;,
+                &quot;description&quot;: &quot;Molestias fugit deleniti distinctio eum doloremque id.&quot;,
+                &quot;status&quot;: &quot;active&quot;,
+                &quot;sort_order&quot;: 61,
+                &quot;parent_id&quot;: 22,
+                &quot;depth&quot;: 2,
+                &quot;created_by&quot;: &quot;N/A&quot;,
+                &quot;updated_by&quot;: &quot;N/A&quot;,
+                &quot;created_at&quot;: &quot;20/02/2026 09:55:27&quot;,
+                &quot;updated_at&quot;: &quot;20/02/2026 09:55:27&quot;
+            }
+        ]
+    },
+    &quot;success&quot;: &quot;true&quot;
 }</code>
  </pre>
     </span>
@@ -19498,7 +21119,31 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-POSTapi-post-categories">
-</span>
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 24,
+        &quot;name&quot;: &quot;Fugiat Sunt&quot;,
+        &quot;slug&quot;: &quot;fugiat-sunt&quot;,
+        &quot;description&quot;: &quot;Harum mollitia modi deserunt aut ab provident perspiciatis quo.&quot;,
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;sort_order&quot;: 47,
+        &quot;parent_id&quot;: null,
+        &quot;depth&quot;: 0,
+        &quot;created_by&quot;: &quot;N/A&quot;,
+        &quot;updated_by&quot;: &quot;N/A&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;Danh mục đ&atilde; được tạo th&agrave;nh c&ocirc;ng!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-post-categories" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-post-categories"></span>:
@@ -19740,7 +21385,61 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PUTapi-post-categories--category_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 26,
+        &quot;name&quot;: &quot;Eius Et&quot;,
+        &quot;slug&quot;: &quot;eius-et&quot;,
+        &quot;description&quot;: &quot;Velit et fugiat sunt nihil accusantium.&quot;,
+        &quot;status&quot;: &quot;inactive&quot;,
+        &quot;sort_order&quot;: 70,
+        &quot;parent_id&quot;: 25,
+        &quot;depth&quot;: 1,
+        &quot;created_by&quot;: &quot;N/A&quot;,
+        &quot;updated_by&quot;: &quot;N/A&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;,
+        &quot;parent&quot;: {
+            &quot;id&quot;: 25,
+            &quot;name&quot;: &quot;Modi Deserunt&quot;,
+            &quot;slug&quot;: &quot;modi-deserunt&quot;,
+            &quot;description&quot;: &quot;Provident perspiciatis quo omnis nostrum aut adipisci quidem.&quot;,
+            &quot;status&quot;: &quot;active&quot;,
+            &quot;sort_order&quot;: 35,
+            &quot;parent_id&quot;: null,
+            &quot;depth&quot;: 0,
+            &quot;created_by&quot;: &quot;N/A&quot;,
+            &quot;updated_by&quot;: &quot;N/A&quot;,
+            &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;
+        },
+        &quot;children&quot;: [
+            {
+                &quot;id&quot;: 27,
+                &quot;name&quot;: &quot;Commodi Incidunt&quot;,
+                &quot;slug&quot;: &quot;commodi-incidunt&quot;,
+                &quot;description&quot;: &quot;Et et modi ipsum nostrum.&quot;,
+                &quot;status&quot;: &quot;active&quot;,
+                &quot;sort_order&quot;: 41,
+                &quot;parent_id&quot;: 26,
+                &quot;depth&quot;: 2,
+                &quot;created_by&quot;: &quot;N/A&quot;,
+                &quot;updated_by&quot;: &quot;N/A&quot;,
+                &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
+                &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;
+            }
+        ]
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;Danh mục đ&atilde; được cập nhật!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PUTapi-post-categories--category_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PUTapi-post-categories--category_id-"></span>:
@@ -20007,7 +21706,61 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PATCHapi-post-categories--category_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 29,
+        &quot;name&quot;: &quot;Velit Et&quot;,
+        &quot;slug&quot;: &quot;velit-et&quot;,
+        &quot;description&quot;: &quot;Nihil accusantium harum mollitia modi deserunt.&quot;,
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;sort_order&quot;: 68,
+        &quot;parent_id&quot;: 28,
+        &quot;depth&quot;: 1,
+        &quot;created_by&quot;: &quot;N/A&quot;,
+        &quot;updated_by&quot;: &quot;N/A&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;,
+        &quot;parent&quot;: {
+            &quot;id&quot;: 28,
+            &quot;name&quot;: &quot;Provident Perspiciatis&quot;,
+            &quot;slug&quot;: &quot;provident-perspiciatis&quot;,
+            &quot;description&quot;: null,
+            &quot;status&quot;: &quot;active&quot;,
+            &quot;sort_order&quot;: 47,
+            &quot;parent_id&quot;: null,
+            &quot;depth&quot;: 0,
+            &quot;created_by&quot;: &quot;N/A&quot;,
+            &quot;updated_by&quot;: &quot;N/A&quot;,
+            &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;
+        },
+        &quot;children&quot;: [
+            {
+                &quot;id&quot;: 30,
+                &quot;name&quot;: &quot;Quidem Nostrum&quot;,
+                &quot;slug&quot;: &quot;quidem-nostrum&quot;,
+                &quot;description&quot;: null,
+                &quot;status&quot;: &quot;inactive&quot;,
+                &quot;sort_order&quot;: 0,
+                &quot;parent_id&quot;: 29,
+                &quot;depth&quot;: 2,
+                &quot;created_by&quot;: &quot;N/A&quot;,
+                &quot;updated_by&quot;: &quot;N/A&quot;,
+                &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
+                &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;
+            }
+        ]
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;Danh mục đ&atilde; được cập nhật!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PATCHapi-post-categories--category_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PATCHapi-post-categories--category_id-"></span>:
@@ -20247,7 +22000,17 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-DELETEapi-post-categories--category_id-">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Danh mục đ&atilde; được x&oacute;a!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-DELETEapi-post-categories--category_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-DELETEapi-post-categories--category_id-"></span>:
@@ -20426,7 +22189,61 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 
 <span id="example-responses-PATCHapi-post-categories--category_id--status">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 32,
+        &quot;name&quot;: &quot;Qui Commodi&quot;,
+        &quot;slug&quot;: &quot;qui-commodi&quot;,
+        &quot;description&quot;: &quot;Odit et et modi.&quot;,
+        &quot;status&quot;: &quot;active&quot;,
+        &quot;sort_order&quot;: 8,
+        &quot;parent_id&quot;: 31,
+        &quot;depth&quot;: 1,
+        &quot;created_by&quot;: &quot;N/A&quot;,
+        &quot;updated_by&quot;: &quot;N/A&quot;,
+        &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
+        &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;,
+        &quot;parent&quot;: {
+            &quot;id&quot;: 31,
+            &quot;name&quot;: &quot;Omnis Autem&quot;,
+            &quot;slug&quot;: &quot;omnis-autem&quot;,
+            &quot;description&quot;: &quot;Aut dolores enim non facere tempora ex voluptatem.&quot;,
+            &quot;status&quot;: &quot;inactive&quot;,
+            &quot;sort_order&quot;: 47,
+            &quot;parent_id&quot;: null,
+            &quot;depth&quot;: 0,
+            &quot;created_by&quot;: &quot;N/A&quot;,
+            &quot;updated_by&quot;: &quot;N/A&quot;,
+            &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
+            &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;
+        },
+        &quot;children&quot;: [
+            {
+                &quot;id&quot;: 33,
+                &quot;name&quot;: &quot;Quis Adipisci&quot;,
+                &quot;slug&quot;: &quot;quis-adipisci&quot;,
+                &quot;description&quot;: null,
+                &quot;status&quot;: &quot;inactive&quot;,
+                &quot;sort_order&quot;: 72,
+                &quot;parent_id&quot;: 32,
+                &quot;depth&quot;: 2,
+                &quot;created_by&quot;: &quot;N/A&quot;,
+                &quot;updated_by&quot;: &quot;N/A&quot;,
+                &quot;created_at&quot;: &quot;20/02/2026 09:55:28&quot;,
+                &quot;updated_at&quot;: &quot;20/02/2026 09:55:28&quot;
+            }
+        ]
+    },
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;Cập nhật trạng th&aacute;i th&agrave;nh c&ocirc;ng!&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PATCHapi-post-categories--category_id--status" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PATCHapi-post-categories--category_id--status"></span>:

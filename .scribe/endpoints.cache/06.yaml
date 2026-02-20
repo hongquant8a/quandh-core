@@ -118,7 +118,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-20T09:40:28'
+        example: '2026-02-20T09:55:28'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -173,7 +173,7 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-20T09:40:28'
+      from_date: '2026-02-20T09:55:28'
       to_date: '2052-03-15'
       sort_by: 'n'
       sort_order: desc
@@ -237,7 +237,13 @@ endpoints:
     cleanBodyParameters: []
     fileParameters:
       file: null
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success": true, "message": "Import vai trò thành công."}'
+        headers: []
+        description: ''
     responseFields: []
     auth:
       - headers
@@ -292,7 +298,13 @@ endpoints:
         - 2
         - 3
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success": true, "message": "Đã xóa thành công các vai trò được chọn!"}'
+        headers: []
+        description: ''
     responseFields: []
     auth:
       - headers
@@ -426,7 +438,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-20T09:40:28'
+        example: '2026-02-20T09:55:28'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -481,7 +493,7 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-20T09:40:28'
+      from_date: '2026-02-20T09:55:28'
       to_date: '2052-03-15'
       sort_by: 'n'
       sort_order: desc
@@ -490,13 +502,10 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
+        status: 200
+        content: '{"success": true, "data": {"total": 5}}'
+        headers: []
+        description: ''
     responseFields: []
     auth:
       - headers
@@ -630,7 +639,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-20T09:40:28'
+        example: '2026-02-20T09:55:28'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -663,7 +672,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: desc
+        example: asc
         type: string
         enumValues:
           - asc
@@ -685,22 +694,19 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-20T09:40:28'
+      from_date: '2026-02-20T09:55:28'
       to_date: '2052-03-15'
       sort_by: 'n'
-      sort_order: desc
+      sort_order: asc
       limit: 7
     fileParameters: []
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
+        status: 200
+        content: '{"data":[{"id":1,"name":"Super Admin","guard_name":"web","organization_id":1,"created_at":"09:40:18 20\/02\/2026","updated_at":"09:40:18 20\/02\/2026"},{"id":1,"name":"Super Admin","guard_name":"web","organization_id":1,"created_at":"09:40:18 20\/02\/2026","updated_at":"09:40:18 20\/02\/2026"}],"links":{"first":"\/?page=1","last":"\/?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"\/?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"\/","per_page":10,"to":2,"total":2},"success":"true"}'
+        headers: []
+        description: ''
     responseFields: []
     auth:
       - headers
@@ -764,13 +770,10 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
+        status: 200
+        content: '{"data":{"id":1,"name":"Super Admin","guard_name":"web","organization_id":1,"organization":{"id":1,"name":"Default"},"permissions":["users.stats","users.index","users.show","users.store","users.update","users.destroy","users.bulkDestroy","users.bulkUpdateStatus","users.changeStatus","users.export","users.import","permissions.stats","permissions.index","permissions.tree","permissions.show","permissions.store","permissions.update","permissions.destroy","permissions.bulkDestroy","permissions.export","permissions.import","roles.stats","roles.index","roles.show","roles.store","roles.update","roles.destroy","roles.bulkDestroy","roles.export","roles.import","organizations.stats","organizations.index","organizations.tree","organizations.show","organizations.store","organizations.update","organizations.destroy","organizations.bulkDestroy","organizations.bulkUpdateStatus","organizations.changeStatus","organizations.export","organizations.import","posts.stats","posts.index","posts.show","posts.store","posts.update","posts.destroy","posts.bulkDestroy","posts.bulkUpdateStatus","posts.changeStatus","posts.export","posts.import","posts.incrementView","post-categories.stats","post-categories.index","post-categories.tree","post-categories.show","post-categories.store","post-categories.update","post-categories.destroy","post-categories.bulkDestroy","post-categories.bulkUpdateStatus","post-categories.changeStatus","post-categories.export","post-categories.import","log-activities.stats","log-activities.index","log-activities.show","log-activities.destroy","log-activities.bulkDestroy","log-activities.destroyByDate","log-activities.destroyAll"],"created_at":"09:40:18 20\/02\/2026","updated_at":"09:40:18 20\/02\/2026"},"success":"true"}'
+        headers: []
+        description: ''
     responseFields: []
     auth:
       - headers
@@ -861,7 +864,13 @@ endpoints:
         - 2
         - 3
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"data":{"id":1,"name":"Super Admin","guard_name":"web","organization_id":1,"permissions":["users.stats","users.index","users.show","users.store","users.update","users.destroy","users.bulkDestroy","users.bulkUpdateStatus","users.changeStatus","users.export","users.import","permissions.stats","permissions.index","permissions.tree","permissions.show","permissions.store","permissions.update","permissions.destroy","permissions.bulkDestroy","permissions.export","permissions.import","roles.stats","roles.index","roles.show","roles.store","roles.update","roles.destroy","roles.bulkDestroy","roles.export","roles.import","organizations.stats","organizations.index","organizations.tree","organizations.show","organizations.store","organizations.update","organizations.destroy","organizations.bulkDestroy","organizations.bulkUpdateStatus","organizations.changeStatus","organizations.export","organizations.import","posts.stats","posts.index","posts.show","posts.store","posts.update","posts.destroy","posts.bulkDestroy","posts.bulkUpdateStatus","posts.changeStatus","posts.export","posts.import","posts.incrementView","post-categories.stats","post-categories.index","post-categories.tree","post-categories.show","post-categories.store","post-categories.update","post-categories.destroy","post-categories.bulkDestroy","post-categories.bulkUpdateStatus","post-categories.changeStatus","post-categories.export","post-categories.import","log-activities.stats","log-activities.index","log-activities.show","log-activities.destroy","log-activities.bulkDestroy","log-activities.destroyByDate","log-activities.destroyAll"],"created_at":"09:40:18 20\/02\/2026","updated_at":"09:40:18 20\/02\/2026"},"success":"true","message":"Vai tr\u00f2 \u0111\u00e3 \u0111\u01b0\u1ee3c t\u1ea1o th\u00e0nh c\u00f4ng!"}'
+        headers: []
+        description: ''
     responseFields: []
     auth:
       - headers
@@ -974,7 +983,13 @@ endpoints:
         - 1
         - 2
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"data":{"id":1,"name":"Super Admin","guard_name":"web","organization_id":1,"permissions":["users.stats","users.index","users.show","users.store","users.update","users.destroy","users.bulkDestroy","users.bulkUpdateStatus","users.changeStatus","users.export","users.import","permissions.stats","permissions.index","permissions.tree","permissions.show","permissions.store","permissions.update","permissions.destroy","permissions.bulkDestroy","permissions.export","permissions.import","roles.stats","roles.index","roles.show","roles.store","roles.update","roles.destroy","roles.bulkDestroy","roles.export","roles.import","organizations.stats","organizations.index","organizations.tree","organizations.show","organizations.store","organizations.update","organizations.destroy","organizations.bulkDestroy","organizations.bulkUpdateStatus","organizations.changeStatus","organizations.export","organizations.import","posts.stats","posts.index","posts.show","posts.store","posts.update","posts.destroy","posts.bulkDestroy","posts.bulkUpdateStatus","posts.changeStatus","posts.export","posts.import","posts.incrementView","post-categories.stats","post-categories.index","post-categories.tree","post-categories.show","post-categories.store","post-categories.update","post-categories.destroy","post-categories.bulkDestroy","post-categories.bulkUpdateStatus","post-categories.changeStatus","post-categories.export","post-categories.import","log-activities.stats","log-activities.index","log-activities.show","log-activities.destroy","log-activities.bulkDestroy","log-activities.destroyByDate","log-activities.destroyAll"],"created_at":"09:40:18 20\/02\/2026","updated_at":"09:40:18 20\/02\/2026"},"success":"true","message":"Vai tr\u00f2 \u0111\u00e3 \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt!"}'
+        headers: []
+        description: ''
     responseFields: []
     auth:
       - headers
@@ -1087,7 +1102,13 @@ endpoints:
         - 1
         - 2
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"data":{"id":1,"name":"Super Admin","guard_name":"web","organization_id":1,"permissions":["users.stats","users.index","users.show","users.store","users.update","users.destroy","users.bulkDestroy","users.bulkUpdateStatus","users.changeStatus","users.export","users.import","permissions.stats","permissions.index","permissions.tree","permissions.show","permissions.store","permissions.update","permissions.destroy","permissions.bulkDestroy","permissions.export","permissions.import","roles.stats","roles.index","roles.show","roles.store","roles.update","roles.destroy","roles.bulkDestroy","roles.export","roles.import","organizations.stats","organizations.index","organizations.tree","organizations.show","organizations.store","organizations.update","organizations.destroy","organizations.bulkDestroy","organizations.bulkUpdateStatus","organizations.changeStatus","organizations.export","organizations.import","posts.stats","posts.index","posts.show","posts.store","posts.update","posts.destroy","posts.bulkDestroy","posts.bulkUpdateStatus","posts.changeStatus","posts.export","posts.import","posts.incrementView","post-categories.stats","post-categories.index","post-categories.tree","post-categories.show","post-categories.store","post-categories.update","post-categories.destroy","post-categories.bulkDestroy","post-categories.bulkUpdateStatus","post-categories.changeStatus","post-categories.export","post-categories.import","log-activities.stats","log-activities.index","log-activities.show","log-activities.destroy","log-activities.bulkDestroy","log-activities.destroyByDate","log-activities.destroyAll"],"created_at":"09:40:18 20\/02\/2026","updated_at":"09:40:18 20\/02\/2026"},"success":"true","message":"Vai tr\u00f2 \u0111\u00e3 \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt!"}'
+        headers: []
+        description: ''
     responseFields: []
     auth:
       - headers
@@ -1148,7 +1169,13 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success": true, "message": "Vai trò đã được xóa!"}'
+        headers: []
+        description: ''
     responseFields: []
     auth:
       - headers

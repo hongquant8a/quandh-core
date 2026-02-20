@@ -39,6 +39,7 @@ class PostController extends Controller
      * @queryParam sort_by string Sắp xếp theo: id, title, created_at, view_count. Example: created_at
      * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
      * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     * @response 200 {"success": true, "data": {"total": 10, "active": 5, "inactive": 5}}
      */
     public function stats(FilterRequest $request)
     {
@@ -62,6 +63,9 @@ class PostController extends Controller
      * @queryParam sort_by string Sắp xếp theo: id, title, created_at, view_count. Example: created_at
      * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
      * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     * @apiResourceCollection App\Modules\Post\Resources\PostCollection
+     * @apiResourceModel App\Modules\Post\Models\Post paginate=10
+     * @apiResourceAdditional success=true
      */
     public function index(FilterRequest $request)
     {
@@ -74,6 +78,9 @@ class PostController extends Controller
      * Chi tiết bài viết
      *
      * @urlParam post integer required ID bài viết. Example: 1
+     * @apiResource App\Modules\Post\Resources\PostResource
+     * @apiResourceModel App\Modules\Post\Models\Post with=categories,attachments
+     * @apiResourceAdditional success=true
      */
     public function show(Post $post)
     {
@@ -89,6 +96,9 @@ class PostController extends Controller
      * @bodyParam status string required Trạng thái: draft, published, archived. Example: draft
      * @bodyParam category_ids array Mảng ID danh mục (tối đa 20). Example: [1, 2]
      * @bodyParam images[] file Ảnh đính kèm (jpeg/png/gif/webp, tối đa 10 ảnh, mỗi ảnh ≤ 5MB).
+     * @apiResource App\Modules\Post\Resources\PostResource status=201
+     * @apiResourceModel App\Modules\Post\Models\Post with=categories,attachments
+     * @apiResourceAdditional success=true message="Bài viết đã được tạo thành công!"
      */
     public function store(StorePostRequest $request)
     {
@@ -110,6 +120,9 @@ class PostController extends Controller
      * @bodyParam category_ids array Mảng ID danh mục (ghi đè danh sách hiện tại).
      * @bodyParam images[] file Ảnh mới (append).
      * @bodyParam remove_attachment_ids array Mảng ID đính kèm cần xóa.
+     * @apiResource App\Modules\Post\Resources\PostResource
+     * @apiResourceModel App\Modules\Post\Models\Post with=categories,attachments
+     * @apiResourceAdditional success=true message="Bài viết đã được cập nhật!"
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
@@ -130,6 +143,7 @@ class PostController extends Controller
      * Xóa bài viết
      *
      * @urlParam post integer required ID bài viết. Example: 1
+     * @response 200 {"success": true, "message": "Bài viết đã được xóa thành công!"}
      */
     public function destroy(Post $post)
     {
@@ -141,6 +155,7 @@ class PostController extends Controller
      * Xóa hàng loạt bài viết
      *
      * @bodyParam ids array required Danh sách ID. Example: [1, 2, 3]
+     * @response 200 {"success": true, "message": "Đã xóa thành công các bài viết được chọn!"}
      */
     public function bulkDestroy(BulkDestroyPostRequest $request)
     {
@@ -153,6 +168,7 @@ class PostController extends Controller
      *
      * @bodyParam ids array required Danh sách ID. Example: [1, 2, 3]
      * @bodyParam status string required Trạng thái: draft, published, archived. Example: published
+     * @response 200 {"success": true, "message": "Cập nhật trạng thái thành công các bài viết được chọn!"}
      */
     public function bulkUpdateStatus(BulkUpdateStatusPostRequest $request)
     {
@@ -180,7 +196,7 @@ class PostController extends Controller
      * Nhập danh sách bài viết
      *
      * @bodyParam file file required File Excel (xlsx, xls, csv). Cột theo chuẩn export.
-     * @response 200 {"message": "Posts imported successfully."}
+     * @response 200 {"success": true, "message": "Import bài viết thành công."}
      */
     public function import(ImportPostRequest $request)
     {
@@ -193,6 +209,9 @@ class PostController extends Controller
      *
      * @urlParam post integer required ID bài viết. Example: 1
      * @bodyParam status string required Trạng thái mới: draft, published, archived. Example: published
+     * @apiResource App\Modules\Post\Resources\PostResource
+     * @apiResourceModel App\Modules\Post\Models\Post with=categories,attachments
+     * @apiResourceAdditional success=true message="Cập nhật trạng thái thành công!"
      */
     public function changeStatus(ChangeStatusPostRequest $request, Post $post)
     {
@@ -204,6 +223,7 @@ class PostController extends Controller
      * Tăng lượt xem bài viết (gọi khi người dùng xem chi tiết).
      *
      * @urlParam post integer required ID bài viết. Example: 1
+     * @response 200 {"success": true, "data": {"view_count": 1}, "message": "Đã cập nhật lượt xem."}
      */
     public function incrementView(Post $post)
     {

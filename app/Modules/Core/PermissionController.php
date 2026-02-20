@@ -35,6 +35,7 @@ class PermissionController extends Controller
      * @queryParam sort_by string Sắp xếp theo: id, name, guard_name, created_at, updated_at. Example: created_at
      * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
      * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     * @response 200 {"success": true, "data": {"total": 20}}
      */
     public function stats(FilterRequest $request)
     {
@@ -53,6 +54,9 @@ class PermissionController extends Controller
      * @queryParam sort_by string Sắp xếp theo: id, name, guard_name, description, sort_order, parent_id, created_at, updated_at. Example: sort_order
      * @queryParam sort_order string Thứ tự: asc, desc. Example: asc
      * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     * @apiResourceCollection App\Modules\Core\Resources\PermissionCollection
+     * @apiResourceModel App\Modules\Core\Models\Permission paginate=10
+     * @apiResourceAdditional success=true
      */
     public function index(FilterRequest $request)
     {
@@ -67,6 +71,7 @@ class PermissionController extends Controller
      * Cây permission (toàn bộ cây, không phân trang). Để hiển thị nhóm quyền trên frontend.
      *
      * @queryParam parent_id integer Lọc theo parent_id (null = gốc). Example: null
+     * @response 200 {"success": true, "data": [{"id": 1, "name": "posts", "guard_name": "web", "description": "Quản lý bài viết", "sort_order": 0, "parent_id": null, "children": []}]}
      */
     public function tree(Request $request)
     {
@@ -81,6 +86,9 @@ class PermissionController extends Controller
      * Chi tiết permission
      *
      * @urlParam permission integer required ID permission. Example: 1
+     * @apiResource App\Modules\Core\Resources\PermissionResource
+     * @apiResourceModel App\Modules\Core\Models\Permission with=parent,children
+     * @apiResourceAdditional success=true
      */
     public function show(Permission $permission)
     {
@@ -96,6 +104,9 @@ class PermissionController extends Controller
      * @bodyParam description string Mô tả hiển thị trên frontend.
      * @bodyParam sort_order integer Thứ tự sắp xếp. Example: 0
      * @bodyParam parent_id integer ID permission cha (null = gốc/nhóm).
+     * @apiResource App\Modules\Core\Resources\PermissionResource status=201
+     * @apiResourceModel App\Modules\Core\Models\Permission
+     * @apiResourceAdditional success=true message="Quyền đã được tạo thành công!"
      */
     public function store(StorePermissionRequest $request)
     {
@@ -114,6 +125,9 @@ class PermissionController extends Controller
      * @bodyParam description string Mô tả.
      * @bodyParam sort_order integer Thứ tự sắp xếp.
      * @bodyParam parent_id integer ID permission cha (null = gốc).
+     * @apiResource App\Modules\Core\Resources\PermissionResource
+     * @apiResourceModel App\Modules\Core\Models\Permission
+     * @apiResourceAdditional success=true message="Quyền đã được cập nhật!"
      */
     public function update(UpdatePermissionRequest $request, Permission $permission)
     {
@@ -126,6 +140,7 @@ class PermissionController extends Controller
      * Xóa permission
      *
      * @urlParam permission integer required ID permission. Example: 1
+     * @response 200 {"success": true, "message": "Quyền đã được xóa!"}
      */
     public function destroy(Permission $permission)
     {
@@ -137,6 +152,7 @@ class PermissionController extends Controller
      * Xóa hàng loạt permission
      *
      * @bodyParam ids array required Danh sách ID. Example: [1, 2, 3]
+     * @response 200 {"success": true, "message": "Đã xóa thành công các quyền được chọn!"}
      */
     public function bulkDestroy(BulkDestroyPermissionRequest $request)
     {
@@ -164,6 +180,7 @@ class PermissionController extends Controller
      * Nhập danh sách permission
      *
      * @bodyParam file file required File excel (xlsx, xls, csv). Cột: name, guard_name, description, sort_order, parent_id.
+     * @response 200 {"success": true, "message": "Import quyền thành công."}
      */
     public function import(ImportPermissionRequest $request)
     {

@@ -28,6 +28,7 @@ class AuthController extends Controller
      * @unauthenticated
      * @bodyParam email string required Email đăng nhập. Example: admin@example.com
      * @bodyParam password string required Mật khẩu. Example: password
+     * @response 200 {"success": true, "message": "Đăng nhập thành công.", "data": {"access_token": "1|xxx...", "token_type": "Bearer", "user": {"id": 1, "name": "Admin", "email": "admin@example.com", "status": "active"}}}
      */
     public function login(LoginRequest $request)
     {
@@ -54,6 +55,8 @@ class AuthController extends Controller
      * Đăng xuất
      *
      * Hủy token hiện tại.
+     *
+     * @response 200 {"success": true, "message": "Đã đăng xuất"}
      */
     public function logout(Request $request)
     {
@@ -68,6 +71,7 @@ class AuthController extends Controller
      *
      * @unauthenticated
      * @bodyParam email string required Email tài khoản. Example: user@example.com
+     * @response 200 {"success": true, "message": "Link reset đã được gửi vào Email"}
      */
     public function forgotPassword(ForgotPasswordRequest $request)
     {
@@ -88,6 +92,7 @@ class AuthController extends Controller
      * @bodyParam password string required Mật khẩu mới (tối thiểu 6 ký tự, có xác nhận). Example: newpassword123
      * @bodyParam password_confirmation string required Xác nhận mật khẩu.
      * @bodyParam token string required Token từ email reset.
+     * @response 200 {"success": true, "message": "Mật khẩu đã được đặt lại"}
      */
     public function resetPassword(ResetPasswordRequest $request)
     {

@@ -36,6 +36,7 @@ class UserController extends Controller
      * @queryParam sort_by string Sắp xếp theo: id, name, email, created_at. Example: created_at
      * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
      * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     * @response 200 {"success": true, "data": {"total": 10, "active": 5, "inactive": 5}}
      */
     public function stats(FilterRequest $request)
     {
@@ -57,6 +58,9 @@ class UserController extends Controller
      * @queryParam sort_by string Sắp xếp theo: id, name, email, created_at. Example: created_at
      * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
      * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     * @apiResourceCollection App\Modules\Core\Resources\UserCollection
+     * @apiResourceModel App\Modules\Core\Models\User paginate=10
+     * @apiResourceAdditional success=true
      */
     public function index(FilterRequest $request)
     {
@@ -69,6 +73,9 @@ class UserController extends Controller
      * Chi tiết người dùng
      *
      * @urlParam user integer required ID người dùng. Example: 1
+     * @apiResource App\Modules\Core\Resources\UserResource
+     * @apiResourceModel App\Modules\Core\Models\User
+     * @apiResourceAdditional success=true
      */
     public function show(User $user)
     {
@@ -83,6 +90,9 @@ class UserController extends Controller
      * @bodyParam password string required Mật khẩu (tối thiểu 6 ký tự). Example: password123
      * @bodyParam password_confirmation string required Xác nhận mật khẩu.
      * @bodyParam status string Trạng thái: active, inactive, banned. Example: active
+     * @apiResource App\Modules\Core\Resources\UserResource status=201
+     * @apiResourceModel App\Modules\Core\Models\User
+     * @apiResourceAdditional success=true message="Tài khoản đã được tạo thành công!"
      */
     public function store(StoreUserRequest $request)
     {
@@ -101,6 +111,9 @@ class UserController extends Controller
      * @bodyParam password string Mật khẩu mới (nếu muốn đổi).
      * @bodyParam password_confirmation string Xác nhận mật khẩu.
      * @bodyParam status string Trạng thái: active, inactive, banned.
+     * @apiResource App\Modules\Core\Resources\UserResource
+     * @apiResourceModel App\Modules\Core\Models\User
+     * @apiResourceAdditional success=true message="Tài khoản đã được cập nhật!"
      */
     public function update(UpdateUserRequest $request, User $user)
     {
@@ -116,6 +129,7 @@ class UserController extends Controller
      * Xóa người dùng
      *
      * @urlParam user integer required ID người dùng. Example: 1
+     * @response 200 {"success": true, "message": "Tài khoản đã được xóa thành công!"}
      */
     public function destroy(User $user)
     {
@@ -127,6 +141,7 @@ class UserController extends Controller
      * Xóa hàng loạt người dùng
      *
      * @bodyParam ids array required Danh sách ID. Example: [1, 2, 3]
+     * @response 200 {"success": true, "message": "Đã xóa thành công các tài khoản được chọn!"}
      */
     public function bulkDestroy(BulkDestroyUserRequest $request)
     {
@@ -139,6 +154,7 @@ class UserController extends Controller
      *
      * @bodyParam ids array required Danh sách ID. Example: [1, 2, 3]
      * @bodyParam status string required Trạng thái: active, inactive, banned. Example: active
+     * @response 200 {"success": true, "message": "Cập nhật trạng thái thành công."}
      */
     public function bulkUpdateStatus(BulkUpdateStatusUserRequest $request)
     {
@@ -166,6 +182,7 @@ class UserController extends Controller
      * Nhập danh sách người dùng
      *
      * @bodyParam file file required File excel (xlsx, xls, csv). Cột: name, email, password, status.
+     * @response 200 {"success": true, "message": "Import người dùng thành công."}
      */
     public function import(ImportUserRequest $request)
     {
@@ -178,6 +195,9 @@ class UserController extends Controller
      *
      * @urlParam user integer required ID người dùng. Example: 1
      * @bodyParam status string required Trạng thái mới: active, inactive, banned. Example: active
+     * @apiResource App\Modules\Core\Resources\UserResource
+     * @apiResourceModel App\Modules\Core\Models\User
+     * @apiResourceAdditional success=true message="Cập nhật trạng thái thành công!"
      */
     public function changeStatus(ChangeStatusUserRequest $request, User $user)
     {

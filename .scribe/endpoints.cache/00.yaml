@@ -56,7 +56,13 @@ endpoints:
       email: admin@example.com
       password: password
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success": true, "message": "Đăng nhập thành công.", "data": {"access_token": "1|xxx...", "token_type": "Bearer", "user": {"id": 1, "name": "Admin", "email": "admin@example.com", "status": "active"}}}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -101,7 +107,13 @@ endpoints:
     cleanBodyParameters:
       email: user@example.com
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success": true, "message": "Link reset đã được gửi vào Email"}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -182,7 +194,13 @@ endpoints:
       password_confirmation: architecto
       token: architecto
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success": true, "message": "Mật khẩu đã được đặt lại"}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -216,7 +234,13 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success": true, "message": "Đã đăng xuất"}'
+        headers: []
+        description: ''
     responseFields: []
     auth:
       - headers

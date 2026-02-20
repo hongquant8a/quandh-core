@@ -39,6 +39,7 @@ class OrganizationController extends Controller
      * @queryParam sort_by string Sắp xếp theo: id, name, slug, status, created_at, updated_at. Example: created_at
      * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
      * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     * @response 200 {"success": true, "data": {"total": 10, "active": 5, "inactive": 5}}
      */
     public function stats(FilterRequest $request)
     {
@@ -62,6 +63,9 @@ class OrganizationController extends Controller
      * @queryParam sort_by string Sắp xếp theo: id, name, slug, status, created_at, updated_at. Example: id
      * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
      * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     * @apiResourceCollection App\Modules\Core\Resources\OrganizationCollection
+     * @apiResourceModel App\Modules\Core\Models\Organization paginate=10
+     * @apiResourceAdditional success=true
      */
     public function index(FilterRequest $request)
     {
@@ -76,6 +80,7 @@ class OrganizationController extends Controller
      * Cây organization (toàn bộ cây, không phân trang). Cấu trúc parent_id.
      *
      * @queryParam status string Lọc theo trạng thái: active, inactive.
+     * @response 200 {"success": true, "data": [{"id": 1, "name": "Công ty A", "slug": "cong-ty-a", "status": "active", "parent_id": null, "children": []}]}
      */
     public function tree(Request $request)
     {
@@ -90,6 +95,9 @@ class OrganizationController extends Controller
      * Chi tiết organization
      *
      * @urlParam organization integer required ID organization. Example: 1
+     * @apiResource App\Modules\Core\Resources\OrganizationResource
+     * @apiResourceModel App\Modules\Core\Models\Organization with=parent,children
+     * @apiResourceAdditional success=true
      */
     public function show(Organization $organization)
     {
@@ -106,6 +114,9 @@ class OrganizationController extends Controller
      * @bodyParam status string required Trạng thái: active, inactive. Example: active
      * @bodyParam parent_id integer ID organization cha (null = gốc). Example: null
      * @bodyParam sort_order integer Thứ tự. Example: 0
+     * @apiResource App\Modules\Core\Resources\OrganizationResource status=201
+     * @apiResourceModel App\Modules\Core\Models\Organization
+     * @apiResourceAdditional success=true message="Organization đã được tạo thành công!"
      */
     public function store(StoreOrganizationRequest $request)
     {
@@ -123,6 +134,9 @@ class OrganizationController extends Controller
      * @bodyParam status string Trạng thái: active, inactive. Example: inactive
      * @bodyParam parent_id integer ID organization cha (null = gốc). Example: null
      * @bodyParam sort_order integer Thứ tự. Example: 0
+     * @apiResource App\Modules\Core\Resources\OrganizationResource
+     * @apiResourceModel App\Modules\Core\Models\Organization with=parent,children
+     * @apiResourceAdditional success=true message="Organization đã được cập nhật!"
      */
     public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
@@ -155,6 +169,7 @@ class OrganizationController extends Controller
      * Xóa organization
      *
      * @urlParam organization integer required ID organization. Example: 1
+     * @response 200 {"success": true, "message": "Organization đã được xóa!"}
      */
     public function destroy(Organization $organization)
     {
@@ -166,6 +181,7 @@ class OrganizationController extends Controller
      * Xóa hàng loạt organization
      *
      * @bodyParam ids array required Danh sách ID. Example: [1, 2, 3]
+     * @response 200 {"success": true, "message": "Đã xóa thành công các organization được chọn!"}
      */
     public function bulkDestroy(BulkDestroyOrganizationRequest $request)
     {
@@ -178,6 +194,7 @@ class OrganizationController extends Controller
      *
      * @bodyParam ids array required Danh sách ID. Example: [1, 2, 3]
      * @bodyParam status string required Trạng thái: active, inactive. Example: active
+     * @response 200 {"success": true, "message": "Cập nhật trạng thái organization thành công."}
      */
     public function bulkUpdateStatus(BulkUpdateStatusOrganizationRequest $request)
     {
@@ -190,6 +207,9 @@ class OrganizationController extends Controller
      *
      * @urlParam organization integer required ID organization. Example: 1
      * @bodyParam status string required Trạng thái mới: active, inactive. Example: inactive
+     * @apiResource App\Modules\Core\Resources\OrganizationResource
+     * @apiResourceModel App\Modules\Core\Models\Organization with=parent,children
+     * @apiResourceAdditional success=true message="Cập nhật trạng thái thành công!"
      */
     public function changeStatus(ChangeStatusOrganizationRequest $request, Organization $organization)
     {
@@ -218,6 +238,7 @@ class OrganizationController extends Controller
      * Nhập danh sách organization
      *
      * @bodyParam file file required File excel (xlsx, xls, csv). Cột: name, slug, description, status.
+     * @response 200 {"success": true, "message": "Import organization thành công."}
      */
     public function import(ImportOrganizationRequest $request)
     {
