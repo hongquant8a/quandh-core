@@ -60,15 +60,4 @@ class Permission extends SpatiePermission
         return $query->orderByRaw('COALESCE(parent_id, 0), sort_order, id');
     }
 
-    /** Xây cây từ collection. */
-    public static function buildTree($items)
-    {
-        $grouped = $items->groupBy('parent_id');
-        $build = function ($parentId) use ($grouped, &$build) {
-            return ($grouped->get($parentId) ?? collect())
-                ->sortBy('sort_order')
-                ->map(fn ($item) => $item->setRelation('children', $build($item->id)));
-        };
-        return $build(null)->values();
-    }
 }

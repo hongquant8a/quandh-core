@@ -2,8 +2,9 @@
 
 namespace App\Modules\Core\Models;
 
-use App\Modules\Core\Models\User;
+use App\Modules\Core\Services\OrganizationService;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * Model Organization – tổ chức (thay thế teams, dùng cho Spatie Permission teams).
@@ -42,15 +43,17 @@ class Organization extends Model
         static::creating(function (Organization $organization) {
             $organization->created_by = $organization->updated_by = auth()->id();
             if (empty($organization->slug)) {
-                $organization->slug = static::uniqueSlug(\Illuminate\Support\Str::slug($organization->name));
+                $organization->slug = app(OrganizationService::class)->generateUniqueSlug(Str::slug($organization->name));
             }
         });
+
         static::updating(function (Organization $organization) {
             $organization->updated_by = auth()->id();
             if ($organization->isDirty('name') && ! $organization->isDirty('slug')) {
-                $organization->slug = static::uniqueSlug(\Illuminate\Support\Str::slug($organization->name), $organization->id);
+                $organization->slug = app(OrganizationService::class)->generateUniqueSlug(Str::slug($organization->name), $organization->id);
             }
         });
+
         static::deleting(function (Organization $organization) {
             foreach ($organization->children as $child) {
                 $child->delete();
@@ -86,6 +89,7 @@ class Organization extends Model
             $column = in_array($sortBy, $allowed) ? $sortBy : 'id';
             $q->orderBy($column, $filters['sort_order'] ?? 'desc');
         });
+
         return $query;
     }
 
@@ -94,66 +98,12 @@ class Organization extends Model
         return $query->orderByRaw('COALESCE(parent_id, 0), sort_order, id');
     }
 
-    public static function buildTree($items)
-    {
-        $grouped = $items->groupBy('parent_id');
-        $builder = function ($parentId) use ($grouped, &$builder) {
-            return ($grouped->get($parentId) ?? collect())->map(function ($node) use (&$builder) {
-                $node->setRelation('children', $builder($node->id));
-                return $node;
-            })->values();
-        };
-        return $builder(null);
-    }
-
-    public static function getFlatTreeOrdered(array $filters = [])
-    {
-        $query = static::with(['creator', 'editor'])->filter($filters);
-        $all = $query->get();
-        $tree = static::buildTree($all);
-        $result = collect();
-        $flatten = function ($nodes) use (&$flatten, &$result) {
-            foreach ($nodes as $node) {
-                $result->push($node);
-                $flatten($node->children);
-            }
-        };
-        $flatten($tree);
-        return $result;
-    }
-
     public function getDepthAttribute(): int
     {
-        $d = 0;
-        $p = $this->parent_id;
-        $ids = [$this->id];
-        while ($p) {
-            if (in_array($p, $ids)) {
-                break;
-            }
-            $ids[] = $p;
-            $parent = static::find($p);
-            $p = $parent ? $parent->parent_id : null;
-            $d++;
+        if (array_key_exists('depth', $this->attributes)) {
+            return (int) $this->attributes['depth'];
         }
-        return $d;
-    }
 
-    protected static function uniqueSlug(string $base, ?int $excludeId = null): string
-    {
-        $slug = $base;
-        $query = static::where('slug', $slug);
-        if ($excludeId !== null) {
-            $query->where('id', '!=', $excludeId);
-        }
-        $c = 0;
-        while ($query->exists()) {
-            $slug = $base . '-' . (++$c);
-            $query = static::where('slug', $slug);
-            if ($excludeId !== null) {
-                $query->where('id', '!=', $excludeId);
-            }
-        }
-        return $slug;
+        return app(OrganizationService::class)->getDepth($this);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Modules\Post\Exports;
 
 use App\Modules\Post\Models\PostCategory;
+use App\Modules\Post\Services\PostCategoryService;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -17,8 +18,10 @@ class PostCategoriesExport implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        $nodes = PostCategory::getFlatTreeOrdered($this->filters);
-        return $nodes->map(function (PostCategory $category) {
+        $service = app(PostCategoryService::class);
+        $nodes = $service->getFlatTreeOrdered($this->filters);
+
+        return $nodes->map(function (PostCategory $category) use ($service) {
             return [
                 'id'          => $category->id,
                 'name'        => $category->name,
@@ -28,7 +31,7 @@ class PostCategoriesExport implements FromCollection, WithHeadings
                 'sort_order'  => $category->sort_order,
                 'parent_id'   => $category->parent_id,
                 'parent_slug' => $category->parent_id ? (PostCategory::find($category->parent_id)?->slug ?? '') : '',
-                'depth'       => $category->depth,
+                'depth'       => $service->getDepth($category),
                 'created_by'  => $category->creator?->name ?? 'N/A',
                 'updated_by'  => $category->editor?->name ?? 'N/A',
                 'created_at'  => $category->created_at?->format('d/m/Y H:i:s'),

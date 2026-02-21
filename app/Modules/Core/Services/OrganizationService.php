@@ -6,6 +6,7 @@ use App\Modules\Core\Enums\StatusEnum;
 use App\Modules\Core\Models\Organization;
 use App\Modules\Core\Exports\OrganizationsExport;
 use App\Modules\Core\Imports\OrganizationsImport;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -36,7 +37,7 @@ class OrganizationService
             ->when($status, fn ($q, $value) => $q->where('status', $value));
         $items = $query->orderBy('sort_order')->orderBy('id')->get();
 
-        return Organization::buildTree($items);
+        return $this->buildTree($items);
     }
 
     public function show(Organization $organization): Organization
@@ -104,6 +105,78 @@ class OrganizationService
     public function import($file): void
     {
         Excel::import(new OrganizationsImport(), $file);
+    }
+
+    public function getFlatTreeOrdered(array $filters = []): Collection
+    {
+        $all = Organization::with(['creator', 'editor'])->filter($filters)->get();
+        $tree = $this->buildTree($all);
+        $result = collect();
+        $flatten = function ($nodes) use (&$flatten, &$result) {
+            foreach ($nodes as $node) {
+                $result->push($node);
+                $flatten($node->children);
+            }
+        };
+        $flatten($tree);
+
+        return $result;
+    }
+
+    public function getDepth(Organization $organization): int
+    {
+        $depth = 0;
+        $parentId = $organization->parent_id;
+        $ids = [$organization->id];
+
+        while ($parentId) {
+            if (in_array($parentId, $ids)) {
+                break;
+            }
+
+            $ids[] = $parentId;
+            $parent = Organization::find($parentId);
+            $parentId = $parent ? $parent->parent_id : null;
+            $depth++;
+        }
+
+        return $depth;
+    }
+
+    public function generateUniqueSlug(string $base, ?int $excludeId = null): string
+    {
+        $slug = $base;
+        $query = Organization::where('slug', $slug);
+        if ($excludeId !== null) {
+            $query->where('id', '!=', $excludeId);
+        }
+
+        $index = 0;
+        while ($query->exists()) {
+            $slug = $base . '-' . (++$index);
+            $query = Organization::where('slug', $slug);
+            if ($excludeId !== null) {
+                $query->where('id', '!=', $excludeId);
+            }
+        }
+
+        return $slug;
+    }
+
+    public function buildTree(Collection $items): Collection
+    {
+        $grouped = $items->groupBy('parent_id');
+        $builder = function ($parentId) use ($grouped, &$builder) {
+            return ($grouped->get($parentId) ?? collect())
+                ->map(function ($node) use (&$builder) {
+                    $node->setRelation('children', $builder($node->id));
+
+                    return $node;
+                })
+                ->values();
+        };
+
+        return $builder(null);
     }
 
     private function isDescendantOf(int $candidateId, int $id): bool

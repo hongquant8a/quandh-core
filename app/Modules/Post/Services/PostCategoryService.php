@@ -6,6 +6,7 @@ use App\Modules\Core\Enums\StatusEnum;
 use App\Modules\Post\Exports\PostCategoriesExport;
 use App\Modules\Post\Imports\PostCategoriesImport;
 use App\Modules\Post\Models\PostCategory;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -37,7 +38,7 @@ class PostCategoryService
             ->when($status, fn ($q, $value) => $q->where('status', $value));
         $items = $query->orderBy('sort_order')->orderBy('id')->get();
 
-        return PostCategory::buildTree($items);
+        return $this->buildTree($items);
     }
 
     public function show(PostCategory $category): PostCategory
@@ -117,6 +118,78 @@ class PostCategoryService
         $category->update(['status' => $status]);
 
         return $category->load(['parent', 'children']);
+    }
+
+    public function getFlatTreeOrdered(array $filters = []): Collection
+    {
+        $all = PostCategory::with(['creator', 'editor'])->filter($filters)->get();
+        $tree = $this->buildTree($all);
+        $result = collect();
+        $flatten = function ($nodes) use (&$flatten, &$result) {
+            foreach ($nodes as $node) {
+                $result->push($node);
+                $flatten($node->children);
+            }
+        };
+        $flatten($tree);
+
+        return $result;
+    }
+
+    public function getDepth(PostCategory $category): int
+    {
+        $depth = 0;
+        $parentId = $category->parent_id;
+        $ids = [$category->id];
+
+        while ($parentId) {
+            if (in_array($parentId, $ids)) {
+                break;
+            }
+
+            $ids[] = $parentId;
+            $parent = PostCategory::find($parentId);
+            $parentId = $parent ? $parent->parent_id : null;
+            $depth++;
+        }
+
+        return $depth;
+    }
+
+    public function generateUniqueSlug(string $base, ?int $excludeId = null): string
+    {
+        $slug = $base;
+        $query = PostCategory::where('slug', $slug);
+        if ($excludeId !== null) {
+            $query->where('id', '!=', $excludeId);
+        }
+
+        $index = 0;
+        while ($query->exists()) {
+            $slug = $base . '-' . (++$index);
+            $query = PostCategory::where('slug', $slug);
+            if ($excludeId !== null) {
+                $query->where('id', '!=', $excludeId);
+            }
+        }
+
+        return $slug;
+    }
+
+    public function buildTree(Collection $items): Collection
+    {
+        $grouped = $items->groupBy('parent_id');
+        $builder = function ($parentId) use ($grouped, &$builder) {
+            return ($grouped->get($parentId) ?? collect())
+                ->map(function ($node) use (&$builder) {
+                    $node->setRelation('children', $builder($node->id));
+
+                    return $node;
+                })
+                ->values();
+        };
+
+        return $builder(null);
     }
 
     private function isDescendantOf(int $candidateId, int $id): bool

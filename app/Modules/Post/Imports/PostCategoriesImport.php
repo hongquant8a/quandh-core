@@ -4,6 +4,7 @@ namespace App\Modules\Post\Imports;
 
 use App\Modules\Core\Enums\StatusEnum;
 use App\Modules\Post\Models\PostCategory;
+use App\Modules\Post\Services\PostCategoryService;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -22,7 +23,7 @@ class PostCategoriesImport implements ToModel, WithHeadingRow
             : null;
 
         $slug = $row['slug'] ?? Str::slug($row['name']);
-        $slug = PostCategory::uniqueSlugForImport($slug);
+        $slug = app(PostCategoryService::class)->generateUniqueSlug($slug);
 
         return new PostCategory([
             'name'        => $row['name'] ?? '',

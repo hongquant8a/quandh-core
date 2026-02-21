@@ -3,6 +3,7 @@
 namespace App\Modules\Core\Exports;
 
 use App\Modules\Core\Models\Organization;
+use App\Modules\Core\Services\OrganizationService;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -14,7 +15,9 @@ class OrganizationsExport implements FromCollection, WithHeadings
 
     public function collection()
     {
-        $items = Organization::getFlatTreeOrdered($this->filters);
+        $service = app(OrganizationService::class);
+        $items = $service->getFlatTreeOrdered($this->filters);
+
         return $items->map(fn ($o) => [
             'id'         => $o->id,
             'name'       => $o->name,
@@ -24,7 +27,7 @@ class OrganizationsExport implements FromCollection, WithHeadings
             'parent_id'  => $o->parent_id,
             'parent_slug' => $o->parent_id ? (Organization::find($o->parent_id)?->slug ?? '') : '',
             'sort_order' => $o->sort_order,
-            'depth'      => $o->depth,
+            'depth'      => $service->getDepth($o),
             'created_by' => $o->creator?->name ?? 'N/A',
             'updated_by' => $o->editor?->name ?? 'N/A',
             'created_at' => $o->created_at?->format('H:i:s d/m/Y'),

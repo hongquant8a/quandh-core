@@ -5,6 +5,7 @@ namespace App\Modules\Core\Services;
 use App\Modules\Core\Models\Permission;
 use App\Modules\Core\Exports\PermissionsExport;
 use App\Modules\Core\Imports\PermissionsImport;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -32,7 +33,7 @@ class PermissionService
 
         $items = $query->orderBy('sort_order')->orderBy('id')->get();
 
-        return Permission::buildTree($items);
+        return $this->buildTree($items);
     }
 
     public function show(Permission $permission): Permission
@@ -72,5 +73,18 @@ class PermissionService
     public function import($file): void
     {
         Excel::import(new PermissionsImport(), $file);
+    }
+
+    public function buildTree(Collection $items): Collection
+    {
+        $grouped = $items->groupBy('parent_id');
+        $builder = function ($parentId) use ($grouped, &$builder) {
+            return ($grouped->get($parentId) ?? collect())
+                ->sortBy('sort_order')
+                ->map(fn ($item) => $item->setRelation('children', $builder($item->id)))
+                ->values();
+        };
+
+        return $builder(null);
     }
 }
