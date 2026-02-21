@@ -3,8 +3,224 @@
 name: 'Core - LogActivity'
 description: |-
 
-  Quản lý nhật ký truy cập: danh sách, chi tiết, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
+  Quản lý nhật ký truy cập: thống kê, danh sách, chi tiết, xuất Excel, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
 endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/log-activities/export
+    metadata:
+      custom: []
+      groupName: 'Core - LogActivity'
+      groupDescription: |-
+
+        Quản lý nhật ký truy cập: thống kê, danh sách, chi tiết, xuất Excel, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Xuất danh sách nhật ký'
+      description: 'Áp dụng cùng bộ lọc với index. Trả về file Excel.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Tìm kiếm (description, route, ip_address, country, user_type).'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      from_date:
+        custom: []
+        name: from_date
+        description: 'date Lọc từ ngày (Y-m-d).'
+        required: false
+        example: '2026-01-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      to_date:
+        custom: []
+        name: to_date
+        description: 'date Lọc đến ngày (Y-m-d).'
+        required: false
+        example: '2026-12-31'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      method_type:
+        custom: []
+        name: method_type
+        description: 'GET, POST, PUT, PATCH, DELETE.'
+        required: false
+        example: GET
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      status_code:
+        custom: []
+        name: status_code
+        description: 'Mã HTTP (200, 400, 500...).'
+        required: false
+        example: 200
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: 'id, description, route, method_type, status_code, ip_address, country, created_at.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'asc, desc.'
+        required: false
+        example: desc
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: architecto
+      from_date: '2026-01-01'
+      to_date: '2026-12-31'
+      method_type: GET
+      status_code: 200
+      sort_by: architecto
+      sort_order: desc
+    bodyParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      from_date:
+        custom: []
+        name: from_date
+        description: 'Must be a valid date.'
+        required: false
+        example: '2026-02-21T07:30:11'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      to_date:
+        custom: []
+        name: to_date
+        description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
+        required: false
+        example: '2052-03-16'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: 'Must not be greater than 50 characters.'
+        required: false
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: ''
+        required: false
+        example: desc
+        type: string
+        enumValues:
+          - asc
+          - desc
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Must be at least 1. Must not be greater than 100.'
+        required: false
+        example: 7
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      search: b
+      status: architecto
+      from_date: '2026-02-21T07:30:11'
+      to_date: '2052-03-16'
+      sort_by: 'n'
+      sort_order: desc
+      limit: 7
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
   -
     custom: []
     httpMethods:
@@ -15,7 +231,7 @@ endpoints:
       groupName: 'Core - LogActivity'
       groupDescription: |-
 
-        Quản lý nhật ký truy cập: danh sách, chi tiết, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
+        Quản lý nhật ký truy cập: thống kê, danh sách, chi tiết, xuất Excel, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
       subgroup: ''
       subgroupDescription: ''
       title: 'Thống kê nhật ký'
@@ -154,7 +370,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-21T07:23:45'
+        example: '2026-02-21T07:30:11'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -209,7 +425,7 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-21T07:23:45'
+      from_date: '2026-02-21T07:30:11'
       to_date: '2052-03-16'
       sort_by: 'n'
       sort_order: asc
@@ -240,7 +456,7 @@ endpoints:
       groupName: 'Core - LogActivity'
       groupDescription: |-
 
-        Quản lý nhật ký truy cập: danh sách, chi tiết, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
+        Quản lý nhật ký truy cập: thống kê, danh sách, chi tiết, xuất Excel, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
       subgroup: ''
       subgroupDescription: ''
       title: 'Xóa nhật ký theo khoảng thời gian'
@@ -307,7 +523,7 @@ endpoints:
       groupName: 'Core - LogActivity'
       groupDescription: |-
 
-        Quản lý nhật ký truy cập: danh sách, chi tiết, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
+        Quản lý nhật ký truy cập: thống kê, danh sách, chi tiết, xuất Excel, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
       subgroup: ''
       subgroupDescription: ''
       title: 'Xóa toàn bộ nhật ký'
@@ -350,7 +566,7 @@ endpoints:
       groupName: 'Core - LogActivity'
       groupDescription: |-
 
-        Quản lý nhật ký truy cập: danh sách, chi tiết, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
+        Quản lý nhật ký truy cập: thống kê, danh sách, chi tiết, xuất Excel, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
       subgroup: ''
       subgroupDescription: ''
       title: 'Xóa hàng loạt nhật ký'
@@ -411,7 +627,7 @@ endpoints:
       groupName: 'Core - LogActivity'
       groupDescription: |-
 
-        Quản lý nhật ký truy cập: danh sách, chi tiết, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
+        Quản lý nhật ký truy cập: thống kê, danh sách, chi tiết, xuất Excel, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
       subgroup: ''
       subgroupDescription: ''
       title: 'Danh sách nhật ký'
@@ -550,7 +766,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-21T07:23:45'
+        example: '2026-02-21T07:30:11'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -583,7 +799,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: desc
+        example: asc
         type: string
         enumValues:
           - asc
@@ -605,10 +821,10 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-21T07:23:45'
+      from_date: '2026-02-21T07:30:11'
       to_date: '2052-03-16'
       sort_by: 'n'
-      sort_order: desc
+      sort_order: asc
       limit: 7
     fileParameters: []
     responses:
@@ -636,7 +852,7 @@ endpoints:
       groupName: 'Core - LogActivity'
       groupDescription: |-
 
-        Quản lý nhật ký truy cập: danh sách, chi tiết, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
+        Quản lý nhật ký truy cập: thống kê, danh sách, chi tiết, xuất Excel, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
       subgroup: ''
       subgroupDescription: ''
       title: 'Chi tiết nhật ký'
@@ -703,7 +919,7 @@ endpoints:
       groupName: 'Core - LogActivity'
       groupDescription: |-
 
-        Quản lý nhật ký truy cập: danh sách, chi tiết, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
+        Quản lý nhật ký truy cập: thống kê, danh sách, chi tiết, xuất Excel, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
       subgroup: ''
       subgroupDescription: ''
       title: 'Xóa nhật ký'

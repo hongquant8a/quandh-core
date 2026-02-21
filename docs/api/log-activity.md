@@ -1,6 +1,6 @@
 # API Nhật ký truy cập (LogActivity) – Core
 
-Quản lý nhật ký truy cập: thống kê, danh sách, chi tiết, xóa, xóa hàng loạt, xóa theo khoảng thời gian, xóa toàn bộ.
+Quản lý nhật ký truy cập: thống kê, danh sách, chi tiết, xuất Excel, xóa, xóa hàng loạt, xóa theo khoảng thời gian, xóa toàn bộ.
 
 **Base path:** `/api/log-activities`
 
@@ -36,6 +36,17 @@ Quản lý nhật ký truy cập: thống kê, danh sách, chi tiết, xóa, xó
 | **Path** | `/api/log-activities/{id}` |
 | **UrlParam** | `id` — ID nhật ký. |
 | **Response** | Object nhật ký (LogActivityResource). |
+
+---
+
+## Xuất nhật ký
+
+| | |
+|---|---|
+| **Method** | GET |
+| **Path** | `/api/log-activities/export` |
+| **Query** | `search`, `from_date`, `to_date`, `method_type`, `status_code`, `sort_by`, `sort_order`. |
+| **Response** | File Excel `log-activities.xlsx`. |
 
 ---
 

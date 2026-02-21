@@ -59,7 +59,7 @@ class PermissionSeeder extends Seeder
         ],
         // Core - Nhật ký truy cập
         'log-activities' => [
-            'stats', 'index', 'show', 'destroy', 'bulkDestroy',
+            'stats', 'index', 'show', 'export', 'destroy', 'bulkDestroy',
             'destroyByDate', 'destroyAll',
         ],
     ];

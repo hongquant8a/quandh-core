@@ -118,7 +118,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-21T07:23:44'
+        example: '2026-02-21T07:30:10'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -151,7 +151,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: asc
+        example: desc
         type: string
         enumValues:
           - asc
@@ -173,10 +173,10 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-21T07:23:44'
+      from_date: '2026-02-21T07:30:10'
       to_date: '2052-03-16'
       sort_by: 'n'
-      sort_order: asc
+      sort_order: desc
       limit: 7
     fileParameters: []
     responses:
@@ -438,7 +438,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-21T07:23:45'
+        example: '2026-02-21T07:30:10'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -493,7 +493,7 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-21T07:23:45'
+      from_date: '2026-02-21T07:30:10'
       to_date: '2052-03-16'
       sort_by: 'n'
       sort_order: desc
@@ -639,7 +639,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-21T07:23:45'
+        example: '2026-02-21T07:30:10'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -672,7 +672,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: asc
+        example: desc
         type: string
         enumValues:
           - asc
@@ -694,10 +694,10 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-21T07:23:45'
+      from_date: '2026-02-21T07:30:10'
       to_date: '2052-03-16'
       sort_by: 'n'
-      sort_order: asc
+      sort_order: desc
       limit: 7
     fileParameters: []
     responses:
@@ -771,7 +771,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":1,"name":"Super Admin","guard_name":"web","organization_id":1,"organization":{"id":1,"name":"Default"},"permissions":["users.stats","users.index","users.show","users.store","users.update","users.destroy","users.bulkDestroy","users.bulkUpdateStatus","users.changeStatus","users.export","users.import","permissions.stats","permissions.index","permissions.tree","permissions.show","permissions.store","permissions.update","permissions.destroy","permissions.bulkDestroy","permissions.export","permissions.import","roles.stats","roles.index","roles.show","roles.store","roles.update","roles.destroy","roles.bulkDestroy","roles.export","roles.import","organizations.stats","organizations.index","organizations.tree","organizations.show","organizations.store","organizations.update","organizations.destroy","organizations.bulkDestroy","organizations.bulkUpdateStatus","organizations.changeStatus","organizations.export","organizations.import","posts.stats","posts.index","posts.show","posts.store","posts.update","posts.destroy","posts.bulkDestroy","posts.bulkUpdateStatus","posts.changeStatus","posts.export","posts.import","posts.incrementView","post-categories.stats","post-categories.index","post-categories.tree","post-categories.show","post-categories.store","post-categories.update","post-categories.destroy","post-categories.bulkDestroy","post-categories.bulkUpdateStatus","post-categories.changeStatus","post-categories.export","post-categories.import","log-activities.stats","log-activities.index","log-activities.show","log-activities.destroy","log-activities.bulkDestroy","log-activities.destroyByDate","log-activities.destroyAll"],"created_at":"04:02:16 21\/02\/2026","updated_at":"04:02:16 21\/02\/2026"},"success":"true"}'
+        content: '{"data":{"id":1,"name":"Super Admin","guard_name":"web","organization_id":1,"organization":{"id":1,"name":"Default"},"permissions":["users.stats","users.index","users.show","users.store","users.update","users.destroy","users.bulkDestroy","users.bulkUpdateStatus","users.changeStatus","users.export","users.import","permissions.stats","permissions.index","permissions.tree","permissions.show","permissions.store","permissions.update","permissions.destroy","permissions.bulkDestroy","permissions.export","permissions.import","roles.stats","roles.index","roles.show","roles.store","roles.update","roles.destroy","roles.bulkDestroy","roles.export","roles.import","organizations.stats","organizations.index","organizations.tree","organizations.show","organizations.store","organizations.update","organizations.destroy","organizations.bulkDestroy","organizations.bulkUpdateStatus","organizations.changeStatus","organizations.export","organizations.import","posts.stats","posts.index","posts.show","posts.store","posts.update","posts.destroy","posts.bulkDestroy","posts.bulkUpdateStatus","posts.changeStatus","posts.export","posts.import","posts.incrementView","post-categories.stats","post-categories.index","post-categories.tree","post-categories.show","post-categories.store","post-categories.update","post-categories.destroy","post-categories.bulkDestroy","post-categories.bulkUpdateStatus","post-categories.changeStatus","post-categories.export","post-categories.import","log-activities.stats","log-activities.index","log-activities.show","log-activities.destroy","log-activities.bulkDestroy","log-activities.destroyByDate","log-activities.destroyAll","log-activities.export"],"created_at":"04:02:16 21\/02\/2026","updated_at":"04:02:16 21\/02\/2026"},"success":"true"}'
         headers: []
         description: ''
     responseFields: []
@@ -868,7 +868,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"data":{"id":1,"name":"Super Admin","guard_name":"web","organization_id":1,"permissions":["users.stats","users.index","users.show","users.store","users.update","users.destroy","users.bulkDestroy","users.bulkUpdateStatus","users.changeStatus","users.export","users.import","permissions.stats","permissions.index","permissions.tree","permissions.show","permissions.store","permissions.update","permissions.destroy","permissions.bulkDestroy","permissions.export","permissions.import","roles.stats","roles.index","roles.show","roles.store","roles.update","roles.destroy","roles.bulkDestroy","roles.export","roles.import","organizations.stats","organizations.index","organizations.tree","organizations.show","organizations.store","organizations.update","organizations.destroy","organizations.bulkDestroy","organizations.bulkUpdateStatus","organizations.changeStatus","organizations.export","organizations.import","posts.stats","posts.index","posts.show","posts.store","posts.update","posts.destroy","posts.bulkDestroy","posts.bulkUpdateStatus","posts.changeStatus","posts.export","posts.import","posts.incrementView","post-categories.stats","post-categories.index","post-categories.tree","post-categories.show","post-categories.store","post-categories.update","post-categories.destroy","post-categories.bulkDestroy","post-categories.bulkUpdateStatus","post-categories.changeStatus","post-categories.export","post-categories.import","log-activities.stats","log-activities.index","log-activities.show","log-activities.destroy","log-activities.bulkDestroy","log-activities.destroyByDate","log-activities.destroyAll"],"created_at":"04:02:16 21\/02\/2026","updated_at":"04:02:16 21\/02\/2026"},"success":"true","message":"Vai tr\u00f2 \u0111\u00e3 \u0111\u01b0\u1ee3c t\u1ea1o th\u00e0nh c\u00f4ng!"}'
+        content: '{"data":{"id":1,"name":"Super Admin","guard_name":"web","organization_id":1,"permissions":["users.stats","users.index","users.show","users.store","users.update","users.destroy","users.bulkDestroy","users.bulkUpdateStatus","users.changeStatus","users.export","users.import","permissions.stats","permissions.index","permissions.tree","permissions.show","permissions.store","permissions.update","permissions.destroy","permissions.bulkDestroy","permissions.export","permissions.import","roles.stats","roles.index","roles.show","roles.store","roles.update","roles.destroy","roles.bulkDestroy","roles.export","roles.import","organizations.stats","organizations.index","organizations.tree","organizations.show","organizations.store","organizations.update","organizations.destroy","organizations.bulkDestroy","organizations.bulkUpdateStatus","organizations.changeStatus","organizations.export","organizations.import","posts.stats","posts.index","posts.show","posts.store","posts.update","posts.destroy","posts.bulkDestroy","posts.bulkUpdateStatus","posts.changeStatus","posts.export","posts.import","posts.incrementView","post-categories.stats","post-categories.index","post-categories.tree","post-categories.show","post-categories.store","post-categories.update","post-categories.destroy","post-categories.bulkDestroy","post-categories.bulkUpdateStatus","post-categories.changeStatus","post-categories.export","post-categories.import","log-activities.stats","log-activities.index","log-activities.show","log-activities.destroy","log-activities.bulkDestroy","log-activities.destroyByDate","log-activities.destroyAll","log-activities.export"],"created_at":"04:02:16 21\/02\/2026","updated_at":"04:02:16 21\/02\/2026"},"success":"true","message":"Vai tr\u00f2 \u0111\u00e3 \u0111\u01b0\u1ee3c t\u1ea1o th\u00e0nh c\u00f4ng!"}'
         headers: []
         description: ''
     responseFields: []
@@ -987,7 +987,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":1,"name":"Super Admin","guard_name":"web","organization_id":1,"permissions":["users.stats","users.index","users.show","users.store","users.update","users.destroy","users.bulkDestroy","users.bulkUpdateStatus","users.changeStatus","users.export","users.import","permissions.stats","permissions.index","permissions.tree","permissions.show","permissions.store","permissions.update","permissions.destroy","permissions.bulkDestroy","permissions.export","permissions.import","roles.stats","roles.index","roles.show","roles.store","roles.update","roles.destroy","roles.bulkDestroy","roles.export","roles.import","organizations.stats","organizations.index","organizations.tree","organizations.show","organizations.store","organizations.update","organizations.destroy","organizations.bulkDestroy","organizations.bulkUpdateStatus","organizations.changeStatus","organizations.export","organizations.import","posts.stats","posts.index","posts.show","posts.store","posts.update","posts.destroy","posts.bulkDestroy","posts.bulkUpdateStatus","posts.changeStatus","posts.export","posts.import","posts.incrementView","post-categories.stats","post-categories.index","post-categories.tree","post-categories.show","post-categories.store","post-categories.update","post-categories.destroy","post-categories.bulkDestroy","post-categories.bulkUpdateStatus","post-categories.changeStatus","post-categories.export","post-categories.import","log-activities.stats","log-activities.index","log-activities.show","log-activities.destroy","log-activities.bulkDestroy","log-activities.destroyByDate","log-activities.destroyAll"],"created_at":"04:02:16 21\/02\/2026","updated_at":"04:02:16 21\/02\/2026"},"success":"true","message":"Vai tr\u00f2 \u0111\u00e3 \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt!"}'
+        content: '{"data":{"id":1,"name":"Super Admin","guard_name":"web","organization_id":1,"permissions":["users.stats","users.index","users.show","users.store","users.update","users.destroy","users.bulkDestroy","users.bulkUpdateStatus","users.changeStatus","users.export","users.import","permissions.stats","permissions.index","permissions.tree","permissions.show","permissions.store","permissions.update","permissions.destroy","permissions.bulkDestroy","permissions.export","permissions.import","roles.stats","roles.index","roles.show","roles.store","roles.update","roles.destroy","roles.bulkDestroy","roles.export","roles.import","organizations.stats","organizations.index","organizations.tree","organizations.show","organizations.store","organizations.update","organizations.destroy","organizations.bulkDestroy","organizations.bulkUpdateStatus","organizations.changeStatus","organizations.export","organizations.import","posts.stats","posts.index","posts.show","posts.store","posts.update","posts.destroy","posts.bulkDestroy","posts.bulkUpdateStatus","posts.changeStatus","posts.export","posts.import","posts.incrementView","post-categories.stats","post-categories.index","post-categories.tree","post-categories.show","post-categories.store","post-categories.update","post-categories.destroy","post-categories.bulkDestroy","post-categories.bulkUpdateStatus","post-categories.changeStatus","post-categories.export","post-categories.import","log-activities.stats","log-activities.index","log-activities.show","log-activities.destroy","log-activities.bulkDestroy","log-activities.destroyByDate","log-activities.destroyAll","log-activities.export"],"created_at":"04:02:16 21\/02\/2026","updated_at":"04:02:16 21\/02\/2026"},"success":"true","message":"Vai tr\u00f2 \u0111\u00e3 \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt!"}'
         headers: []
         description: ''
     responseFields: []
@@ -1106,7 +1106,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":1,"name":"Super Admin","guard_name":"web","organization_id":1,"permissions":["users.stats","users.index","users.show","users.store","users.update","users.destroy","users.bulkDestroy","users.bulkUpdateStatus","users.changeStatus","users.export","users.import","permissions.stats","permissions.index","permissions.tree","permissions.show","permissions.store","permissions.update","permissions.destroy","permissions.bulkDestroy","permissions.export","permissions.import","roles.stats","roles.index","roles.show","roles.store","roles.update","roles.destroy","roles.bulkDestroy","roles.export","roles.import","organizations.stats","organizations.index","organizations.tree","organizations.show","organizations.store","organizations.update","organizations.destroy","organizations.bulkDestroy","organizations.bulkUpdateStatus","organizations.changeStatus","organizations.export","organizations.import","posts.stats","posts.index","posts.show","posts.store","posts.update","posts.destroy","posts.bulkDestroy","posts.bulkUpdateStatus","posts.changeStatus","posts.export","posts.import","posts.incrementView","post-categories.stats","post-categories.index","post-categories.tree","post-categories.show","post-categories.store","post-categories.update","post-categories.destroy","post-categories.bulkDestroy","post-categories.bulkUpdateStatus","post-categories.changeStatus","post-categories.export","post-categories.import","log-activities.stats","log-activities.index","log-activities.show","log-activities.destroy","log-activities.bulkDestroy","log-activities.destroyByDate","log-activities.destroyAll"],"created_at":"04:02:16 21\/02\/2026","updated_at":"04:02:16 21\/02\/2026"},"success":"true","message":"Vai tr\u00f2 \u0111\u00e3 \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt!"}'
+        content: '{"data":{"id":1,"name":"Super Admin","guard_name":"web","organization_id":1,"permissions":["users.stats","users.index","users.show","users.store","users.update","users.destroy","users.bulkDestroy","users.bulkUpdateStatus","users.changeStatus","users.export","users.import","permissions.stats","permissions.index","permissions.tree","permissions.show","permissions.store","permissions.update","permissions.destroy","permissions.bulkDestroy","permissions.export","permissions.import","roles.stats","roles.index","roles.show","roles.store","roles.update","roles.destroy","roles.bulkDestroy","roles.export","roles.import","organizations.stats","organizations.index","organizations.tree","organizations.show","organizations.store","organizations.update","organizations.destroy","organizations.bulkDestroy","organizations.bulkUpdateStatus","organizations.changeStatus","organizations.export","organizations.import","posts.stats","posts.index","posts.show","posts.store","posts.update","posts.destroy","posts.bulkDestroy","posts.bulkUpdateStatus","posts.changeStatus","posts.export","posts.import","posts.incrementView","post-categories.stats","post-categories.index","post-categories.tree","post-categories.show","post-categories.store","post-categories.update","post-categories.destroy","post-categories.bulkDestroy","post-categories.bulkUpdateStatus","post-categories.changeStatus","post-categories.export","post-categories.import","log-activities.stats","log-activities.index","log-activities.show","log-activities.destroy","log-activities.bulkDestroy","log-activities.destroyByDate","log-activities.destroyAll","log-activities.export"],"created_at":"04:02:16 21\/02\/2026","updated_at":"04:02:16 21\/02\/2026"},"success":"true","message":"Vai tr\u00f2 \u0111\u00e3 \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt!"}'
         headers: []
         description: ''
     responseFields: []

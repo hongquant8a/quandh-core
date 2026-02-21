@@ -14,7 +14,7 @@ use App\Modules\Core\Services\LogActivityService;
 /**
  * @group Core - LogActivity
  *
- * Quản lý nhật ký truy cập: danh sách, chi tiết, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
+ * Quản lý nhật ký truy cập: thống kê, danh sách, chi tiết, xuất Excel, xóa, xóa hàng loạt, xóa theo thời gian, xóa toàn bộ.
  */
 class LogActivityController extends Controller
 {
@@ -61,6 +61,24 @@ class LogActivityController extends Controller
     {
         $logs = $this->logActivityService->index($request->all(), (int) ($request->limit ?? 10));
         return $this->successCollection(new LogActivityCollection($logs));
+    }
+
+    /**
+     * Xuất danh sách nhật ký
+     *
+     * Áp dụng cùng bộ lọc với index. Trả về file Excel.
+     *
+     * @queryParam search string Tìm kiếm (description, route, ip_address, country, user_type).
+     * @queryParam from_date date Lọc từ ngày (Y-m-d). Example: 2026-01-01
+     * @queryParam to_date date Lọc đến ngày (Y-m-d). Example: 2026-12-31
+     * @queryParam method_type string GET, POST, PUT, PATCH, DELETE. Example: GET
+     * @queryParam status_code integer Mã HTTP (200, 400, 500...). Example: 200
+     * @queryParam sort_by string id, description, route, method_type, status_code, ip_address, country, created_at.
+     * @queryParam sort_order string asc, desc. Example: desc
+     */
+    public function export(FilterRequest $request)
+    {
+        return $this->logActivityService->export($request->all());
     }
 
     /**

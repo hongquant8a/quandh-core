@@ -2,7 +2,10 @@
 
 namespace App\Modules\Core\Services;
 
+use App\Modules\Core\Exports\LogActivitiesExport;
 use App\Modules\Core\Models\LogActivity;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class LogActivityService
 {
@@ -48,5 +51,10 @@ class LogActivityService
         LogActivity::truncate();
 
         return $count;
+    }
+
+    public function export(array $filters): BinaryFileResponse
+    {
+        return Excel::download(new LogActivitiesExport($filters), 'log-activities.xlsx');
     }
 }

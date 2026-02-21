@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Modules\Core\LogActivityController;
 
+Route::get('/export', [LogActivityController::class, 'export'])->middleware('permission:log-activities.export,web');
 Route::get('/stats', [LogActivityController::class, 'stats'])->middleware('permission:log-activities.stats,web');
 Route::post('/delete-by-date', [LogActivityController::class, 'destroyByDate'])->middleware('permission:log-activities.destroyByDate,web');
 Route::post('/clear', [LogActivityController::class, 'destroyAll'])->middleware('permission:log-activities.destroyAll,web');
