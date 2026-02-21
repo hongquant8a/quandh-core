@@ -162,7 +162,20 @@ class LogActivity
         $resourceLabel = $this->resourceLabel($resource);
 
         $params = $request->route()?->parameters() ?? [];
-        $id = $params['user'] ?? $params['post'] ?? $params['organization'] ?? $params['category'] ?? $params['role'] ?? $params['logActivity'] ?? $params['id'] ?? null;
+        $id = $params['user']
+            ?? $params['post']
+            ?? $params['organization']
+            ?? $params['category']
+            ?? $params['role']
+            ?? $params['logActivity']
+            ?? $params['document']
+            ?? $params['documentType']
+            ?? $params['issuingAgency']
+            ?? $params['issuingLevel']
+            ?? $params['documentSigner']
+            ?? $params['documentField']
+            ?? $params['id']
+            ?? null;
         $suffix = $id ? ' #' . (is_object($id) ? $id->getKey() : $id) : '';
 
         return trim("{$actionLabel} {$resourceLabel}{$suffix}");
@@ -180,6 +193,12 @@ class LogActivity
             'organizations'   => 'tổ chức',
             'auth'            => 'xác thực',
             'log-activities'  => 'nhật ký truy cập',
+            'documents'       => 'văn bản',
+            'document-types'  => 'loại văn bản',
+            'issuing-agencies'=> 'cơ quan ban hành',
+            'issuing-levels'  => 'cấp ban hành',
+            'document-signers'=> 'người ký',
+            'document-fields' => 'lĩnh vực',
         ];
 
         return $labels[$resource] ?? str_replace('-', ' ', $resource);

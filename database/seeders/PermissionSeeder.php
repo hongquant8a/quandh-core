@@ -62,6 +62,36 @@ class PermissionSeeder extends Seeder
             'stats', 'index', 'show', 'export', 'destroy', 'bulkDestroy',
             'destroyByDate', 'destroyAll',
         ],
+        // Document - Văn bản
+        'documents' => [
+            'stats', 'index', 'show', 'store', 'update', 'destroy',
+            'bulkDestroy', 'bulkUpdateStatus', 'changeStatus', 'export', 'import',
+        ],
+        // Document - Loại văn bản
+        'document-types' => [
+            'stats', 'index', 'show', 'store', 'update', 'destroy',
+            'bulkDestroy', 'bulkUpdateStatus', 'changeStatus', 'export', 'import',
+        ],
+        // Document - Cơ quan ban hành
+        'issuing-agencies' => [
+            'stats', 'index', 'show', 'store', 'update', 'destroy',
+            'bulkDestroy', 'bulkUpdateStatus', 'changeStatus', 'export', 'import',
+        ],
+        // Document - Cấp ban hành
+        'issuing-levels' => [
+            'stats', 'index', 'show', 'store', 'update', 'destroy',
+            'bulkDestroy', 'bulkUpdateStatus', 'changeStatus', 'export', 'import',
+        ],
+        // Document - Người ký
+        'document-signers' => [
+            'stats', 'index', 'show', 'store', 'update', 'destroy',
+            'bulkDestroy', 'bulkUpdateStatus', 'changeStatus', 'export', 'import',
+        ],
+        // Document - Lĩnh vực
+        'document-fields' => [
+            'stats', 'index', 'show', 'store', 'update', 'destroy',
+            'bulkDestroy', 'bulkUpdateStatus', 'changeStatus', 'export', 'import',
+        ],
     ];
 
     public function run(): void
@@ -104,6 +134,12 @@ class PermissionSeeder extends Seeder
         'posts'           => 'Bài viết',
         'post-categories' => 'Danh mục bài viết',
         'log-activities'  => 'Nhật ký truy cập',
+        'documents'       => 'Văn bản',
+        'document-types'  => 'Loại văn bản',
+        'issuing-agencies'=> 'Cơ quan ban hành',
+        'issuing-levels'  => 'Cấp ban hành',
+        'document-signers'=> 'Người ký',
+        'document-fields' => 'Lĩnh vực',
     ];
 
     /** Nhãn action (để description). */

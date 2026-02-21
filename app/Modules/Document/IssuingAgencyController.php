@@ -1,0 +1,186 @@
+<?php
+
+namespace App\Modules\Document;
+
+use App\Http\Controllers\Controller;
+use App\Modules\Core\Requests\FilterRequest;
+use App\Modules\Document\Models\IssuingAgency;
+use App\Modules\Document\Requests\BulkDestroyCatalogRequest;
+use App\Modules\Document\Requests\BulkUpdateStatusCatalogRequest;
+use App\Modules\Document\Requests\ChangeStatusCatalogRequest;
+use App\Modules\Document\Requests\ImportCatalogRequest;
+use App\Modules\Document\Requests\StoreCatalogRequest;
+use App\Modules\Document\Requests\UpdateCatalogRequest;
+use App\Modules\Document\Resources\CatalogCollection;
+use App\Modules\Document\Resources\CatalogResource;
+use App\Modules\Document\Services\CatalogService;
+
+/**
+ * @group Document - Cơ quan ban hành
+ *
+ * Quản lý danh mục cơ quan ban hành: thống kê, danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập và đổi trạng thái.
+ */
+class IssuingAgencyController extends Controller
+{
+    public function __construct(private CatalogService $catalogService)
+    {
+    }
+
+    /**
+     * Thống kê cơ quan ban hành
+     *
+     * @queryParam search string Từ khóa tìm kiếm theo tên.
+     * @queryParam status string Lọc theo trạng thái: active, inactive.
+     * @queryParam from_date date Lọc từ ngày tạo (Y-m-d). Example: 2026-01-01
+     * @queryParam to_date date Lọc đến ngày tạo (Y-m-d). Example: 2026-12-31
+     * @queryParam sort_by string Sắp xếp theo: id, name, created_at, updated_at. Example: created_at
+     * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
+     * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     * @response 200 {"success": true, "data": {"total": 10, "active": 8, "inactive": 2}}
+     */
+    public function stats(FilterRequest $request)
+    {
+        return $this->success($this->catalogService->stats(IssuingAgency::class, $request->all()));
+    }
+
+    /**
+     * Danh sách cơ quan ban hành
+     *
+     * @queryParam search string Từ khóa tìm kiếm theo tên.
+     * @queryParam status string Lọc theo trạng thái: active, inactive.
+     * @queryParam from_date date Lọc từ ngày tạo (Y-m-d). Example: 2026-01-01
+     * @queryParam to_date date Lọc đến ngày tạo (Y-m-d). Example: 2026-12-31
+     * @queryParam sort_by string Sắp xếp theo: id, name, created_at, updated_at. Example: created_at
+     * @queryParam sort_order string Thứ tự: asc, desc. Example: desc
+     * @queryParam limit integer Số bản ghi mỗi trang (1-100). Example: 10
+     * @apiResourceCollection App\Modules\Document\Resources\CatalogCollection
+     * @apiResourceModel App\Modules\Document\Models\IssuingAgency paginate=10
+     * @apiResourceAdditional success=true
+     */
+    public function index(FilterRequest $request)
+    {
+        $items = $this->catalogService->index(IssuingAgency::class, $request->all(), (int) ($request->limit ?? 10));
+        return $this->successCollection(new CatalogCollection($items));
+    }
+
+    /**
+     * Chi tiết cơ quan ban hành
+     *
+     * @urlParam issuingAgency integer required ID cơ quan ban hành. Example: 1
+     * @apiResource App\Modules\Document\Resources\CatalogResource
+     * @apiResourceModel App\Modules\Document\Models\IssuingAgency
+     * @apiResourceAdditional success=true
+     */
+    public function show(IssuingAgency $issuingAgency)
+    {
+        return $this->successResource(new CatalogResource($this->catalogService->show($issuingAgency)));
+    }
+
+    /**
+     * Tạo cơ quan ban hành
+     *
+     * @bodyParam name string required Tên cơ quan ban hành. Example: Bộ Tài chính
+     * @bodyParam description string Mô tả.
+     * @bodyParam status string required Trạng thái: active, inactive. Example: active
+     * @apiResource App\Modules\Document\Resources\CatalogResource status=201
+     * @apiResourceModel App\Modules\Document\Models\IssuingAgency
+     * @apiResourceAdditional success=true message="Tạo cơ quan ban hành thành công!"
+     */
+    public function store(StoreCatalogRequest $request)
+    {
+        $item = $this->catalogService->store(IssuingAgency::class, $request->validated());
+        return $this->successResource(new CatalogResource($item), 'Tạo cơ quan ban hành thành công!', 201);
+    }
+
+    /**
+     * Cập nhật cơ quan ban hành
+     *
+     * @urlParam issuingAgency integer required ID cơ quan ban hành. Example: 1
+     * @bodyParam name string Tên cơ quan ban hành.
+     * @bodyParam description string Mô tả.
+     * @bodyParam status string Trạng thái: active, inactive.
+     * @apiResource App\Modules\Document\Resources\CatalogResource
+     * @apiResourceModel App\Modules\Document\Models\IssuingAgency
+     * @apiResourceAdditional success=true message="Cập nhật cơ quan ban hành thành công!"
+     */
+    public function update(UpdateCatalogRequest $request, IssuingAgency $issuingAgency)
+    {
+        $item = $this->catalogService->update($issuingAgency, $request->validated());
+        return $this->successResource(new CatalogResource($item), 'Cập nhật cơ quan ban hành thành công!');
+    }
+
+    /**
+     * Xóa cơ quan ban hành
+     *
+     * @urlParam issuingAgency integer required ID cơ quan ban hành. Example: 1
+     * @response 200 {"success": true, "message": "Xóa cơ quan ban hành thành công!"}
+     */
+    public function destroy(IssuingAgency $issuingAgency)
+    {
+        $this->catalogService->destroy($issuingAgency);
+        return $this->success(null, 'Xóa cơ quan ban hành thành công!');
+    }
+
+    /**
+     * Xóa hàng loạt cơ quan ban hành
+     *
+     * @bodyParam ids array required Danh sách ID. Example: [1,2,3]
+     * @response 200 {"success": true, "message": "Xóa hàng loạt thành công!"}
+     */
+    public function bulkDestroy(BulkDestroyCatalogRequest $request)
+    {
+        $this->catalogService->bulkDestroy(IssuingAgency::class, $request->ids);
+        return $this->success(null, 'Xóa hàng loạt thành công!');
+    }
+
+    /**
+     * Cập nhật trạng thái hàng loạt cơ quan ban hành
+     *
+     * @bodyParam ids array required Danh sách ID. Example: [1,2,3]
+     * @bodyParam status string required Trạng thái mới: active, inactive. Example: inactive
+     * @response 200 {"success": true, "message": "Cập nhật trạng thái hàng loạt thành công!"}
+     */
+    public function bulkUpdateStatus(BulkUpdateStatusCatalogRequest $request)
+    {
+        $this->catalogService->bulkUpdateStatus(IssuingAgency::class, $request->ids, $request->status);
+        return $this->success(null, 'Cập nhật trạng thái hàng loạt thành công!');
+    }
+
+    /**
+     * Đổi trạng thái cơ quan ban hành
+     *
+     * @urlParam issuingAgency integer required ID cơ quan ban hành. Example: 1
+     * @bodyParam status string required Trạng thái mới: active, inactive. Example: active
+     * @apiResource App\Modules\Document\Resources\CatalogResource
+     * @apiResourceModel App\Modules\Document\Models\IssuingAgency
+     * @apiResourceAdditional success=true message="Đổi trạng thái thành công!"
+     */
+    public function changeStatus(ChangeStatusCatalogRequest $request, IssuingAgency $issuingAgency)
+    {
+        $item = $this->catalogService->changeStatus($issuingAgency, $request->status);
+        return $this->successResource(new CatalogResource($item), 'Đổi trạng thái thành công!');
+    }
+
+    /**
+     * Xuất Excel cơ quan ban hành
+     *
+     * @queryParam search string Từ khóa tìm kiếm theo tên.
+     * @queryParam status string Lọc theo trạng thái: active, inactive.
+     */
+    public function export(FilterRequest $request)
+    {
+        return $this->catalogService->export(IssuingAgency::class, $request->all(), 'issuing-agencies.xlsx');
+    }
+
+    /**
+     * Import cơ quan ban hành
+     *
+     * @bodyParam file file required File Excel (xlsx, xls, csv).
+     * @response 200 {"success": true, "message": "Import cơ quan ban hành thành công."}
+     */
+    public function import(ImportCatalogRequest $request)
+    {
+        $this->catalogService->import(IssuingAgency::class, $request->file('file'));
+        return $this->success(null, 'Import cơ quan ban hành thành công.');
+    }
+}

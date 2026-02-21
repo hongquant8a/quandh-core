@@ -9,6 +9,8 @@
     - **Bắt buộc**: Namespace phải khớp chính xác với cấu trúc thư mục (ví dụ: `App\Modules\Voter\Controllers`).
     - **Khuyến nghị**: Ưu tiên tạo file mới trong module thay vì các thư mục mặc định của Laravel.
     - **Bắt buộc**: Mỗi module có thư mục `Enums/` chứa enum (trạng thái, loại, ...). Ví dụ: `Core/Enums/UserStatusEnum.php`, `Post/Enums/PostStatusEnum.php`. Enum dùng `rule()` và `values()` cho validation.
+    - **Bắt buộc**: Với các bảng danh mục liên quan trực tiếp tới module chức năng, tên bảng phải có tiền tố module để dễ phân biệt và tránh xung đột (ví dụ module `Document`: `document_types`, `document_fields`; module `Post`: `post_categories`).
+    - **Bắt buộc**: Với bảng pivot thuộc module chức năng, tên bảng phải nhất quán theo resource của module và có nhận diện module rõ ràng (ưu tiên tiền tố module), ví dụ: `post_post_category`, `document_document_type`, `document_document_field`.
 
 - **Module Chức năng Chuẩn**: 
     - **Bắt buộc**: Một module mới mặc định phải bao gồm các hàm: `stats`, `index`, `show`, `store`, `update`, `destroy`, `bulk delete`, `bulk update status`, `change status`, `export`, `import`.

@@ -16,7 +16,7 @@ use App\Modules\Post\Requests\ChangeStatusPostRequest;
 use App\Modules\Post\Services\PostService;
 
 /**
- * @group Post
+ * @group Post - Post
  *
  * Quản lý bài viết: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
  */

@@ -316,4 +316,72 @@ users ──┬── created_by/updated_by ──► posts
 
 ---
 
+## 5. Văn bản & Danh mục (Module Document)
+
+### `documents`
+Bảng văn bản chính.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK, auto increment |
+| so_ky_hieu | varchar(255) | No | — | UNIQUE |
+| ten_van_ban | varchar(255) | No | — | |
+| noi_dung | longtext | Yes | null | |
+| issuing_agency_id | bigint unsigned | Yes | null | FK → document_issuing_agencies.id |
+| issuing_level_id | bigint unsigned | Yes | null | FK → document_issuing_levels.id |
+| signer_id | bigint unsigned | Yes | null | FK → document_signers.id |
+| ngay_ban_hanh | date | Yes | null | |
+| ngay_xuat_ban | date | Yes | null | |
+| ngay_hieu_luc | date | Yes | null | |
+| ngay_het_hieu_luc | date | Yes | null | |
+| status | varchar(255) | No | 'active' | active, inactive |
+| created_by | bigint unsigned | Yes | null | FK → users.id |
+| updated_by | bigint unsigned | Yes | null | FK → users.id |
+| created_at | timestamp | Yes | null | |
+| updated_at | timestamp | Yes | null | |
+
+### Bảng danh mục
+
+Các bảng: `document_types`, `document_issuing_agencies`, `document_issuing_levels`, `document_signers`, `document_fields` có cùng cấu trúc:
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK, auto increment |
+| name | varchar(255) | No | — | |
+| description | text | Yes | null | |
+| status | varchar(255) | No | 'active' | active, inactive |
+| created_by | bigint unsigned | Yes | null | FK → users.id |
+| updated_by | bigint unsigned | Yes | null | FK → users.id |
+| created_at | timestamp | Yes | null | |
+| updated_at | timestamp | Yes | null | |
+
+### Pivot module document
+
+#### `document_document_type`
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK, auto increment |
+| document_id | bigint unsigned | No | — | FK → documents.id, ON DELETE CASCADE |
+| document_type_id | bigint unsigned | No | — | FK → document_types.id, ON DELETE CASCADE |
+| created_at | timestamp | Yes | null | |
+| updated_at | timestamp | Yes | null | |
+| — | — | — | — | UNIQUE(document_id, document_type_id) |
+
+#### `document_document_field`
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK, auto increment |
+| document_id | bigint unsigned | No | — | FK → documents.id, ON DELETE CASCADE |
+| document_field_id | bigint unsigned | No | — | FK → document_fields.id, ON DELETE CASCADE |
+| created_at | timestamp | Yes | null | |
+| updated_at | timestamp | Yes | null | |
+| — | — | — | — | UNIQUE(document_id, document_field_id) |
+
+**Quan hệ:**  
+- `documents` n-1 với `document_issuing_agencies`, `document_issuing_levels`, `document_signers`.  
+- `documents` n-n với `document_types` và `document_fields`.  
+- `documents` 1-n (polymorphic) với `media` qua `collection_name = document-attachments`.
+
+---
+
 *File được cập nhật theo migration trong `database/migrations/`.*

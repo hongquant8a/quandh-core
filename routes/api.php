@@ -32,4 +32,22 @@ Route::middleware(['auth:sanctum', 'set.permissions.team', 'log.activity'])->gro
     Route::prefix('log-activities')->group(function () {
         require base_path('app/Modules/Core/Routes/log_activity.php');
     });
+    Route::prefix('documents')->group(function () {
+        require base_path('app/Modules/Document/Routes/document.php');
+    });
+    Route::prefix('document-types')->group(function () {
+        require base_path('app/Modules/Document/Routes/document_type.php');
+    });
+    Route::prefix('issuing-agencies')->group(function () {
+        require base_path('app/Modules/Document/Routes/issuing_agency.php');
+    });
+    Route::prefix('issuing-levels')->group(function () {
+        require base_path('app/Modules/Document/Routes/issuing_level.php');
+    });
+    Route::prefix('document-signers')->group(function () {
+        require base_path('app/Modules/Document/Routes/document_signer.php');
+    });
+    Route::prefix('document-fields')->group(function () {
+        require base_path('app/Modules/Document/Routes/document_field.php');
+    });
 });

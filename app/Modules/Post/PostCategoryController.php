@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 use App\Modules\Post\Services\PostCategoryService;
 
 /**
- * @group Post Category
+ * @group Post - Category
  *
  * Quản lý danh mục tin tức phân cấp (cấu trúc cây parent_id): danh sách, cây, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập, đổi trạng thái.
  */

@@ -1,4 +1,4 @@
-name: Post
+name: 'Post - Post'
 description: |-
 
   Quản lý bài viết: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
@@ -10,7 +10,7 @@ endpoints:
     uri: api/posts/export
     metadata:
       custom: []
-      groupName: Post
+      groupName: 'Post - Post'
       groupDescription: |-
 
         Quản lý bài viết: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
@@ -116,7 +116,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-21T11:53:00'
+        example: '2026-02-21T14:45:01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -171,7 +171,7 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-21T11:53:00'
+      from_date: '2026-02-21T14:45:01'
       to_date: '2052-03-16'
       sort_by: 'n'
       sort_order: desc
@@ -202,7 +202,7 @@ endpoints:
     uri: api/posts/import
     metadata:
       custom: []
-      groupName: Post
+      groupName: 'Post - Post'
       groupDescription: |-
 
         Quản lý bài viết: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
@@ -257,7 +257,7 @@ endpoints:
     uri: api/posts/bulk-delete
     metadata:
       custom: []
-      groupName: Post
+      groupName: 'Post - Post'
       groupDescription: |-
 
         Quản lý bài viết: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
@@ -318,7 +318,7 @@ endpoints:
     uri: api/posts/bulk-status
     metadata:
       custom: []
-      groupName: Post
+      groupName: 'Post - Post'
       groupDescription: |-
 
         Quản lý bài viết: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
@@ -391,7 +391,7 @@ endpoints:
     uri: api/posts/stats
     metadata:
       custom: []
-      groupName: Post
+      groupName: 'Post - Post'
       groupDescription: |-
 
         Quản lý bài viết: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
@@ -509,7 +509,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-21T11:53:00'
+        example: '2026-02-21T14:45:01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -564,7 +564,7 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-21T11:53:00'
+      from_date: '2026-02-21T14:45:01'
       to_date: '2052-03-16'
       sort_by: 'n'
       sort_order: desc
@@ -592,7 +592,7 @@ endpoints:
     uri: api/posts
     metadata:
       custom: []
-      groupName: Post
+      groupName: 'Post - Post'
       groupDescription: |-
 
         Quản lý bài viết: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
@@ -710,7 +710,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-21T11:53:00'
+        example: '2026-02-21T14:45:01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -743,7 +743,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: asc
+        example: desc
         type: string
         enumValues:
           - asc
@@ -765,17 +765,17 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-21T11:53:00'
+      from_date: '2026-02-21T14:45:01'
       to_date: '2052-03-16'
       sort_by: 'n'
-      sort_order: asc
+      sort_order: desc
       limit: 7
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{"data":[{"id":21,"title":"Quos velit et fugiat sunt nihil accusantium harum.","slug":"quos-velit-et-fugiat-sunt-nihil-accusantium-harum","content":"Deserunt aut ab provident perspiciatis quo omnis nostrum. Adipisci quidem nostrum qui commodi incidunt iure. Et et modi ipsum nostrum.\n\nEt consequatur aut dolores enim. Facere tempora ex voluptatem laboriosam. Quis adipisci molestias fugit deleniti distinctio eum. Id aut libero aliquam veniam. Dolorem mollitia deleniti nemo.\n\nOfficia est dignissimos neque blanditiis odio veritatis excepturi. Delectus fugit qui repudiandae laboriosam. Alias tenetur ratione nemo voluptate accusamus ut et.","status":"published","view_count":0,"created_by":"N\/A","updated_by":"N\/A","created_at":"21\/02\/2026 11:53:00","updated_at":"21\/02\/2026 11:53:00"},{"id":22,"title":"Rerum ex repellendus assumenda et.","slug":"rerum-ex-repellendus-assumenda-et","content":"Reiciendis quia perspiciatis deserunt ducimus corrupti et. Quia maiores assumenda odit. Repellat officiis corporis nesciunt ut. Iure impedit molestiae ut rem est esse sint.\n\nSunt suscipit doloribus fugiat ut aut deserunt et. Neque recusandae et ipsam dolorem et ut dicta. Assumenda consequatur ut et sunt quisquam. Repellendus ut eaque alias ratione dolores.\n\nEa ut aut deserunt sint quis. Quod id aspernatur consectetur id a consectetur assumenda. Neque sit sunt nihil accusantium odit ut perspiciatis.","status":"draft","view_count":0,"created_by":"N\/A","updated_by":"N\/A","created_at":"21\/02\/2026 11:53:00","updated_at":"21\/02\/2026 11:53:00"}],"links":{"first":"\/?page=1","last":"\/?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"\/?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"\/","per_page":10,"to":2,"total":2},"success":"true"}'
+        content: '{"data":[{"id":29,"title":"Quos velit et fugiat sunt nihil accusantium harum.","slug":"quos-velit-et-fugiat-sunt-nihil-accusantium-harum","content":"Deserunt aut ab provident perspiciatis quo omnis nostrum. Adipisci quidem nostrum qui commodi incidunt iure. Et et modi ipsum nostrum.\n\nEt consequatur aut dolores enim. Facere tempora ex voluptatem laboriosam. Quis adipisci molestias fugit deleniti distinctio eum. Id aut libero aliquam veniam. Dolorem mollitia deleniti nemo.\n\nOfficia est dignissimos neque blanditiis odio veritatis excepturi. Delectus fugit qui repudiandae laboriosam. Alias tenetur ratione nemo voluptate accusamus ut et.","status":"published","view_count":0,"created_by":"N\/A","updated_by":"N\/A","created_at":"21\/02\/2026 14:45:01","updated_at":"21\/02\/2026 14:45:01"},{"id":30,"title":"Rerum ex repellendus assumenda et.","slug":"rerum-ex-repellendus-assumenda-et","content":"Reiciendis quia perspiciatis deserunt ducimus corrupti et. Quia maiores assumenda odit. Repellat officiis corporis nesciunt ut. Iure impedit molestiae ut rem est esse sint.\n\nSunt suscipit doloribus fugiat ut aut deserunt et. Neque recusandae et ipsam dolorem et ut dicta. Assumenda consequatur ut et sunt quisquam. Repellendus ut eaque alias ratione dolores.\n\nEa ut aut deserunt sint quis. Quod id aspernatur consectetur id a consectetur assumenda. Neque sit sunt nihil accusantium odit ut perspiciatis.","status":"draft","view_count":0,"created_by":"N\/A","updated_by":"N\/A","created_at":"21\/02\/2026 14:45:01","updated_at":"21\/02\/2026 14:45:01"}],"links":{"first":"\/?page=1","last":"\/?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"\/?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"\/","per_page":10,"to":2,"total":2},"success":"true"}'
         headers: []
         description: ''
     responseFields: []
@@ -793,7 +793,7 @@ endpoints:
     uri: 'api/posts/{post_id}'
     metadata:
       custom: []
-      groupName: Post
+      groupName: 'Post - Post'
       groupDescription: |-
 
         Quản lý bài viết: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
@@ -842,7 +842,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":1,"title":"Atque quos et sit quia ab.","slug":"atque-quos-et-sit-quia-ab","content":"Recusandae eaque omnis odio facere. Quidem nihil aliquid eum eius officia esse. Ipsum sunt modi aspernatur nemo. Molestiae vel ut quia ipsa.\n\nSit qui dicta aliquid est laudantium. Inventore et odio sunt. Nemo facilis corrupti facilis. Amet deleniti rerum libero animi.\n\nBeatae sunt itaque cumque totam facilis iusto quasi voluptatem. Nesciunt omnis necessitatibus illo. Iure amet perferendis delectus nulla eum. Officiis suscipit eius earum dolorum asperiores. Quia autem qui animi.","status":"draft","view_count":0,"categories":[{"id":5,"name":"Gi\u00e1o d\u1ee5c","slug":"giao-duc","description":"Nisi adipisci hic quisquam sed.","status":"inactive","sort_order":5,"parent_id":null,"depth":0,"created_by":"Amie Boyer","updated_by":"Amie Boyer","created_at":"21\/02\/2026 11:52:47","updated_at":"21\/02\/2026 11:52:48"}],"attachments":[],"created_by":"Dr. Jerrold Predovic","updated_by":"Ms. Caterina Abernathy IV","created_at":"21\/02\/2026 11:52:48","updated_at":"21\/02\/2026 11:52:48"},"success":"true"}'
+        content: '{"data":{"id":1,"title":"Ut dolorem ab repudiandae velit.","slug":"ut-dolorem-ab-repudiandae-velit","content":"Velit ut exercitationem itaque. Consectetur assumenda ducimus et quis fugiat maiores voluptatum.\n\nSed et ut odit repellendus explicabo. Quos nostrum corrupti corporis eaque. Assumenda unde quis non eos. Tempora quis rerum minus ad.\n\nDoloribus consequuntur sunt non molestias. Est qui praesentium culpa voluptatibus. Illum iste nulla exercitationem quas. Rerum veritatis vel aut consequuntur reiciendis.","status":"archived","view_count":0,"categories":[{"id":14,"name":"Gi\u1ea3i tr\u00ed - nisi","slug":"giai-tri-fuga-6999bba404a28","description":null,"status":"active","sort_order":2,"parent_id":4,"depth":1,"created_by":"Ms. Verona Hagenes I","updated_by":"Ms. Verona Hagenes I","created_at":"21\/02\/2026 14:05:24","updated_at":"21\/02\/2026 14:05:24"}],"attachments":[],"created_by":"Jerald Bernhard","updated_by":"Willis Kuhn","created_at":"21\/02\/2026 14:05:24","updated_at":"21\/02\/2026 14:05:24"},"success":"true"}'
         headers: []
         description: ''
     responseFields: []
@@ -860,7 +860,7 @@ endpoints:
     uri: 'api/posts/{post_id}/view'
     metadata:
       custom: []
-      groupName: Post
+      groupName: 'Post - Post'
       groupDescription: |-
 
         Quản lý bài viết: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
@@ -927,7 +927,7 @@ endpoints:
     uri: api/posts
     metadata:
       custom: []
-      groupName: Post
+      groupName: 'Post - Post'
       groupDescription: |-
 
         Quản lý bài viết: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
@@ -1030,7 +1030,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: '{"data":{"id":1,"title":"Atque quos et sit quia ab.","slug":"atque-quos-et-sit-quia-ab","content":"Recusandae eaque omnis odio facere. Quidem nihil aliquid eum eius officia esse. Ipsum sunt modi aspernatur nemo. Molestiae vel ut quia ipsa.\n\nSit qui dicta aliquid est laudantium. Inventore et odio sunt. Nemo facilis corrupti facilis. Amet deleniti rerum libero animi.\n\nBeatae sunt itaque cumque totam facilis iusto quasi voluptatem. Nesciunt omnis necessitatibus illo. Iure amet perferendis delectus nulla eum. Officiis suscipit eius earum dolorum asperiores. Quia autem qui animi.","status":"draft","view_count":0,"categories":[{"id":5,"name":"Gi\u00e1o d\u1ee5c","slug":"giao-duc","description":"Nisi adipisci hic quisquam sed.","status":"inactive","sort_order":5,"parent_id":null,"depth":0,"created_by":"Amie Boyer","updated_by":"Amie Boyer","created_at":"21\/02\/2026 11:52:47","updated_at":"21\/02\/2026 11:52:48"}],"attachments":[],"created_by":"Dr. Jerrold Predovic","updated_by":"Ms. Caterina Abernathy IV","created_at":"21\/02\/2026 11:52:48","updated_at":"21\/02\/2026 11:52:48"},"success":"true","message":"B\u00e0i vi\u1ebft \u0111\u00e3 \u0111\u01b0\u1ee3c t\u1ea1o th\u00e0nh c\u00f4ng!"}'
+        content: '{"data":{"id":1,"title":"Ut dolorem ab repudiandae velit.","slug":"ut-dolorem-ab-repudiandae-velit","content":"Velit ut exercitationem itaque. Consectetur assumenda ducimus et quis fugiat maiores voluptatum.\n\nSed et ut odit repellendus explicabo. Quos nostrum corrupti corporis eaque. Assumenda unde quis non eos. Tempora quis rerum minus ad.\n\nDoloribus consequuntur sunt non molestias. Est qui praesentium culpa voluptatibus. Illum iste nulla exercitationem quas. Rerum veritatis vel aut consequuntur reiciendis.","status":"archived","view_count":0,"categories":[{"id":14,"name":"Gi\u1ea3i tr\u00ed - nisi","slug":"giai-tri-fuga-6999bba404a28","description":null,"status":"active","sort_order":2,"parent_id":4,"depth":1,"created_by":"Ms. Verona Hagenes I","updated_by":"Ms. Verona Hagenes I","created_at":"21\/02\/2026 14:05:24","updated_at":"21\/02\/2026 14:05:24"}],"attachments":[],"created_by":"Jerald Bernhard","updated_by":"Willis Kuhn","created_at":"21\/02\/2026 14:05:24","updated_at":"21\/02\/2026 14:05:24"},"success":"true","message":"B\u00e0i vi\u1ebft \u0111\u00e3 \u0111\u01b0\u1ee3c t\u1ea1o th\u00e0nh c\u00f4ng!"}'
         headers: []
         description: ''
     responseFields: []
@@ -1048,7 +1048,7 @@ endpoints:
     uri: 'api/posts/{post_id}'
     metadata:
       custom: []
-      groupName: Post
+      groupName: 'Post - Post'
       groupDescription: |-
 
         Quản lý bài viết: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
@@ -1187,7 +1187,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":1,"title":"Atque quos et sit quia ab.","slug":"atque-quos-et-sit-quia-ab","content":"Recusandae eaque omnis odio facere. Quidem nihil aliquid eum eius officia esse. Ipsum sunt modi aspernatur nemo. Molestiae vel ut quia ipsa.\n\nSit qui dicta aliquid est laudantium. Inventore et odio sunt. Nemo facilis corrupti facilis. Amet deleniti rerum libero animi.\n\nBeatae sunt itaque cumque totam facilis iusto quasi voluptatem. Nesciunt omnis necessitatibus illo. Iure amet perferendis delectus nulla eum. Officiis suscipit eius earum dolorum asperiores. Quia autem qui animi.","status":"draft","view_count":0,"categories":[{"id":5,"name":"Gi\u00e1o d\u1ee5c","slug":"giao-duc","description":"Nisi adipisci hic quisquam sed.","status":"inactive","sort_order":5,"parent_id":null,"depth":0,"created_by":"Amie Boyer","updated_by":"Amie Boyer","created_at":"21\/02\/2026 11:52:47","updated_at":"21\/02\/2026 11:52:48"}],"attachments":[],"created_by":"Dr. Jerrold Predovic","updated_by":"Ms. Caterina Abernathy IV","created_at":"21\/02\/2026 11:52:48","updated_at":"21\/02\/2026 11:52:48"},"success":"true","message":"B\u00e0i vi\u1ebft \u0111\u00e3 \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt!"}'
+        content: '{"data":{"id":1,"title":"Ut dolorem ab repudiandae velit.","slug":"ut-dolorem-ab-repudiandae-velit","content":"Velit ut exercitationem itaque. Consectetur assumenda ducimus et quis fugiat maiores voluptatum.\n\nSed et ut odit repellendus explicabo. Quos nostrum corrupti corporis eaque. Assumenda unde quis non eos. Tempora quis rerum minus ad.\n\nDoloribus consequuntur sunt non molestias. Est qui praesentium culpa voluptatibus. Illum iste nulla exercitationem quas. Rerum veritatis vel aut consequuntur reiciendis.","status":"archived","view_count":0,"categories":[{"id":14,"name":"Gi\u1ea3i tr\u00ed - nisi","slug":"giai-tri-fuga-6999bba404a28","description":null,"status":"active","sort_order":2,"parent_id":4,"depth":1,"created_by":"Ms. Verona Hagenes I","updated_by":"Ms. Verona Hagenes I","created_at":"21\/02\/2026 14:05:24","updated_at":"21\/02\/2026 14:05:24"}],"attachments":[],"created_by":"Jerald Bernhard","updated_by":"Willis Kuhn","created_at":"21\/02\/2026 14:05:24","updated_at":"21\/02\/2026 14:05:24"},"success":"true","message":"B\u00e0i vi\u1ebft \u0111\u00e3 \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt!"}'
         headers: []
         description: ''
     responseFields: []
@@ -1205,7 +1205,7 @@ endpoints:
     uri: 'api/posts/{post_id}'
     metadata:
       custom: []
-      groupName: Post
+      groupName: 'Post - Post'
       groupDescription: |-
 
         Quản lý bài viết: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
@@ -1344,7 +1344,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":1,"title":"Atque quos et sit quia ab.","slug":"atque-quos-et-sit-quia-ab","content":"Recusandae eaque omnis odio facere. Quidem nihil aliquid eum eius officia esse. Ipsum sunt modi aspernatur nemo. Molestiae vel ut quia ipsa.\n\nSit qui dicta aliquid est laudantium. Inventore et odio sunt. Nemo facilis corrupti facilis. Amet deleniti rerum libero animi.\n\nBeatae sunt itaque cumque totam facilis iusto quasi voluptatem. Nesciunt omnis necessitatibus illo. Iure amet perferendis delectus nulla eum. Officiis suscipit eius earum dolorum asperiores. Quia autem qui animi.","status":"draft","view_count":0,"categories":[{"id":5,"name":"Gi\u00e1o d\u1ee5c","slug":"giao-duc","description":"Nisi adipisci hic quisquam sed.","status":"inactive","sort_order":5,"parent_id":null,"depth":0,"created_by":"Amie Boyer","updated_by":"Amie Boyer","created_at":"21\/02\/2026 11:52:47","updated_at":"21\/02\/2026 11:52:48"}],"attachments":[],"created_by":"Dr. Jerrold Predovic","updated_by":"Ms. Caterina Abernathy IV","created_at":"21\/02\/2026 11:52:48","updated_at":"21\/02\/2026 11:52:48"},"success":"true","message":"B\u00e0i vi\u1ebft \u0111\u00e3 \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt!"}'
+        content: '{"data":{"id":1,"title":"Ut dolorem ab repudiandae velit.","slug":"ut-dolorem-ab-repudiandae-velit","content":"Velit ut exercitationem itaque. Consectetur assumenda ducimus et quis fugiat maiores voluptatum.\n\nSed et ut odit repellendus explicabo. Quos nostrum corrupti corporis eaque. Assumenda unde quis non eos. Tempora quis rerum minus ad.\n\nDoloribus consequuntur sunt non molestias. Est qui praesentium culpa voluptatibus. Illum iste nulla exercitationem quas. Rerum veritatis vel aut consequuntur reiciendis.","status":"archived","view_count":0,"categories":[{"id":14,"name":"Gi\u1ea3i tr\u00ed - nisi","slug":"giai-tri-fuga-6999bba404a28","description":null,"status":"active","sort_order":2,"parent_id":4,"depth":1,"created_by":"Ms. Verona Hagenes I","updated_by":"Ms. Verona Hagenes I","created_at":"21\/02\/2026 14:05:24","updated_at":"21\/02\/2026 14:05:24"}],"attachments":[],"created_by":"Jerald Bernhard","updated_by":"Willis Kuhn","created_at":"21\/02\/2026 14:05:24","updated_at":"21\/02\/2026 14:05:24"},"success":"true","message":"B\u00e0i vi\u1ebft \u0111\u00e3 \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt!"}'
         headers: []
         description: ''
     responseFields: []
@@ -1362,7 +1362,7 @@ endpoints:
     uri: 'api/posts/{post_id}'
     metadata:
       custom: []
-      groupName: Post
+      groupName: 'Post - Post'
       groupDescription: |-
 
         Quản lý bài viết: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
@@ -1429,7 +1429,7 @@ endpoints:
     uri: 'api/posts/{post_id}/status'
     metadata:
       custom: []
-      groupName: Post
+      groupName: 'Post - Post'
       groupDescription: |-
 
         Quản lý bài viết: danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt
@@ -1490,7 +1490,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":1,"title":"Atque quos et sit quia ab.","slug":"atque-quos-et-sit-quia-ab","content":"Recusandae eaque omnis odio facere. Quidem nihil aliquid eum eius officia esse. Ipsum sunt modi aspernatur nemo. Molestiae vel ut quia ipsa.\n\nSit qui dicta aliquid est laudantium. Inventore et odio sunt. Nemo facilis corrupti facilis. Amet deleniti rerum libero animi.\n\nBeatae sunt itaque cumque totam facilis iusto quasi voluptatem. Nesciunt omnis necessitatibus illo. Iure amet perferendis delectus nulla eum. Officiis suscipit eius earum dolorum asperiores. Quia autem qui animi.","status":"draft","view_count":0,"categories":[{"id":5,"name":"Gi\u00e1o d\u1ee5c","slug":"giao-duc","description":"Nisi adipisci hic quisquam sed.","status":"inactive","sort_order":5,"parent_id":null,"depth":0,"created_by":"Amie Boyer","updated_by":"Amie Boyer","created_at":"21\/02\/2026 11:52:47","updated_at":"21\/02\/2026 11:52:48"}],"created_by":"Dr. Jerrold Predovic","updated_by":"Ms. Caterina Abernathy IV","created_at":"21\/02\/2026 11:52:48","updated_at":"21\/02\/2026 11:52:48"},"success":"true","message":"C\u1eadp nh\u1eadt tr\u1ea1ng th\u00e1i th\u00e0nh c\u00f4ng!"}'
+        content: '{"data":{"id":1,"title":"Ut dolorem ab repudiandae velit.","slug":"ut-dolorem-ab-repudiandae-velit","content":"Velit ut exercitationem itaque. Consectetur assumenda ducimus et quis fugiat maiores voluptatum.\n\nSed et ut odit repellendus explicabo. Quos nostrum corrupti corporis eaque. Assumenda unde quis non eos. Tempora quis rerum minus ad.\n\nDoloribus consequuntur sunt non molestias. Est qui praesentium culpa voluptatibus. Illum iste nulla exercitationem quas. Rerum veritatis vel aut consequuntur reiciendis.","status":"archived","view_count":0,"categories":[{"id":14,"name":"Gi\u1ea3i tr\u00ed - nisi","slug":"giai-tri-fuga-6999bba404a28","description":null,"status":"active","sort_order":2,"parent_id":4,"depth":1,"created_by":"Ms. Verona Hagenes I","updated_by":"Ms. Verona Hagenes I","created_at":"21\/02\/2026 14:05:24","updated_at":"21\/02\/2026 14:05:24"}],"created_by":"Jerald Bernhard","updated_by":"Willis Kuhn","created_at":"21\/02\/2026 14:05:24","updated_at":"21\/02\/2026 14:05:24"},"success":"true","message":"C\u1eadp nh\u1eadt tr\u1ea1ng th\u00e1i th\u00e0nh c\u00f4ng!"}'
         headers: []
         description: ''
     responseFields: []
