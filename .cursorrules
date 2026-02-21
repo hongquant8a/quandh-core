@@ -35,12 +35,15 @@
     - **Khuyến nghị**: Với thao tác hàng loạt nhiều bước (bulk delete theo từng bản ghi, bulk sync...), bọc transaction để đảm bảo toàn vẹn dữ liệu.
     - **Bắt buộc**: Các thao tác chỉ đọc dữ liệu hoặc chỉ một câu lệnh ghi đơn lẻ thì không cần transaction để tránh lạm dụng.
     - **Bắt buộc**: Nếu trong transaction có thao tác file (upload/delete file trong storage), phải có cơ chế bù trừ khi lỗi (cleanup file) bằng `try/catch` hoặc cơ chế tương đương để tránh lệch giữa DB và file system.
+    - **Bắt buộc**: Tất cả luồng upload/xóa media phải đi qua `App\Modules\Core\Services\MediaService` (upload 1 file, upload nhiều file, xóa theo id). Không gọi trực tiếp `addMedia()`, `Storage::put/delete` trong service của từng module nếu đã có `MediaService`.
+    - **Khuyến nghị**: Validate định dạng/kích thước file ở `FormRequest`; `MediaService` giữ vai trò chuẩn hóa thao tác media dùng chung đa module.
     - **Checklist review PR (Service & Transaction)**:
         - [ ] Controller không chứa nghiệp vụ phức tạp; chỉ validate -> gọi service -> trả response.
         - [ ] Mỗi endpoint nghiệp vụ có method tương ứng trong Service của module.
         - [ ] Luồng ghi nhiều bước đã được bọc `DB::transaction()`.
         - [ ] Không lạm dụng transaction cho read/single-write đơn giản.
         - [ ] Luồng có thao tác file trong transaction có cơ chế cleanup khi lỗi.
+        - [ ] Luồng upload media sử dụng `Core\\Services\\MediaService`, không xử lý lưu file trực tiếp ở service module.
         - [ ] Sau refactor, response format và HTTP status code vẫn giữ đúng chuẩn hiện tại.
 
 - **API Resource & Localization**:
