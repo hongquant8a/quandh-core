@@ -4,7 +4,6 @@ namespace App\Modules\Core;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Core\Requests\FilterRequest;
-use App\Modules\Core\Enums\UserStatusEnum;
 use App\Modules\Core\Models\User;
 use App\Modules\Core\Requests\StoreUserRequest;
 use App\Modules\Core\Requests\UpdateUserRequest;
@@ -14,10 +13,7 @@ use App\Modules\Core\Requests\ImportUserRequest;
 use App\Modules\Core\Requests\ChangeStatusUserRequest;
 use App\Modules\Core\Resources\UserResource;
 use App\Modules\Core\Resources\UserCollection;
-use App\Modules\Core\Exports\UsersExport;
-use App\Modules\Core\Imports\UsersImport;
-use Illuminate\Support\Facades\Hash;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Modules\Core\Services\UserService;
 
 /**
  * @group Core - User
@@ -26,6 +22,10 @@ use Maatwebsite\Excel\Facades\Excel;
  */
 class UserController extends Controller
 {
+    public function __construct(private UserService $userService)
+    {
+    }
+
     /**
      * Thống kê người dùng
      *
@@ -40,12 +40,7 @@ class UserController extends Controller
      */
     public function stats(FilterRequest $request)
     {
-        $base = User::filter($request->all());
-        return $this->success([
-            'total'    => (clone $base)->count(),
-            'active'   => (clone $base)->where('status', UserStatusEnum::Active->value)->count(),
-            'inactive' => (clone $base)->where('status', '!=', UserStatusEnum::Active->value)->count(),
-        ]);
+        return $this->success($this->userService->stats($request->all()));
     }
 
     /**
@@ -64,8 +59,7 @@ class UserController extends Controller
      */
     public function index(FilterRequest $request)
     {
-        $users = User::filter($request->all())
-            ->paginate($request->limit ?? 10);
+        $users = $this->userService->index($request->all(), (int) ($request->limit ?? 10));
         return $this->successCollection(new UserCollection($users));
     }
 
@@ -96,9 +90,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $data = $request->validated();
-        $data['password'] = Hash::make($data['password']);
-        $user = User::create($data);
+        $user = $this->userService->store($request->validated());
         return $this->successResource(new UserResource($user), 'Tài khoản đã được tạo thành công!', 201);
     }
 
@@ -117,11 +109,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $data = $request->validated();
-        if (isset($data['password'])) {
-            $data['password'] = Hash::make($data['password']);
-        }
-        $user->update($data);
+        $user = $this->userService->update($user, $request->validated());
         return $this->successResource(new UserResource($user), 'Tài khoản đã được cập nhật!');
     }
 
@@ -133,7 +121,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
+        $this->userService->destroy($user);
         return $this->success(null, 'Tài khoản đã được xóa thành công!');
     }
 
@@ -145,7 +133,7 @@ class UserController extends Controller
      */
     public function bulkDestroy(BulkDestroyUserRequest $request)
     {
-        User::destroy($request->ids);
+        $this->userService->bulkDestroy($request->ids);
         return $this->success(null, 'Đã xóa thành công các tài khoản được chọn!');
     }
 
@@ -158,7 +146,7 @@ class UserController extends Controller
      */
     public function bulkUpdateStatus(BulkUpdateStatusUserRequest $request)
     {
-        User::whereIn('id', $request->ids)->update(['status' => $request->status]);
+        $this->userService->bulkUpdateStatus($request->ids, $request->status);
         return $this->success(null, 'Cập nhật trạng thái thành công.');
     }
 
@@ -175,7 +163,7 @@ class UserController extends Controller
      */
     public function export(FilterRequest $request)
     {
-        return Excel::download(new UsersExport($request->all()), 'users.xlsx');
+        return $this->userService->export($request->all());
     }
 
     /**
@@ -186,7 +174,7 @@ class UserController extends Controller
      */
     public function import(ImportUserRequest $request)
     {
-        Excel::import(new UsersImport, $request->file('file'));
+        $this->userService->import($request->file('file'));
         return $this->success(null, 'Import người dùng thành công.');
     }
 
@@ -201,7 +189,7 @@ class UserController extends Controller
      */
     public function changeStatus(ChangeStatusUserRequest $request, User $user)
     {
-        $user->update(['status' => $request->status]);
+        $user = $this->userService->changeStatus($user, $request->status);
         return $this->successResource(new UserResource($user), 'Cập nhật trạng thái thành công!');
     }
 }

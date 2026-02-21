@@ -6,12 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Modules\Auth\Requests\LoginRequest;
 use App\Modules\Auth\Requests\ForgotPasswordRequest;
 use App\Modules\Auth\Requests\ResetPasswordRequest;
-use App\Modules\Core\Enums\UserStatusEnum;
-use App\Modules\Core\Models\User;
-use App\Modules\Core\Resources\UserResource;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
+use App\Modules\Auth\Services\AuthService;
 
 /**
  * @group Auth
@@ -20,6 +16,10 @@ use Illuminate\Support\Facades\Password;
  */
 class AuthController extends Controller
 {
+    public function __construct(private AuthService $authService)
+    {
+    }
+
     /**
      * Đăng nhập
      *
@@ -32,26 +32,17 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        $login = $request->email;
-        $user = User::where('email', $login)
-            ->orWhere('user_name', $login)
-            ->first();
+        $result = $this->authService->login($request->email, $request->password);
 
-        if (! $user || ! Hash::check($request->password, $user->password)) {
-            return $this->unauthorized('Thông tin đăng nhập không chính xác');
+        if (! $result['ok']) {
+            if ($result['type'] === 'unauthorized') {
+                return $this->unauthorized($result['message']);
+            }
+
+            return $this->forbidden($result['message']);
         }
 
-        if ($user->status !== UserStatusEnum::Active->value) {
-            return $this->forbidden('Tài khoản của bạn đã bị khóa');
-        }
-
-        $token = $user->createToken('auth_token')->plainTextToken;
-        $data = [
-            'access_token' => $token,
-            'token_type'   => 'Bearer',
-            'user'         => (new UserResource($user))->resolve(),
-        ];
-        return $this->success($data, 'Đăng nhập thành công.');
+        return $this->success($result['data'], 'Đăng nhập thành công.');
     }
 
     /**
@@ -63,7 +54,7 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        $this->authService->logout($request->user());
         return $this->success(null, 'Đã đăng xuất');
     }
 
@@ -78,9 +69,9 @@ class AuthController extends Controller
      */
     public function forgotPassword(ForgotPasswordRequest $request)
     {
-        $status = Password::sendResetLink($request->only('email'));
+        $ok = $this->authService->forgotPassword($request->email);
 
-        return $status === Password::RESET_LINK_SENT
+        return $ok
             ? $this->success(null, 'Link reset đã được gửi vào Email')
             : $this->error('Không thể gửi mail', 400);
     }
@@ -99,11 +90,9 @@ class AuthController extends Controller
      */
     public function resetPassword(ResetPasswordRequest $request)
     {
-        $status = Password::reset($request->only('email', 'password', 'token'), function (User $user, string $password) {
-            $user->forceFill(['password' => Hash::make($password)])->save();
-        });
+        $ok = $this->authService->resetPassword($request->email, $request->password, $request->token);
 
-        return $status === Password::PASSWORD_RESET
+        return $ok
             ? $this->success(null, 'Mật khẩu đã được đặt lại')
             : $this->error('Không thể đặt lại mật khẩu', 400);
     }

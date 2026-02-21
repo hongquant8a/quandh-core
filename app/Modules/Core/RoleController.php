@@ -11,9 +11,7 @@ use App\Modules\Core\Requests\BulkDestroyRoleRequest;
 use App\Modules\Core\Requests\ImportRoleRequest;
 use App\Modules\Core\Resources\RoleResource;
 use App\Modules\Core\Resources\RoleCollection;
-use App\Modules\Core\Exports\RolesExport;
-use App\Modules\Core\Imports\RolesImport;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Modules\Core\Services\RoleService;
 
 /**
  * @group Core - Role
@@ -22,6 +20,10 @@ use Maatwebsite\Excel\Facades\Excel;
  */
 class RoleController extends Controller
 {
+    public function __construct(private RoleService $roleService)
+    {
+    }
+
     /**
      * Thống kê role
      *
@@ -37,8 +39,7 @@ class RoleController extends Controller
      */
     public function stats(FilterRequest $request)
     {
-        $base = Role::with('organization')->filter($request->all());
-        return $this->success(['total' => (clone $base)->count()]);
+        return $this->success($this->roleService->stats($request->all()));
     }
 
     /**
@@ -58,9 +59,7 @@ class RoleController extends Controller
      */
     public function index(FilterRequest $request)
     {
-        $items = Role::with(['organization', 'permissions'])
-            ->filter($request->all())
-            ->paginate($request->limit ?? 10);
+        $items = $this->roleService->index($request->all(), (int) ($request->limit ?? 10));
         return $this->successCollection(new RoleCollection($items));
     }
 
@@ -74,7 +73,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        $role->load(['organization', 'permissions']);
+        $role = $this->roleService->show($role);
         return $this->successResource(new RoleResource($role));
     }
 
@@ -91,15 +90,8 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
-        $data = $request->validated();
-        $permissionIds = $data['permission_ids'] ?? null;
-        unset($data['permission_ids']);
-        $data['guard_name'] = $data['guard_name'] ?? config('auth.defaults.guard', 'web');
-        $role = Role::create($data);
-        if (!empty($permissionIds)) {
-            $role->syncPermissions($permissionIds);
-        }
-        return $this->successResource(new RoleResource($role->load('permissions')), 'Vai trò đã được tạo thành công!', 201);
+        $role = $this->roleService->store($request->validated());
+        return $this->successResource(new RoleResource($role), 'Vai trò đã được tạo thành công!', 201);
     }
 
     /**
@@ -116,14 +108,8 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        $data = $request->validated();
-        $permissionIds = $data['permission_ids'] ?? null;
-        unset($data['permission_ids']);
-        $role->update($data);
-        if ($permissionIds !== null) {
-            $role->syncPermissions($permissionIds);
-        }
-        return $this->successResource(new RoleResource($role->load('permissions')), 'Vai trò đã được cập nhật!');
+        $role = $this->roleService->update($role, $request->validated());
+        return $this->successResource(new RoleResource($role), 'Vai trò đã được cập nhật!');
     }
 
     /**
@@ -134,7 +120,7 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        $role->delete();
+        $this->roleService->destroy($role);
         return $this->success(null, 'Vai trò đã được xóa!');
     }
 
@@ -146,7 +132,7 @@ class RoleController extends Controller
      */
     public function bulkDestroy(BulkDestroyRoleRequest $request)
     {
-        Role::whereIn('id', $request->ids)->delete();
+        $this->roleService->bulkDestroy($request->ids);
         return $this->success(null, 'Đã xóa thành công các vai trò được chọn!');
     }
 
@@ -163,7 +149,7 @@ class RoleController extends Controller
      */
     public function export(FilterRequest $request)
     {
-        return Excel::download(new RolesExport($request->all()), 'roles.xlsx');
+        return $this->roleService->export($request->all());
     }
 
     /**
@@ -174,7 +160,7 @@ class RoleController extends Controller
      */
     public function import(ImportRoleRequest $request)
     {
-        Excel::import(new RolesImport, $request->file('file'));
+        $this->roleService->import($request->file('file'));
         return $this->success(null, 'Import vai trò thành công.');
     }
 }

@@ -24,6 +24,23 @@
     - `$this->error($message, $code, $errors, $errorCode)` – lỗi chung.
     - `$this->unauthorized()`, `$this->forbidden()`, `$this->notFound()`, `$this->conflict()` – shortcuts.
 
+- **Service Layer & Transaction**:
+    - **Bắt buộc**: Mỗi module phải có `Services/` để chứa nghiệp vụ. Namespace chuẩn: `App\Modules\<Module>\Services`. Quy ước tên: `{Resource}Service` (ví dụ: `PostService`, `UserService`).
+    - **Bắt buộc**: Controller chỉ điều phối theo luồng: nhận request -> validate (FormRequest) -> gọi Service -> trả response chuẩn (`success/successResource/successCollection/error`).
+    - **Bắt buộc**: Không đặt nghiệp vụ xử lý dữ liệu phức tạp trong Controller (query nhiều bước, sync quan hệ, xử lý trạng thái, import/export, ...).
+    - **Bắt buộc**: Service phải ưu tiên giữ bộ method chuẩn theo module: `stats`, `index`, `show`, `store`, `update`, `destroy`, `bulkDestroy`, `bulkUpdateStatus`, `changeStatus`, `export`, `import` (áp dụng theo resource có hỗ trợ).
+    - **Bắt buộc**: Dùng `DB::transaction()` cho các luồng ghi nhiều bước có phụ thuộc nhau (ví dụ: create/update + sync quan hệ + xóa/thêm dữ liệu liên quan).
+    - **Khuyến nghị**: Với thao tác hàng loạt nhiều bước (bulk delete theo từng bản ghi, bulk sync...), bọc transaction để đảm bảo toàn vẹn dữ liệu.
+    - **Bắt buộc**: Các thao tác chỉ đọc dữ liệu hoặc chỉ một câu lệnh ghi đơn lẻ thì không cần transaction để tránh lạm dụng.
+    - **Bắt buộc**: Nếu trong transaction có thao tác file (upload/delete file trong storage), phải có cơ chế bù trừ khi lỗi (cleanup file) bằng `try/catch` hoặc cơ chế tương đương để tránh lệch giữa DB và file system.
+    - **Checklist review PR (Service & Transaction)**:
+        - [ ] Controller không chứa nghiệp vụ phức tạp; chỉ validate -> gọi service -> trả response.
+        - [ ] Mỗi endpoint nghiệp vụ có method tương ứng trong Service của module.
+        - [ ] Luồng ghi nhiều bước đã được bọc `DB::transaction()`.
+        - [ ] Không lạm dụng transaction cho read/single-write đơn giản.
+        - [ ] Luồng có thao tác file trong transaction có cơ chế cleanup khi lỗi.
+        - [ ] Sau refactor, response format và HTTP status code vẫn giữ đúng chuẩn hiện tại.
+
 - **API Resource & Localization**:
     - Luôn sử dụng Resource để trả về dữ liệu API.
     - **Định dạng ngày tháng**: Trong Resource, bắt buộc chuyển đổi dữ liệu thời gian về định dạng Việt Nam:
@@ -32,7 +49,7 @@
     - Ví dụ: `'created_at' => $this->created_at->format('H:i:s d/m/Y')`.
 
 - **Tài liệu & Thiết kế**:
-    - **Tài liệu câu trả lời**: Lưu các giải thích kiến trúc hoặc giải pháp phức tạp vào `/docs/answer`.
+    - **Tài liệu câu trả lời**: Lưu các phân tích, đánh giá tổng quan về hệ thống, giải thích kiến trúc hoặc giải pháp phức tạp vào `/docs/answer`.
     - **Tài liệu API**: Khi tạo/cập nhật Controller, phải cập nhật file Markdown tương ứng trong `/docs/api` (gồm: Method, Path, Request Body, Response mẫu).
     - **Database**: Cập nhật sơ đồ bảng vào `DATABASE_DESIGN.md` khi có Migration mới.
     - **Cấu trúc dự án**: Cập nhật thông tin chi tiết về tập tin, thư mục vào `STRUCTURE_DESIGN.md` khi có thay đổi.

@@ -4,7 +4,6 @@ namespace App\Modules\Post;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Core\Requests\FilterRequest;
-use App\Modules\Core\Enums\StatusEnum;
 use App\Modules\Post\Models\PostCategory;
 use App\Modules\Post\Requests\StorePostCategoryRequest;
 use App\Modules\Post\Requests\UpdatePostCategoryRequest;
@@ -15,10 +14,8 @@ use App\Modules\Post\Requests\ChangeStatusPostCategoryRequest;
 use App\Modules\Post\Resources\PostCategoryResource;
 use App\Modules\Post\Resources\PostCategoryCollection;
 use App\Modules\Post\Resources\PostCategoryTreeResource;
-use App\Modules\Post\Exports\PostCategoriesExport;
-use App\Modules\Post\Imports\PostCategoriesImport;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Modules\Post\Services\PostCategoryService;
 
 /**
  * @group Post Category
@@ -27,6 +24,10 @@ use Maatwebsite\Excel\Facades\Excel;
  */
 class PostCategoryController extends Controller
 {
+    public function __construct(private PostCategoryService $postCategoryService)
+    {
+    }
+
     /**
      * Thống kê danh mục tin tức
      *
@@ -43,12 +44,7 @@ class PostCategoryController extends Controller
      */
     public function stats(FilterRequest $request)
     {
-        $base = PostCategory::filter($request->all());
-        return $this->success([
-            'total'    => (clone $base)->count(),
-            'active'   => (clone $base)->where('status', StatusEnum::Active->value)->count(),
-            'inactive' => (clone $base)->where('status', '!=', StatusEnum::Active->value)->count(),
-        ]);
+        return $this->success($this->postCategoryService->stats($request->all()));
     }
 
     /**
@@ -67,10 +63,7 @@ class PostCategoryController extends Controller
      */
     public function index(FilterRequest $request)
     {
-        $categories = PostCategory::with(['creator', 'editor', 'parent'])
-            ->filter($request->all())
-            ->treeOrder()
-            ->paginate($request->limit ?? 10);
+        $categories = $this->postCategoryService->index($request->all(), (int) ($request->limit ?? 10));
         return $this->successCollection(new PostCategoryCollection($categories));
     }
 
@@ -82,10 +75,7 @@ class PostCategoryController extends Controller
      */
     public function tree(Request $request)
     {
-        $query = PostCategory::query()
-            ->when($request->status, fn ($q, $v) => $q->where('status', $v));
-        $items = $query->orderBy('sort_order')->orderBy('id')->get();
-        $tree = PostCategory::buildTree($items);
+        $tree = $this->postCategoryService->tree($request->status);
         return $this->successCollection(PostCategoryTreeResource::collection($tree));
     }
 
@@ -99,7 +89,7 @@ class PostCategoryController extends Controller
      */
     public function show(PostCategory $category)
     {
-        $category->load(['creator', 'editor', 'parent', 'children' => fn ($q) => $q->orderBy('sort_order')]);
+        $category = $this->postCategoryService->show($category);
         return $this->successResource(new PostCategoryResource($category));
     }
 
@@ -118,12 +108,7 @@ class PostCategoryController extends Controller
      */
     public function store(StorePostCategoryRequest $request)
     {
-        $data = $request->validated();
-        $parentId = $data['parent_id'] ?? null;
-        if ($parentId) {
-            PostCategory::findOrFail($parentId);
-        }
-        $category = PostCategory::create($data);
+        $category = $this->postCategoryService->store($request->validated());
         return $this->successResource(new PostCategoryResource($category), 'Danh mục đã được tạo thành công!', 201);
     }
 
@@ -143,32 +128,12 @@ class PostCategoryController extends Controller
      */
     public function update(UpdatePostCategoryRequest $request, PostCategory $category)
     {
-        $data = $request->validated();
-        $parentId = array_key_exists('parent_id', $data) ? $data['parent_id'] : null;
-        if ($parentId !== null && (int) $parentId !== 0) {
-            $parent = PostCategory::findOrFail($parentId);
-            if (static::isDescendantOf($parent->id, $category->id)) {
-                return $this->error('Không thể chọn danh mục con làm danh mục cha.', 422, null, 'CONFLICT');
-            }
+        $result = $this->postCategoryService->update($category, $request->validated());
+        if (! $result['ok']) {
+            return $this->error($result['message'], $result['code'], null, $result['error_code']);
         }
-        if ($parentId !== null && (int) $parentId === 0) {
-            $data['parent_id'] = null;
-        }
-        $category->update($data);
-        return $this->successResource(new PostCategoryResource($category->fresh(['parent', 'children'])), 'Danh mục đã được cập nhật!');
-    }
 
-    /** Kiểm tra id có phải hậu duệ của candidateId không (tránh vòng). */
-    protected static function isDescendantOf(int $candidateId, int $id): bool
-    {
-        $current = PostCategory::find($id);
-        while ($current && $current->parent_id) {
-            if ($current->parent_id === $candidateId) {
-                return true;
-            }
-            $current = PostCategory::find($current->parent_id);
-        }
-        return false;
+        return $this->successResource(new PostCategoryResource($result['category']), 'Danh mục đã được cập nhật!');
     }
 
     /**
@@ -179,7 +144,7 @@ class PostCategoryController extends Controller
      */
     public function destroy(PostCategory $category)
     {
-        $category->delete();
+        $this->postCategoryService->destroy($category);
         return $this->success(null, 'Danh mục đã được xóa!');
     }
 
@@ -191,7 +156,7 @@ class PostCategoryController extends Controller
      */
     public function bulkDestroy(BulkDestroyPostCategoryRequest $request)
     {
-        PostCategory::whereIn('id', $request->ids)->get()->each->delete();
+        $this->postCategoryService->bulkDestroy($request->ids);
         return $this->success(null, 'Đã xóa thành công các danh mục được chọn!');
     }
 
@@ -204,7 +169,7 @@ class PostCategoryController extends Controller
      */
     public function bulkUpdateStatus(BulkUpdateStatusPostCategoryRequest $request)
     {
-        PostCategory::whereIn('id', $request->ids)->update(['status' => $request->status]);
+        $this->postCategoryService->bulkUpdateStatus($request->ids, $request->status);
         return $this->success(null, 'Cập nhật trạng thái thành công các danh mục được chọn!');
     }
 
@@ -222,7 +187,7 @@ class PostCategoryController extends Controller
      */
     public function export(FilterRequest $request)
     {
-        return Excel::download(new PostCategoriesExport($request->all()), 'post-categories.xlsx');
+        return $this->postCategoryService->export($request->all());
     }
 
     /**
@@ -233,7 +198,7 @@ class PostCategoryController extends Controller
      */
     public function import(ImportPostCategoryRequest $request)
     {
-        Excel::import(new PostCategoriesImport, $request->file('file'));
+        $this->postCategoryService->import($request->file('file'));
         return $this->success(null, 'Import danh mục bài viết thành công.');
     }
 
@@ -248,7 +213,7 @@ class PostCategoryController extends Controller
      */
     public function changeStatus(ChangeStatusPostCategoryRequest $request, PostCategory $category)
     {
-        $category->update(['status' => $request->status]);
-        return $this->successResource(new PostCategoryResource($category->load(['parent', 'children'])), 'Cập nhật trạng thái thành công!');
+        $category = $this->postCategoryService->changeStatus($category, $request->status);
+        return $this->successResource(new PostCategoryResource($category), 'Cập nhật trạng thái thành công!');
     }
 }

@@ -13,9 +13,7 @@ use App\Modules\Core\Resources\PermissionResource;
 use App\Modules\Core\Resources\PermissionCollection;
 use App\Modules\Core\Resources\PermissionTreeResource;
 use Illuminate\Http\Request;
-use App\Modules\Core\Exports\PermissionsExport;
-use App\Modules\Core\Imports\PermissionsImport;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Modules\Core\Services\PermissionService;
 
 /**
  * @group Core - Permission
@@ -24,6 +22,10 @@ use Maatwebsite\Excel\Facades\Excel;
  */
 class PermissionController extends Controller
 {
+    public function __construct(private PermissionService $permissionService)
+    {
+    }
+
     /**
      * Thống kê permission
      *
@@ -39,8 +41,7 @@ class PermissionController extends Controller
      */
     public function stats(FilterRequest $request)
     {
-        $base = Permission::filter($request->all());
-        return $this->success(['total' => (clone $base)->count()]);
+        return $this->success($this->permissionService->stats($request->all()));
     }
 
     /**
@@ -60,10 +61,7 @@ class PermissionController extends Controller
      */
     public function index(FilterRequest $request)
     {
-        $items = Permission::with('parent')
-            ->filter($request->all())
-            ->treeOrder()
-            ->paginate($request->limit ?? 10);
+        $items = $this->permissionService->index($request->all(), (int) ($request->limit ?? 10));
         return $this->successCollection(new PermissionCollection($items));
     }
 
@@ -75,10 +73,7 @@ class PermissionController extends Controller
      */
     public function tree(Request $request)
     {
-        $query = Permission::query()
-            ->when($request->has('parent_id'), fn ($q) => $q->where('parent_id', $request->parent_id));
-        $items = $query->orderBy('sort_order')->orderBy('id')->get();
-        $tree = Permission::buildTree($items);
+        $tree = $this->permissionService->tree($request->has('parent_id'), $request->parent_id);
         return $this->successCollection(PermissionTreeResource::collection($tree));
     }
 
@@ -92,7 +87,7 @@ class PermissionController extends Controller
      */
     public function show(Permission $permission)
     {
-        $permission->load(['parent', 'children']);
+        $permission = $this->permissionService->show($permission);
         return $this->successResource(new PermissionResource($permission));
     }
 
@@ -110,9 +105,7 @@ class PermissionController extends Controller
      */
     public function store(StorePermissionRequest $request)
     {
-        $data = $request->validated();
-        $data['guard_name'] = $data['guard_name'] ?? config('auth.defaults.guard', 'web');
-        $permission = Permission::create($data);
+        $permission = $this->permissionService->store($request->validated());
         return $this->successResource(new PermissionResource($permission), 'Quyền đã được tạo thành công!', 201);
     }
 
@@ -131,8 +124,7 @@ class PermissionController extends Controller
      */
     public function update(UpdatePermissionRequest $request, Permission $permission)
     {
-        $data = $request->validated();
-        $permission->update($data);
+        $permission = $this->permissionService->update($permission, $request->validated());
         return $this->successResource(new PermissionResource($permission), 'Quyền đã được cập nhật!');
     }
 
@@ -144,7 +136,7 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        $permission->delete();
+        $this->permissionService->destroy($permission);
         return $this->success(null, 'Quyền đã được xóa!');
     }
 
@@ -156,7 +148,7 @@ class PermissionController extends Controller
      */
     public function bulkDestroy(BulkDestroyPermissionRequest $request)
     {
-        Permission::whereIn('id', $request->ids)->delete();
+        $this->permissionService->bulkDestroy($request->ids);
         return $this->success(null, 'Đã xóa thành công các quyền được chọn!');
     }
 
@@ -173,7 +165,7 @@ class PermissionController extends Controller
      */
     public function export(FilterRequest $request)
     {
-        return Excel::download(new PermissionsExport($request->all()), 'permissions.xlsx');
+        return $this->permissionService->export($request->all());
     }
 
     /**
@@ -184,7 +176,7 @@ class PermissionController extends Controller
      */
     public function import(ImportPermissionRequest $request)
     {
-        Excel::import(new PermissionsImport, $request->file('file'));
+        $this->permissionService->import($request->file('file'));
         return $this->success(null, 'Import quyền thành công.');
     }
 }

@@ -9,6 +9,7 @@ use App\Modules\Core\Requests\BulkDestroyLogActivityRequest;
 use App\Modules\Core\Requests\DestroyByDateLogActivityRequest;
 use App\Modules\Core\Resources\LogActivityResource;
 use App\Modules\Core\Resources\LogActivityCollection;
+use App\Modules\Core\Services\LogActivityService;
 
 /**
  * @group Core - LogActivity
@@ -17,6 +18,10 @@ use App\Modules\Core\Resources\LogActivityCollection;
  */
 class LogActivityController extends Controller
 {
+    public function __construct(private LogActivityService $logActivityService)
+    {
+    }
+
     /**
      * Thống kê nhật ký
      *
@@ -34,8 +39,7 @@ class LogActivityController extends Controller
      */
     public function stats(FilterRequest $request)
     {
-        $base = LogActivity::filter($request->all());
-        return $this->success(['total' => (clone $base)->count()]);
+        return $this->success($this->logActivityService->stats($request->all()));
     }
 
     /**
@@ -55,9 +59,7 @@ class LogActivityController extends Controller
      */
     public function index(FilterRequest $request)
     {
-        $logs = LogActivity::with('user', 'organization')
-            ->filter($request->all())
-            ->paginate($request->limit ?? 10);
+        $logs = $this->logActivityService->index($request->all(), (int) ($request->limit ?? 10));
         return $this->successCollection(new LogActivityCollection($logs));
     }
 
@@ -71,7 +73,7 @@ class LogActivityController extends Controller
      */
     public function show(LogActivity $logActivity)
     {
-        $logActivity->load('user', 'organization');
+        $logActivity = $this->logActivityService->show($logActivity);
         return $this->successResource(new LogActivityResource($logActivity));
     }
 
@@ -83,7 +85,7 @@ class LogActivityController extends Controller
      */
     public function destroy(LogActivity $logActivity)
     {
-        $logActivity->delete();
+        $this->logActivityService->destroy($logActivity);
         return $this->success(null, 'Đã xóa nhật ký thành công!');
     }
 
@@ -95,7 +97,7 @@ class LogActivityController extends Controller
      */
     public function bulkDestroy(BulkDestroyLogActivityRequest $request)
     {
-        $count = LogActivity::whereIn('id', $request->ids)->delete();
+        $count = $this->logActivityService->bulkDestroy($request->ids);
         return $this->success(null, "Đã xóa thành công {$count} nhật ký!");
     }
 
@@ -108,9 +110,7 @@ class LogActivityController extends Controller
      */
     public function destroyByDate(DestroyByDateLogActivityRequest $request)
     {
-        $count = LogActivity::whereDate('created_at', '>=', $request->from_date)
-            ->whereDate('created_at', '<=', $request->to_date)
-            ->delete();
+        $count = $this->logActivityService->destroyByDate($request->from_date, $request->to_date);
         return $this->success(null, "Đã xóa thành công {$count} nhật ký trong khoảng thời gian!");
     }
 
@@ -121,8 +121,7 @@ class LogActivityController extends Controller
      */
     public function destroyAll()
     {
-        $count = LogActivity::count();
-        LogActivity::truncate();
+        $count = $this->logActivityService->destroyAll();
         return $this->success(null, "Đã xóa toàn bộ {$count} nhật ký!");
     }
 }

@@ -4,7 +4,6 @@ namespace App\Modules\Post;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Core\Requests\FilterRequest;
-use App\Modules\Post\Enums\PostStatusEnum;
 use App\Modules\Post\Models\Post;
 use App\Modules\Post\Requests\StorePostRequest;
 use App\Modules\Post\Requests\UpdatePostRequest;
@@ -12,14 +11,9 @@ use App\Modules\Post\Requests\BulkDestroyPostRequest;
 use App\Modules\Post\Requests\BulkUpdateStatusPostRequest;
 use App\Modules\Post\Resources\PostResource;
 use App\Modules\Post\Resources\PostCollection;
-use App\Modules\Post\Exports\PostsExport;
-use App\Modules\Post\Imports\PostsImport;
-use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\Post\Requests\ImportPostRequest;
 use App\Modules\Post\Requests\ChangeStatusPostRequest;
-use App\Modules\Post\Models\PostAttachment;
-use Illuminate\Support\Facades\Storage;
+use App\Modules\Post\Services\PostService;
 
 /**
  * @group Post
@@ -28,6 +22,10 @@ use Illuminate\Support\Facades\Storage;
  */
 class PostController extends Controller
 {
+    public function __construct(private PostService $postService)
+    {
+    }
+
     /**
      * Thống kê bài viết
      *
@@ -43,13 +41,7 @@ class PostController extends Controller
      */
     public function stats(FilterRequest $request)
     {
-        $base = Post::filter($request->all());
-
-        return $this->success([
-            'total'    => (clone $base)->count(),
-            'active'   => (clone $base)->where('status', PostStatusEnum::Published->value)->count(),
-            'inactive' => (clone $base)->where('status', '!=', PostStatusEnum::Published->value)->count(),
-        ]);
+        return $this->success($this->postService->stats($request->all()));
     }
 
     /**
@@ -69,8 +61,7 @@ class PostController extends Controller
      */
     public function index(FilterRequest $request)
     {
-        $posts = Post::with('categories')->filter($request->all())
-            ->paginate($request->limit ?? 10);
+        $posts = $this->postService->index($request->all(), (int) ($request->limit ?? 10));
         return $this->successCollection(new PostCollection($posts));
     }
 
@@ -84,7 +75,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $post->load(['categories', 'attachments']);
+        $post = $this->postService->show($post);
         return $this->successResource(new PostResource($post));
     }
 
@@ -102,11 +93,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        $data = collect($request->validated())->except(['images', 'category_ids'])->all();
-        $post = Post::create($data);
-        $this->syncPostCategories($post, $request->validated());
-        $this->savePostAttachments($post, $request->file('images', []));
-        $post->load(['categories', 'attachments']);
+        $post = $this->postService->store($request->validated(), $request->file('images', []));
         return $this->successResource(new PostResource($post), 'Bài viết đã được tạo thành công!', 201);
     }
 
@@ -126,16 +113,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        $data = collect($request->validated())->except(['images', 'remove_attachment_ids', 'category_ids'])->all();
-        $post->update($data);
-        if (array_key_exists('category_ids', $request->validated())) {
-            $this->syncPostCategories($post, $request->validated());
-        }
-        if ($ids = $request->remove_attachment_ids) {
-            PostAttachment::where('post_id', $post->id)->whereIn('id', $ids)->delete();
-        }
-        $this->savePostAttachments($post, $request->file('images', []));
-        $post->load(['categories', 'attachments']);
+        $post = $this->postService->update($post, $request->validated(), $request->file('images', []));
         return $this->successResource(new PostResource($post), 'Bài viết đã được cập nhật!');
     }
 
@@ -147,7 +125,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $post->delete();
+        $this->postService->destroy($post);
         return $this->success(null, 'Bài viết đã được xóa thành công!');
     }
 
@@ -159,7 +137,7 @@ class PostController extends Controller
      */
     public function bulkDestroy(BulkDestroyPostRequest $request)
     {
-        Post::destroy($request->ids);
+        $this->postService->bulkDestroy($request->ids);
         return $this->success(null, 'Đã xóa thành công các bài viết được chọn!');
     }
 
@@ -172,7 +150,7 @@ class PostController extends Controller
      */
     public function bulkUpdateStatus(BulkUpdateStatusPostRequest $request)
     {
-        Post::whereIn('id', $request->ids)->update(['status' => $request->status]);
+        $this->postService->bulkUpdateStatus($request->ids, $request->status);
         return $this->success(null, 'Cập nhật trạng thái thành công các bài viết được chọn!');
     }
 
@@ -189,7 +167,7 @@ class PostController extends Controller
      */
     public function export(FilterRequest $request)
     {
-        return Excel::download(new PostsExport($request->all()), 'posts.xlsx');
+        return $this->postService->export($request->all());
     }
 
     /**
@@ -200,7 +178,7 @@ class PostController extends Controller
      */
     public function import(ImportPostRequest $request)
     {
-        Excel::import(new PostsImport, $request->file('file'));
+        $this->postService->import($request->file('file'));
         return $this->success(null, 'Import bài viết thành công.');
     }
 
@@ -215,8 +193,8 @@ class PostController extends Controller
      */
     public function changeStatus(ChangeStatusPostRequest $request, Post $post)
     {
-        $post->update(['status' => $request->status]);
-        return $this->successResource(new PostResource($post->load(['categories', 'attachments'])), 'Cập nhật trạng thái thành công!');
+        $post = $this->postService->changeStatus($post, $request->status);
+        return $this->successResource(new PostResource($post), 'Cập nhật trạng thái thành công!');
     }
 
     /**
@@ -227,39 +205,7 @@ class PostController extends Controller
      */
     public function incrementView(Post $post)
     {
-        $post->increment('view_count');
-        return $this->success(['view_count' => $post->fresh()->view_count], 'Đã cập nhật lượt xem.');
-    }
-
-    /**
-     * Đồng bộ danh mục bài viết (quan hệ n-n qua bảng pivot).
-     */
-    private function syncPostCategories(Post $post, array $validated): void
-    {
-        $ids = $validated['category_ids'] ?? [];
-        $post->categories()->sync($ids);
-    }
-
-    /**
-     * Lưu file ảnh đính kèm vào storage và tạo bản ghi post_attachments.
-     */
-    private function savePostAttachments(Post $post, array $files): void
-    {
-        $sortOrder = $post->attachments()->max('sort_order') ?? 0;
-        foreach ($files as $file) {
-            if (! $file || ! $file->isValid()) {
-                continue;
-            }
-            $path = $file->store('post-attachments/' . $post->id, 'public');
-            PostAttachment::create([
-                'post_id'        => $post->id,
-                'path'           => $path,
-                'disk'           => 'public',
-                'original_name'  => $file->getClientOriginalName(),
-                'mime_type'      => $file->getMimeType(),
-                'size'           => $file->getSize(),
-                'sort_order'     => ++$sortOrder,
-            ]);
-        }
+        $viewCount = $this->postService->incrementView($post);
+        return $this->success(['view_count' => $viewCount], 'Đã cập nhật lượt xem.');
     }
 }

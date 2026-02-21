@@ -4,7 +4,6 @@ namespace App\Modules\Core;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Core\Requests\FilterRequest;
-use App\Modules\Core\Enums\StatusEnum;
 use App\Modules\Core\Models\Organization;
 use App\Modules\Core\Requests\StoreOrganizationRequest;
 use App\Modules\Core\Requests\UpdateOrganizationRequest;
@@ -16,9 +15,7 @@ use App\Modules\Core\Resources\OrganizationResource;
 use App\Modules\Core\Resources\OrganizationCollection;
 use App\Modules\Core\Resources\OrganizationTreeResource;
 use Illuminate\Http\Request;
-use App\Modules\Core\Exports\OrganizationsExport;
-use App\Modules\Core\Imports\OrganizationsImport;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Modules\Core\Services\OrganizationService;
 
 /**
  * @group Core - Organization
@@ -27,6 +24,10 @@ use Maatwebsite\Excel\Facades\Excel;
  */
 class OrganizationController extends Controller
 {
+    public function __construct(private OrganizationService $organizationService)
+    {
+    }
+
     /**
      * Thống kê organization
      *
@@ -43,12 +44,7 @@ class OrganizationController extends Controller
      */
     public function stats(FilterRequest $request)
     {
-        $base = Organization::filter($request->all());
-        return $this->success([
-            'total'    => (clone $base)->count(),
-            'active'   => (clone $base)->where('status', StatusEnum::Active->value)->count(),
-            'inactive' => (clone $base)->where('status', '!=', StatusEnum::Active->value)->count(),
-        ]);
+        return $this->success($this->organizationService->stats($request->all()));
     }
 
     /**
@@ -69,10 +65,7 @@ class OrganizationController extends Controller
      */
     public function index(FilterRequest $request)
     {
-        $items = Organization::with(['creator', 'editor', 'parent'])
-            ->filter($request->all())
-            ->treeOrder()
-            ->paginate($request->limit ?? 10);
+        $items = $this->organizationService->index($request->all(), (int) ($request->limit ?? 10));
         return $this->successCollection(new OrganizationCollection($items));
     }
 
@@ -84,10 +77,7 @@ class OrganizationController extends Controller
      */
     public function tree(Request $request)
     {
-        $query = Organization::query()
-            ->when($request->status, fn ($q, $v) => $q->where('status', $v));
-        $items = $query->orderBy('sort_order')->orderBy('id')->get();
-        $tree = Organization::buildTree($items);
+        $tree = $this->organizationService->tree($request->status);
         return $this->successCollection(OrganizationTreeResource::collection($tree));
     }
 
@@ -101,7 +91,7 @@ class OrganizationController extends Controller
      */
     public function show(Organization $organization)
     {
-        $organization->load(['creator', 'editor', 'parent', 'children' => fn ($q) => $q->orderBy('sort_order')]);
+        $organization = $this->organizationService->show($organization);
         return $this->successResource(new OrganizationResource($organization));
     }
 
@@ -120,7 +110,7 @@ class OrganizationController extends Controller
      */
     public function store(StoreOrganizationRequest $request)
     {
-        $organization = Organization::create($request->validated());
+        $organization = $this->organizationService->store($request->validated());
         return $this->successResource(new OrganizationResource($organization), 'Organization đã được tạo thành công!', 201);
     }
 
@@ -140,29 +130,12 @@ class OrganizationController extends Controller
      */
     public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
-        $data = $request->validated();
-        if (isset($data['parent_id']) && (int) $data['parent_id'] !== 0) {
-            if (static::isDescendantOf($data['parent_id'], $organization->id)) {
-                return $this->error('Không thể chọn organization con làm organization cha.', 422, null, 'CONFLICT');
-            }
+        $result = $this->organizationService->update($organization, $request->validated());
+        if (! $result['ok']) {
+            return $this->error($result['message'], $result['code'], null, $result['error_code']);
         }
-        if (array_key_exists('parent_id', $data) && (int) $data['parent_id'] === 0) {
-            $data['parent_id'] = null;
-        }
-        $organization->update($data);
-        return $this->successResource(new OrganizationResource($organization->fresh(['parent', 'children'])), 'Organization đã được cập nhật!');
-    }
 
-    protected static function isDescendantOf(int $candidateId, int $id): bool
-    {
-        $current = Organization::find($id);
-        while ($current && $current->parent_id) {
-            if ($current->parent_id === $candidateId) {
-                return true;
-            }
-            $current = Organization::find($current->parent_id);
-        }
-        return false;
+        return $this->successResource(new OrganizationResource($result['organization']), 'Organization đã được cập nhật!');
     }
 
     /**
@@ -173,7 +146,7 @@ class OrganizationController extends Controller
      */
     public function destroy(Organization $organization)
     {
-        $organization->delete();
+        $this->organizationService->destroy($organization);
         return $this->success(null, 'Organization đã được xóa!');
     }
 
@@ -185,7 +158,7 @@ class OrganizationController extends Controller
      */
     public function bulkDestroy(BulkDestroyOrganizationRequest $request)
     {
-        Organization::whereIn('id', $request->ids)->delete();
+        $this->organizationService->bulkDestroy($request->ids);
         return $this->success(null, 'Đã xóa thành công các organization được chọn!');
     }
 
@@ -198,7 +171,7 @@ class OrganizationController extends Controller
      */
     public function bulkUpdateStatus(BulkUpdateStatusOrganizationRequest $request)
     {
-        Organization::whereIn('id', $request->ids)->update(['status' => $request->status]);
+        $this->organizationService->bulkUpdateStatus($request->ids, $request->status);
         return $this->success(null, 'Cập nhật trạng thái organization thành công.');
     }
 
@@ -213,8 +186,8 @@ class OrganizationController extends Controller
      */
     public function changeStatus(ChangeStatusOrganizationRequest $request, Organization $organization)
     {
-        $organization->update(['status' => $request->status]);
-        return $this->successResource(new OrganizationResource($organization->load(['parent', 'children'])), 'Cập nhật trạng thái thành công!');
+        $organization = $this->organizationService->changeStatus($organization, $request->status);
+        return $this->successResource(new OrganizationResource($organization), 'Cập nhật trạng thái thành công!');
     }
 
     /**
@@ -231,7 +204,7 @@ class OrganizationController extends Controller
      */
     public function export(FilterRequest $request)
     {
-        return Excel::download(new OrganizationsExport($request->all()), 'organizations.xlsx');
+        return $this->organizationService->export($request->all());
     }
 
     /**
@@ -242,7 +215,7 @@ class OrganizationController extends Controller
      */
     public function import(ImportOrganizationRequest $request)
     {
-        Excel::import(new OrganizationsImport, $request->file('file'));
+        $this->organizationService->import($request->file('file'));
         return $this->success(null, 'Import organization thành công.');
     }
 }
