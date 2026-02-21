@@ -56,7 +56,7 @@ Quản lý bài viết tin tức: thống kê, danh sách, chi tiết, CRUD, xó
 |---|---|
 | **Method** | PUT / PATCH |
 | **Path** | `/api/posts/{id}` |
-| **Body** | Giống tạo (các field tùy chọn). Thêm: `category_ids` (ghi đè danh sách danh mục), `images[]` (ảnh mới append), `remove_attachment_ids` (mảng ID đính kèm cần xóa). |
+| **Body** | Giống tạo (các field tùy chọn). Thêm: `category_ids` (ghi đè danh sách danh mục), `images[]` (ảnh mới append), `remove_attachment_ids` (mảng ID media đính kèm cần xóa). |
 | **Response** | Object bài viết đã cập nhật (kèm categories, attachments). |
 
 ---

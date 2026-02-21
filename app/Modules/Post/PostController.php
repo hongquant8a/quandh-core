@@ -70,7 +70,7 @@ class PostController extends Controller
      *
      * @urlParam post integer required ID bài viết. Example: 1
      * @apiResource App\Modules\Post\Resources\PostResource
-     * @apiResourceModel App\Modules\Post\Models\Post with=categories,attachments
+     * @apiResourceModel App\Modules\Post\Models\Post with=categories,media
      * @apiResourceAdditional success=true
      */
     public function show(Post $post)
@@ -88,7 +88,7 @@ class PostController extends Controller
      * @bodyParam category_ids array Mảng ID danh mục (tối đa 20). Example: [1, 2]
      * @bodyParam images[] file Ảnh đính kèm (jpeg/png/gif/webp, tối đa 10 ảnh, mỗi ảnh ≤ 5MB).
      * @apiResource App\Modules\Post\Resources\PostResource status=201
-     * @apiResourceModel App\Modules\Post\Models\Post with=categories,attachments
+     * @apiResourceModel App\Modules\Post\Models\Post with=categories,media
      * @apiResourceAdditional success=true message="Bài viết đã được tạo thành công!"
      */
     public function store(StorePostRequest $request)
@@ -108,7 +108,7 @@ class PostController extends Controller
      * @bodyParam images[] file Ảnh mới (append).
      * @bodyParam remove_attachment_ids array Mảng ID đính kèm cần xóa.
      * @apiResource App\Modules\Post\Resources\PostResource
-     * @apiResourceModel App\Modules\Post\Models\Post with=categories,attachments
+     * @apiResourceModel App\Modules\Post\Models\Post with=categories,media
      * @apiResourceAdditional success=true message="Bài viết đã được cập nhật!"
      */
     public function update(UpdatePostRequest $request, Post $post)

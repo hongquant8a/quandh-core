@@ -162,8 +162,8 @@ class PermissionSeeder extends Seeder
             return;
         }
 
-        // Tất cả role gắn với team mặc định (model_has_roles.organization_id NOT NULL khi bật teams)
-        // Super Admin: toàn quyền, thuộc team mặc định (roles chuẩn Spatie, không có status)
+        // Tất cả role gắn với organization mặc định (model_has_roles.organization_id NOT NULL khi bật teams)
+        // Super Admin: toàn quyền, thuộc organization mặc định (roles chuẩn Spatie, không có status)
         Role::firstOrCreate(
             ['name' => 'Super Admin', 'guard_name' => self::GUARD, 'organization_id' => $defaultOrganization->id]
         );

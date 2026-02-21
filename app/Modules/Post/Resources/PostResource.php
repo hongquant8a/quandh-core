@@ -5,6 +5,7 @@ namespace App\Modules\Post\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class PostResource extends JsonResource
 {
@@ -18,15 +19,19 @@ class PostResource extends JsonResource
             'status'      => $this->status,
             'view_count'  => (int) $this->view_count,
             'categories'  => $this->whenLoaded('categories', fn () => PostCategoryResource::collection($this->categories)),
-            'attachments' => $this->whenLoaded('attachments', function () {
-                return $this->attachments->map(fn ($a) => [
-                    'id'       => $a->id,
-                    'url'      => $a->url,
-                    'original_name' => $a->original_name,
-                    'mime_type' => $a->mime_type,
-                    'size'     => $a->size,
-                    'sort_order' => $a->sort_order,
-                ]);
+            'attachments' => $this->whenLoaded('media', function () {
+                return $this->media
+                    ->where('collection_name', 'post-attachments')
+                    ->sortBy('order_column')
+                    ->values()
+                    ->map(fn (Media $media) => [
+                        'id' => $media->id,
+                        'url' => $media->getFullUrl(),
+                        'original_name' => $media->getCustomProperty('original_name') ?: $media->file_name,
+                        'mime_type' => $media->mime_type,
+                        'size' => $media->size,
+                        'sort_order' => $media->order_column,
+                    ]);
             }),
             'created_by'  => $this->creator->name ?? 'N/A',
             'updated_by'  => $this->editor->name ?? 'N/A',

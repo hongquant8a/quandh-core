@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
-     * Danh mục tin tức phân cấp (cây) dùng Nested Set.
+ * Run the migrations.
+ * Danh mục tin tức phân cấp theo parent_id.
      */
     public function up(): void
     {
@@ -19,8 +19,12 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('status')->default('active'); // active, inactive
             $table->unsignedInteger('sort_order')->default(0);
-            $table->nestedSet();
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
+
+            $table->foreign('parent_id')->references('id')->on('post_categories')->nullOnDelete();
         });
     }
 
@@ -29,9 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('post_categories', function (Blueprint $table) {
-            $table->dropNestedSet();
-        });
         Schema::dropIfExists('post_categories');
     }
 };

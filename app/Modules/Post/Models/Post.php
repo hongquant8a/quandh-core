@@ -5,10 +5,14 @@ namespace App\Modules\Post\Models;
 use App\Modules\Core\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Post extends Model
+class Post extends Model implements HasMedia
 {
     use HasFactory;
+    use InteractsWithMedia;
 
     protected static function newFactory()
     {
@@ -53,7 +57,16 @@ class Post extends Model
 
     public function attachments()
     {
-        return $this->hasMany(PostAttachment::class)->orderBy('sort_order');
+        return $this->media()->where('collection_name', 'post-attachments')->orderBy('order_column');
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('post-attachments');
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
     }
 
     public function scopeFilter($query, array $filters)

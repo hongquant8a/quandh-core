@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->string('status')->default('draft'); // draft, published, archived...
+            $table->unsignedInteger('view_count')->default(0);
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }

@@ -6,7 +6,7 @@ use App\Modules\Post\Enums\PostStatusEnum;
 use App\Modules\Post\Exports\PostsExport;
 use App\Modules\Post\Imports\PostsImport;
 use App\Modules\Post\Models\Post;
-use App\Modules\Post\Models\PostAttachment;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -33,42 +33,59 @@ class PostService
 
     public function show(Post $post): Post
     {
-        return $post->load(['categories', 'attachments']);
+        return $post->load(['categories', 'media']);
     }
 
     public function store(array $validated, array $images = []): Post
     {
-        return DB::transaction(function () use ($validated, $images) {
-            $data = collect($validated)->except(['images', 'category_ids'])->all();
-            $post = Post::create($data);
+        $storedFiles = [];
 
-            $this->syncPostCategories($post, $validated);
-            $this->savePostAttachments($post, $images);
+        try {
+            return DB::transaction(function () use ($validated, $images, &$storedFiles) {
+                $data = collect($validated)->except(['images', 'category_ids'])->all();
+                $post = Post::create($data);
 
-            return $post->load(['categories', 'attachments']);
-        });
+                $this->syncPostCategories($post, $validated);
+                $this->savePostAttachments($post, $images, $storedFiles);
+
+                return $post->load(['categories', 'media']);
+            });
+        } catch (\Throwable $exception) {
+            $this->cleanupStoredMediaFiles($storedFiles);
+            throw $exception;
+        }
     }
 
     public function update(Post $post, array $validated, array $images = []): Post
     {
-        return DB::transaction(function () use ($post, $validated, $images) {
-            $data = collect($validated)->except(['images', 'remove_attachment_ids', 'category_ids'])->all();
-            $post->update($data);
+        $storedFiles = [];
 
-            if (array_key_exists('category_ids', $validated)) {
-                $this->syncPostCategories($post, $validated);
-            }
+        try {
+            return DB::transaction(function () use ($post, $validated, $images, &$storedFiles) {
+                $data = collect($validated)->except(['images', 'remove_attachment_ids', 'category_ids'])->all();
+                $post->update($data);
 
-            if (! empty($validated['remove_attachment_ids'])) {
-                PostAttachment::where('post_id', $post->id)
-                    ->whereIn('id', $validated['remove_attachment_ids'])
-                    ->delete();
-            }
+                if (array_key_exists('category_ids', $validated)) {
+                    $this->syncPostCategories($post, $validated);
+                }
 
-            $this->savePostAttachments($post, $images);
+                if (! empty($validated['remove_attachment_ids'])) {
+                    $post->media()
+                        ->where('collection_name', 'post-attachments')
+                        ->whereIn('id', $validated['remove_attachment_ids'])
+                        ->get()
+                        ->each
+                        ->delete();
+                }
 
-            return $post->load(['categories', 'attachments']);
-        });
+                $this->savePostAttachments($post, $images, $storedFiles);
+
+                return $post->load(['categories', 'media']);
+            });
+        } catch (\Throwable $exception) {
+            $this->cleanupStoredMediaFiles($storedFiles);
+            throw $exception;
+        }
     }
 
     public function destroy(Post $post): void
@@ -100,7 +117,7 @@ class PostService
     {
         $post->update(['status' => $status]);
 
-        return $post->load(['categories', 'attachments']);
+        return $post->load(['categories', 'media']);
     }
 
     public function incrementView(Post $post): int
@@ -116,26 +133,34 @@ class PostService
         $post->categories()->sync($ids);
     }
 
-    private function savePostAttachments(Post $post, array $files): void
+    private function savePostAttachments(Post $post, array $files, array &$storedFiles): void
     {
-        $sortOrder = $post->attachments()->max('sort_order') ?? 0;
-
         foreach ($files as $file) {
             if (! $file || ! $file->isValid()) {
                 continue;
             }
 
-            $path = $file->store('post-attachments/' . $post->id, 'public');
+            $media = $post->addMedia($file)
+                ->usingName(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
+                ->usingFileName($file->hashName())
+                ->withCustomProperties([
+                    'original_name' => $file->getClientOriginalName(),
+                ])
+                ->toMediaCollection('post-attachments', 'public');
 
-            PostAttachment::create([
-                'post_id' => $post->id,
-                'path' => $path,
-                'disk' => 'public',
-                'original_name' => $file->getClientOriginalName(),
-                'mime_type' => $file->getMimeType(),
-                'size' => $file->getSize(),
-                'sort_order' => ++$sortOrder,
-            ]);
+            $storedFiles[] = [
+                'disk' => $media->disk,
+                'path' => $media->getPathRelativeToRoot(),
+            ];
+        }
+    }
+
+    private function cleanupStoredMediaFiles(array $storedFiles): void
+    {
+        foreach ($storedFiles as $storedFile) {
+            if (! empty($storedFile['disk']) && ! empty($storedFile['path'])) {
+                Storage::disk($storedFile['disk'])->delete($storedFile['path']);
+            }
         }
     }
 }

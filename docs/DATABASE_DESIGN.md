@@ -246,21 +246,29 @@ Bài viết tin tức.
 
 **Quan hệ:**  
 - N-n với `post_categories` qua bảng `post_post_category`.  
-- 1-n với `post_attachments` (một bài có nhiều đính kèm).
+- 1-n (polymorphic) với `media` qua Spatie Media Library (`model_type = App\Modules\Post\Models\Post`, `collection_name = post-attachments`).
 
-### `post_attachments`
-File/ảnh đính kèm bài viết.
+### `media`
+Bảng media dùng chung từ Spatie Media Library (quản lý file polymorphic cho nhiều model).
 
 | Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
 |-----|------|----------|----------|---------------------|
 | id | bigint unsigned | No | — | PK, auto increment |
-| post_id | bigint unsigned | No | — | FK → posts.id, ON DELETE CASCADE |
-| path | varchar(255) | No | — | Đường dẫn file trên disk |
-| disk | varchar(255) | No | 'public' | |
-| original_name | varchar(255) | Yes | null | |
+| model_type | varchar(255) | No | — | Polymorphic type |
+| model_id | bigint unsigned | No | — | Polymorphic id |
+| uuid | char(36) | Yes | null | UNIQUE |
+| collection_name | varchar(255) | No | — | Ví dụ: `post-attachments` |
+| name | varchar(255) | No | — | Tên hiển thị |
+| file_name | varchar(255) | No | — | Tên file lưu trên disk |
 | mime_type | varchar(255) | Yes | null | |
-| size | int unsigned | Yes | null | Kích thước (bytes) |
-| sort_order | int unsigned | No | 0 | |
+| disk | varchar(255) | No | — | Disk lưu trữ (`public`) |
+| conversions_disk | varchar(255) | Yes | null | |
+| size | bigint unsigned | No | — | Kích thước (bytes) |
+| manipulations | json | No | — | |
+| custom_properties | json | No | — | Lưu metadata (vd `original_name`) |
+| generated_conversions | json | No | — | |
+| responsive_images | json | No | — | |
+| order_column | int unsigned | Yes | null | Thứ tự trong collection, có index |
 | created_at | timestamp | Yes | null | |
 | updated_at | timestamp | Yes | null | |
 
@@ -301,7 +309,7 @@ Bảng pivot: bài viết ↔ danh mục (n-n).
 
 ```
 users ──┬── created_by/updated_by ──► posts
-        │                                    ├── 1-n ──► post_attachments
+        │                                    ├── 1-n (polymorphic) ──► media
         │                                    └── n-n ──► post_post_category ◄── n-n ── post_categories
         └── created_by/updated_by ──► post_categories
 ```

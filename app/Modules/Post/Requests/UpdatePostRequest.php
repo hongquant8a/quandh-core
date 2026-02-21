@@ -23,7 +23,7 @@ class UpdatePostRequest extends FormRequest
             'images'                => 'nullable|array|max:10',
             'images.*'              => 'image|mimes:jpeg,png,gif,webp|max:5120',
             'remove_attachment_ids' => 'nullable|array',
-            'remove_attachment_ids.*' => 'integer|exists:post_attachments,id',
+            'remove_attachment_ids.*' => 'integer|exists:media,id',
         ];
     }
 
