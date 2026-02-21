@@ -2,17 +2,21 @@
 
 namespace App\Modules\Post\Services;
 
+use App\Modules\Core\Services\MediaService;
 use App\Modules\Post\Enums\PostStatusEnum;
 use App\Modules\Post\Exports\PostsExport;
 use App\Modules\Post\Imports\PostsImport;
 use App\Modules\Post\Models\Post;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PostService
 {
+    public function __construct(private MediaService $mediaService)
+    {
+    }
+
     public function stats(array $filters): array
     {
         $base = Post::filter($filters);
@@ -70,12 +74,7 @@ class PostService
                 }
 
                 if (! empty($validated['remove_attachment_ids'])) {
-                    $post->media()
-                        ->where('collection_name', 'post-attachments')
-                        ->whereIn('id', $validated['remove_attachment_ids'])
-                        ->get()
-                        ->each
-                        ->delete();
+                    $this->mediaService->removeByIds($post, $validated['remove_attachment_ids'], 'post-attachments');
                 }
 
                 $this->savePostAttachments($post, $images, $storedFiles);
@@ -135,32 +134,15 @@ class PostService
 
     private function savePostAttachments(Post $post, array $files, array &$storedFiles): void
     {
-        foreach ($files as $file) {
-            if (! $file || ! $file->isValid()) {
-                continue;
-            }
+        $uploaded = $this->mediaService->uploadMany($post, $files, 'post-attachments', [
+            'disk' => 'public',
+        ]);
 
-            $media = $post->addMedia($file)
-                ->usingName(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
-                ->usingFileName($file->hashName())
-                ->withCustomProperties([
-                    'original_name' => $file->getClientOriginalName(),
-                ])
-                ->toMediaCollection('post-attachments', 'public');
-
-            $storedFiles[] = [
-                'disk' => $media->disk,
-                'path' => $media->getPathRelativeToRoot(),
-            ];
-        }
+        $storedFiles = array_merge($storedFiles, $uploaded);
     }
 
     private function cleanupStoredMediaFiles(array $storedFiles): void
     {
-        foreach ($storedFiles as $storedFile) {
-            if (! empty($storedFile['disk']) && ! empty($storedFile['path'])) {
-                Storage::disk($storedFile['disk'])->delete($storedFile['path']);
-            }
-        }
+        $this->mediaService->cleanupStoredFiles($storedFiles);
     }
 }

@@ -142,7 +142,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-21T07:30:11'
+        example: '2026-02-21T11:53:02'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -175,7 +175,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: desc
+        example: asc
         type: string
         enumValues:
           - asc
@@ -197,10 +197,10 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-21T07:30:11'
+      from_date: '2026-02-21T11:53:02'
       to_date: '2052-03-16'
       sort_by: 'n'
-      sort_order: desc
+      sort_order: asc
       limit: 7
     fileParameters: []
     responses:
@@ -370,7 +370,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-21T07:30:11'
+        example: '2026-02-21T11:53:02'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -403,7 +403,7 @@ endpoints:
         name: sort_order
         description: ''
         required: false
-        example: asc
+        example: desc
         type: string
         enumValues:
           - asc
@@ -425,10 +425,10 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-21T07:30:11'
+      from_date: '2026-02-21T11:53:02'
       to_date: '2052-03-16'
       sort_by: 'n'
-      sort_order: asc
+      sort_order: desc
       limit: 7
     fileParameters: []
     responses:
@@ -766,7 +766,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-21T07:30:11'
+        example: '2026-02-21T11:53:02'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -821,7 +821,7 @@ endpoints:
     cleanBodyParameters:
       search: b
       status: architecto
-      from_date: '2026-02-21T07:30:11'
+      from_date: '2026-02-21T11:53:02'
       to_date: '2052-03-16'
       sort_by: 'n'
       sort_order: asc
