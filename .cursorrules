@@ -1,28 +1,30 @@
 # Laravel Modular & Documentation Rules for Quân
 
-- **Ngôn ngữ**: Sử dụng tiếng Việt cho toàn bộ tài liệu, phản hồi và comment giải thích logic.
-- **Môi trường**: Luôn sử dụng lệnh `sail` thay thế cho `php` khi thực thi công việc. Ví dụ: `sail artisan migrate`.
+- **Ngôn ngữ**:
+    - **Bắt buộc**: Sử dụng tiếng Việt cho toàn bộ tài liệu, phản hồi và comment giải thích logic.
+- **Môi trường**:
+    - **Bắt buộc**: Luôn sử dụng lệnh `sail` thay thế cho `php` khi thực thi công việc. Ví dụ: `sail artisan migrate`.
 - **Cấu trúc Thư mục**: 
-    - Luôn làm việc theo cấu trúc Modular tại `/app/Modules/`. 
-    - Namespace phải khớp chính xác với cấu trúc thư mục (ví dụ: `App\Modules\Voter\Controllers`).
-    - Ưu tiên tạo file mới trong module thay vì các thư mục mặc định của Laravel.
-    - **Enums**: Mỗi module có thư mục `Enums/` chứa enum (trạng thái, loại, ...). Ví dụ: `Core/Enums/UserStatusEnum.php`, `Post/Enums/PostStatusEnum.php`. Enum dùng `rule()` và `values()` cho validation.
+    - **Bắt buộc**: Luôn làm việc theo cấu trúc Modular tại `/app/Modules/`. 
+    - **Bắt buộc**: Namespace phải khớp chính xác với cấu trúc thư mục (ví dụ: `App\Modules\Voter\Controllers`).
+    - **Khuyến nghị**: Ưu tiên tạo file mới trong module thay vì các thư mục mặc định của Laravel.
+    - **Bắt buộc**: Mỗi module có thư mục `Enums/` chứa enum (trạng thái, loại, ...). Ví dụ: `Core/Enums/UserStatusEnum.php`, `Post/Enums/PostStatusEnum.php`. Enum dùng `rule()` và `values()` cho validation.
 
 - **Module Chức năng Chuẩn**: 
-    - Một module mới mặc định phải bao gồm các hàm: `stats`, `index`, `show`, `store`, `update`, `destroy`, `bulk delete`, `bulk update status`, `change status`, `export`, `import`.
-    - **Bộ lọc index**: Luôn có tìm kiếm theo tên (hoặc trường chính), trạng thái (status), khoảng ngày tạo (từ ngày đến ngày — `created_at`), và sắp xếp theo `id`, `created_at`, `updated_at` cùng các trường thông tin khác phù hợp (ví dụ: `title`, `sort_order`, `view_count`).
+    - **Bắt buộc**: Một module mới mặc định phải bao gồm các hàm: `stats`, `index`, `show`, `store`, `update`, `destroy`, `bulk delete`, `bulk update status`, `change status`, `export`, `import`.
+    - **Bắt buộc**: Bộ lọc `index` phải có tìm kiếm theo tên (hoặc trường chính), trạng thái (`status`), khoảng ngày tạo (`created_at` từ ngày - đến ngày), và sắp xếp theo `id`, `created_at`, `updated_at` cùng các trường phù hợp (ví dụ: `title`, `sort_order`, `view_count`).
 
 - **Export**:
-    - Khi export Excel, luôn xuất đầy đủ các trường thông tin giống danh sách index (Resource).
-    - Các trường quan hệ (created_by, created_at, updated_by, updated_at, status, categories, ...) phải có trong export tương ứng index.
+    - **Bắt buộc**: Khi export Excel, luôn xuất đầy đủ các trường thông tin giống danh sách index (Resource).
+    - **Bắt buộc**: Các trường quan hệ (created_by, created_at, updated_by, updated_at, status, categories, ...) phải có trong export tương ứng index.
 
 - **API Response (Trait RespondsWithJson)**:
-    - Trait tại `App\Modules\Core\Traits\RespondsWithJson`, dùng qua Controller base. Chuẩn response: `success` (bool), `message` (optional), `data` (optional).
-    - `$this->success($data, $message)` – stats, destroy, bulk, import.
-    - `$this->successResource(JsonResource, $message)` – show, store, update, changeStatus.
-    - `$this->successCollection(ResourceCollection, $message)` – index, tree.
-    - `$this->error($message, $code, $errors, $errorCode)` – lỗi chung.
-    - `$this->unauthorized()`, `$this->forbidden()`, `$this->notFound()`, `$this->conflict()` – shortcuts.
+    - **Bắt buộc**: Dùng trait `App\Modules\Core\Traits\RespondsWithJson` qua Controller base. Chuẩn response: `success` (bool), `message` (optional), `data` (optional).
+    - **Bắt buộc**: `$this->success($data, $message)` – stats, destroy, bulk, import.
+    - **Bắt buộc**: `$this->successResource(JsonResource, $message)` – show, store, update, changeStatus.
+    - **Bắt buộc**: `$this->successCollection(ResourceCollection, $message)` – index, tree.
+    - **Bắt buộc**: `$this->error($message, $code, $errors, $errorCode)` – lỗi chung.
+    - **Khuyến nghị**: Dùng shortcut `$this->unauthorized()`, `$this->forbidden()`, `$this->notFound()`, `$this->conflict()`.
 
 - **Service Layer & Transaction**:
     - **Bắt buộc**: Mỗi module phải có `Services/` để chứa nghiệp vụ. Namespace chuẩn: `App\Modules\<Module>\Services`. Quy ước tên: `{Resource}Service` (ví dụ: `PostService`, `UserService`).
@@ -42,35 +44,35 @@
         - [ ] Sau refactor, response format và HTTP status code vẫn giữ đúng chuẩn hiện tại.
 
 - **API Resource & Localization**:
-    - Luôn sử dụng Resource để trả về dữ liệu API.
-    - **Định dạng ngày tháng**: Trong Resource, bắt buộc chuyển đổi dữ liệu thời gian về định dạng Việt Nam:
-        - Các trường chỉ có ngày (ví dụ: birthday): `d/m/Y`.
-        - Các trường có cả giờ (ví dụ: created_at, updated_at): `H:i:s d/m/Y`.
-    - Ví dụ: `'created_at' => $this->created_at->format('H:i:s d/m/Y')`.
+    - **Bắt buộc**: Luôn sử dụng Resource để trả về dữ liệu API.
+    - **Bắt buộc**: Trong Resource, chuyển đổi dữ liệu thời gian về định dạng Việt Nam:
+        - **Bắt buộc**: Các trường chỉ có ngày (ví dụ: birthday): `d/m/Y`.
+        - **Bắt buộc**: Các trường có cả giờ (ví dụ: created_at, updated_at): `H:i:s d/m/Y`.
+    - **Ví dụ**: `'created_at' => $this->created_at->format('H:i:s d/m/Y')`.
 
 - **Tài liệu & Thiết kế**:
-    - **Tài liệu câu trả lời**: Lưu các phân tích, đánh giá tổng quan về hệ thống, giải thích kiến trúc hoặc giải pháp phức tạp vào `/docs/answer`.
-    - **Tài liệu API**: Khi tạo/cập nhật Controller, phải cập nhật file Markdown tương ứng trong `/docs/api` (gồm: Method, Path, Request Body, Response mẫu).
-    - **Database**: Cập nhật sơ đồ bảng vào `DATABASE_DESIGN.md` khi có Migration mới.
-    - **Cấu trúc dự án**: Cập nhật thông tin chi tiết về tập tin, thư mục vào `STRUCTURE_DESIGN.md` khi có thay đổi.
+    - **Bắt buộc**: Lưu các phân tích, đánh giá tổng quan hệ thống, giải thích kiến trúc hoặc giải pháp phức tạp vào `/docs/answer`.
+    - **Bắt buộc**: Khi tạo/cập nhật Controller, cập nhật file Markdown tương ứng trong `/docs/api` (gồm: Method, Path, Request Body, Response mẫu).
+    - **Bắt buộc**: Cập nhật sơ đồ bảng vào `DATABASE_DESIGN.md` khi có Migration mới.
+    - **Bắt buộc**: Cập nhật thông tin chi tiết tập tin/thư mục vào `STRUCTURE_DESIGN.md` khi có thay đổi.
 
 - **Scribe (API documentation)**:
-    - Khi tạo hoặc thay đổi Controller API, **bắt buộc** bổ sung PHPDoc cho Scribe để sinh tài liệu API (`sail artisan scribe:generate`).
-    - **Trên class**: dùng `@group Tên nhóm` (ví dụ: `@group Core - User`) và mô tả ngắn chức năng của controller.
-    - **Trên từng action (method)**:
-        - Mô tả ngắn bằng tiếng Việt cho từng endpoint.
-        - `@queryParam` cho tham số query (search, status, sort_by, sort_order, limit, from_date, to_date, ...): ghi rõ kiểu, mô tả, Example nếu cần.
-        - `@urlParam` cho tham số trên đường dẫn (ví dụ: `{user}`, `{id}`): required/optional, mô tả, Example.
-        - `@bodyParam` cho request body (POST/PUT/PATCH): tên trường, kiểu, required/optional, mô tả, Example.
-        - `@response` hoặc `@responseField` khi cần mô tả response mẫu cụ thể.
-    - Đồng bộ với chuẩn module: mỗi action (stats, index, show, store, update, destroy, bulkDestroy, bulkUpdateStatus, changeStatus, export, import) đều có block PHPDoc đầy đủ tham số.
-    - Tham khảo style trong `app/Modules/Post/PostController.php` và `app/Modules/Post/PostCategoryController.php`.
+    - **Bắt buộc**: Khi tạo hoặc thay đổi Controller API, bổ sung PHPDoc cho Scribe để sinh tài liệu API (`sail artisan scribe:generate`).
+    - **Bắt buộc**: Trên class dùng `@group Tên nhóm` (ví dụ: `@group Core - User`) và mô tả ngắn chức năng controller.
+    - **Bắt buộc**: Trên từng action (method):
+        - **Bắt buộc**: Mô tả ngắn bằng tiếng Việt cho từng endpoint.
+        - **Bắt buộc**: `@queryParam` cho tham số query (search, status, sort_by, sort_order, limit, from_date, to_date, ...): ghi rõ kiểu, mô tả, Example nếu cần.
+        - **Bắt buộc**: `@urlParam` cho tham số đường dẫn (ví dụ: `{user}`, `{id}`): required/optional, mô tả, Example.
+        - **Bắt buộc**: `@bodyParam` cho request body (POST/PUT/PATCH): tên trường, kiểu, required/optional, mô tả, Example.
+        - **Khuyến nghị**: `@response` hoặc `@responseField` khi cần mô tả response mẫu cụ thể.
+    - **Bắt buộc**: Đồng bộ chuẩn module, mỗi action (stats, index, show, store, update, destroy, bulkDestroy, bulkUpdateStatus, changeStatus, export, import) phải có block PHPDoc đầy đủ tham số.
+    - **Khuyến nghị**: Tham khảo style trong `app/Modules/Post/PostController.php` và `app/Modules/Post/PostCategoryController.php`.
 
 - **Seed Permission (phân quyền)**:
-    - Danh sách permission chuẩn nằm trong `database/seeders/PermissionSeeder.php` (mảng `PERMISSIONS`: resource => [actions]).
-    - **Khi có thay đổi hoặc bổ sung chức năng**: thêm module mới (resource mới) hoặc thêm action mới vào controller (ví dụ: thêm action `duplicate`) thì **bắt buộc** cập nhật mảng permission trong PermissionSeeder cho đầy đủ (thêm resource hoặc thêm action vào resource tương ứng), sau đó chạy `sail artisan db:seed --class=PermissionSeeder` (hoặc migrate:fresh --seed) để đồng bộ quyền.
-    - Định dạng permission: `{resource}.{action}` (resource trùng prefix API: users, permissions, roles, organizations, posts, post-categories, log-activities).
-    - **Guard**: Dùng guard 'web' cho cả web và API Sanctum (đồng bộ với Spatie Permission).
+    - **Bắt buộc**: Danh sách permission chuẩn nằm trong `database/seeders/PermissionSeeder.php` (mảng `PERMISSIONS`: resource => [actions]).
+    - **Bắt buộc**: Khi có thay đổi/bổ sung chức năng (thêm resource mới hoặc action mới như `duplicate`), phải cập nhật mảng permission trong `PermissionSeeder`, sau đó chạy `sail artisan db:seed --class=PermissionSeeder` (hoặc `migrate:fresh --seed`) để đồng bộ quyền.
+    - **Bắt buộc**: Định dạng permission: `{resource}.{action}` (resource trùng prefix API: users, permissions, roles, organizations, posts, post-categories, log-activities).
+    - **Bắt buộc**: Dùng guard `web` cho cả web và API Sanctum (đồng bộ với Spatie Permission).
 
 - **LogActivity Middleware (mô tả nhật ký)**:
-    - Khi thêm resource hoặc action mới: cập nhật `app/Modules/Core/Middleware/LogActivity.php`: resourceLabel(), actionLabels, pathActions, route params.
+    - **Bắt buộc**: Khi thêm resource hoặc action mới, cập nhật `app/Modules/Core/Middleware/LogActivity.php`: `resourceLabel()`, `actionLabels`, `pathActions`, route params.
