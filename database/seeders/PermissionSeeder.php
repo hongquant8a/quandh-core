@@ -101,7 +101,7 @@ class PermissionSeeder extends Seeder
         $this->seedPermissions();
         $this->seedRoles();
         $this->assignPermissionsToRoles();
-        $this->assignSuperAdminToFirstUser();
+        $this->seedFixedUsersAndAssignRoles();
     }
 
     /** Chuyển permission/role từ guard api sang web (một lần khi đổi chiến lược guard). */
@@ -246,8 +246,12 @@ class PermissionSeeder extends Seeder
         }
     }
 
-    /** Gán role cho user: user 1 = Super Admin, user 2 = Admin, user 3 = Vai trò mẫu. */
-    protected function assignSuperAdminToFirstUser(): void
+    /**
+     * Tạo user cố định để đăng nhập kiểm tra và gán role:
+     * - admin@example.com => Super Admin
+     * - basic@example.com => Vai trò mẫu (quyền cơ bản)
+     */
+    protected function seedFixedUsersAndAssignRoles(): void
     {
         $defaultOrganization = Organization::where('slug', 'default')->first();
         if (! $defaultOrganization) {
@@ -256,22 +260,44 @@ class PermissionSeeder extends Seeder
         setPermissionsTeamId($defaultOrganization->id);
 
         $superAdmin = Role::where('name', 'Super Admin')->where('organization_id', $defaultOrganization->id)->where('guard_name', self::GUARD)->first();
-        $admin = Role::where('name', 'Admin')->where('organization_id', $defaultOrganization->id)->where('guard_name', self::GUARD)->first();
         $sampleRole = Role::where('name', 'Vai trò mẫu')->where('organization_id', $defaultOrganization->id)->where('guard_name', self::GUARD)->first();
 
-        $user1 = User::find(1);
-        if ($user1 && $superAdmin && ! $user1->hasRole($superAdmin)) {
-            $user1->assignRole($superAdmin);
+        $superAdminUser = User::updateOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'admin',
+                'user_name' => 'admin',
+                'password' => 'quandcore**11',
+                'status' => StatusEnum::Active->value,
+                'email_verified_at' => now(),
+            ]
+        );
+        $superAdminUser->forceFill([
+            'created_by' => $superAdminUser->id,
+            'updated_by' => $superAdminUser->id,
+        ])->save();
+
+        if ($superAdmin) {
+            $superAdminUser->syncRoles([$superAdmin]);
         }
 
-        $user2 = User::find(2);
-        if ($user2 && $admin && ! $user2->hasRole($admin)) {
-            $user2->assignRole($admin);
-        }
+        $basicUser = User::updateOrCreate(
+            ['email' => 'basic@example.com'],
+            [
+                'name' => 'basic',
+                'user_name' => 'basic',
+                'password' => 'quandcore**11',
+                'status' => StatusEnum::Active->value,
+                'email_verified_at' => now(),
+            ]
+        );
+        $basicUser->forceFill([
+            'created_by' => $superAdminUser->id,
+            'updated_by' => $superAdminUser->id,
+        ])->save();
 
-        $user3 = User::find(3);
-        if ($user3 && $sampleRole && ! $user3->hasRole($sampleRole)) {
-            $user3->assignRole($sampleRole);
+        if ($sampleRole) {
+            $basicUser->syncRoles([$sampleRole]);
         }
     }
 
