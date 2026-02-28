@@ -1,22 +1,22 @@
-name: 'Document - Lĩnh vực'
+name: 'Document - Văn bản'
 description: |-
 
-  Quản lý danh mục lĩnh vực: thống kê, danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập và đổi trạng thái.
+  Quản lý văn bản pháp lý và các tệp đính kèm.
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/document-fields/export
+    uri: api/documents/export
     metadata:
       custom: []
-      groupName: 'Document - Lĩnh vực'
+      groupName: 'Document - Văn bản'
       groupDescription: |-
 
-        Quản lý danh mục lĩnh vực: thống kê, danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập và đổi trạng thái.
+        Quản lý văn bản pháp lý và các tệp đính kèm.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Xuất Excel lĩnh vực'
+      title: 'Xuất Excel danh sách văn bản'
       description: ''
       authenticated: true
       deprecated: false
@@ -30,35 +30,9 @@ endpoints:
       search:
         custom: []
         name: search
-        description: 'Từ khóa tìm kiếm theo tên.'
+        description: 'Tìm theo số ký hiệu hoặc tên văn bản.'
         required: false
         example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: 'Lọc theo trạng thái: active, inactive.'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      search: architecto
-      status: architecto
-    bodyParameters:
-      search:
-        custom: []
-        name: search
-        description: 'Must not be greater than 100 characters.'
-        required: false
-        example: b
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -67,7 +41,7 @@ endpoints:
       status:
         custom: []
         name: status
-        description: ''
+        description: 'Trạng thái: active, inactive.'
         required: false
         example: architecto
         type: string
@@ -78,9 +52,9 @@ endpoints:
       from_date:
         custom: []
         name: from_date
-        description: 'Must be a valid date.'
+        description: 'Lọc từ ngày tạo (Y-m-d). Must be a valid date.'
         required: false
-        example: '2026-02-23T13:24:33'
+        example: '2026-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -89,9 +63,9 @@ endpoints:
       to_date:
         custom: []
         name: to_date
-        description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
+        description: 'Lọc đến ngày tạo (Y-m-d). Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
-        example: '2052-03-18'
+        example: '2026-12-31'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -100,9 +74,9 @@ endpoints:
       sort_by:
         custom: []
         name: sort_by
-        description: 'Must not be greater than 50 characters.'
+        description: 'Trường dùng để sắp xếp. Must not be greater than 50 characters.'
         required: false
-        example: 'n'
+        example: created_at
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -111,7 +85,7 @@ endpoints:
       sort_order:
         custom: []
         name: sort_order
-        description: ''
+        description: 'Thứ tự sắp xếp.'
         required: false
         example: desc
         type: string
@@ -124,22 +98,84 @@ endpoints:
       limit:
         custom: []
         name: limit
-        description: 'Must be at least 1. Must not be greater than 100.'
+        description: 'Số bản ghi mỗi trang (1-100). Must be at least 1. Must not be greater than 100.'
         required: false
-        example: 7
+        example: 10
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         deprecated: false
-    cleanBodyParameters:
-      search: b
+      document_type_id:
+        custom: []
+        name: document_type_id
+        description: 'Lọc theo loại văn bản.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      document_field_id:
+        custom: []
+        name: document_field_id
+        description: 'Lọc theo lĩnh vực.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      issuing_agency_id:
+        custom: []
+        name: issuing_agency_id
+        description: 'Lọc theo cơ quan ban hành.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      issuing_level_id:
+        custom: []
+        name: issuing_level_id
+        description: 'Lọc theo cấp ban hành.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      signer_id:
+        custom: []
+        name: signer_id
+        description: 'Lọc theo người ký.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: architecto
       status: architecto
-      from_date: '2026-02-23T13:24:33'
-      to_date: '2052-03-18'
-      sort_by: 'n'
+      from_date: '2026-01-01'
+      to_date: '2026-12-31'
+      sort_by: created_at
       sort_order: desc
-      limit: 7
+      limit: 10
+      document_type_id: 16
+      document_field_id: 16
+      issuing_agency_id: 16
+      issuing_level_id: 16
+      signer_id: 16
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses:
       -
@@ -163,16 +199,16 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/document-fields/import
+    uri: api/documents/import
     metadata:
       custom: []
-      groupName: 'Document - Lĩnh vực'
+      groupName: 'Document - Văn bản'
       groupDescription: |-
 
-        Quản lý danh mục lĩnh vực: thống kê, danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập và đổi trạng thái.
+        Quản lý văn bản pháp lý và các tệp đính kèm.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Import lĩnh vực'
+      title: 'Import Excel văn bản'
       description: ''
       authenticated: true
       deprecated: false
@@ -203,7 +239,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"success": true, "message": "Import lĩnh vực thành công."}'
+        content: '{"success": true, "message": "Import văn bản thành công."}'
         headers: []
         description: ''
     responseFields: []
@@ -218,16 +254,16 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/document-fields/bulk-delete
+    uri: api/documents/bulk-delete
     metadata:
       custom: []
-      groupName: 'Document - Lĩnh vực'
+      groupName: 'Document - Văn bản'
       groupDescription: |-
 
-        Quản lý danh mục lĩnh vực: thống kê, danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập và đổi trạng thái.
+        Quản lý văn bản pháp lý và các tệp đính kèm.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Xóa hàng loạt lĩnh vực'
+      title: 'Xóa hàng loạt văn bản'
       description: ''
       authenticated: true
       deprecated: false
@@ -243,7 +279,7 @@ endpoints:
       ids:
         custom: []
         name: ids
-        description: 'Danh sách ID.'
+        description: 'Danh sách ID văn bản.'
         required: true
         example:
           - 1
@@ -264,7 +300,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"success": true, "message": "Xóa hàng loạt thành công!"}'
+        content: '{"success": true, "message": "Xóa hàng loạt văn bản thành công!"}'
         headers: []
         description: ''
     responseFields: []
@@ -279,16 +315,16 @@ endpoints:
     custom: []
     httpMethods:
       - PATCH
-    uri: api/document-fields/bulk-status
+    uri: api/documents/bulk-status
     metadata:
       custom: []
-      groupName: 'Document - Lĩnh vực'
+      groupName: 'Document - Văn bản'
       groupDescription: |-
 
-        Quản lý danh mục lĩnh vực: thống kê, danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập và đổi trạng thái.
+        Quản lý văn bản pháp lý và các tệp đính kèm.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Cập nhật trạng thái hàng loạt lĩnh vực'
+      title: 'Cập nhật trạng thái hàng loạt'
       description: ''
       authenticated: true
       deprecated: false
@@ -304,7 +340,7 @@ endpoints:
       ids:
         custom: []
         name: ids
-        description: 'Danh sách ID.'
+        description: 'Danh sách ID văn bản.'
         required: true
         example:
           - 1
@@ -352,17 +388,17 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/document-fields/stats
+    uri: api/documents/stats
     metadata:
       custom: []
-      groupName: 'Document - Lĩnh vực'
+      groupName: 'Document - Văn bản'
       groupDescription: |-
 
-        Quản lý danh mục lĩnh vực: thống kê, danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập và đổi trạng thái.
+        Quản lý văn bản pháp lý và các tệp đính kèm.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Thống kê lĩnh vực'
-      description: ''
+      title: 'Thống kê văn bản'
+      description: 'Tổng số văn bản, đang hoạt động (active), không hoạt động (inactive). Áp dụng cùng bộ lọc với danh sách.'
       authenticated: true
       deprecated: false
     headers:
@@ -375,24 +411,24 @@ endpoints:
       search:
         custom: []
         name: search
-        description: 'Từ khóa tìm kiếm theo tên.'
+        description: 'Tìm theo số ký hiệu hoặc tên văn bản.'
         required: false
-        example: architecto
+        example: VB-01
         type: string
         enumValues: []
-        exampleWasSpecified: false
-        nullable: false
+        exampleWasSpecified: true
+        nullable: true
         deprecated: false
       status:
         custom: []
         name: status
-        description: 'Lọc theo trạng thái: active, inactive.'
+        description: 'Trạng thái: active, inactive.'
         required: false
-        example: architecto
+        example: active
         type: string
         enumValues: []
-        exampleWasSpecified: false
-        nullable: false
+        exampleWasSpecified: true
+        nullable: true
         deprecated: false
       from_date:
         custom: []
@@ -403,7 +439,7 @@ endpoints:
         type: string
         enumValues: []
         exampleWasSpecified: true
-        nullable: false
+        nullable: true
         deprecated: false
       to_date:
         custom: []
@@ -414,111 +450,25 @@ endpoints:
         type: string
         enumValues: []
         exampleWasSpecified: true
-        nullable: false
+        nullable: true
         deprecated: false
       sort_by:
         custom: []
         name: sort_by
-        description: 'Sắp xếp theo: id, name, created_at, updated_at.'
+        description: 'Trường dùng để sắp xếp. Must not be greater than 50 characters.'
         required: false
         example: created_at
         type: string
         enumValues: []
-        exampleWasSpecified: true
-        nullable: false
+        exampleWasSpecified: false
+        nullable: true
         deprecated: false
       sort_order:
         custom: []
         name: sort_order
-        description: 'Thứ tự: asc, desc.'
+        description: 'Thứ tự sắp xếp.'
         required: false
         example: desc
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      limit:
-        custom: []
-        name: limit
-        description: 'Số bản ghi mỗi trang (1-100).'
-        required: false
-        example: 10
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      search: architecto
-      status: architecto
-      from_date: '2026-01-01'
-      to_date: '2026-12-31'
-      sort_by: created_at
-      sort_order: desc
-      limit: 10
-    bodyParameters:
-      search:
-        custom: []
-        name: search
-        description: 'Must not be greater than 100 characters.'
-        required: false
-        example: b
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      from_date:
-        custom: []
-        name: from_date
-        description: 'Must be a valid date.'
-        required: false
-        example: '2026-02-23T13:24:33'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      to_date:
-        custom: []
-        name: to_date
-        description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
-        required: false
-        example: '2052-03-18'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      sort_by:
-        custom: []
-        name: sort_by
-        description: 'Must not be greater than 50 characters.'
-        required: false
-        example: 'n'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      sort_order:
-        custom: []
-        name: sort_order
-        description: ''
-        required: false
-        example: asc
         type: string
         enumValues:
           - asc
@@ -529,28 +479,90 @@ endpoints:
       limit:
         custom: []
         name: limit
-        description: 'Must be at least 1. Must not be greater than 100.'
+        description: 'Số bản ghi mỗi trang (1-100). Must be at least 1. Must not be greater than 100.'
         required: false
-        example: 7
+        example: 10
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         deprecated: false
-    cleanBodyParameters:
-      search: b
-      status: architecto
-      from_date: '2026-02-23T13:24:33'
-      to_date: '2052-03-18'
-      sort_by: 'n'
-      sort_order: asc
-      limit: 7
+      document_type_id:
+        custom: []
+        name: document_type_id
+        description: 'Lọc theo loại văn bản.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      document_field_id:
+        custom: []
+        name: document_field_id
+        description: 'Lọc theo lĩnh vực.'
+        required: false
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      issuing_agency_id:
+        custom: []
+        name: issuing_agency_id
+        description: 'Lọc theo cơ quan ban hành.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      issuing_level_id:
+        custom: []
+        name: issuing_level_id
+        description: 'Lọc theo cấp ban hành.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      signer_id:
+        custom: []
+        name: signer_id
+        description: 'Lọc theo người ký.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: VB-01
+      status: active
+      from_date: '2026-01-01'
+      to_date: '2026-12-31'
+      sort_by: created_at
+      sort_order: desc
+      limit: 10
+      document_type_id: 1
+      document_field_id: 2
+      issuing_agency_id: 1
+      issuing_level_id: 1
+      signer_id: 1
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{"success": true, "data": {"total": 10, "active": 8, "inactive": 2}}'
+        content: '{"success": true, "data": {"total": 10, "active": 7, "inactive": 3}}'
         headers: []
         description: ''
     responseFields: []
@@ -565,16 +577,16 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/document-fields
+    uri: api/documents
     metadata:
       custom: []
-      groupName: 'Document - Lĩnh vực'
+      groupName: 'Document - Văn bản'
       groupDescription: |-
 
-        Quản lý danh mục lĩnh vực: thống kê, danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập và đổi trạng thái.
+        Quản lý văn bản pháp lý và các tệp đính kèm.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Danh sách lĩnh vực'
+      title: 'Danh sách văn bản'
       description: ''
       authenticated: true
       deprecated: false
@@ -588,78 +600,133 @@ endpoints:
       search:
         custom: []
         name: search
-        description: 'Từ khóa tìm kiếm theo tên.'
+        description: 'Tìm theo số ký hiệu hoặc tên văn bản.'
         required: false
         example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
         deprecated: false
       status:
         custom: []
         name: status
-        description: 'Lọc theo trạng thái: active, inactive.'
+        description: 'Trạng thái: active, inactive.'
         required: false
         example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
         deprecated: false
       from_date:
         custom: []
         name: from_date
-        description: 'date Lọc từ ngày tạo (Y-m-d).'
+        description: 'Lọc từ ngày tạo (Y-m-d). Must be a valid date.'
         required: false
         example: '2026-01-01'
         type: string
         enumValues: []
-        exampleWasSpecified: true
-        nullable: false
+        exampleWasSpecified: false
+        nullable: true
         deprecated: false
       to_date:
         custom: []
         name: to_date
-        description: 'date Lọc đến ngày tạo (Y-m-d).'
+        description: 'Lọc đến ngày tạo (Y-m-d). Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
         required: false
         example: '2026-12-31'
         type: string
         enumValues: []
-        exampleWasSpecified: true
-        nullable: false
+        exampleWasSpecified: false
+        nullable: true
         deprecated: false
       sort_by:
         custom: []
         name: sort_by
-        description: 'Sắp xếp theo: id, name, created_at, updated_at.'
+        description: 'Sắp xếp theo id, so_ky_hieu, ten_van_ban, ngay_ban_hanh, created_at, updated_at.'
         required: false
-        example: created_at
+        example: architecto
         type: string
         enumValues: []
-        exampleWasSpecified: true
-        nullable: false
+        exampleWasSpecified: false
+        nullable: true
         deprecated: false
       sort_order:
         custom: []
         name: sort_order
-        description: 'Thứ tự: asc, desc.'
+        description: asc|desc.
         required: false
-        example: desc
+        example: architecto
         type: string
         enumValues: []
-        exampleWasSpecified: true
-        nullable: false
+        exampleWasSpecified: false
+        nullable: true
         deprecated: false
       limit:
         custom: []
         name: limit
-        description: 'Số bản ghi mỗi trang (1-100).'
+        description: 'Số lượng mỗi trang.'
         required: false
-        example: 10
+        example: 16
         type: integer
         enumValues: []
-        exampleWasSpecified: true
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      document_type_id:
+        custom: []
+        name: document_type_id
+        description: 'Lọc theo loại văn bản.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      document_field_id:
+        custom: []
+        name: document_field_id
+        description: 'Lọc theo lĩnh vực.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      issuing_agency_id:
+        custom: []
+        name: issuing_agency_id
+        description: 'Lọc theo cơ quan ban hành.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      issuing_level_id:
+        custom: []
+        name: issuing_level_id
+        description: 'Lọc theo cấp ban hành.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      signer_id:
+        custom: []
+        name: signer_id
+        description: 'Lọc theo người ký.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanQueryParameters:
@@ -667,103 +734,22 @@ endpoints:
       status: architecto
       from_date: '2026-01-01'
       to_date: '2026-12-31'
-      sort_by: created_at
-      sort_order: desc
-      limit: 10
-    bodyParameters:
-      search:
-        custom: []
-        name: search
-        description: 'Must not be greater than 100 characters.'
-        required: false
-        example: b
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      from_date:
-        custom: []
-        name: from_date
-        description: 'Must be a valid date.'
-        required: false
-        example: '2026-02-23T13:24:33'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      to_date:
-        custom: []
-        name: to_date
-        description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
-        required: false
-        example: '2052-03-18'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      sort_by:
-        custom: []
-        name: sort_by
-        description: 'Must not be greater than 50 characters.'
-        required: false
-        example: 'n'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      sort_order:
-        custom: []
-        name: sort_order
-        description: ''
-        required: false
-        example: desc
-        type: string
-        enumValues:
-          - asc
-          - desc
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      limit:
-        custom: []
-        name: limit
-        description: 'Must be at least 1. Must not be greater than 100.'
-        required: false
-        example: 7
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-    cleanBodyParameters:
-      search: b
-      status: architecto
-      from_date: '2026-02-23T13:24:33'
-      to_date: '2052-03-18'
-      sort_by: 'n'
-      sort_order: desc
-      limit: 7
+      sort_by: architecto
+      sort_order: architecto
+      limit: 16
+      document_type_id: 16
+      document_field_id: 16
+      issuing_agency_id: 16
+      issuing_level_id: 16
+      signer_id: 16
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{"data":[{"id":null,"name":null,"description":null,"status":null,"created_by":"N\/A","updated_by":"N\/A","created_at":null,"updated_at":null},{"id":null,"name":null,"description":null,"status":null,"created_by":"N\/A","updated_by":"N\/A","created_at":null,"updated_at":null}],"links":{"first":"\/?page=1","last":"\/?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"\/?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"\/","per_page":10,"to":2,"total":2},"success":"true"}'
+        content: '{"data":[{"id":7,"so_ky_hieu":"VB-9171\/GZ","ten_van_ban":"Velit et fugiat sunt.","noi_dung":"Mollitia modi deserunt aut ab provident perspiciatis quo. Nostrum aut adipisci quidem nostrum. Commodi incidunt iure odit. Et modi ipsum nostrum omnis autem et consequatur. Dolores enim non facere tempora.\n\nLaboriosam praesentium quis adipisci molestias fugit deleniti distinctio. Doloremque id aut libero aliquam veniam corporis. Mollitia deleniti nemo odit quia officia.","status":"inactive","ngay_ban_hanh":"12\/10\/1999","ngay_xuat_ban":null,"ngay_hieu_luc":null,"ngay_het_hieu_luc":null,"created_by":"N\/A","updated_by":"N\/A","created_at":"09:22:01 28\/02\/2026","updated_at":"09:22:01 28\/02\/2026"},{"id":8,"so_ky_hieu":"VB-1084\/VI","ten_van_ban":"Qui repudiandae laboriosam est.","noi_dung":null,"status":"inactive","ngay_ban_hanh":null,"ngay_xuat_ban":null,"ngay_hieu_luc":null,"ngay_het_hieu_luc":"04\/06\/1986","created_by":"N\/A","updated_by":"N\/A","created_at":"09:22:01 28\/02\/2026","updated_at":"09:22:01 28\/02\/2026"}],"links":{"first":"\/?page=1","last":"\/?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"\/?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"path":"\/","per_page":10,"to":2,"total":2},"success":"true"}'
         headers: []
         description: ''
     responseFields: []
@@ -778,16 +764,16 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/document-fields/{documentField_id}'
+    uri: 'api/documents/{document_id}'
     metadata:
       custom: []
-      groupName: 'Document - Lĩnh vực'
+      groupName: 'Document - Văn bản'
       groupDescription: |-
 
-        Quản lý danh mục lĩnh vực: thống kê, danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập và đổi trạng thái.
+        Quản lý văn bản pháp lý và các tệp đính kèm.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Chi tiết lĩnh vực'
+      title: 'Chi tiết văn bản'
       description: ''
       authenticated: true
       deprecated: false
@@ -796,10 +782,10 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      documentField_id:
+      document_id:
         custom: []
-        name: documentField_id
-        description: 'The ID of the documentField.'
+        name: document_id
+        description: 'The ID of the document.'
         required: true
         example: 16
         type: integer
@@ -807,20 +793,20 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      documentField:
+      document:
         custom: []
-        name: documentField
-        description: 'ID lĩnh vực.'
+        name: document
+        description: 'ID văn bản.'
         required: true
-        example: 1
+        example: 16
         type: integer
         enumValues: []
-        exampleWasSpecified: true
+        exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      documentField_id: 16
-      documentField: 1
+      document_id: 16
+      document: 16
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -830,7 +816,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":null,"name":null,"description":null,"status":null,"created_by":"N\/A","updated_by":"N\/A","created_at":null,"updated_at":null},"success":"true"}'
+        content: '{"data":{"id":null,"so_ky_hieu":null,"ten_van_ban":null,"noi_dung":null,"status":null,"ngay_ban_hanh":null,"ngay_xuat_ban":null,"ngay_hieu_luc":null,"ngay_het_hieu_luc":null,"created_by":"N\/A","updated_by":"N\/A","created_at":null,"updated_at":null},"success":"true"}'
         headers: []
         description: ''
     responseFields: []
@@ -845,46 +831,158 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/document-fields
+    uri: api/documents
     metadata:
       custom: []
-      groupName: 'Document - Lĩnh vực'
+      groupName: 'Document - Văn bản'
       groupDescription: |-
 
-        Quản lý danh mục lĩnh vực: thống kê, danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập và đổi trạng thái.
+        Quản lý văn bản pháp lý và các tệp đính kèm.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Tạo lĩnh vực'
+      title: 'Tạo mới văn bản'
       description: ''
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
-      Content-Type: application/json
+      Content-Type: multipart/form-data
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      name:
+      so_ky_hieu:
         custom: []
-        name: name
-        description: 'Tên lĩnh vực.'
+        name: so_ky_hieu
+        description: 'Số ký hiệu văn bản.'
         required: true
-        example: 'Tài chính'
+        example: architecto
         type: string
         enumValues: []
-        exampleWasSpecified: true
+        exampleWasSpecified: false
         nullable: false
         deprecated: false
-      description:
+      ten_van_ban:
         custom: []
-        name: description
-        description: 'Mô tả.'
-        required: false
-        example: 'Eius et animi quos velit et.'
+        name: ten_van_ban
+        description: 'Tên văn bản.'
+        required: true
+        example: architecto
         type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      noi_dung:
+        custom: []
+        name: noi_dung
+        description: 'Nội dung văn bản.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      issuing_agency_id:
+        custom: []
+        name: issuing_agency_id
+        description: 'ID cơ quan ban hành.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      issuing_level_id:
+        custom: []
+        name: issuing_level_id
+        description: 'ID cấp ban hành.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      signer_id:
+        custom: []
+        name: signer_id
+        description: 'ID người ký.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      document_type_ids:
+        custom: []
+        name: document_type_ids
+        description: 'Danh sách ID loại văn bản.'
+        required: false
+        example:
+          - architecto
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      document_field_ids:
+        custom: []
+        name: document_field_ids
+        description: 'Danh sách ID lĩnh vực.'
+        required: false
+        example:
+          - architecto
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      ngay_ban_hanh:
+        custom: []
+        name: ngay_ban_hanh
+        description: 'Ngày ban hành.'
+        required: false
+        example: architecto
+        type: date
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      ngay_xuat_ban:
+        custom: []
+        name: ngay_xuat_ban
+        description: 'Ngày xuất bản.'
+        required: false
+        example: architecto
+        type: date
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      ngay_hieu_luc:
+        custom: []
+        name: ngay_hieu_luc
+        description: 'Ngày hiệu lực.'
+        required: false
+        example: architecto
+        type: date
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      ngay_het_hieu_luc:
+        custom: []
+        name: ngay_het_hieu_luc
+        description: 'Ngày hết hiệu lực.'
+        required: false
+        example: architecto
+        type: date
         enumValues: []
         exampleWasSpecified: false
         nullable: true
@@ -892,24 +990,62 @@ endpoints:
       status:
         custom: []
         name: status
-        description: 'Trạng thái: active, inactive.'
+        description: active|inactive.
         required: true
-        example: active
+        example: architecto
         type: string
         enumValues: []
-        exampleWasSpecified: true
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      attachments:
+        custom: []
+        name: attachments
+        description: 'Must be a file. Must not be greater than 10240 kilobytes.'
+        required: false
+        example:
+          - null
+        type: 'file[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'attachments[]':
+        custom: []
+        name: 'attachments[]'
+        description: 'Nhiều file đính kèm.'
+        required: false
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: 'Tài chính'
-      description: 'Eius et animi quos velit et.'
-      status: active
-    fileParameters: []
+      so_ky_hieu: architecto
+      ten_van_ban: architecto
+      noi_dung: architecto
+      issuing_agency_id: 16
+      issuing_level_id: 16
+      signer_id: 16
+      document_type_ids:
+        - architecto
+      document_field_ids:
+        - architecto
+      ngay_ban_hanh: architecto
+      ngay_xuat_ban: architecto
+      ngay_hieu_luc: architecto
+      ngay_het_hieu_luc: architecto
+      status: architecto
+    fileParameters:
+      attachments:
+        - null
+      'attachments[]': null
     responses:
       -
         custom: []
         status: 201
-        content: '{"data":{"id":null,"name":null,"description":null,"status":null,"created_by":"N\/A","updated_by":"N\/A","created_at":null,"updated_at":null},"success":"true","message":"T\u1ea1o l\u0129nh v\u1ef1c th\u00e0nh c\u00f4ng!"}'
+        content: '{"data":{"id":null,"so_ky_hieu":null,"ten_van_ban":null,"noi_dung":null,"status":null,"ngay_ban_hanh":null,"ngay_xuat_ban":null,"ngay_hieu_luc":null,"ngay_het_hieu_luc":null,"created_by":"N\/A","updated_by":"N\/A","created_at":null,"updated_at":null},"success":"true","message":"T\u1ea1o v\u0103n b\u1ea3n th\u00e0nh c\u00f4ng!"}'
         headers: []
         description: ''
     responseFields: []
@@ -924,28 +1060,28 @@ endpoints:
     custom: []
     httpMethods:
       - PUT
-    uri: 'api/document-fields/{documentField_id}'
+    uri: 'api/documents/{document_id}'
     metadata:
       custom: []
-      groupName: 'Document - Lĩnh vực'
+      groupName: 'Document - Văn bản'
       groupDescription: |-
 
-        Quản lý danh mục lĩnh vực: thống kê, danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập và đổi trạng thái.
+        Quản lý văn bản pháp lý và các tệp đính kèm.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Cập nhật lĩnh vực'
+      title: 'Cập nhật văn bản'
       description: ''
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
-      Content-Type: application/json
+      Content-Type: multipart/form-data
       Accept: application/json
     urlParameters:
-      documentField_id:
+      document_id:
         custom: []
-        name: documentField_id
-        description: 'The ID of the documentField.'
+        name: document_id
+        description: 'The ID of the document.'
         required: true
         example: 16
         type: integer
@@ -953,27 +1089,27 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      documentField:
+      document:
         custom: []
-        name: documentField
-        description: 'ID lĩnh vực.'
+        name: document
+        description: 'ID văn bản.'
         required: true
-        example: 1
+        example: 16
         type: integer
         enumValues: []
-        exampleWasSpecified: true
+        exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      documentField_id: 16
-      documentField: 1
+      document_id: 16
+      document: 16
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      name:
+      so_ky_hieu:
         custom: []
-        name: name
-        description: 'Tên lĩnh vực.'
+        name: so_ky_hieu
+        description: 'Số ký hiệu văn bản.'
         required: false
         example: architecto
         type: string
@@ -981,13 +1117,125 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      description:
+      ten_van_ban:
         custom: []
-        name: description
-        description: 'Mô tả.'
+        name: ten_van_ban
+        description: 'Tên văn bản.'
         required: false
-        example: 'Eius et animi quos velit et.'
+        example: architecto
         type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      noi_dung:
+        custom: []
+        name: noi_dung
+        description: 'Nội dung văn bản.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      issuing_agency_id:
+        custom: []
+        name: issuing_agency_id
+        description: 'ID cơ quan ban hành.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      issuing_level_id:
+        custom: []
+        name: issuing_level_id
+        description: 'ID cấp ban hành.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      signer_id:
+        custom: []
+        name: signer_id
+        description: 'ID người ký.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      document_type_ids:
+        custom: []
+        name: document_type_ids
+        description: 'Danh sách ID loại văn bản.'
+        required: false
+        example:
+          - architecto
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      document_field_ids:
+        custom: []
+        name: document_field_ids
+        description: 'Danh sách ID lĩnh vực.'
+        required: false
+        example:
+          - architecto
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      ngay_ban_hanh:
+        custom: []
+        name: ngay_ban_hanh
+        description: 'Ngày ban hành.'
+        required: false
+        example: architecto
+        type: date
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      ngay_xuat_ban:
+        custom: []
+        name: ngay_xuat_ban
+        description: 'Ngày xuất bản.'
+        required: false
+        example: architecto
+        type: date
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      ngay_hieu_luc:
+        custom: []
+        name: ngay_hieu_luc
+        description: 'Ngày hiệu lực.'
+        required: false
+        example: architecto
+        type: date
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      ngay_het_hieu_luc:
+        custom: []
+        name: ngay_het_hieu_luc
+        description: 'Ngày hết hiệu lực.'
+        required: false
+        example: architecto
+        type: date
         enumValues: []
         exampleWasSpecified: false
         nullable: true
@@ -1003,16 +1251,68 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      attachments:
+        custom: []
+        name: attachments
+        description: 'Must be a file. Must not be greater than 10240 kilobytes.'
+        required: false
+        example:
+          - null
+        type: 'file[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      remove_attachment_ids:
+        custom: []
+        name: remove_attachment_ids
+        description: 'Danh sách media id cần xóa.'
+        required: false
+        example:
+          - architecto
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'attachments[]':
+        custom: []
+        name: 'attachments[]'
+        description: 'Nhiều file đính kèm (append).'
+        required: false
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
-      name: architecto
-      description: 'Eius et animi quos velit et.'
+      so_ky_hieu: architecto
+      ten_van_ban: architecto
+      noi_dung: architecto
+      issuing_agency_id: 16
+      issuing_level_id: 16
+      signer_id: 16
+      document_type_ids:
+        - architecto
+      document_field_ids:
+        - architecto
+      ngay_ban_hanh: architecto
+      ngay_xuat_ban: architecto
+      ngay_hieu_luc: architecto
+      ngay_het_hieu_luc: architecto
       status: architecto
-    fileParameters: []
+      remove_attachment_ids:
+        - architecto
+    fileParameters:
+      attachments:
+        - null
+      'attachments[]': null
     responses:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":null,"name":null,"description":null,"status":null,"created_by":"N\/A","updated_by":"N\/A","created_at":null,"updated_at":null},"success":"true","message":"C\u1eadp nh\u1eadt l\u0129nh v\u1ef1c th\u00e0nh c\u00f4ng!"}'
+        content: '{"data":{"id":null,"so_ky_hieu":null,"ten_van_ban":null,"noi_dung":null,"status":null,"ngay_ban_hanh":null,"ngay_xuat_ban":null,"ngay_hieu_luc":null,"ngay_het_hieu_luc":null,"created_by":"N\/A","updated_by":"N\/A","created_at":null,"updated_at":null},"success":"true","message":"C\u1eadp nh\u1eadt v\u0103n b\u1ea3n th\u00e0nh c\u00f4ng!"}'
         headers: []
         description: ''
     responseFields: []
@@ -1027,28 +1327,28 @@ endpoints:
     custom: []
     httpMethods:
       - PATCH
-    uri: 'api/document-fields/{documentField_id}'
+    uri: 'api/documents/{document_id}'
     metadata:
       custom: []
-      groupName: 'Document - Lĩnh vực'
+      groupName: 'Document - Văn bản'
       groupDescription: |-
 
-        Quản lý danh mục lĩnh vực: thống kê, danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập và đổi trạng thái.
+        Quản lý văn bản pháp lý và các tệp đính kèm.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Cập nhật lĩnh vực'
+      title: 'Cập nhật văn bản'
       description: ''
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
-      Content-Type: application/json
+      Content-Type: multipart/form-data
       Accept: application/json
     urlParameters:
-      documentField_id:
+      document_id:
         custom: []
-        name: documentField_id
-        description: 'The ID of the documentField.'
+        name: document_id
+        description: 'The ID of the document.'
         required: true
         example: 16
         type: integer
@@ -1056,27 +1356,27 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      documentField:
+      document:
         custom: []
-        name: documentField
-        description: 'ID lĩnh vực.'
+        name: document
+        description: 'ID văn bản.'
         required: true
-        example: 1
+        example: 16
         type: integer
         enumValues: []
-        exampleWasSpecified: true
+        exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      documentField_id: 16
-      documentField: 1
+      document_id: 16
+      document: 16
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      name:
+      so_ky_hieu:
         custom: []
-        name: name
-        description: 'Tên lĩnh vực.'
+        name: so_ky_hieu
+        description: 'Số ký hiệu văn bản.'
         required: false
         example: architecto
         type: string
@@ -1084,13 +1384,125 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      description:
+      ten_van_ban:
         custom: []
-        name: description
-        description: 'Mô tả.'
+        name: ten_van_ban
+        description: 'Tên văn bản.'
         required: false
-        example: 'Eius et animi quos velit et.'
+        example: architecto
         type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      noi_dung:
+        custom: []
+        name: noi_dung
+        description: 'Nội dung văn bản.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      issuing_agency_id:
+        custom: []
+        name: issuing_agency_id
+        description: 'ID cơ quan ban hành.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      issuing_level_id:
+        custom: []
+        name: issuing_level_id
+        description: 'ID cấp ban hành.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      signer_id:
+        custom: []
+        name: signer_id
+        description: 'ID người ký.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      document_type_ids:
+        custom: []
+        name: document_type_ids
+        description: 'Danh sách ID loại văn bản.'
+        required: false
+        example:
+          - architecto
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      document_field_ids:
+        custom: []
+        name: document_field_ids
+        description: 'Danh sách ID lĩnh vực.'
+        required: false
+        example:
+          - architecto
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      ngay_ban_hanh:
+        custom: []
+        name: ngay_ban_hanh
+        description: 'Ngày ban hành.'
+        required: false
+        example: architecto
+        type: date
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      ngay_xuat_ban:
+        custom: []
+        name: ngay_xuat_ban
+        description: 'Ngày xuất bản.'
+        required: false
+        example: architecto
+        type: date
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      ngay_hieu_luc:
+        custom: []
+        name: ngay_hieu_luc
+        description: 'Ngày hiệu lực.'
+        required: false
+        example: architecto
+        type: date
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      ngay_het_hieu_luc:
+        custom: []
+        name: ngay_het_hieu_luc
+        description: 'Ngày hết hiệu lực.'
+        required: false
+        example: architecto
+        type: date
         enumValues: []
         exampleWasSpecified: false
         nullable: true
@@ -1106,16 +1518,68 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      attachments:
+        custom: []
+        name: attachments
+        description: 'Must be a file. Must not be greater than 10240 kilobytes.'
+        required: false
+        example:
+          - null
+        type: 'file[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      remove_attachment_ids:
+        custom: []
+        name: remove_attachment_ids
+        description: 'Danh sách media id cần xóa.'
+        required: false
+        example:
+          - architecto
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'attachments[]':
+        custom: []
+        name: 'attachments[]'
+        description: 'Nhiều file đính kèm (append).'
+        required: false
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
-      name: architecto
-      description: 'Eius et animi quos velit et.'
+      so_ky_hieu: architecto
+      ten_van_ban: architecto
+      noi_dung: architecto
+      issuing_agency_id: 16
+      issuing_level_id: 16
+      signer_id: 16
+      document_type_ids:
+        - architecto
+      document_field_ids:
+        - architecto
+      ngay_ban_hanh: architecto
+      ngay_xuat_ban: architecto
+      ngay_hieu_luc: architecto
+      ngay_het_hieu_luc: architecto
       status: architecto
-    fileParameters: []
+      remove_attachment_ids:
+        - architecto
+    fileParameters:
+      attachments:
+        - null
+      'attachments[]': null
     responses:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":null,"name":null,"description":null,"status":null,"created_by":"N\/A","updated_by":"N\/A","created_at":null,"updated_at":null},"success":"true","message":"C\u1eadp nh\u1eadt l\u0129nh v\u1ef1c th\u00e0nh c\u00f4ng!"}'
+        content: '{"data":{"id":null,"so_ky_hieu":null,"ten_van_ban":null,"noi_dung":null,"status":null,"ngay_ban_hanh":null,"ngay_xuat_ban":null,"ngay_hieu_luc":null,"ngay_het_hieu_luc":null,"created_by":"N\/A","updated_by":"N\/A","created_at":null,"updated_at":null},"success":"true","message":"C\u1eadp nh\u1eadt v\u0103n b\u1ea3n th\u00e0nh c\u00f4ng!"}'
         headers: []
         description: ''
     responseFields: []
@@ -1130,16 +1594,16 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/document-fields/{documentField_id}'
+    uri: 'api/documents/{document_id}'
     metadata:
       custom: []
-      groupName: 'Document - Lĩnh vực'
+      groupName: 'Document - Văn bản'
       groupDescription: |-
 
-        Quản lý danh mục lĩnh vực: thống kê, danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập và đổi trạng thái.
+        Quản lý văn bản pháp lý và các tệp đính kèm.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Xóa lĩnh vực'
+      title: 'Xóa văn bản'
       description: ''
       authenticated: true
       deprecated: false
@@ -1148,10 +1612,10 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      documentField_id:
+      document_id:
         custom: []
-        name: documentField_id
-        description: 'The ID of the documentField.'
+        name: document_id
+        description: 'The ID of the document.'
         required: true
         example: 16
         type: integer
@@ -1159,10 +1623,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      documentField:
+      document:
         custom: []
-        name: documentField
-        description: 'ID lĩnh vực.'
+        name: document
+        description: 'ID văn bản.'
         required: true
         example: 1
         type: integer
@@ -1171,8 +1635,8 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      documentField_id: 16
-      documentField: 1
+      document_id: 16
+      document: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1182,7 +1646,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"success": true, "message": "Xóa lĩnh vực thành công!"}'
+        content: '{"success": true, "message": "Xóa văn bản thành công!"}'
         headers: []
         description: ''
     responseFields: []
@@ -1197,16 +1661,16 @@ endpoints:
     custom: []
     httpMethods:
       - PATCH
-    uri: 'api/document-fields/{documentField_id}/status'
+    uri: 'api/documents/{document_id}/status'
     metadata:
       custom: []
-      groupName: 'Document - Lĩnh vực'
+      groupName: 'Document - Văn bản'
       groupDescription: |-
 
-        Quản lý danh mục lĩnh vực: thống kê, danh sách, chi tiết, tạo, cập nhật, xóa, thao tác hàng loạt, xuất/nhập và đổi trạng thái.
+        Quản lý văn bản pháp lý và các tệp đính kèm.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Đổi trạng thái lĩnh vực'
+      title: 'Đổi trạng thái văn bản'
       description: ''
       authenticated: true
       deprecated: false
@@ -1215,10 +1679,10 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      documentField_id:
+      document_id:
         custom: []
-        name: documentField_id
-        description: 'The ID of the documentField.'
+        name: document_id
+        description: 'The ID of the document.'
         required: true
         example: 16
         type: integer
@@ -1226,10 +1690,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      documentField:
+      document:
         custom: []
-        name: documentField
-        description: 'ID lĩnh vực.'
+        name: document
+        description: 'ID văn bản.'
         required: true
         example: 1
         type: integer
@@ -1238,8 +1702,8 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      documentField_id: 16
-      documentField: 1
+      document_id: 16
+      document: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1261,7 +1725,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":{"id":null,"name":null,"description":null,"status":null,"created_by":"N\/A","updated_by":"N\/A","created_at":null,"updated_at":null},"success":"true","message":"\u0110\u1ed5i tr\u1ea1ng th\u00e1i th\u00e0nh c\u00f4ng!"}'
+        content: '{"data":{"id":null,"so_ky_hieu":null,"ten_van_ban":null,"noi_dung":null,"status":null,"ngay_ban_hanh":null,"ngay_xuat_ban":null,"ngay_hieu_luc":null,"ngay_het_hieu_luc":null,"created_by":"N\/A","updated_by":"N\/A","created_at":null,"updated_at":null},"success":"true","message":"\u0110\u1ed5i tr\u1ea1ng th\u00e1i v\u0103n b\u1ea3n th\u00e0nh c\u00f4ng!"}'
         headers: []
         description: ''
     responseFields: []
