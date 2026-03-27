@@ -81,7 +81,7 @@ app/Modules/
 
 Khi thêm module mới hoặc thay đổi cấu trúc lớn, cần cập nhật đồng thời:
 
-- `STRUCTURE_DESIGN.md` (file này).
+- `docs/STRUCTURE_DESIGN.md` (file này).
 - `docs/DATABASE_DESIGN.md` nếu có migration mới.
 - `docs/api/*.md` và tài liệu Scribe nếu thay đổi controller/endpoint API.
 

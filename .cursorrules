@@ -69,7 +69,7 @@
     - **Bắt buộc**: Lưu các phân tích, đánh giá tổng quan hệ thống, giải thích kiến trúc hoặc giải pháp phức tạp vào `/docs/answer`.
     - **Bắt buộc**: Khi tạo/cập nhật Controller, cập nhật file Markdown tương ứng trong `/docs/api` (gồm: Method, Path, Request Body, Response mẫu).
     - **Bắt buộc**: Cập nhật sơ đồ bảng vào `DATABASE_DESIGN.md` khi có Migration mới.
-    - **Bắt buộc**: Cập nhật thông tin chi tiết tập tin/thư mục vào `STRUCTURE_DESIGN.md` khi có thay đổi.
+    - **Bắt buộc**: Cập nhật thông tin chi tiết tập tin/thư mục vào `docs/STRUCTURE_DESIGN.md` khi có thay đổi.
 
 - **Scribe (API documentation)**:
     - **Bắt buộc**: Khi tạo hoặc thay đổi Controller API, bổ sung PHPDoc cho Scribe để sinh tài liệu API (`sail artisan scribe:generate`).
