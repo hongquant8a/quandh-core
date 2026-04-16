@@ -96,10 +96,11 @@ Tối thiểu triển khai cho:
 
 ## 3. Thiết kế dữ liệu (database)
 
-## 3.1 Bảng phòng ban nội bộ của module
+## 3.1 Nguồn dữ liệu phòng ban để lọc user và thống kê
 
-**Bảng:** `task_assignment_departments`  
-Mục đích: quản lý danh mục phòng ban phục vụ riêng cho nghiệp vụ giao việc.
+Mục đích: quản lý danh mục phòng ban nội bộ riêng của module `TaskAssignment`, phục vụ lọc user, phân quyền nghiệp vụ và thống kê.
+
+**Bảng:** `task_assignment_departments`
 
 Trường chính đề xuất:
 - `id`
@@ -110,6 +111,11 @@ Trường chính đề xuất:
 - `sort_order` (default 0)
 - `created_by`, `updated_by`
 - `created_at`, `updated_at`
+
+Khuyến nghị:
+- Không giao việc trực tiếp cho phòng ban, chỉ giao cho user.
+- FE chọn `department_id` để lọc user thuộc phòng ban đó trước khi chọn người nhận việc.
+- Quan hệ user-phòng ban do module `TaskAssignment` quản lý riêng (không phụ thuộc Core).
 
 ## 3.2 Bảng danh mục loại văn bản
 
@@ -206,23 +212,7 @@ Index khuyến nghị:
 - `(task_assignment_item_type_id)`
 - `(priority)`
 
-## 3.7 Bảng liên kết công việc - phòng ban thực hiện
-
-Do yêu cầu "giữa các phòng ban với nhau", 1 công việc có thể cần nhiều phòng ban phối hợp.
-
-**Bảng pivot:** `task_assignment_item_department`
-
-Trường:
-- `id`
-- `task_assignment_item_id`
-- `department_id` (FK -> `task_assignment_departments`)
-- `role` (`main`, `cooperate`) - phòng ban chính/phối hợp
-- `created_at`, `updated_at`
-
-Ràng buộc:
-- unique(`task_assignment_item_id`, `department_id`)
-
-## 3.8 Bảng liên kết công việc - người dùng thực hiện
+## 3.7 Bảng liên kết công việc - người dùng thực hiện
 
 Để giao việc đến từng cá nhân trong phòng ban, bổ sung bảng:
 
@@ -231,7 +221,6 @@ Ràng buộc:
 Trường:
 - `id`
 - `task_assignment_item_id`
-- `department_id` (FK -> `task_assignment_departments`)
 - `user_id` (FK -> `users`)
 - `assignment_role` (`main`, `support`) - người chủ trì/phối hợp
 - `assignment_status` (`assigned`, `accepted`, `rejected`, `done`) - trạng thái nhận việc
@@ -243,9 +232,9 @@ Trường:
 
 Ràng buộc:
 - unique(`task_assignment_item_id`, `user_id`)
-- index(`department_id`, `assignment_status`)
+- index(`assignment_status`)
 
-## 3.9 Bảng báo cáo kết quả thực hiện công việc
+## 3.8 Bảng báo cáo kết quả thực hiện công việc
 
 Để quản lý nội dung người được giao báo cáo, bổ sung bảng:
 
@@ -259,6 +248,10 @@ Trường:
 - `report_document_number` (số ký hiệu văn bản báo cáo)
 - `report_document_excerpt` (trích yếu văn bản báo cáo)
 - `report_document_content` (nội dung văn bản báo cáo)
+- `manager_confirmed` (bool, default false)
+- `manager_confirmed_by` (FK -> `users`, nullable)
+- `manager_confirmed_at` (datetime, nullable)
+- `manager_confirm_note` (text, nullable, ghi chú xác nhận/không đạt)
 - `updated_at` (ngày cập nhật báo cáo gần nhất)
 - `created_at`
 
@@ -268,8 +261,9 @@ Ràng buộc:
 
 Ghi chú:
 - Mỗi công việc có thể có nhiều lần báo cáo theo tiến độ hoặc nhiều báo cáo từ các user phối hợp.
+- Với nhu cầu hiện tại, chỉ cần 1 bước xác nhận đơn giản: quản lý bật `manager_confirmed=true` khi kiểm tra đạt quy định.
 
-## 3.10 Bảng đính kèm tệp văn bản báo cáo
+## 3.9 Bảng đính kèm tệp văn bản báo cáo
 
 **Bảng:** `task_assignment_item_report_attachments`
 
@@ -284,7 +278,7 @@ Trường:
 Ràng buộc:
 - unique(`task_assignment_item_report_id`, `media_id`)
 
-## 3.11 Bảng lưu nhắc việc/lịch sử gửi nhắc
+## 3.10 Bảng lưu nhắc việc/lịch sử gửi nhắc
 
 **Bảng:** `task_assignment_reminders`
 
@@ -294,11 +288,38 @@ Trường:
 - `remind_at` (thời điểm dự kiến nhắc)
 - `sent_at` (nullable)
 - `channel` (`system`, `email`, `zalo`, `sms`)
-- `recipient_department_id` (nullable)
+- `recipient_department_id` (nullable, tham chiếu phòng ban trong module `TaskAssignment`)
 - `recipient_user_id` (nullable)
 - `status` (`pending`, `sent`, `failed`)
 - `error_message` (nullable)
 - `created_at`, `updated_at`
+
+## 3.11 Bảng cấu hình thông báo của module giao việc
+
+Để cho phép bật/tắt linh hoạt các kênh gửi nhận thông báo và cấu hình mốc thời gian gửi nhắc, bổ sung:
+
+**Bảng:** `task_assignment_notification_settings`
+
+Trường:
+- `id`
+- `name` (tên cấu hình, ví dụ: cấu hình mặc định)
+- `is_active` (bool, default true)
+- `channel_email_enabled` (bool)
+- `channel_sms_enabled` (bool)
+- `channel_zalo_enabled` (bool)
+- `channel_firebase_enabled` (bool)
+- `channel_system_enabled` (bool, thông báo nội bộ)
+- `lead_days_json` (json, ví dụ: `[7,3,1]` - trước hạn bao nhiêu ngày)
+- `on_due_day_enabled` (bool, gửi ngày đến hạn)
+- `overdue_days_json` (json, ví dụ: `[1,3,7]` - quá hạn bao nhiêu ngày)
+- `send_time` (time, ví dụ: `08:00:00`)
+- `timezone` (varchar, ví dụ: `Asia/Ho_Chi_Minh`)
+- `created_by`, `updated_by`
+- `created_at`, `updated_at`
+
+Ghi chú:
+- Có thể dùng 1 cấu hình mặc định toàn hệ thống hoặc mở rộng nhiều cấu hình theo loại công việc.
+- Các giá trị json cần validate là mảng số nguyên dương, không trùng lặp.
 
 ---
 
@@ -335,9 +356,9 @@ Trường:
 ## 4.4 Phạm vi dữ liệu và bảo mật
 
 - Module `TaskAssignment` vận hành độc lập, **không dùng `organization_id`**.
-- Dữ liệu phòng ban được quản lý riêng qua bảng `task_assignment_departments`.
-- Mọi ràng buộc nghiệp vụ giao việc phải kiểm tra theo `department_id` nội bộ của module.
-- Người nhận việc (`user_id`) phải thuộc đúng `department_id` được giao trong module.
+- Không giao việc trực tiếp cho phòng ban, chỉ giao cho user.
+- Phòng ban dùng nguồn dữ liệu riêng của module (`task_assignment_departments`).
+- Người nhận việc (`user_id`) phải là user hợp lệ/đang hoạt động và được ánh xạ với phòng ban trong module.
 - Nếu hệ thống chạy đa tổ chức, việc tách dữ liệu tổ chức xử lý ở tầng triển khai/hạ tầng, không đặt trong schema nghiệp vụ của module này.
 
 ---
@@ -346,7 +367,7 @@ Trường:
 
 ## 5.1 Bộ lọc index cho văn bản/công việc
 
-Để theo dõi theo phòng ban theo thời gian, index công việc cần hỗ trợ:
+Để theo dõi công việc theo user và tổng hợp theo phòng ban của module theo thời gian, index cần hỗ trợ:
 - `search` (tên công việc/tên văn bản)
 - `processing_status` (trạng thái xử lý)
 - `completion_percent_from`, `completion_percent_to`
@@ -355,7 +376,7 @@ Trường:
 - `start_from`, `start_to` (lọc theo ngày giờ bắt đầu)
 - `end_from`, `end_to` (lọc theo ngày giờ kết thúc)
 - `from_date`, `to_date` (theo `issue_date` của văn bản)
-- `department_id` (lọc theo đơn vị thực hiện)
+- `department_id` (lọc tập user nhận việc theo phòng ban module)
 - `user_id` (lọc theo người được giao việc)
 - `assignment_role` (`main`/`support`)
 - `assignment_status` (`assigned`, `accepted`, `rejected`, `done`)
@@ -370,7 +391,7 @@ Trường:
 Ngoài `stats` chuẩn, nên có:
 
 1. `GET /api/task-assignment-items/stats-by-department`
-   - Tổng số theo phòng ban.
+   - Tổng số theo phòng ban của module được giao việc.
    - Đang làm / hoàn thành / quá hạn.
 
 2. `GET /api/task-assignment-items/stats-by-user`
@@ -393,13 +414,17 @@ Ngoài `stats` chuẩn, nên có:
 
 ## 6.1 Chiến lược nhắc việc
 
-Đề xuất 3 mốc nhắc mặc định (cấu hình được):
-- Trước hạn `3 ngày`
-- Trước hạn `1 ngày`
+Đề xuất mốc nhắc mặc định (cấu hình được):
+- Trước hạn `7 ngày`, `3 ngày`, `1 ngày`
 - Đúng ngày hạn
 
 Và nhắc quá hạn:
 - Sau hạn `+1 ngày`, `+3 ngày`, `+7 ngày`
+
+Các mốc này không hard-code, lấy từ `task_assignment_notification_settings`:
+- `lead_days_json`
+- `on_due_day_enabled`
+- `overdue_days_json`
 
 ## 6.2 Scheduler & job
 
@@ -407,15 +432,48 @@ Và nhắc quá hạn:
   - `sail artisan task-assignment:dispatch-reminders`
 - Luồng:
   1. Lấy công việc có `has_deadline`, chưa `done`.
-  2. Tính mốc nhắc cần gửi tại thời điểm hiện tại.
-  3. Ghi vào `task_assignment_reminders` (pending -> sent/failed).
-  4. Gửi qua kênh cấu hình (notification in-app/email/...).
+  2. Nạp cấu hình thông báo đang active.
+  3. Tính mốc nhắc cần gửi tại thời điểm hiện tại theo timezone cấu hình.
+  4. Ghi vào `task_assignment_reminders` (pending -> sent/failed).
+  5. Gửi qua các kênh đã bật (system/email/sms/zalo/firebase).
 
 ## 6.3 Chống gửi trùng
 
 - Tạo khóa idempotent theo:
   - `task_assignment_item_id + remind_at + channel + recipient`
 - Nếu đã có bản ghi `sent` thì bỏ qua.
+
+## 6.4 Quy tắc cấu hình kênh gửi nhận thông báo
+
+- Cho phép bật/tắt độc lập từng kênh:
+  - Email
+  - SMS
+  - Zalo
+  - Firebase
+  - Thông báo nội bộ hệ thống
+- Khi một kênh tắt, job không đẩy vào provider tương ứng.
+- Nếu gửi thất bại ở một kênh, vẫn tiếp tục các kênh còn lại và ghi `failed` chi tiết.
+- Với Firebase: ưu tiên cho thông báo realtime trên app.
+- Với Email/SMS/Zalo: dùng cho nhắc việc quan trọng hoặc quá hạn.
+
+## 6.5 API cấu hình thông báo đề xuất
+
+- `GET /api/task-assignment-notification-settings`
+  - Lấy cấu hình thông báo hiện tại.
+- `PUT /api/task-assignment-notification-settings`
+  - Cập nhật cấu hình kênh và mốc thời gian gửi nhắc.
+
+Body đề xuất:
+- `channel_email_enabled`: boolean
+- `channel_sms_enabled`: boolean
+- `channel_zalo_enabled`: boolean
+- `channel_firebase_enabled`: boolean
+- `channel_system_enabled`: boolean
+- `lead_days`: array<int> (ví dụ `[7,3,1]`)
+- `on_due_day_enabled`: boolean
+- `overdue_days`: array<int> (ví dụ `[1,3,7]`)
+- `send_time`: `H:i:s`
+- `timezone`: string
 
 ---
 
@@ -460,7 +518,7 @@ Và nhắc quá hạn:
 ## 8.1 Export
 
 - Export văn bản: đầy đủ trường của index + thông tin tạo/cập nhật + danh sách tệp đính kèm (tên tệp/đường dẫn tải).
-- Export công việc: gồm văn bản, phòng ban thực hiện, người dùng được giao, vai trò giao việc, trạng thái nhận việc, loại công việc, `start_at`, `end_at`, `processing_status`, `completion_percent`, `priority`.
+- Export công việc: gồm văn bản, người dùng được giao, phòng ban trong module, vai trò giao việc, trạng thái nhận việc, loại công việc, `start_at`, `end_at`, `processing_status`, `completion_percent`, `priority`.
 - Trường thời gian format thống nhất theo chuẩn tài nguyên API.
 
 ## 8.2 Import
@@ -468,10 +526,9 @@ Và nhắc quá hạn:
 - File validate: `required|file|mimes:xlsx,xls,csv|max:10240`.
 - Cột bắt buộc tối thiểu:
   - Văn bản: `name`, `issue_date`, `task_assignment_type`
-  - Công việc: `document_code_or_name`, `task_name`, `department`, `assignee_user`, `deadline_type`
+  - Công việc: `document_code_or_name`, `task_name`, `assignee_user`, `deadline_type`
 - Nếu `deadline_type = has_deadline` bắt buộc có `end_at`.
-- `department` import theo `code` hoặc `name` từ bảng `task_assignment_departments`.
-- `assignee_user` import theo `id` hoặc `email/username` và phải thuộc `department` đã chỉ định.
+- `assignee_user` import theo `id` hoặc `email/username`; phòng ban lấy theo ánh xạ user-phòng ban trong module.
 - Tệp đính kèm không import trực tiếp qua cột excel nhị phân; khuyến nghị import theo `attachment_urls` (phân tách `;`) hoặc dùng API upload đính kèm riêng sau khi tạo văn bản.
 
 ## 8.3 API upload đính kèm đề xuất
@@ -504,10 +561,10 @@ Validate upload đề xuất:
 6. **BE** validate quy tắc thời gian và tiến độ:
    - `end_at >= start_at` (nếu có `end_at`).
    - `deadline_type = has_deadline` thì bắt buộc `end_at`.
-7. **FE** gán phòng ban và người dùng cho từng công việc:
+7. **FE** lọc user theo phòng ban và gán người dùng cho từng công việc:
    - Ghi nhận `assignment_role`, `assignment_status`.
-8. **BE** kiểm tra user thuộc phòng ban đã giao:
-   - Lưu liên kết `task_assignment_item_department` và `task_assignment_item_user`.
+8. **BE** kiểm tra user hợp lệ trước khi giao:
+   - Lưu liên kết `task_assignment_item_user`.
 9. **FE** phát hành văn bản:
    - Gọi `PATCH /api/task-assignment-documents/{id}/change-status` sang `issued`.
 10. **BE** khóa logic chỉnh sửa cốt lõi và sinh lịch nhắc việc:
@@ -519,7 +576,7 @@ Validate upload đề xuất:
 1. **FE** mở màn hình "Công việc của tôi":
    - Gọi danh sách với filter: `department_id`, `user_id`, `processing_status`, `priority`, `start_from/start_to`, `end_from/end_to`.
 2. **BE** trả danh sách đã phân trang:
-   - Kèm thông tin văn bản, phòng ban, người giao, người phối hợp.
+   - Kèm thông tin văn bản, người giao, người phối hợp và phòng ban hiện tại của user.
 3. **FE** cập nhật tiến độ công việc:
    - Gọi `PATCH /api/task-assignment-items/{id}` với `processing_status`, `completion_percent`, ghi chú.
 4. **BE** đồng bộ trạng thái:
@@ -534,6 +591,11 @@ Validate upload đề xuất:
    - Upload file qua `MediaService`, lưu liên kết tại `task_assignment_item_report_attachments`.
 7. **FE** chỉnh sửa báo cáo:
    - Gọi `PATCH /api/task-assignment-item-reports/{reportId}` để cập nhật nội dung, ngày cập nhật, tệp đính kèm.
+8. **FE (quản lý)** xác nhận hoàn thành đúng quy định:
+   - Gọi `PATCH /api/task-assignment-item-reports/{reportId}/confirm`.
+9. **BE** ghi nhận xác nhận:
+   - Set `manager_confirmed=true`, `manager_confirmed_by`, `manager_confirmed_at`, `manager_confirm_note`.
+   - Nếu báo cáo cuối cùng của công việc đã được xác nhận, cho phép chuyển công việc sang `processing_status=done`.
 
 ### Luồng C - Nhắc việc tự động
 
@@ -558,6 +620,7 @@ Validate upload đề xuất:
    - Gọi endpoint export theo đúng bộ lọc đang xem để phục vụ họp giao ban.
 5. **BE** hỗ trợ drill-down theo báo cáo thực hiện:
    - Xem chi tiết báo cáo của từng người: ngày hoàn thành, số ký hiệu, trích yếu, nội dung, tệp đính kèm, ngày cập nhật.
+   - Hiển thị thêm trạng thái quản lý đã xác nhận hay chưa.
 
 ---
 
@@ -577,7 +640,7 @@ Trong `PermissionSeeder`, bổ sung các resource:
   - ban hành văn bản
   - cập nhật tiến độ công việc
   - gửi nhắc việc
-- Log đầy đủ `resource`, `action`, `department_id` (nếu có), `target_id`.
+- Log đầy đủ `resource`, `action`, `target_id`, `assignee_user_id` và `assignee_department_id` theo dữ liệu phòng ban của module tại thời điểm log.
 
 ---
 
@@ -587,11 +650,11 @@ Trong `PermissionSeeder`, bổ sung các resource:
 - Tạo migration + model + enum + request + resource + service.
 - CRUD phòng ban nội bộ `task_assignment_departments`.
 - CRUD văn bản, loại văn bản, loại công việc, công việc.
-- Thiết lập ràng buộc FK dựa trên `department_id`.
 - Triển khai giao việc đến user qua `task_assignment_item_user`.
+- Triển khai bảng ánh xạ user-phòng ban riêng cho module (ví dụ `task_assignment_user_department`) để phục vụ lọc/thống kê.
 
 ## Giai đoạn 2: Theo dõi tiến độ & thống kê
-- Bộ lọc theo phòng ban và thời gian.
+- Bộ lọc theo user, phòng ban module và thời gian.
 - Bổ sung bộ lọc theo user và trạng thái nhận việc.
 - API `stats-by-department`, `stats-by-user`, `stats-by-time`, `overdue`.
 - Dashboard backend cho lãnh đạo/phòng điều phối.
@@ -612,7 +675,7 @@ Trong `PermissionSeeder`, bổ sung các resource:
 
 Giải pháp tối ưu là tách rõ 3 lớp nghiệp vụ:
 - **Lớp quản lý văn bản giao việc** (đầu vào pháp lý/quản trị),
-- **Lớp thực thi công việc liên phòng ban và theo cá nhân** (theo dõi tiến độ thực tế),
+- **Lớp thực thi công việc theo cá nhân** (theo dõi tiến độ thực tế),
 - **Lớp điều hành** (thống kê + nhắc việc + báo cáo).
 
 Thiết kế trên đáp ứng đầy đủ yêu cầu hiện tại và mở rộng tốt cho các nhu cầu nâng cao như KPI phòng ban, SLA xử lý, và tích hợp đa kênh nhắc việc.
