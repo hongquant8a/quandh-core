@@ -117,6 +117,21 @@ Khuyến nghị:
 - FE chọn `department_id` để lọc user thuộc phòng ban đó trước khi chọn người nhận việc.
 - Quan hệ user-phòng ban do module `TaskAssignment` quản lý riêng (không phụ thuộc Core).
 
+Để quản lý danh sách user thuộc phòng ban (phục vụ lọc khi giao việc), bổ sung bảng:
+
+**Bảng:** `task_assignment_user_departments`
+
+Trường chính:
+- `id`
+- `user_id` (FK -> `users`)
+- `department_id` (FK -> `task_assignment_departments`)
+- `is_primary` (bool, default true) - nếu user thuộc nhiều phòng ban, chọn phòng ban chính để FE mặc định
+- `status` (`active`, `inactive`)
+- `created_at`, `updated_at`
+
+Ghi chú:
+- Khi giao việc cho user, BE sẽ lưu `assigned_department_id` vào bản ghi phân công `task_assignment_item_user` để phục vụ thống kê về sau.
+
 ## 3.2 Bảng danh mục loại văn bản
 
 **Bảng:** `task_assignment_types`  
@@ -214,7 +229,7 @@ Index khuyến nghị:
 
 ## 3.7 Bảng liên kết công việc - người dùng thực hiện
 
-Để giao việc đến từng cá nhân trong phòng ban, bổ sung bảng:
+Để giao việc đến từng cá nhân (phòng ban dùng để lọc user), bổ sung bảng:
 
 **Bảng pivot:** `task_assignment_item_user`
 
@@ -222,8 +237,9 @@ Trường:
 - `id`
 - `task_assignment_item_id`
 - `user_id` (FK -> `users`)
+- `assigned_department_id` (FK -> `task_assignment_departments`) - phòng ban được gán tại thời điểm giao việc
 - `assignment_role` (`main`, `support`) - người chủ trì/phối hợp
-- `assignment_status` (`assigned`, `accepted`, `rejected`, `done`) - trạng thái nhận việc
+- `assignment_status` (`assigned`, `accepted`, `rejected`, `done`, `transferred`) - trạng thái nhận việc
 - `assigned_at` (thời điểm giao)
 - `accepted_at` (nullable)
 - `completed_at` (nullable)
@@ -232,9 +248,29 @@ Trường:
 
 Ràng buộc:
 - unique(`task_assignment_item_id`, `user_id`)
-- index(`assignment_status`)
+- index(`assigned_department_id`, `assignment_status`)
 
-## 3.8 Bảng báo cáo kết quả thực hiện công việc
+## 3.8 Bảng lịch sử điều chuyển công việc giữa người dùng
+
+Để hỗ trợ trường hợp người dùng chuyển công việc cho người khác và vẫn lưu lại lịch sử, bổ sung bảng:
+
+**Bảng:** `task_assignment_item_user_transfers`
+
+Trường:
+- `id`
+- `task_assignment_item_id` (FK -> `task_assignment_items`)
+- `from_user_id` (FK -> `users`)
+- `to_user_id` (FK -> `users`)
+- `transferred_by_user_id` (FK -> `users`) - người thực hiện điều chuyển
+- `transferred_department_id` (FK -> `task_assignment_departments`) - phòng ban tại thời điểm điều chuyển
+- `transferred_at` (datetime)
+- `note` (nullable)
+- `created_at`, `updated_at`
+
+Ràng buộc:
+- index(`task_assignment_item_id`, `transferred_at`)
+
+## 3.9 Bảng báo cáo kết quả thực hiện công việc
 
 Để quản lý nội dung người được giao báo cáo, bổ sung bảng:
 
@@ -263,7 +299,7 @@ Ghi chú:
 - Mỗi công việc có thể có nhiều lần báo cáo theo tiến độ hoặc nhiều báo cáo từ các user phối hợp.
 - Với nhu cầu hiện tại, chỉ cần 1 bước xác nhận đơn giản: quản lý bật `manager_confirmed=true` khi kiểm tra đạt quy định.
 
-## 3.9 Bảng đính kèm tệp văn bản báo cáo
+## 3.10 Bảng đính kèm tệp văn bản báo cáo
 
 **Bảng:** `task_assignment_item_report_attachments`
 
@@ -278,7 +314,28 @@ Trường:
 Ràng buộc:
 - unique(`task_assignment_item_report_id`, `media_id`)
 
-## 3.10 Bảng lưu nhắc việc/lịch sử gửi nhắc
+## 3.11 Bảng nhận xét, ghi chú và trao đổi (theo từng công việc)
+
+Mục đích: mỗi công việc có luồng **trao đổi giữa quản lý và người thực hiện**, mỗi dòng là một lần gửi, **có dấu thời gian**, không sửa/xóa nội dung đã gửi (chỉ thêm mới để giữ lịch sử).
+
+**Bảng:** `task_assignment_item_notes`
+
+Trường:
+- `id`
+- `task_assignment_item_id` (FK -> `task_assignment_items`)
+- `author_user_id` (FK -> `users`) - người gửi
+- `author_role` (`manager`, `assignee`) - phân biệt quản lý hay người thực hiện (theo quyền tại thời điểm gửi)
+- `content` (text) - nội dung nhận xét / ghi chú / trao đổi
+- `created_at` (datetime) - thời điểm gửi, dùng làm dấu thời gian hiển thị timeline
+
+Ràng buộc:
+- index(`task_assignment_item_id`, `created_at`)
+
+Quy tắc:
+- Chỉ cho phép **thêm mới** (append-only); không cập nhật/xóa nội dung đã lưu (trừ quyền hệ thống đặc biệt nếu có).
+- FE hiển thị theo thứ tự `created_at` tăng dần (timeline).
+
+## 3.12 Bảng lưu nhắc việc/lịch sử gửi nhắc
 
 **Bảng:** `task_assignment_reminders`
 
@@ -294,7 +351,7 @@ Trường:
 - `error_message` (nullable)
 - `created_at`, `updated_at`
 
-## 3.11 Bảng cấu hình thông báo của module giao việc
+## 3.13 Bảng cấu hình thông báo của module giao việc
 
 Để cho phép bật/tắt linh hoạt các kênh gửi nhận thông báo và cấu hình mốc thời gian gửi nhắc, bổ sung:
 
@@ -361,6 +418,13 @@ Ghi chú:
 - Người nhận việc (`user_id`) phải là user hợp lệ/đang hoạt động và được ánh xạ với phòng ban trong module.
 - Nếu hệ thống chạy đa tổ chức, việc tách dữ liệu tổ chức xử lý ở tầng triển khai/hạ tầng, không đặt trong schema nghiệp vụ của module này.
 
+## 4.5 Nhận xét, ghi chú và trao đổi (theo công việc)
+
+- Mỗi công việc có **timeline** nhận xét/trao đổi giữa **quản lý** và **người thực hiện**, lưu tại `task_assignment_item_notes`.
+- Mỗi lần gửi là một bản ghi mới có `created_at` cố định; không sửa/xóa nội dung cũ để đảm bảo truy vết.
+- `author_role` phân loại quản lý hay người thực hiện (theo quyền tại thời điểm gửi).
+- BE chỉ cho phép user có quyền (quản lý hoặc người được phân công hiện tại) đọc/ghi ghi chú theo công việc.
+
 ---
 
 ## 5. API và bộ lọc theo dõi theo thời gian
@@ -376,10 +440,11 @@ Ghi chú:
 - `start_from`, `start_to` (lọc theo ngày giờ bắt đầu)
 - `end_from`, `end_to` (lọc theo ngày giờ kết thúc)
 - `from_date`, `to_date` (theo `issue_date` của văn bản)
-- `department_id` (lọc tập user nhận việc theo phòng ban module)
+- `department_id` (lọc tập user theo `task_assignment_user_departments`)
+- (Thống kê phòng ban sử dụng `assigned_department_id` đã lưu tại thời điểm giao)
 - `user_id` (lọc theo người được giao việc)
 - `assignment_role` (`main`/`support`)
-- `assignment_status` (`assigned`, `accepted`, `rejected`, `done`)
+- `assignment_status` (`assigned`, `accepted`, `rejected`, `done`, `transferred`)
 - `task_assignment_type_id`
 - `task_assignment_item_type_id`
 - `sort_by`: `id`, `created_at`, `updated_at`, `start_at`, `end_at`, `completion_percent`, `priority`, `issue_date`
@@ -391,7 +456,7 @@ Ghi chú:
 Ngoài `stats` chuẩn, nên có:
 
 1. `GET /api/task-assignment-items/stats-by-department`
-   - Tổng số theo phòng ban của module được giao việc.
+   - Tổng số theo `assigned_department_id` (phòng ban tại thời điểm giao việc).
    - Đang làm / hoàn thành / quá hạn.
 
 2. `GET /api/task-assignment-items/stats-by-user`
@@ -407,6 +472,13 @@ Ngoài `stats` chuẩn, nên có:
 
 5. `GET /api/task-assignment-items/upcoming-deadline`
    - Danh sách sắp đến hạn trong N ngày.
+
+## 5.3 API nhận xét ghi chú tra đổi (theo công việc)
+
+- `GET /api/task-assignment-items/{id}/notes`
+  - Danh sách ghi chú theo thời gian (`created_at` tăng dần), phục vụ hiển thị timeline.
+- `POST /api/task-assignment-items/{id}/notes`
+  - Thêm một dòng nhận xét/trao đổi: `content` (bắt buộc); BE tự gán `author_user_id` và `author_role` theo người đăng nhập và quyền.
 
 ---
 
@@ -564,7 +636,7 @@ Validate upload đề xuất:
 7. **FE** lọc user theo phòng ban và gán người dùng cho từng công việc:
    - Ghi nhận `assignment_role`, `assignment_status`.
 8. **BE** kiểm tra user hợp lệ trước khi giao:
-   - Lưu liên kết `task_assignment_item_user`.
+   - Lưu liên kết `task_assignment_item_user` và ghi `assigned_department_id` theo phòng ban đang dùng để lọc user tại thời điểm giao.
 9. **FE** phát hành văn bản:
    - Gọi `PATCH /api/task-assignment-documents/{id}/change-status` sang `issued`.
 10. **BE** khóa logic chỉnh sửa cốt lõi và sinh lịch nhắc việc:
@@ -576,24 +648,33 @@ Validate upload đề xuất:
 1. **FE** mở màn hình "Công việc của tôi":
    - Gọi danh sách với filter: `department_id`, `user_id`, `processing_status`, `priority`, `start_from/start_to`, `end_from/end_to`.
 2. **BE** trả danh sách đã phân trang:
-   - Kèm thông tin văn bản, người giao, người phối hợp và phòng ban hiện tại của user.
+   - Kèm thông tin văn bản, người giao, người phối hợp và `assigned_department_id` (phòng ban tại thời điểm giao việc).
 3. **FE** cập nhật tiến độ công việc:
    - Gọi `PATCH /api/task-assignment-items/{id}` với `processing_status`, `completion_percent`, ghi chú.
+3b. **FE** xem và gửi nhận xét, ghi chú tra đổi với quản lý (timeline):
+   - `GET /api/task-assignment-items/{id}/notes`
+   - `POST /api/task-assignment-items/{id}/notes` với `content` (mỗi lần gửi là một bản ghi mới, có `created_at`).
 4. **BE** đồng bộ trạng thái:
    - `processing_status = done` => `completion_percent = 100`, set `completed_at`.
    - `completion_percent = 100` => tự chuyển `done`.
    - Quá `end_at` mà chưa hoàn thành => đánh dấu `overdue`.
-5. **FE** nộp báo cáo thực hiện công việc:
+5. **FE** (người đang được giao) chuyển công việc cho người dùng khác:
+   - Gọi `POST /api/task-assignment-items/{id}/transfers` với `to_user_id`, `note`.
+6. **BE** ghi nhận điều chuyển và lưu lịch sử:
+   - Tạo record tại `task_assignment_item_user_transfers`.
+   - Cập nhật record phân công hiện tại của user: `assignment_status=transferred`.
+   - Tạo record phân công mới cho `to_user_id`: `assignment_status=assigned`, đồng thời set `assigned_department_id` theo phòng ban tại thời điểm điều chuyển.
+7. **FE** nộp báo cáo thực hiện công việc:
    - Gọi `POST /api/task-assignment-items/{id}/reports` với:
    - `completed_at`, `report_document_number`, `report_document_excerpt`, `report_document_content`, `files[]`.
-6. **BE** lưu báo cáo và tệp đính kèm:
+8. **BE** lưu báo cáo và tệp đính kèm:
    - Lưu vào `task_assignment_item_reports`.
    - Upload file qua `MediaService`, lưu liên kết tại `task_assignment_item_report_attachments`.
-7. **FE** chỉnh sửa báo cáo:
+9. **FE** chỉnh sửa báo cáo:
    - Gọi `PATCH /api/task-assignment-item-reports/{reportId}` để cập nhật nội dung, ngày cập nhật, tệp đính kèm.
-8. **FE (quản lý)** xác nhận hoàn thành đúng quy định:
+10. **FE (quản lý)** xác nhận hoàn thành đúng quy định:
    - Gọi `PATCH /api/task-assignment-item-reports/{reportId}/confirm`.
-9. **BE** ghi nhận xác nhận:
+11. **BE** ghi nhận xác nhận:
    - Set `manager_confirmed=true`, `manager_confirmed_by`, `manager_confirmed_at`, `manager_confirm_note`.
    - Nếu báo cáo cuối cùng của công việc đã được xác nhận, cho phép chuyển công việc sang `processing_status=done`.
 
@@ -633,12 +714,14 @@ Trong `PermissionSeeder`, bổ sung các resource:
 - `task-assignment-items`: `stats,index,show,store,update,destroy,bulkDestroy,bulkUpdateStatus,changeStatus,export,import`
 - `task-assignment-types`: action chuẩn
 - `task-assignment-item-types`: action chuẩn
+- `task-assignment-item-notes`: `index` (list theo công việc), `store` (thêm ghi chú)
 
 ## 9.2 LogActivity
 
 - Bổ sung mapping label cho:
   - ban hành văn bản
   - cập nhật tiến độ công việc
+  - thêm nhận xét, ghi chú tra đổi theo công việc
   - gửi nhắc việc
 - Log đầy đủ `resource`, `action`, `target_id`, `assignee_user_id` và `assignee_department_id` theo dữ liệu phòng ban của module tại thời điểm log.
 
@@ -651,11 +734,12 @@ Trong `PermissionSeeder`, bổ sung các resource:
 - CRUD phòng ban nội bộ `task_assignment_departments`.
 - CRUD văn bản, loại văn bản, loại công việc, công việc.
 - Triển khai giao việc đến user qua `task_assignment_item_user`.
-- Triển khai bảng ánh xạ user-phòng ban riêng cho module (ví dụ `task_assignment_user_department`) để phục vụ lọc/thống kê.
+- Triển khai bảng ánh xạ user-phòng ban riêng cho module (ví dụ `task_assignment_user_departments`) để phục vụ lọc/thống kê.
+- Bảng `task_assignment_item_notes` và API nhận xét ghi chú tra đổi theo công việc.
 
 ## Giai đoạn 2: Theo dõi tiến độ & thống kê
 - Bộ lọc theo user, phòng ban module và thời gian.
-- Bổ sung bộ lọc theo user và trạng thái nhận việc.
+ - Bổ sung bộ lọc theo user và trạng thái nhận việc.
 - API `stats-by-department`, `stats-by-user`, `stats-by-time`, `overdue`.
 - Dashboard backend cho lãnh đạo/phòng điều phối.
 
