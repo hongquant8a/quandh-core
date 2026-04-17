@@ -288,6 +288,9 @@ Trường:
 - `manager_confirmed_by` (FK -> `users`, nullable)
 - `manager_confirmed_at` (datetime, nullable)
 - `manager_confirm_note` (text, nullable, ghi chú xác nhận/không đạt)
+- `is_locked` (bool, default false) - khóa báo cáo sau khi đã xác nhận
+- `locked_at` (datetime, nullable)
+- `locked_by` (FK -> `users`, nullable)
 - `updated_at` (ngày cập nhật báo cáo gần nhất)
 - `created_at`
 
@@ -298,6 +301,7 @@ Ràng buộc:
 Ghi chú:
 - Mỗi công việc có thể có nhiều lần báo cáo theo tiến độ hoặc nhiều báo cáo từ các user phối hợp.
 - Với nhu cầu hiện tại, chỉ cần 1 bước xác nhận đơn giản: quản lý bật `manager_confirmed=true` khi kiểm tra đạt quy định.
+- Sau khi xác nhận đạt, báo cáo chuyển `is_locked=true` để không cho chỉnh sửa nội dung/file (trừ quyền mở khóa đặc biệt).
 
 ## 3.10 Bảng đính kèm tệp văn bản báo cáo
 
@@ -585,38 +589,48 @@ Body đề xuất:
 
 ---
 
-## 8. Import/Export
+## 8. Quy trình nghiệp vụ và tích hợp API
 
-## 8.1 Export
+## 8.1 Quy trình end-to-end (từ giao việc đến khóa công việc)
 
-- Export văn bản: đầy đủ trường của index + thông tin tạo/cập nhật + danh sách tệp đính kèm (tên tệp/đường dẫn tải).
-- Export công việc: gồm văn bản, người dùng được giao, phòng ban trong module, vai trò giao việc, trạng thái nhận việc, loại công việc, `start_at`, `end_at`, `processing_status`, `completion_percent`, `priority`.
-- Trường thời gian format thống nhất theo chuẩn tài nguyên API.
+### Giai đoạn 1: Khởi tạo giao việc
 
-## 8.2 Import
+1. Quản lý tạo văn bản giao việc ở trạng thái `draft`.
+2. Quản lý đính kèm tệp văn bản giao việc.
+3. Quản lý thêm các công việc thuộc văn bản (thời hạn, ưu tiên, loại công việc).
+4. FE lọc user theo phòng ban module và chọn người thực hiện.
+5. BE lưu phân công tại `task_assignment_item_user` với `assigned_department_id` tại thời điểm giao.
+6. Quản lý ban hành văn bản (`issued`) để bắt đầu vận hành chính thức.
 
-- File validate: `required|file|mimes:xlsx,xls,csv|max:10240`.
-- Cột bắt buộc tối thiểu:
-  - Văn bản: `name`, `issue_date`, `task_assignment_type`
-  - Công việc: `document_code_or_name`, `task_name`, `assignee_user`, `deadline_type`
-- Nếu `deadline_type = has_deadline` bắt buộc có `end_at`.
-- `assignee_user` import theo `id` hoặc `email/username`; phòng ban lấy theo ánh xạ user-phòng ban trong module.
-- Tệp đính kèm không import trực tiếp qua cột excel nhị phân; khuyến nghị import theo `attachment_urls` (phân tách `;`) hoặc dùng API upload đính kèm riêng sau khi tạo văn bản.
+### Giai đoạn 2: Thực hiện công việc
 
-## 8.3 API upload đính kèm đề xuất
+1. Người thực hiện nhận việc và cập nhật tiến độ (`processing_status`, `completion_percent`).
+2. Quản lý và người thực hiện trao đổi qua timeline ghi chú `task_assignment_item_notes` (có dấu thời gian `created_at`).
+3. Nếu cần, công việc được điều chuyển bởi quản lý hoặc người thực hiện hiện tại (theo quyền), lưu lịch sử tại `task_assignment_item_user_transfers`.
+4. Hệ thống tự động đánh dấu `overdue` khi quá hạn mà chưa hoàn thành.
 
-- `POST /api/task-assignment-documents/{id}/attachments`
-  - Upload nhiều tệp, trả về danh sách attachment đã gắn vào văn bản.
-- `DELETE /api/task-assignment-documents/{id}/attachments/{attachmentId}`
-  - Gỡ tệp đính kèm khỏi văn bản.
-- `PATCH /api/task-assignment-documents/{id}/attachments/sort`
-  - Cập nhật thứ tự hiển thị tệp đính kèm.
+### Giai đoạn 3: Báo cáo kết quả
 
-Validate upload đề xuất:
-- `files` => `required|array|min:1`
-- `files.*` => `file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:20480`
+1. Người thực hiện nộp báo cáo kết quả (ngày hoàn thành, số ký hiệu, trích yếu, nội dung, tệp đính kèm).
+2. Người thực hiện được chỉnh sửa báo cáo khi chưa xác nhận/khóa.
+3. Quản lý kiểm tra và xác nhận đạt quy định (`manager_confirmed=true`).
 
-## 8.4 Luồng hoạt động BE/FE để giao việc và báo cáo công việc
+### Giai đoạn 4: Khóa báo cáo và đóng công việc
+
+1. Sau xác nhận, BE khóa báo cáo (`is_locked=true`, `locked_at`, `locked_by`).
+2. Khi báo cáo cuối đã xác nhận và khóa, công việc chuyển hoàn thành nghiệp vụ (`processing_status=done`).
+3. Sau khi đóng công việc:
+   - chặn cập nhật báo cáo thông thường,
+   - chặn điều chuyển/gán lại người thực hiện thông thường,
+   - chỉ cho phép mở lại bằng quyền đặc biệt và có log.
+
+### Giai đoạn 5: Điều hành và thống kê
+
+1. Dashboard thống kê theo phòng ban, user, thời gian, quá hạn, sắp đến hạn.
+2. Thống kê phòng ban luôn dựa trên `assigned_department_id` đã lưu tại thời điểm giao/điều chuyển để giữ ổn định lịch sử.
+3. Drill-down xem đầy đủ lịch sử: phân công, điều chuyển, ghi chú timeline, báo cáo, xác nhận và trạng thái khóa.
+
+## 8.2 Luồng BE/FE theo API (mapping kỹ thuật)
 
 ### Luồng A - Tạo và ban hành văn bản giao việc
 
@@ -664,6 +678,7 @@ Validate upload đề xuất:
    - Tạo record tại `task_assignment_item_user_transfers`.
    - Cập nhật record phân công hiện tại của user: `assignment_status=transferred`.
    - Tạo record phân công mới cho `to_user_id`: `assignment_status=assigned`, đồng thời set `assigned_department_id` theo phòng ban tại thời điểm điều chuyển.
+   - Người thực hiện điều chuyển (`transferred_by_user_id`) có thể là **quản lý** hoặc **người thực hiện hiện tại** (theo phân quyền).
 7. **FE** nộp báo cáo thực hiện công việc:
    - Gọi `POST /api/task-assignment-items/{id}/reports` với:
    - `completed_at`, `report_document_number`, `report_document_excerpt`, `report_document_content`, `files[]`.
@@ -676,6 +691,7 @@ Validate upload đề xuất:
    - Gọi `PATCH /api/task-assignment-item-reports/{reportId}/confirm`.
 11. **BE** ghi nhận xác nhận:
    - Set `manager_confirmed=true`, `manager_confirmed_by`, `manager_confirmed_at`, `manager_confirm_note`.
+   - Khóa báo cáo: set `is_locked=true`, `locked_at`, `locked_by`.
    - Nếu báo cáo cuối cùng của công việc đã được xác nhận, cho phép chuyển công việc sang `processing_status=done`.
 
 ### Luồng C - Nhắc việc tự động
@@ -703,6 +719,37 @@ Validate upload đề xuất:
    - Xem chi tiết báo cáo của từng người: ngày hoàn thành, số ký hiệu, trích yếu, nội dung, tệp đính kèm, ngày cập nhật.
    - Hiển thị thêm trạng thái quản lý đã xác nhận hay chưa.
 
+## 8.3 Import/Export
+
+### Export
+
+- Export văn bản: đầy đủ trường của index + thông tin tạo/cập nhật + danh sách tệp đính kèm (tên tệp/đường dẫn tải).
+- Export công việc: gồm văn bản, người dùng được giao, phòng ban trong module, vai trò giao việc, trạng thái nhận việc, loại công việc, `start_at`, `end_at`, `processing_status`, `completion_percent`, `priority`.
+- Trường thời gian format thống nhất theo chuẩn tài nguyên API.
+
+### Import
+
+- File validate: `required|file|mimes:xlsx,xls,csv|max:10240`.
+- Cột bắt buộc tối thiểu:
+  - Văn bản: `name`, `issue_date`, `task_assignment_type`
+  - Công việc: `document_code_or_name`, `task_name`, `assignee_user`, `deadline_type`
+- Nếu `deadline_type = has_deadline` bắt buộc có `end_at`.
+- `assignee_user` import theo `id` hoặc `email/username`; phòng ban lấy theo ánh xạ user-phòng ban trong module.
+- Tệp đính kèm không import trực tiếp qua cột excel nhị phân; khuyến nghị import theo `attachment_urls` (phân tách `;`) hoặc dùng API upload đính kèm riêng sau khi tạo văn bản.
+
+## 8.4 API upload đính kèm đề xuất
+
+- `POST /api/task-assignment-documents/{id}/attachments`
+  - Upload nhiều tệp, trả về danh sách attachment đã gắn vào văn bản.
+- `DELETE /api/task-assignment-documents/{id}/attachments/{attachmentId}`
+  - Gỡ tệp đính kèm khỏi văn bản.
+- `PATCH /api/task-assignment-documents/{id}/attachments/sort`
+  - Cập nhật thứ tự hiển thị tệp đính kèm.
+
+Validate upload đề xuất:
+- `files` => `required|array|min:1`
+- `files.*` => `file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:20480`
+
 ---
 
 ## 9. Permission và logging
@@ -724,6 +771,65 @@ Trong `PermissionSeeder`, bổ sung các resource:
   - thêm nhận xét, ghi chú tra đổi theo công việc
   - gửi nhắc việc
 - Log đầy đủ `resource`, `action`, `target_id`, `assignee_user_id` và `assignee_department_id` theo dữ liệu phòng ban của module tại thời điểm log.
+
+## 9.3 State Machine chuẩn (để BE/FE triển khai thống nhất)
+
+### A. State machine phân công người thực hiện (`assignment_status`)
+
+Trạng thái: `assigned`, `accepted`, `rejected`, `done`, `transferred`.
+
+Luồng chuyển trạng thái:
+- `assigned -> accepted`: người nhận việc xác nhận tiếp nhận.
+- `assigned -> rejected`: người nhận việc từ chối (có lý do).
+- `accepted -> done`: người nhận việc hoàn thành phần việc của mình.
+- `assigned|accepted|done -> transferred`: quản lý hoặc người thực hiện hiện tại điều chuyển cho user khác (theo quyền).
+
+Quy tắc:
+- Khi `transferred`, bản ghi cũ không xóa; tạo bản ghi phân công mới cho user mới với `assignment_status=assigned`.
+- Mọi điều chuyển bắt buộc lưu tại `task_assignment_item_user_transfers`.
+
+### B. State machine xử lý công việc (`processing_status`)
+
+Trạng thái: `todo`, `in_progress`, `paused`, `overdue`, `done`, `cancelled`.
+
+Luồng chuyển trạng thái chính:
+- `todo -> in_progress`: bắt đầu xử lý.
+- `in_progress -> paused`: tạm dừng.
+- `paused -> in_progress`: tiếp tục xử lý.
+- `todo|in_progress|paused -> done`: hoàn thành.
+- `todo|in_progress|paused -> overdue`: quá `end_at` nhưng chưa hoàn thành (hệ thống tự động).
+- `todo|in_progress|paused -> cancelled`: hủy theo quyết định quản lý.
+
+Quy tắc đồng bộ:
+- `done` => `completion_percent=100`, set `completed_at`.
+- `completion_percent=100` => tự chuyển `done`.
+- Với công việc đã có báo cáo cuối được xác nhận và khóa, không cho sửa ngược về trạng thái đang xử lý (trừ quyền mở khóa đặc biệt).
+
+### C. State machine báo cáo kết quả (`manager_confirmed` + `is_locked`)
+
+Trạng thái logic:
+- `draft_report`: đã tạo/chỉnh sửa báo cáo, chưa xác nhận quản lý (`manager_confirmed=false`, `is_locked=false`).
+- `confirmed_locked`: quản lý xác nhận đạt quy định và khóa báo cáo (`manager_confirmed=true`, `is_locked=true`).
+
+Luồng chuyển trạng thái:
+- `draft_report -> confirmed_locked`: quản lý thực hiện action confirm.
+- `confirmed_locked -> draft_report` (ngoại lệ): mở khóa bởi quyền đặc biệt (audit bắt buộc).
+
+Quy tắc khóa:
+- Khi `is_locked=true`: chặn cập nhật nội dung báo cáo, chặn sửa danh sách tệp báo cáo.
+- Chỉ cho phép thao tác đọc và hiển thị lịch sử.
+
+### D. Điều kiện đóng công việc (khóa nghiệp vụ)
+
+Khuyến nghị điều kiện đóng:
+- `processing_status=done`
+- Có báo cáo cuối `manager_confirmed=true` và `is_locked=true`
+- Không còn phân công đang mở ở trạng thái `assigned|accepted|in_progress` (nếu áp dụng đa người thực hiện)
+
+Sau khi đóng:
+- Chặn điều chuyển/gán lại người thực hiện.
+- Chặn cập nhật tiến độ và báo cáo thông thường.
+- Chỉ mở lại bằng quyền đặc biệt và phải ghi log lý do.
 
 ---
 
