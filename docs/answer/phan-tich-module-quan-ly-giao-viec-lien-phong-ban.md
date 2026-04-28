@@ -12,6 +12,7 @@
 1. **Văn bản giao việc** (đầu việc cấp văn bản):
    - Tên văn bản giao việc
    - Tóm tắt nội dung
+   - Nội dung AI phân tích: dữ liệu người dùng nhập/dán để gửi AI n8n agent phân tích nhanh và gợi ý tự động điền form phía frontend
    - Ngày ban hành
    - Loại văn bản giao việc
    - Trạng thái: `draft` (lưu tạm), `issued` (ban hành)
@@ -153,6 +154,7 @@ Trường chính đề xuất:
 - `id`
 - `name` (tên văn bản giao việc)
 - `summary` (tóm tắt nội dung)
+- `ai_analysis_content` (longText, nullable) - nội dung người dùng nhập/dán để AI n8n agent phân tích nhanh và hỗ trợ FE tự động điền các trường như tên văn bản, tóm tắt, ngày ban hành, loại văn bản, danh sách công việc đề xuất
 - `issue_date` (ngày ban hành)
 - `task_assignment_type_id` (FK -> `task_assignment_types`)
 - `status` (`draft`, `issued`)
@@ -596,11 +598,12 @@ Body đề xuất:
 ### Giai đoạn 1: Khởi tạo giao việc
 
 1. Quản lý tạo văn bản giao việc ở trạng thái `draft`.
-2. Quản lý đính kèm tệp văn bản giao việc.
-3. Quản lý thêm các công việc thuộc văn bản (thời hạn, ưu tiên, loại công việc).
-4. FE lọc user theo phòng ban module và chọn người thực hiện.
-5. BE lưu phân công tại `task_assignment_item_user` với `assigned_department_id` tại thời điểm giao.
-6. Quản lý ban hành văn bản (`issued`) để bắt đầu vận hành chính thức.
+2. Nếu cần hỗ trợ nhập liệu nhanh, quản lý nhập/dán `ai_analysis_content` để FE gửi AI n8n agent phân tích và tự động gợi ý điền các trường ban đầu.
+3. Quản lý đính kèm tệp văn bản giao việc.
+4. Quản lý thêm các công việc thuộc văn bản (thời hạn, ưu tiên, loại công việc).
+5. FE lọc user theo phòng ban module và chọn người thực hiện.
+6. BE lưu phân công tại `task_assignment_item_user` với `assigned_department_id` tại thời điểm giao.
+7. Quản lý ban hành văn bản (`issued`) để bắt đầu vận hành chính thức.
 
 ### Giai đoạn 2: Thực hiện công việc
 
@@ -635,25 +638,31 @@ Body đề xuất:
 ### Luồng A - Tạo và ban hành văn bản giao việc
 
 1. **FE** tạo văn bản ở trạng thái `draft`:
-   - Gọi `POST /api/task-assignment-documents` với `name`, `summary`, `issue_date`, `task_assignment_type_id`.
+   - Gọi `POST /api/task-assignment-documents` với `name`, `summary`, `ai_analysis_content`, `issue_date`, `task_assignment_type_id`.
+   - `ai_analysis_content` là trường không bắt buộc, dùng để lưu lại nội dung đầu vào mà người dùng đã đưa cho AI n8n agent phân tích.
 2. **BE** validate và lưu văn bản:
    - Trả về `document_id` để FE dùng cho các bước tiếp theo.
-3. **FE** đính kèm nhiều tệp:
+   - Validate `ai_analysis_content`: `nullable|string` (dùng `longText` ở database, không nên giới hạn ngắn vì người dùng có thể dán toàn bộ nội dung văn bản).
+3. **FE** có thể gọi AI n8n agent ở bước nhập liệu nhanh:
+   - FE gửi `ai_analysis_content` sang n8n agent để phân tích và nhận dữ liệu gợi ý.
+   - FE tự điền các trường `name`, `summary`, `issue_date`, `task_assignment_type_id` và danh sách công việc đề xuất để người dùng kiểm tra trước khi lưu chính thức.
+   - BE chỉ lưu `ai_analysis_content` và dữ liệu đã được người dùng xác nhận; không phụ thuộc trực tiếp vào kết quả AI chưa được duyệt.
+4. **FE** đính kèm nhiều tệp:
    - Gọi `POST /api/task-assignment-documents/{id}/attachments`.
-4. **BE** upload qua `MediaService` và gắn attachment:
+5. **BE** upload qua `MediaService` và gắn attachment:
    - Lưu vào `task_assignment_document_attachments`.
-5. **FE** thêm danh sách công việc thuộc văn bản:
+6. **FE** thêm danh sách công việc thuộc văn bản:
    - `name`, `description`, `start_at`, `end_at`, `processing_status`, `completion_percent`, `priority`, `deadline_type`.
-6. **BE** validate quy tắc thời gian và tiến độ:
+7. **BE** validate quy tắc thời gian và tiến độ:
    - `end_at >= start_at` (nếu có `end_at`).
    - `deadline_type = has_deadline` thì bắt buộc `end_at`.
-7. **FE** lọc user theo phòng ban và gán người dùng cho từng công việc:
+8. **FE** lọc user theo phòng ban và gán người dùng cho từng công việc:
    - Ghi nhận `assignment_role`, `assignment_status`.
-8. **BE** kiểm tra user hợp lệ trước khi giao:
+9. **BE** kiểm tra user hợp lệ trước khi giao:
    - Lưu liên kết `task_assignment_item_user` và ghi `assigned_department_id` theo phòng ban đang dùng để lọc user tại thời điểm giao.
-9. **FE** phát hành văn bản:
+10. **FE** phát hành văn bản:
    - Gọi `PATCH /api/task-assignment-documents/{id}/change-status` sang `issued`.
-10. **BE** khóa logic chỉnh sửa cốt lõi và sinh lịch nhắc việc:
+11. **BE** khóa logic chỉnh sửa cốt lõi và sinh lịch nhắc việc:
     - Set `issued_at`.
     - Tạo lịch nhắc ban đầu cho các công việc có hạn.
 
@@ -723,7 +732,7 @@ Body đề xuất:
 
 ### Export
 
-- Export văn bản: đầy đủ trường của index + thông tin tạo/cập nhật + danh sách tệp đính kèm (tên tệp/đường dẫn tải).
+- Export văn bản: đầy đủ trường của index, bao gồm `ai_analysis_content`, thông tin tạo/cập nhật và danh sách tệp đính kèm (tên tệp/đường dẫn tải).
 - Export công việc: gồm văn bản, người dùng được giao, phòng ban trong module, vai trò giao việc, trạng thái nhận việc, loại công việc, `start_at`, `end_at`, `processing_status`, `completion_percent`, `priority`.
 - Trường thời gian format thống nhất theo chuẩn tài nguyên API.
 
@@ -733,6 +742,7 @@ Body đề xuất:
 - Cột bắt buộc tối thiểu:
   - Văn bản: `name`, `issue_date`, `task_assignment_type`
   - Công việc: `document_code_or_name`, `task_name`, `assignee_user`, `deadline_type`
+- Cột không bắt buộc của văn bản: `summary`, `ai_analysis_content`, `attachment_urls`, `status` (mặc định `draft`).
 - Nếu `deadline_type = has_deadline` bắt buộc có `end_at`.
 - `assignee_user` import theo `id` hoặc `email/username`; phòng ban lấy theo ánh xạ user-phòng ban trong module.
 - Tệp đính kèm không import trực tiếp qua cột excel nhị phân; khuyến nghị import theo `attachment_urls` (phân tách `;`) hoặc dùng API upload đính kèm riêng sau khi tạo văn bản.
