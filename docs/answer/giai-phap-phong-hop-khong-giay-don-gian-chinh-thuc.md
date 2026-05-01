@@ -1,13 +1,27 @@
 # Giải pháp phòng họp không giấy đơn giản
 
 **Ngày tạo:** 2026-04-30  
-**Mục đích:** Chốt phiên bản giải pháp phòng họp không giấy theo hướng đơn giản, dễ hiểu, dễ triển khai, bám sát các chức năng cần thiết cho UBND phường, xã và các cuộc họp định kỳ/HĐND.
+**Mục đích:** Xây dựng bản đặc tả giải pháp phòng họp không giấy theo hướng thực tiễn, dễ triển khai và sẵn sàng phát triển thành phần mềm dùng thật cho UBND phường/xã, HĐND và các cuộc họp định kỳ tại địa phương.
 
 ---
 
 ## 1. Định hướng chung
 
-Giải pháp nên được thiết kế theo hướng **ít màn hình, thao tác rõ ràng, người dùng phổ thông dễ dùng**. Hệ thống không cần triển khai quá nhiều lớp nghiệp vụ phức tạp ngay từ đầu, nhưng vẫn phải đủ các phần cốt lõi:
+### 1.1 Mục đích của phần mềm
+
+Phần mềm được định hướng để số hóa trọn vẹn vòng đời một cuộc họp: chuẩn bị trước họp, điều hành trong họp và tổng hợp sau họp. Trọng tâm là thay thế quy trình giấy tờ rời rạc bằng một luồng thống nhất, có dữ liệu theo thời gian thực, giúp lãnh đạo và đơn vị vận hành ra quyết định nhanh và chính xác hơn.
+
+### 1.2 Ý nghĩa triển khai
+
+- Giảm chi phí in ấn, phát hành tài liệu giấy và công việc thủ công.
+- Nâng cao tính minh bạch trong điều hành, biểu quyết, điểm danh và theo dõi tiến độ họp.
+- Chuẩn hóa quy trình phối hợp giữa chủ trì, thư ký/điều hành và đại biểu.
+- Tạo nền tảng dữ liệu phục vụ báo cáo, tra cứu lịch sử và đánh giá hiệu quả cuộc họp.
+- Phù hợp lộ trình chuyển đổi số cấp cơ sở, triển khai từng bước nhưng vẫn tạo giá trị ngay.
+
+### 1.3 Định hướng chức năng
+
+Giải pháp nên được thiết kế theo hướng **ít màn hình, thao tác rõ ràng, người dùng phổ thông dễ dùng**. Ở giai đoạn đầu, hệ thống ưu tiên nhóm chức năng cốt lõi, tránh dàn trải nghiệp vụ nâng cao:
 
 - Tạo cuộc họp.
 - Công khai cuộc họp và tài liệu.
@@ -24,6 +38,8 @@ Giải pháp nên được thiết kế theo hướng **ít màn hình, thao tá
 - Màn chiếu.
 - Cập nhật kết luận.
 - Lưu lượt xem cuộc họp và tài liệu.
+
+Các chức năng nâng cao (AI âm thanh, realtime sâu, tích hợp đa kênh thông báo...) triển khai sau khi người dùng đã vận hành ổn định nhóm chức năng cốt lõi.
 
 Hệ thống có 2 khu vực chính:
 
@@ -493,6 +509,29 @@ Nên triển khai sau khi các chức năng chính đã ổn định.
 - Tập tin đính kèm ghi chú (`meeting_personal_note_attachments`): sắp theo `sort_order asc`, nếu trùng thì `created_at asc`, sau cùng `id asc`.
 - Khuyến nghị frontend dùng cùng thứ tự này để tránh lệch giữa màn hình người dùng và dữ liệu từ API.
 
+### 7.14 Quyền truy cập file ghi chú
+
+- File đính kèm ghi chú là dữ liệu cá nhân theo đại biểu, không dùng chung giữa các đại biểu.
+- `Delegate` chỉ được xem/tải/sửa/xóa file đính kèm thuộc chính ghi chú do mình tạo.
+- `Chủ trì`, `thư ký/điều hành`, `quản lý` không tự động thấy file ghi chú cá nhân, trừ khi có cơ chế chia sẻ hoặc quyền đặc biệt được định nghĩa riêng.
+- Mọi truy vấn file ghi chú phải đi qua kiểm tra quyền trên `meeting_personal_notes.meeting_participant_id`.
+
+### 7.15 Ma trận quyền action cho file ghi chú
+
+Các action chuẩn cần thống nhất giữa backend và frontend:
+
+- `view_note_attachment`: xem danh sách file trong ghi chú.
+- `download_note_attachment`: tải file đính kèm.
+- `create_note_attachment`: thêm file đính kèm.
+- `delete_note_attachment`: xóa file đính kèm.
+- `reorder_note_attachment`: sắp xếp lại thứ tự file.
+
+Nguyên tắc theo vai trò:
+
+- `Delegate`: chỉ được thao tác các action trên ghi chú cá nhân của chính mình.
+- `Chairperson`, `Operator`, `Manager`: mặc định không có quyền truy cập file ghi chú cá nhân của đại biểu khác.
+- Nếu cần nghiệp vụ đặc biệt, phải bật quyền riêng theo chính sách tổ chức và có log kiểm tra.
+
 ---
 
 ## 8. Mô hình dữ liệu đơn giản đề xuất
@@ -882,6 +921,60 @@ Bảng nhắc lịch họp.
 | `created_by` | bigint nullable | Người tạo nhắc |
 | `created_at` | timestamp | Ngày tạo |
 | `updated_at` | timestamp | Ngày cập nhật |
+
+### 8.20 Quy tắc mặc định sinh `sort_order`
+
+Khi tạo mới bản ghi, nếu frontend không truyền `sort_order` thì backend tự sinh theo nguyên tắc `max(sort_order) + 1` trong đúng phạm vi nghiệp vụ:
+
+- `meeting_agendas`: phạm vi theo `meeting_id + parent_id` (cùng cấp chương trình).
+- `meeting_documents`: phạm vi theo `meeting_id`.
+- `meeting_vote_topics`: phạm vi theo `meeting_id`.
+- `meeting_discussion_registrations`: phạm vi theo `meeting_id + meeting_agenda_id + type`.
+- `meeting_personal_notes`: phạm vi theo `meeting_id + meeting_participant_id`.
+- `meeting_personal_note_attachments`: phạm vi theo `meeting_personal_note_id`.
+
+Nguyên tắc cập nhật:
+
+- Khi kéo thả đổi thứ tự, backend cập nhật lại `sort_order` tuần tự (1..n) trong đúng phạm vi.
+- Nên dùng transaction cho thao tác reorder nhiều dòng để tránh trùng hoặc mất thứ tự khi ghi đồng thời.
+
+### 8.21 Xử lý đồng thời khi reorder
+
+Để tránh xung đột khi nhiều người cùng sắp xếp:
+
+- Reorder phải chạy trong transaction và khóa theo đúng phạm vi dữ liệu đang sắp xếp.
+- Có thể dùng một trong hai cơ chế:
+  - `Pessimistic lock`: khóa bản ghi trong phạm vi reorder (`SELECT ... FOR UPDATE`).
+  - `Optimistic lock`: gửi `version/updated_at` từ frontend, backend từ chối nếu dữ liệu đã thay đổi.
+- Khi phát hiện xung đột, trả thông báo rõ ràng để frontend yêu cầu người dùng tải lại danh sách và thực hiện lại thao tác.
+- Sau khi reorder xong, luôn chuẩn hóa lại dãy `sort_order` liên tục từ `1..n`.
+
+### 8.22 API contract tối thiểu (phase khởi động)
+
+Mục tiêu là chốt sớm định dạng request/response để backend/frontend làm song song, giảm rework.
+
+Nhóm endpoint cần chốt trước:
+
+- `Meetings`: `stats`, `index`, `show`, `store`, `update`, `destroy`, `changeStatus`.
+- `Meeting Agendas`: CRUD + `reorder`.
+- `Meeting Documents`: CRUD + upload media + `reorder`.
+- `Meeting Vote Topics`: CRUD + `reorder` + `open`/`close` + cấu hình hiển thị kết quả.
+- `Meeting Vote Responses`: gửi phiếu biểu quyết + lấy thống kê tổng hợp.
+- `Meeting Discussion Registrations`: đăng ký + cập nhật trạng thái + `reorder`.
+- `Meeting Personal Notes`: CRUD + `reorder`.
+- `Meeting Personal Note Attachments`: upload/delete/download + `reorder`.
+- `Meeting Attendances`: check-in bằng `qr/button/manual`, điểm danh thay.
+
+Chuẩn response đề xuất:
+
+- Danh sách: trả theo `successCollection`.
+- Chi tiết/tạo/sửa: trả theo `successResource`.
+- Hành động nghiệp vụ (`open vote`, `close vote`, `reorder`, `check-in`): trả theo `success`.
+
+Chuẩn request `reorder` đề xuất:
+
+- Body dạng mảng cặp `id`, `sort_order`.
+- Có thể gửi thêm trường kiểm tra đồng thời (`version` hoặc `updated_at`) theo phạm vi.
 
 ---
 
