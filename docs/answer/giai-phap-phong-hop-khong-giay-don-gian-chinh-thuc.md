@@ -73,6 +73,8 @@ Mỗi dòng chương trình gồm:
 - `person_in_charge`: Người phụ trách, kiểu đoạn văn bản.
 - `allow_discussion_registration`: Cho đăng ký thảo luận, kiểu `true/false`.
 - `allow_question_registration`: Cho đăng ký chất vấn, kiểu `true/false`.
+- `parent_id`: Chương trình cha nếu là mục con, kiểu lựa chọn.
+- `sort_order`: Thứ tự hiển thị trong cùng cấp.
 
 Gợi ý đơn giản hóa:
 
@@ -80,6 +82,8 @@ Gợi ý đơn giản hóa:
 - Không bắt buộc chọn người phụ trách từ tài khoản; nhập text là đủ dễ dùng.
 - Chỉ khi chương trình bật `allow_discussion_registration` thì đại biểu mới thấy nút đăng ký thảo luận.
 - Chỉ khi chương trình bật `allow_question_registration` thì đại biểu mới thấy nút đăng ký chất vấn.
+- Cho sắp xếp thứ tự bằng kéo thả trong cùng cấp và có thể đẩy vào mục con.
+- Nên giới hạn tối đa 2-3 cấp phân cấp để dễ theo dõi trên màn chiếu và thiết bị cá nhân.
 
 ### 2.3 Danh sách tài liệu đính kèm
 
@@ -120,6 +124,10 @@ Mỗi chương trình biểu quyết gồm:
 
 - `title`: Tên chương trình biểu quyết.
 - `vote_type`: Loại biểu quyết.
+- `ballot_mode`: Chế độ biểu quyết: `anonymous` (ẩn danh) hoặc `public_named` (công khai danh tính).
+- `show_result_on_projector`: Có hiển thị kết quả tổng hợp trên màn chiếu hay không.
+- `show_result_on_personal_device`: Có hiển thị kết quả tổng hợp trên thiết bị cá nhân hay không.
+- `sort_order`: Thứ tự hiển thị chương trình biểu quyết.
 
 Loại biểu quyết gồm 2 nhóm:
 
@@ -139,6 +147,8 @@ Nguyên tắc:
 - Đại biểu chỉ được biểu quyết nếu thuộc danh sách tham dự cuộc họp.
 - Mỗi đại biểu chỉ có một phiếu trên một chương trình biểu quyết.
 - Sau khi đóng biểu quyết thì không cho sửa phiếu nếu không có quyền đặc biệt.
+- Với `anonymous`: không hiển thị danh tính người bỏ phiếu trong mọi màn hình nghiệp vụ thông thường.
+- Với `public_named`: chỉ vai trò quản lý và chủ trì được xem chi tiết theo từng đại biểu; các vai trò khác chỉ xem số liệu tổng hợp nếu được bật hiển thị.
 
 ### 2.6 Tùy chọn gửi thông báo và giấy mời
 
@@ -404,12 +414,17 @@ Trong tab `Tài liệu`, đại biểu có thêm phần ghi chú cá nhân.
 - Người đăng ký được đưa vào danh sách chờ.
 - Chủ trì có thể gọi đại biểu thảo luận/chất vấn.
 - Người điều hành đánh dấu `Đã thảo luận` hoặc `Đã chất vấn`.
+- Đại biểu có thể đính kèm file khi đăng ký để chủ trì/điều hành mở trình chiếu ngay trong phiên họp.
+- File đính kèm đăng ký thảo luận/chất vấn nên đi qua `MediaService` và giới hạn định dạng theo cấu hình.
 
 ### 7.4 Biểu quyết
 
 - Biểu quyết chỉ được thực hiện khi được kích hoạt theo chương trình.
 - Đại biểu chỉ được biểu quyết nếu thuộc danh sách tham dự.
 - Hệ thống lưu kết quả theo từng đại biểu và tổng hợp tỷ lệ.
+- Có 2 chế độ biểu quyết: `ẩn danh` và `công khai danh tính`.
+- Kết quả tổng hợp có thể bật/tắt hiển thị độc lập cho `màn chiếu` và `thiết bị cá nhân`.
+- Kết quả chi tiết theo từng người chỉ cho `quản lý` và `chủ trì` trong chế độ công khai danh tính.
 
 ### 7.5 Lượt xem
 
@@ -434,6 +449,49 @@ Có thể dùng để:
 - Thông báo mở/đóng biểu quyết.
 
 Nên triển khai sau khi các chức năng chính đã ổn định.
+
+### 7.8 Ghi chú cá nhân
+
+- Bảng ghi chú cá nhân không cần liên kết tài liệu.
+- Chỉ cho phép ghi chú đoạn văn bản.
+- Mỗi đại biểu có thể tạo nhiều ghi chú trong cùng một cuộc họp.
+- Mỗi ghi chú cho phép đính kèm nhiều tập tin.
+- Ghi chú có trường thứ tự để sắp xếp và kéo thả theo nhu cầu cá nhân của đại biểu.
+- Ghi chú mặc định là dữ liệu cá nhân, chỉ người tạo xem được.
+
+### 7.9 Chương trình họp phân cấp
+
+- Chương trình cuộc họp cần hỗ trợ phân cấp (mục cha/mục con) và sắp xếp thứ tự.
+- Khi hiển thị ở màn chiếu và thiết bị cá nhân phải thể hiện rõ cấp độ bằng thụt lề/đánh số.
+- Nên hỗ trợ thao tác kéo thả để đổi thứ tự và thay đổi cấp.
+
+### 7.10 Điều khiển hiển thị kết quả biểu quyết
+
+- Thư ký/điều hành có thể bật/tắt hiển thị kết quả trên màn chiếu theo từng chương trình biểu quyết.
+- Thư ký/điều hành có thể bật/tắt hiển thị kết quả trên thiết bị cá nhân độc lập với màn chiếu.
+- Trường hợp cần giữ bí mật trong lúc biểu quyết, hệ thống cho mở biểu quyết nhưng chưa hiển thị kết quả đến khi chủ trì cho phép.
+
+### 7.11 Xác nhận thao tác quan trọng ở frontend
+
+- Với hành động quan trọng, frontend bắt buộc hiển thị hộp xác nhận trước khi gửi API.
+- Danh sách tối thiểu gồm: ban hành cuộc họp, mở/đóng biểu quyết, xóa dữ liệu, điểm danh thay, gọi đại biểu thảo luận, công bố kết luận.
+- Cần thông điệp xác nhận rõ ràng, có nêu hệ quả để tránh thao tác nhầm trong lúc điều hành trực tiếp.
+
+### 7.12 Điểm danh quét mã theo tài khoản đăng nhập
+
+- Luồng điểm danh quét mã chỉ cần đại biểu mở link và đăng nhập tài khoản.
+- Sau đăng nhập, frontend lấy token phiên hiện tại để gửi yêu cầu điểm danh; backend đối soát tài khoản với đại biểu của cuộc họp rồi cập nhật `có mặt`.
+- Không yêu cầu đại biểu nhập thêm thông tin tay nếu đã xác thực hợp lệ.
+- Vẫn lưu `checkin_method = qr` để phục vụ báo cáo.
+
+### 7.13 Quy tắc sắp xếp mặc định
+
+- Chương trình họp (`meeting_agendas`): sắp theo `sort_order asc`, nếu trùng thì `start_time asc`, sau cùng `id asc`.
+- Danh sách tài liệu (`meeting_documents`): sắp theo `sort_order asc`, nếu trùng thì `created_at desc`, sau cùng `id desc`.
+- Chương trình biểu quyết (`meeting_vote_topics`): sắp theo `sort_order asc`, nếu trùng thì `created_at asc`, sau cùng `id asc`.
+- Ghi chú cá nhân (`meeting_personal_notes`): sắp theo `sort_order asc`, nếu trùng thì `updated_at desc`, sau cùng `id desc`.
+- Tập tin đính kèm ghi chú (`meeting_personal_note_attachments`): sắp theo `sort_order asc`, nếu trùng thì `created_at asc`, sau cùng `id asc`.
+- Khuyến nghị frontend dùng cùng thứ tự này để tránh lệch giữa màn hình người dùng và dữ liệu từ API.
 
 ---
 
@@ -584,6 +642,7 @@ Bảng chương trình cuộc họp.
 | `person_in_charge` | string nullable | Người phụ trách nhập dạng text |
 | `allow_discussion_registration` | boolean | Cho đăng ký thảo luận |
 | `allow_question_registration` | boolean | Cho đăng ký chất vấn |
+| `parent_id` | bigint nullable | Chương trình cha nếu là mục con |
 | `sort_order` | integer | Thứ tự hiển thị |
 | `created_at` | timestamp | Ngày tạo |
 | `updated_at` | timestamp | Ngày cập nhật |
@@ -669,6 +728,10 @@ Bảng chương trình biểu quyết.
 | `meeting_agenda_id` | bigint nullable | Chương trình liên quan nếu có |
 | `title` | string | Tên chương trình biểu quyết |
 | `vote_type` | string | Loại biểu quyết: `agree_disagree_abstain`, `approve_reject_abstain` |
+| `ballot_mode` | string | Chế độ: `anonymous`, `public_named` |
+| `show_result_on_projector` | boolean | Có hiển thị kết quả tổng hợp trên màn chiếu |
+| `show_result_on_personal_device` | boolean | Có hiển thị kết quả tổng hợp trên thiết bị cá nhân |
+| `sort_order` | integer | Thứ tự hiển thị chương trình biểu quyết |
 | `status` | string | Trạng thái: `draft`, `opened`, `closed` |
 | `opened_at` | datetime nullable | Thời điểm mở biểu quyết |
 | `closed_at` | datetime nullable | Thời điểm đóng biểu quyết |
@@ -687,6 +750,7 @@ Bảng phiếu biểu quyết của đại biểu.
 | `meeting_vote_topic_id` | bigint | Chương trình biểu quyết |
 | `meeting_participant_id` | bigint | Đại biểu biểu quyết |
 | `option` | string | Lựa chọn: `agree`, `disagree`, `approve`, `reject`, `abstain` |
+| `is_visible_to_managers` | boolean | Cờ nội bộ cho phép quản lý/chủ trì xem chi tiết theo người khi cần |
 | `voted_at` | datetime | Thời điểm biểu quyết |
 | `created_at` | timestamp | Ngày tạo |
 | `updated_at` | timestamp | Ngày cập nhật |
@@ -707,6 +771,7 @@ Bảng đăng ký thảo luận/chất vấn.
 | `meeting_participant_id` | bigint | Đại biểu đăng ký |
 | `type` | string | Loại đăng ký: `discussion`, `question` |
 | `content` | text | Nội dung thảo luận/chất vấn |
+| `media_id` | bigint nullable | File đính kèm nội dung thảo luận/chất vấn qua `MediaService` |
 | `status` | string | Trạng thái: `registered`, `called`, `completed`, `cancelled` |
 | `called_at` | datetime nullable | Thời điểm được chủ trì gọi |
 | `completed_at` | datetime nullable | Thời điểm đã thảo luận/chất vấn xong |
@@ -728,16 +793,32 @@ Bảng ghi chú cá nhân của đại biểu.
 | `id` | bigint | Khóa chính |
 | `meeting_id` | bigint | Cuộc họp |
 | `meeting_participant_id` | bigint | Đại biểu ghi chú |
-| `meeting_document_id` | bigint nullable | Tài liệu liên quan nếu có |
 | `content` | longText | Nội dung ghi chú |
+| `sort_order` | integer | Thứ tự hiển thị ghi chú theo từng đại biểu trong cuộc họp |
 | `created_at` | timestamp | Ngày tạo |
 | `updated_at` | timestamp | Ngày cập nhật |
 
 Nguyên tắc:
 
 - Ghi chú mặc định chỉ người tạo xem được.
+- Không bắt buộc liên kết ghi chú với tài liệu.
+- Mỗi đại biểu có thể có nhiều ghi chú trong cùng một cuộc họp.
+- Cho phép sắp xếp thủ công theo `sort_order`.
 
-### 8.15 Bảng `meeting_conclusions`
+### 8.15 Bảng `meeting_personal_note_attachments`
+
+Bảng tập tin đính kèm cho ghi chú cá nhân.
+
+| Trường | Kiểu | Mô tả |
+| --- | --- | --- |
+| `id` | bigint | Khóa chính |
+| `meeting_personal_note_id` | bigint | Ghi chú cá nhân |
+| `media_id` | bigint | Tập tin đính kèm qua `MediaService` |
+| `sort_order` | integer | Thứ tự hiển thị tập tin trong ghi chú |
+| `created_at` | timestamp | Ngày tạo |
+| `updated_at` | timestamp | Ngày cập nhật |
+
+### 8.16 Bảng `meeting_conclusions`
 
 Bảng kết luận cuộc họp.
 
@@ -754,7 +835,7 @@ Bảng kết luận cuộc họp.
 | `created_at` | timestamp | Ngày tạo |
 | `updated_at` | timestamp | Ngày cập nhật |
 
-### 8.16 Bảng `meeting_views`
+### 8.17 Bảng `meeting_views`
 
 Bảng lưu lượt xem cuộc họp và tài liệu.
 
@@ -768,7 +849,7 @@ Bảng lưu lượt xem cuộc họp và tài liệu.
 | `user_agent` | text nullable | Thiết bị/trình duyệt |
 | `viewed_at` | datetime | Thời điểm xem |
 
-### 8.17 Bảng `meeting_invitations`
+### 8.18 Bảng `meeting_invitations`
 
 Bảng giấy mời theo đại biểu.
 
@@ -785,7 +866,7 @@ Bảng giấy mời theo đại biểu.
 | `created_at` | timestamp | Ngày tạo |
 | `updated_at` | timestamp | Ngày cập nhật |
 
-### 8.18 Bảng `meeting_reminders`
+### 8.19 Bảng `meeting_reminders`
 
 Bảng nhắc lịch họp.
 
