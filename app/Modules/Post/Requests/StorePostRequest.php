@@ -41,7 +41,18 @@ class StorePostRequest extends FormRequest
             'images.*.max' => 'Mỗi ảnh tối đa 5MB.',
         ];
     }
-
+    public function attributes(): array
+    {
+        return [
+            'title' => 'Tiêu đề',
+            'content' => 'Nội dung',
+            'status' => 'Trạng thái',
+            'category_ids' => 'category ids',
+            'category_ids.*' => 'Phần tử của category ids',
+            'images' => 'images',
+            'images.*' => 'Phần tử của images',
+        ];
+    }
     public function bodyParameters(): array
     {
         return [];

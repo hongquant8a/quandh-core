@@ -30,7 +30,14 @@ class BulkUpdateStatusPostRequest extends FormRequest
             'status.in' => 'Trạng thái không hợp lệ.',
         ];
     }
-
+    public function attributes(): array
+    {
+        return [
+            'ids' => 'Danh sách ID',
+            'ids.*' => 'Phần tử của Danh sách ID',
+            'status' => 'Trạng thái',
+        ];
+    }
     public function bodyParameters(): array
     {
         return [];

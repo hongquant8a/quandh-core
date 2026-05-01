@@ -63,7 +63,20 @@ class StoreUserRequest extends FormRequest
             'assignments.*.organization_ids.*.exists' => 'Tổ chức không tồn tại.',
         ];
     }
-
+    public function attributes(): array
+    {
+        return [
+            'name' => 'Tên',
+            'email' => 'Email',
+            'user_name' => 'user name',
+            'password' => 'Mật khẩu',
+            'status' => 'Trạng thái',
+            'assignments' => 'assignments',
+            'assignments.*.role_id' => 'ID vai trò của từng phần tử assignments',
+            'assignments.*.organization_ids' => 'organization ids của từng phần tử assignments',
+            'assignments.*.organization_ids.*' => 'Phần tử của assignments.*.organization ids',
+        ];
+    }
     public function bodyParameters(): array
     {
         return [

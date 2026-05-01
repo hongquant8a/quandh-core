@@ -35,7 +35,15 @@ class ResetPasswordRequest extends FormRequest
             'token.required' => 'Token đặt lại mật khẩu không được để trống.',
         ];
     }
-
+    public function attributes(): array
+    {
+        return [
+            'email' => 'Email',
+            'password' => 'Mật khẩu',
+            'password_confirmation' => 'password confirmation',
+            'token' => 'token',
+        ];
+    }
     public function bodyParameters(): array
     {
         return [];

@@ -29,7 +29,16 @@ class StorePermissionRequest extends FormRequest
             'name.max' => 'Tên quyền không được vượt quá 255 ký tự.',
         ];
     }
-
+    public function attributes(): array
+    {
+        return [
+            'name' => 'Tên',
+            'guard_name' => 'guard name',
+            'description' => 'Mô tả',
+            'sort_order' => 'Thứ tự sắp xếp',
+            'parent_id' => 'ID bản ghi cha',
+        ];
+    }
     public function bodyParameters(): array
     {
         return [];

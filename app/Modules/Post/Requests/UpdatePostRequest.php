@@ -40,7 +40,20 @@ class UpdatePostRequest extends FormRequest
             'images.*.image' => 'File phải là hình ảnh.',
         ];
     }
-
+    public function attributes(): array
+    {
+        return [
+            'title' => 'Tiêu đề',
+            'content' => 'Nội dung',
+            'status' => 'Trạng thái',
+            'category_ids' => 'category ids',
+            'category_ids.*' => 'Phần tử của category ids',
+            'images' => 'images',
+            'images.*' => 'Phần tử của images',
+            'remove_attachment_ids' => 'remove attachment ids',
+            'remove_attachment_ids.*' => 'Phần tử của remove attachment ids',
+        ];
+    }
     public function bodyParameters(): array
     {
         return [];

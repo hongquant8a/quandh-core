@@ -32,7 +32,17 @@ class StoreOrganizationRequest extends FormRequest
             'status.in' => 'Trạng thái chỉ chấp nhận active, inactive.',
         ];
     }
-
+    public function attributes(): array
+    {
+        return [
+            'name' => 'Tên',
+            'slug' => 'Slug',
+            'description' => 'Mô tả',
+            'status' => 'Trạng thái',
+            'parent_id' => 'ID bản ghi cha',
+            'sort_order' => 'Thứ tự sắp xếp',
+        ];
+    }
     public function bodyParameters(): array
     {
         return [];
