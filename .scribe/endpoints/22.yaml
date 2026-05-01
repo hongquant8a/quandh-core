@@ -1,0 +1,848 @@
+name: 'Meeting - Chương trình họp'
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/meeting-agendas/bulk-delete
+    metadata:
+      custom: []
+      groupName: 'Meeting - Chương trình họp'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Xóa hàng loạt chương trình họp.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      ids:
+        custom: []
+        name: ids
+        description: ''
+        required: false
+        example:
+          - 16
+        type: 'integer[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      ids:
+        - 16
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: api/meeting-agendas/reorder
+    metadata:
+      custom: []
+      groupName: 'Meeting - Chương trình họp'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Sắp xếp lại thứ tự chương trình họp.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      items:
+        custom: []
+        name: items
+        description: 'Danh sách cặp id và sort_order để sắp xếp lại chương trình họp. Must have at least 1 items.'
+        required: true
+        example:
+          -
+            id: 1
+            sort_order: 1
+          -
+            id: 2
+            sort_order: 2
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'items[].id':
+        custom: []
+        name: 'items[].id'
+        description: 'The <code>id</code> of an existing record in the meeting_agendas table.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'items[].sort_order':
+        custom: []
+        name: 'items[].sort_order'
+        description: 'Must be at least 0.'
+        required: true
+        example: 39
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      items:
+        -
+          id: 1
+          sort_order: 1
+        -
+          id: 2
+          sort_order: 2
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/meeting-agendas
+    metadata:
+      custom: []
+      groupName: 'Meeting - Chương trình họp'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Danh sách chương trình họp.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Từ khóa tìm kiếm theo tên hoặc trường chính. Must not be greater than 100 characters.'
+        required: false
+        example: van-ban
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Lọc theo trạng thái.'
+        required: false
+        example: active
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      from_date:
+        custom: []
+        name: from_date
+        description: 'Lọc từ ngày tạo (Y-m-d). Must be a valid date.'
+        required: false
+        example: '2026-01-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      to_date:
+        custom: []
+        name: to_date
+        description: 'Lọc đến ngày tạo (Y-m-d). Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
+        required: false
+        example: '2026-12-31'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: 'Trường dùng để sắp xếp. Must not be greater than 50 characters.'
+        required: false
+        example: created_at
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự sắp xếp.'
+        required: false
+        example: desc
+        type: string
+        enumValues:
+          - asc
+          - desc
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Số bản ghi mỗi trang (1-100). Must be at least 1. Must not be greater than 100.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanQueryParameters:
+      search: van-ban
+      status: active
+      from_date: '2026-01-01'
+      to_date: '2026-12-31'
+      sort_by: created_at
+      sort_order: desc
+      limit: 10
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/meeting-agendas/{meetingAgenda_id}'
+    metadata:
+      custom: []
+      groupName: 'Meeting - Chương trình họp'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Chi tiết chương trình họp.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      meetingAgenda_id:
+        custom: []
+        name: meetingAgenda_id
+        description: 'The ID of the meetingAgenda.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      meetingAgenda:
+        custom: []
+        name: meetingAgenda
+        description: 'ID chương trình họp.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      meetingAgenda_id: 16
+      meetingAgenda: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/meeting-agendas
+    metadata:
+      custom: []
+      groupName: 'Meeting - Chương trình họp'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Tạo chương trình họp.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      meeting_id:
+        custom: []
+        name: meeting_id
+        description: 'ID cuộc họp. The <code>id</code> of an existing record in the meetings table.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      start_time:
+        custom: []
+        name: start_time
+        description: 'Giờ bắt đầu (H:i:s). Must be a valid date in the format <code>H:i:s</code>.'
+        required: false
+        example: '08:00:00'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      end_time:
+        custom: []
+        name: end_time
+        description: 'Giờ kết thúc (H:i:s). Must be a valid date in the format <code>H:i:s</code>. Must be a date after or equal to <code>start_time</code>.'
+        required: false
+        example: '08:30:00'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      content:
+        custom: []
+        name: content
+        description: 'Nội dung chương trình.'
+        required: true
+        example: 'Báo cáo công tác tuần.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      person_in_charge:
+        custom: []
+        name: person_in_charge
+        description: 'Người phụ trách. Must not be greater than 255 characters.'
+        required: false
+        example: 'Nguyễn Văn A'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      allow_discussion_registration:
+        custom: []
+        name: allow_discussion_registration
+        description: 'Cho phép đăng ký thảo luận.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      allow_question_registration:
+        custom: []
+        name: allow_question_registration
+        description: 'Cho phép đăng ký chất vấn.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      parent_id:
+        custom: []
+        name: parent_id
+        description: 'ID chương trình cha nếu là mục con. The <code>id</code> of an existing record in the meeting_agendas table.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự hiển thị. Must be at least 0.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      meeting_id: 1
+      start_time: '08:00:00'
+      end_time: '08:30:00'
+      content: 'Báo cáo công tác tuần.'
+      person_in_charge: 'Nguyễn Văn A'
+      allow_discussion_registration: true
+      allow_question_registration: false
+      sort_order: 1
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/meeting-agendas/{meetingAgenda_id}'
+    metadata:
+      custom: []
+      groupName: 'Meeting - Chương trình họp'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Cập nhật chương trình họp.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      meetingAgenda_id:
+        custom: []
+        name: meetingAgenda_id
+        description: 'The ID of the meetingAgenda.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      meetingAgenda:
+        custom: []
+        name: meetingAgenda
+        description: 'ID chương trình họp.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      meetingAgenda_id: 16
+      meetingAgenda: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      start_time:
+        custom: []
+        name: start_time
+        description: 'Must be a valid date in the format <code>H:i:s</code>.'
+        required: false
+        example: '14:55:12'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      end_time:
+        custom: []
+        name: end_time
+        description: 'Must be a valid date in the format <code>H:i:s</code>. Must be a date after or equal to <code>start_time</code>.'
+        required: false
+        example: '2052-05-24'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      content:
+        custom: []
+        name: content
+        description: 'Nội dung chương trình.'
+        required: false
+        example: 'Thảo luận chuyên đề A'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      person_in_charge:
+        custom: []
+        name: person_in_charge
+        description: 'Người phụ trách. Must not be greater than 255 characters.'
+        required: false
+        example: 'Lê Văn C'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      allow_discussion_registration:
+        custom: []
+        name: allow_discussion_registration
+        description: 'Cho phép đăng ký thảo luận.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      allow_question_registration:
+        custom: []
+        name: allow_question_registration
+        description: 'Cho phép đăng ký chất vấn.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      parent_id:
+        custom: []
+        name: parent_id
+        description: 'ID mục cha. The <code>id</code> of an existing record in the meeting_agendas table.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự hiển thị. Must be at least 0.'
+        required: false
+        example: 3
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      start_time: '14:55:12'
+      end_time: '2052-05-24'
+      content: 'Thảo luận chuyên đề A'
+      person_in_charge: 'Lê Văn C'
+      allow_discussion_registration: true
+      allow_question_registration: true
+      sort_order: 3
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/meeting-agendas/{meetingAgenda_id}'
+    metadata:
+      custom: []
+      groupName: 'Meeting - Chương trình họp'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Cập nhật chương trình họp.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      meetingAgenda_id:
+        custom: []
+        name: meetingAgenda_id
+        description: 'The ID of the meetingAgenda.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      meetingAgenda:
+        custom: []
+        name: meetingAgenda
+        description: 'ID chương trình họp.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      meetingAgenda_id: 16
+      meetingAgenda: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      start_time:
+        custom: []
+        name: start_time
+        description: 'Must be a valid date in the format <code>H:i:s</code>.'
+        required: false
+        example: '14:55:12'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      end_time:
+        custom: []
+        name: end_time
+        description: 'Must be a valid date in the format <code>H:i:s</code>. Must be a date after or equal to <code>start_time</code>.'
+        required: false
+        example: '2052-05-24'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      content:
+        custom: []
+        name: content
+        description: 'Nội dung chương trình.'
+        required: false
+        example: 'Thảo luận chuyên đề A'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      person_in_charge:
+        custom: []
+        name: person_in_charge
+        description: 'Người phụ trách. Must not be greater than 255 characters.'
+        required: false
+        example: 'Lê Văn C'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      allow_discussion_registration:
+        custom: []
+        name: allow_discussion_registration
+        description: 'Cho phép đăng ký thảo luận.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      allow_question_registration:
+        custom: []
+        name: allow_question_registration
+        description: 'Cho phép đăng ký chất vấn.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      parent_id:
+        custom: []
+        name: parent_id
+        description: 'ID mục cha. The <code>id</code> of an existing record in the meeting_agendas table.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự hiển thị. Must be at least 0.'
+        required: false
+        example: 3
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      start_time: '14:55:12'
+      end_time: '2052-05-24'
+      content: 'Thảo luận chuyên đề A'
+      person_in_charge: 'Lê Văn C'
+      allow_discussion_registration: true
+      allow_question_registration: true
+      sort_order: 3
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/meeting-agendas/{meetingAgenda_id}'
+    metadata:
+      custom: []
+      groupName: 'Meeting - Chương trình họp'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Xóa chương trình họp.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      meetingAgenda_id:
+        custom: []
+        name: meetingAgenda_id
+        description: 'The ID of the meetingAgenda.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      meetingAgenda:
+        custom: []
+        name: meetingAgenda
+        description: 'ID chương trình họp.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      meetingAgenda_id: 16
+      meetingAgenda: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

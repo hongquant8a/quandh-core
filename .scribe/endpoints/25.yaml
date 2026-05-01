@@ -1,216 +1,18 @@
-name: 'Meeting - Tài liệu họp'
+name: 'Meeting - Chương trình biểu quyết'
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
-      - GET
-    uri: api/meeting-documents/public
-    metadata:
-      custom: []
-      groupName: 'Meeting - Tài liệu họp'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Danh sách tài liệu họp công khai.'
-      description: ''
-      authenticated: false
-      deprecated: false
-    headers:
-      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters:
-      search:
-        custom: []
-        name: search
-        description: 'Từ khóa tìm kiếm theo tên hoặc trường chính. Must not be greater than 100 characters.'
-        required: false
-        example: van-ban
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: 'Lọc theo trạng thái.'
-        required: false
-        example: active
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      from_date:
-        custom: []
-        name: from_date
-        description: 'Lọc từ ngày tạo (Y-m-d). Must be a valid date.'
-        required: false
-        example: '2026-01-01'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      to_date:
-        custom: []
-        name: to_date
-        description: 'Lọc đến ngày tạo (Y-m-d). Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
-        required: false
-        example: '2026-12-31'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      sort_by:
-        custom: []
-        name: sort_by
-        description: 'Trường dùng để sắp xếp. Must not be greater than 50 characters.'
-        required: false
-        example: created_at
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      sort_order:
-        custom: []
-        name: sort_order
-        description: 'Thứ tự sắp xếp.'
-        required: false
-        example: desc
-        type: string
-        enumValues:
-          - asc
-          - desc
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      limit:
-        custom: []
-        name: limit
-        description: 'Số bản ghi mỗi trang (1-100). Must be at least 1. Must not be greater than 100.'
-        required: false
-        example: 10
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-    cleanQueryParameters:
-      search: van-ban
-      status: active
-      from_date: '2026-01-01'
-      to_date: '2026-12-31'
-      sort_by: created_at
-      sort_order: desc
-      limit: 10
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 500
-        content: |-
-          {
-              "message": "Server Error"
-          }
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/meeting-documents/public/{meetingDocument_id}'
-    metadata:
-      custom: []
-      groupName: 'Meeting - Tài liệu họp'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Chi tiết tài liệu họp công khai.'
-      description: ''
-      authenticated: false
-      deprecated: false
-    headers:
-      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      meetingDocument_id:
-        custom: []
-        name: meetingDocument_id
-        description: 'The ID of the meetingDocument.'
-        required: true
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      meetingDocument:
-        custom: []
-        name: meetingDocument
-        description: 'ID tài liệu họp.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      meetingDocument_id: 16
-      meetingDocument: 1
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 500
-        content: |-
-          {
-              "message": "Server Error"
-          }
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
       - POST
-    uri: api/meeting-documents/bulk-delete
+    uri: api/meeting-vote-topics/bulk-delete
     metadata:
       custom: []
-      groupName: 'Meeting - Tài liệu họp'
+      groupName: 'Meeting - Chương trình biểu quyết'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Xóa hàng loạt tài liệu họp.'
+      title: 'Xóa hàng loạt chương trình biểu quyết.'
       description: ''
       authenticated: true
       deprecated: false
@@ -253,78 +55,14 @@ endpoints:
     custom: []
     httpMethods:
       - PATCH
-    uri: api/meeting-documents/bulk-status
+    uri: api/meeting-vote-topics/reorder
     metadata:
       custom: []
-      groupName: 'Meeting - Tài liệu họp'
+      groupName: 'Meeting - Chương trình biểu quyết'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Cập nhật trạng thái hàng loạt tài liệu họp.'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
-      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      ids:
-        custom: []
-        name: ids
-        description: ''
-        required: false
-        example:
-          - 16
-        type: 'integer[]'
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: 'Trạng thái mới của tài liệu họp.'
-        required: true
-        example: published
-        type: string
-        enumValues:
-          - draft
-          - published
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      ids:
-        - 16
-      status: published
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - PATCH
-    uri: api/meeting-documents/reorder
-    metadata:
-      custom: []
-      groupName: 'Meeting - Tài liệu họp'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Sắp xếp lại thứ tự tài liệu họp.'
+      title: 'Sắp xếp thứ tự chương trình biểu quyết.'
       description: ''
       authenticated: true
       deprecated: false
@@ -341,7 +79,7 @@ endpoints:
       items:
         custom: []
         name: items
-        description: 'Danh sách cặp id và sort_order để sắp xếp lại tài liệu họp. Must have at least 1 items.'
+        description: 'Danh sách cặp id và sort_order để sắp xếp chương trình biểu quyết. Must have at least 1 items.'
         required: true
         example:
           -
@@ -358,7 +96,7 @@ endpoints:
       'items[].id':
         custom: []
         name: 'items[].id'
-        description: 'The <code>id</code> of an existing record in the meeting_documents table.'
+        description: 'The <code>id</code> of an existing record in the meeting_vote_topics table.'
         required: true
         example: 16
         type: integer
@@ -398,15 +136,135 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - GET
-    uri: api/meeting-documents
+      - PATCH
+    uri: 'api/meeting-vote-topics/{meetingVoteTopic_id}/open'
     metadata:
       custom: []
-      groupName: 'Meeting - Tài liệu họp'
+      groupName: 'Meeting - Chương trình biểu quyết'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Danh sách tài liệu họp.'
+      title: 'Mở biểu quyết.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      meetingVoteTopic_id:
+        custom: []
+        name: meetingVoteTopic_id
+        description: 'The ID of the meetingVoteTopic.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      meetingVoteTopic:
+        custom: []
+        name: meetingVoteTopic
+        description: 'ID chương trình biểu quyết.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      meetingVoteTopic_id: 16
+      meetingVoteTopic: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/meeting-vote-topics/{meetingVoteTopic_id}/close'
+    metadata:
+      custom: []
+      groupName: 'Meeting - Chương trình biểu quyết'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Đóng biểu quyết.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      meetingVoteTopic_id:
+        custom: []
+        name: meetingVoteTopic_id
+        description: 'The ID of the meetingVoteTopic.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      meetingVoteTopic:
+        custom: []
+        name: meetingVoteTopic
+        description: 'ID chương trình biểu quyết.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      meetingVoteTopic_id: 16
+      meetingVoteTopic: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/meeting-vote-topics/stats
+    metadata:
+      custom: []
+      groupName: 'Meeting - Chương trình biểu quyết'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Thống kê chương trình biểu quyết.'
       description: ''
       authenticated: true
       deprecated: false
@@ -530,14 +388,145 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/meeting-documents/{meetingDocument_id}'
+    uri: api/meeting-vote-topics
     metadata:
       custom: []
-      groupName: 'Meeting - Tài liệu họp'
+      groupName: 'Meeting - Chương trình biểu quyết'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Chi tiết tài liệu họp.'
+      title: 'Danh sách chương trình biểu quyết.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Từ khóa tìm kiếm theo tên hoặc trường chính. Must not be greater than 100 characters.'
+        required: false
+        example: van-ban
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Lọc theo trạng thái.'
+        required: false
+        example: active
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      from_date:
+        custom: []
+        name: from_date
+        description: 'Lọc từ ngày tạo (Y-m-d). Must be a valid date.'
+        required: false
+        example: '2026-01-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      to_date:
+        custom: []
+        name: to_date
+        description: 'Lọc đến ngày tạo (Y-m-d). Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
+        required: false
+        example: '2026-12-31'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: 'Trường dùng để sắp xếp. Must not be greater than 50 characters.'
+        required: false
+        example: created_at
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự sắp xếp.'
+        required: false
+        example: desc
+        type: string
+        enumValues:
+          - asc
+          - desc
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Số bản ghi mỗi trang (1-100). Must be at least 1. Must not be greater than 100.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanQueryParameters:
+      search: van-ban
+      status: active
+      from_date: '2026-01-01'
+      to_date: '2026-12-31'
+      sort_by: created_at
+      sort_order: desc
+      limit: 10
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/meeting-vote-topics/{meetingVoteTopic_id}'
+    metadata:
+      custom: []
+      groupName: 'Meeting - Chương trình biểu quyết'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Chi tiết chương trình biểu quyết.'
       description: ''
       authenticated: true
       deprecated: false
@@ -547,10 +536,10 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      meetingDocument_id:
+      meetingVoteTopic_id:
         custom: []
-        name: meetingDocument_id
-        description: 'The ID of the meetingDocument.'
+        name: meetingVoteTopic_id
+        description: 'The ID of the meetingVoteTopic.'
         required: true
         example: 16
         type: integer
@@ -558,10 +547,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      meetingDocument:
+      meetingVoteTopic:
         custom: []
-        name: meetingDocument
-        description: 'ID tài liệu họp.'
+        name: meetingVoteTopic
+        description: 'ID chương trình biểu quyết.'
         required: true
         example: 1
         type: integer
@@ -570,8 +559,8 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      meetingDocument_id: 16
-      meetingDocument: 1
+      meetingVoteTopic_id: 16
+      meetingVoteTopic: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -599,21 +588,21 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/meeting-documents
+    uri: api/meeting-vote-topics
     metadata:
       custom: []
-      groupName: 'Meeting - Tài liệu họp'
+      groupName: 'Meeting - Chương trình biểu quyết'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Tạo tài liệu họp.'
+      title: 'Tạo chương trình biểu quyết.'
       description: ''
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
       X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
-      Content-Type: multipart/form-data
+      Content-Type: application/json
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
@@ -636,18 +625,7 @@ endpoints:
         name: meeting_agenda_id
         description: 'ID chương trình họp liên quan. The <code>id</code> of an existing record in the meeting_agendas table.'
         required: false
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      meeting_document_type_id:
-        custom: []
-        name: meeting_document_type_id
-        description: 'ID loại tài liệu họp. The <code>id</code> of an existing record in the meeting_document_types table.'
-        required: false
-        example: 1
+        example: 2
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -656,70 +634,61 @@ endpoints:
       title:
         custom: []
         name: title
-        description: 'Tiêu đề tài liệu. Must not be greater than 255 characters.'
+        description: 'Tên chương trình biểu quyết. Must not be greater than 255 characters.'
         required: true
-        example: 'Báo cáo tổng hợp'
+        example: 'Thông qua kế hoạch A'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      document_number:
+      vote_type:
         custom: []
-        name: document_number
-        description: 'Số hiệu tài liệu. Must not be greater than 255 characters.'
-        required: false
-        example: BC-01/2026
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      summary:
-        custom: []
-        name: summary
-        description: 'Trích yếu nội dung.'
-        required: false
-        example: 'Nội dung chính của tài liệu.'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      file:
-        custom: []
-        name: file
-        description: 'Tệp đính kèm tài liệu. Must be a file. Must not be greater than 10240 kilobytes.'
-        required: false
-        example: null
-        type: file
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      is_public:
-        custom: []
-        name: is_public
-        description: 'Công khai tài liệu hay không.'
+        name: vote_type
+        description: 'Loại biểu quyết.'
         required: true
+        example: agree_disagree_abstain
+        type: string
+        enumValues:
+          - agree_disagree_abstain
+          - approve_reject_abstain
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      ballot_mode:
+        custom: []
+        name: ballot_mode
+        description: 'Chế độ biểu quyết.'
+        required: true
+        example: anonymous
+        type: string
+        enumValues:
+          - anonymous
+          - public_named
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      show_result_on_projector:
+        custom: []
+        name: show_result_on_projector
+        description: 'Hiển thị kết quả trên màn chiếu.'
+        required: false
         example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
         deprecated: false
-      status:
+      show_result_on_personal_device:
         custom: []
-        name: status
-        description: 'Trạng thái tài liệu.'
-        required: true
-        example: draft
-        type: string
-        enumValues:
-          - draft
-          - published
+        name: show_result_on_personal_device
+        description: 'Hiển thị kết quả trên thiết bị cá nhân.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
         deprecated: false
       sort_order:
         custom: []
@@ -732,18 +701,31 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Trạng thái chủ đề biểu quyết.'
+        required: false
+        example: draft
+        type: string
+        enumValues:
+          - draft
+          - opened
+          - closed
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       meeting_id: 1
-      meeting_agenda_id: 1
-      meeting_document_type_id: 1
-      title: 'Báo cáo tổng hợp'
-      document_number: BC-01/2026
-      summary: 'Nội dung chính của tài liệu.'
-      is_public: true
-      status: draft
+      meeting_agenda_id: 2
+      title: 'Thông qua kế hoạch A'
+      vote_type: agree_disagree_abstain
+      ballot_mode: anonymous
+      show_result_on_projector: true
+      show_result_on_personal_device: false
       sort_order: 1
-    fileParameters:
-      file: null
+      status: draft
+    fileParameters: []
     responses: []
     responseFields: []
     auth:
@@ -757,378 +739,14 @@ endpoints:
     custom: []
     httpMethods:
       - PUT
-    uri: 'api/meeting-documents/{meetingDocument_id}'
+    uri: 'api/meeting-vote-topics/{meetingVoteTopic_id}'
     metadata:
       custom: []
-      groupName: 'Meeting - Tài liệu họp'
+      groupName: 'Meeting - Chương trình biểu quyết'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Cập nhật tài liệu họp.'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
-      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
-      Content-Type: multipart/form-data
-      Accept: application/json
-    urlParameters:
-      meetingDocument_id:
-        custom: []
-        name: meetingDocument_id
-        description: 'The ID of the meetingDocument.'
-        required: true
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      meetingDocument:
-        custom: []
-        name: meetingDocument
-        description: 'ID tài liệu họp.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      meetingDocument_id: 16
-      meetingDocument: 1
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      meeting_agenda_id:
-        custom: []
-        name: meeting_agenda_id
-        description: 'The <code>id</code> of an existing record in the meeting_agendas table.'
-        required: false
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      meeting_document_type_id:
-        custom: []
-        name: meeting_document_type_id
-        description: 'The <code>id</code> of an existing record in the meeting_document_types table.'
-        required: false
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      title:
-        custom: []
-        name: title
-        description: 'Tiêu đề tài liệu. Must not be greater than 255 characters.'
-        required: false
-        example: 'Báo cáo cập nhật'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      document_number:
-        custom: []
-        name: document_number
-        description: 'Số hiệu tài liệu. Must not be greater than 255 characters.'
-        required: false
-        example: BC-02/2026
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      summary:
-        custom: []
-        name: summary
-        description: 'Trích yếu.'
-        required: false
-        example: 'Tóm tắt nội dung cập nhật'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      file:
-        custom: []
-        name: file
-        description: 'Tệp tài liệu thay thế hoặc bổ sung. Must be a file. Must not be greater than 10240 kilobytes.'
-        required: false
-        example: null
-        type: file
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      is_public:
-        custom: []
-        name: is_public
-        description: 'Công khai tài liệu.'
-        required: false
-        example: false
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: 'Trạng thái tài liệu.'
-        required: false
-        example: published
-        type: string
-        enumValues:
-          - draft
-          - published
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      sort_order:
-        custom: []
-        name: sort_order
-        description: 'Must be at least 0.'
-        required: false
-        example: 39
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      remove_file:
-        custom: []
-        name: remove_file
-        description: 'Xóa file hiện tại hay không.'
-        required: false
-        example: false
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-    cleanBodyParameters:
-      meeting_agenda_id: 16
-      meeting_document_type_id: 16
-      title: 'Báo cáo cập nhật'
-      document_number: BC-02/2026
-      summary: 'Tóm tắt nội dung cập nhật'
-      is_public: false
-      status: published
-      sort_order: 39
-      remove_file: false
-    fileParameters:
-      file: null
-    responses: []
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - PATCH
-    uri: 'api/meeting-documents/{meetingDocument_id}'
-    metadata:
-      custom: []
-      groupName: 'Meeting - Tài liệu họp'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Cập nhật tài liệu họp.'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
-      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
-      Content-Type: multipart/form-data
-      Accept: application/json
-    urlParameters:
-      meetingDocument_id:
-        custom: []
-        name: meetingDocument_id
-        description: 'The ID of the meetingDocument.'
-        required: true
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      meetingDocument:
-        custom: []
-        name: meetingDocument
-        description: 'ID tài liệu họp.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      meetingDocument_id: 16
-      meetingDocument: 1
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      meeting_agenda_id:
-        custom: []
-        name: meeting_agenda_id
-        description: 'The <code>id</code> of an existing record in the meeting_agendas table.'
-        required: false
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      meeting_document_type_id:
-        custom: []
-        name: meeting_document_type_id
-        description: 'The <code>id</code> of an existing record in the meeting_document_types table.'
-        required: false
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      title:
-        custom: []
-        name: title
-        description: 'Tiêu đề tài liệu. Must not be greater than 255 characters.'
-        required: false
-        example: 'Báo cáo cập nhật'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      document_number:
-        custom: []
-        name: document_number
-        description: 'Số hiệu tài liệu. Must not be greater than 255 characters.'
-        required: false
-        example: BC-02/2026
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      summary:
-        custom: []
-        name: summary
-        description: 'Trích yếu.'
-        required: false
-        example: 'Tóm tắt nội dung cập nhật'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      file:
-        custom: []
-        name: file
-        description: 'Tệp tài liệu thay thế hoặc bổ sung. Must be a file. Must not be greater than 10240 kilobytes.'
-        required: false
-        example: null
-        type: file
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      is_public:
-        custom: []
-        name: is_public
-        description: 'Công khai tài liệu.'
-        required: false
-        example: false
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: 'Trạng thái tài liệu.'
-        required: false
-        example: published
-        type: string
-        enumValues:
-          - draft
-          - published
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      sort_order:
-        custom: []
-        name: sort_order
-        description: 'Must be at least 0.'
-        required: false
-        example: 39
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      remove_file:
-        custom: []
-        name: remove_file
-        description: 'Xóa file hiện tại hay không.'
-        required: false
-        example: false
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-    cleanBodyParameters:
-      meeting_agenda_id: 16
-      meeting_document_type_id: 16
-      title: 'Báo cáo cập nhật'
-      document_number: BC-02/2026
-      summary: 'Tóm tắt nội dung cập nhật'
-      is_public: false
-      status: published
-      sort_order: 39
-      remove_file: false
-    fileParameters:
-      file: null
-    responses: []
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - DELETE
-    uri: 'api/meeting-documents/{meetingDocument_id}'
-    metadata:
-      custom: []
-      groupName: 'Meeting - Tài liệu họp'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Xóa tài liệu họp.'
+      title: 'Cập nhật chương trình biểu quyết.'
       description: ''
       authenticated: true
       deprecated: false
@@ -1138,10 +756,10 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      meetingDocument_id:
+      meetingVoteTopic_id:
         custom: []
-        name: meetingDocument_id
-        description: 'The ID of the meetingDocument.'
+        name: meetingVoteTopic_id
+        description: 'The ID of the meetingVoteTopic.'
         required: true
         example: 16
         type: integer
@@ -1149,10 +767,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      meetingDocument:
+      meetingVoteTopic:
         custom: []
-        name: meetingDocument
-        description: 'ID tài liệu họp.'
+        name: meetingVoteTopic
+        description: 'ID chương trình biểu quyết.'
         required: true
         example: 1
         type: integer
@@ -1161,12 +779,115 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      meetingDocument_id: 16
-      meetingDocument: 1
+      meetingVoteTopic_id: 16
+      meetingVoteTopic: 1
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    bodyParameters:
+      meeting_agenda_id:
+        custom: []
+        name: meeting_agenda_id
+        description: 'The <code>id</code> of an existing record in the meeting_agendas table.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      title:
+        custom: []
+        name: title
+        description: 'Tên chương trình biểu quyết. Must not be greater than 255 characters.'
+        required: false
+        example: 'Biểu quyết điều chỉnh kế hoạch'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vote_type:
+        custom: []
+        name: vote_type
+        description: 'Loại biểu quyết.'
+        required: false
+        example: approve_reject_abstain
+        type: string
+        enumValues:
+          - agree_disagree_abstain
+          - approve_reject_abstain
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      ballot_mode:
+        custom: []
+        name: ballot_mode
+        description: 'Chế độ biểu quyết.'
+        required: false
+        example: public_named
+        type: string
+        enumValues:
+          - anonymous
+          - public_named
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      show_result_on_projector:
+        custom: []
+        name: show_result_on_projector
+        description: 'Hiển thị kết quả trên màn chiếu.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      show_result_on_personal_device:
+        custom: []
+        name: show_result_on_personal_device
+        description: 'Hiển thị kết quả trên thiết bị cá nhân.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Must be at least 0.'
+        required: false
+        example: 39
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Trạng thái chủ đề biểu quyết.'
+        required: false
+        example: opened
+        type: string
+        enumValues:
+          - draft
+          - opened
+          - closed
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      meeting_agenda_id: 16
+      title: 'Biểu quyết điều chỉnh kế hoạch'
+      vote_type: approve_reject_abstain
+      ballot_mode: public_named
+      show_result_on_projector: true
+      show_result_on_personal_device: true
+      sort_order: 39
+      status: opened
     fileParameters: []
     responses: []
     responseFields: []
@@ -1181,14 +902,14 @@ endpoints:
     custom: []
     httpMethods:
       - PATCH
-    uri: 'api/meeting-documents/{meetingDocument_id}/status'
+    uri: 'api/meeting-vote-topics/{meetingVoteTopic_id}'
     metadata:
       custom: []
-      groupName: 'Meeting - Tài liệu họp'
+      groupName: 'Meeting - Chương trình biểu quyết'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Đổi trạng thái tài liệu họp.'
+      title: 'Cập nhật chương trình biểu quyết.'
       description: ''
       authenticated: true
       deprecated: false
@@ -1198,10 +919,10 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      meetingDocument_id:
+      meetingVoteTopic_id:
         custom: []
-        name: meetingDocument_id
-        description: 'The ID of the meetingDocument.'
+        name: meetingVoteTopic_id
+        description: 'The ID of the meetingVoteTopic.'
         required: true
         example: 16
         type: integer
@@ -1209,10 +930,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      meetingDocument:
+      meetingVoteTopic:
         custom: []
-        name: meetingDocument
-        description: 'ID tài liệu họp.'
+        name: meetingVoteTopic
+        description: 'ID chương trình biểu quyết.'
         required: true
         example: 1
         type: integer
@@ -1221,26 +942,175 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      meetingDocument_id: 16
-      meetingDocument: 1
+      meetingVoteTopic_id: 16
+      meetingVoteTopic: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
+      meeting_agenda_id:
+        custom: []
+        name: meeting_agenda_id
+        description: 'The <code>id</code> of an existing record in the meeting_agendas table.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      title:
+        custom: []
+        name: title
+        description: 'Tên chương trình biểu quyết. Must not be greater than 255 characters.'
+        required: false
+        example: 'Biểu quyết điều chỉnh kế hoạch'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vote_type:
+        custom: []
+        name: vote_type
+        description: 'Loại biểu quyết.'
+        required: false
+        example: approve_reject_abstain
+        type: string
+        enumValues:
+          - agree_disagree_abstain
+          - approve_reject_abstain
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      ballot_mode:
+        custom: []
+        name: ballot_mode
+        description: 'Chế độ biểu quyết.'
+        required: false
+        example: public_named
+        type: string
+        enumValues:
+          - anonymous
+          - public_named
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      show_result_on_projector:
+        custom: []
+        name: show_result_on_projector
+        description: 'Hiển thị kết quả trên màn chiếu.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      show_result_on_personal_device:
+        custom: []
+        name: show_result_on_personal_device
+        description: 'Hiển thị kết quả trên thiết bị cá nhân.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Must be at least 0.'
+        required: false
+        example: 39
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
       status:
         custom: []
         name: status
-        description: 'Trạng thái mới của tài liệu họp.'
-        required: true
-        example: published
+        description: 'Trạng thái chủ đề biểu quyết.'
+        required: false
+        example: opened
         type: string
         enumValues:
           - draft
-          - published
+          - opened
+          - closed
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      status: published
+      meeting_agenda_id: 16
+      title: 'Biểu quyết điều chỉnh kế hoạch'
+      vote_type: approve_reject_abstain
+      ballot_mode: public_named
+      show_result_on_projector: true
+      show_result_on_personal_device: true
+      sort_order: 39
+      status: opened
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/meeting-vote-topics/{meetingVoteTopic_id}'
+    metadata:
+      custom: []
+      groupName: 'Meeting - Chương trình biểu quyết'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Xóa chương trình biểu quyết.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      meetingVoteTopic_id:
+        custom: []
+        name: meetingVoteTopic_id
+        description: 'The ID of the meetingVoteTopic.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      meetingVoteTopic:
+        custom: []
+        name: meetingVoteTopic
+        description: 'ID chương trình biểu quyết.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      meetingVoteTopic_id: 16
+      meetingVoteTopic: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses: []
     responseFields: []

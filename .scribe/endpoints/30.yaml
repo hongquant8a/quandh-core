@@ -1,0 +1,348 @@
+name: 'Meeting - Tệp ghi chú cá nhân'
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: api/meeting-personal-note-attachments/reorder
+    metadata:
+      custom: []
+      groupName: 'Meeting - Tệp ghi chú cá nhân'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Sắp xếp thứ tự file đính kèm ghi chú cá nhân.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      items:
+        custom: []
+        name: items
+        description: 'Danh sách cặp id và sort_order để sắp xếp file ghi chú cá nhân. Must have at least 1 items.'
+        required: true
+        example:
+          -
+            id: 1
+            sort_order: 1
+          -
+            id: 2
+            sort_order: 2
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'items[].id':
+        custom: []
+        name: 'items[].id'
+        description: 'The <code>id</code> of an existing record in the meeting_personal_note_attachments table.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'items[].sort_order':
+        custom: []
+        name: 'items[].sort_order'
+        description: 'Must be at least 0.'
+        required: true
+        example: 39
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      items:
+        -
+          id: 1
+          sort_order: 1
+        -
+          id: 2
+          sort_order: 2
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/meeting-personal-note-attachments
+    metadata:
+      custom: []
+      groupName: 'Meeting - Tệp ghi chú cá nhân'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Danh sách file đính kèm ghi chú cá nhân.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Từ khóa tìm kiếm theo tên hoặc trường chính. Must not be greater than 100 characters.'
+        required: false
+        example: van-ban
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Lọc theo trạng thái.'
+        required: false
+        example: active
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      from_date:
+        custom: []
+        name: from_date
+        description: 'Lọc từ ngày tạo (Y-m-d). Must be a valid date.'
+        required: false
+        example: '2026-01-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      to_date:
+        custom: []
+        name: to_date
+        description: 'Lọc đến ngày tạo (Y-m-d). Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
+        required: false
+        example: '2026-12-31'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_by:
+        custom: []
+        name: sort_by
+        description: 'Trường dùng để sắp xếp. Must not be greater than 50 characters.'
+        required: false
+        example: created_at
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự sắp xếp.'
+        required: false
+        example: desc
+        type: string
+        enumValues:
+          - asc
+          - desc
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Số bản ghi mỗi trang (1-100). Must be at least 1. Must not be greater than 100.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanQueryParameters:
+      search: van-ban
+      status: active
+      from_date: '2026-01-01'
+      to_date: '2026-12-31'
+      sort_by: created_at
+      sort_order: desc
+      limit: 10
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/meeting-personal-note-attachments
+    metadata:
+      custom: []
+      groupName: 'Meeting - Tệp ghi chú cá nhân'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Thêm file đính kèm cho ghi chú cá nhân.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      meeting_personal_note_id:
+        custom: []
+        name: meeting_personal_note_id
+        description: 'ID ghi chú cá nhân. The <code>id</code> of an existing record in the meeting_personal_notes table.'
+        required: true
+        example: 5
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      file:
+        custom: []
+        name: file
+        description: 'Tệp đính kèm ghi chú cá nhân. Must be a file. Must not be greater than 10240 kilobytes.'
+        required: true
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort_order:
+        custom: []
+        name: sort_order
+        description: 'Thứ tự hiển thị file. Must be at least 0.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      meeting_personal_note_id: 5
+      sort_order: 1
+    fileParameters:
+      file: null
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/meeting-personal-note-attachments/{meetingPersonalNoteAttachment_id}'
+    metadata:
+      custom: []
+      groupName: 'Meeting - Tệp ghi chú cá nhân'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Xóa file đính kèm ghi chú cá nhân.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer Bearer {YOUR_ACCESS_TOKEN}'
+      X-Organization-Id: 'ID tổ chức cần làm việc (bắt buộc với endpoint yêu cầu auth). Example: 1'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      meetingPersonalNoteAttachment_id:
+        custom: []
+        name: meetingPersonalNoteAttachment_id
+        description: 'The ID of the meetingPersonalNoteAttachment.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      meetingPersonalNoteAttachment:
+        custom: []
+        name: meetingPersonalNoteAttachment
+        description: 'ID file ghi chú cá nhân.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      meetingPersonalNoteAttachment_id: 16
+      meetingPersonalNoteAttachment: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
