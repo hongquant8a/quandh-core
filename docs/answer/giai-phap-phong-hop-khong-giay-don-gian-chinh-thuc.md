@@ -228,6 +228,79 @@ Các tùy chọn cần có:
 8. Sử dụng tab `Màn chiếu` khi cần trình chiếu thông tin.
 9. Cập nhật văn bản/nội dung kết luận.
 
+### 3.5 Luồng hoạt động chi tiết giữa Backend và Frontend
+
+Mục này mô tả luồng kỹ thuật để đội Backend (BE) và Frontend (FE) triển khai đồng bộ, giảm lệch nghiệp vụ khi chạy thật.
+
+#### Giai đoạn A - Trước họp (chuẩn bị và ban hành)
+
+1. FE quản trị gọi API danh mục (`meeting_types`, `meeting_locations`, `meeting_document_types`, `meeting_attendees`, `meeting_attendee_groups`) để tải dữ liệu form.
+2. BE trả dữ liệu đã scope theo `organization_id`, lọc `status = active`, sắp xếp theo `sort_order` hoặc `name`.
+3. FE nhập dữ liệu cuộc họp và gửi `store`:
+   - Thông tin chung cuộc họp.
+   - Danh sách chương trình.
+   - Danh sách tài liệu.
+   - Danh sách đại biểu tham dự.
+   - Danh sách chương trình biểu quyết.
+4. BE validate bằng FormRequest, xử lý nghiệp vụ trong Service:
+   - Tạo `meetings`.
+   - Lưu `meeting_agendas`, `meeting_documents`, `meeting_participants`, `meeting_vote_topics`.
+   - Với tài liệu/file đính kèm: upload qua `MediaService`.
+   - Bọc transaction cho luồng ghi nhiều bước.
+5. FE hiển thị bản xem trước và trạng thái `draft`, cho phép chỉnh sửa trước khi ban hành.
+6. Khi người dùng bấm ban hành, FE gọi action `changeStatus` hoặc action publish chuyên biệt.
+7. BE chuyển trạng thái `draft -> published`, set `published_at`, tạo bản ghi `meeting_invitations` và kích hoạt gửi giấy mời theo lựa chọn (`now` hoặc `scheduled`).
+8. FE hiển thị kết quả ban hành, số lượng giấy mời thành công/thất bại để điều hành xử lý tiếp.
+
+#### Giai đoạn B - Cận giờ họp (xác nhận tham gia và điểm danh)
+
+1. Đại biểu mở link giấy mời hoặc đăng nhập vào danh sách cuộc họp của tôi.
+2. FE gọi `show` cuộc họp và API participant profile để xác định quyền/role (`delegate`, `chairperson`, `operator`).
+3. BE kiểm tra tenant + membership:
+   - Nếu không thuộc `meeting_participants` thì từ chối truy cập dữ liệu nội bộ.
+   - Nếu hợp lệ thì trả dữ liệu theo role và theo cờ công khai.
+4. Đại biểu bấm xác nhận tham gia/vắng mặt, FE gửi action cập nhật `response_status`.
+5. BE lưu `response_status`, `absence_reason`, `responded_at` và trả dữ liệu mới để FE cập nhật realtime nhẹ (polling hoặc refresh theo chu kỳ).
+6. Đến khung điểm danh, FE hiển thị nút điểm danh/quét mã theo cấu hình cuộc họp.
+7. FE gửi check-in với `checkin_method = qr | button | manual`.
+8. BE đối soát tài khoản đăng nhập với `meeting_participant_id`, chặn check-in trùng, cập nhật `meeting_attendances` và đồng bộ trạng thái có mặt.
+
+#### Giai đoạn C - Trong họp (điều hành, thảo luận/chất vấn, biểu quyết)
+
+1. FE điều hành tải dashboard phiên họp:
+   - Tổng số mời, đã xác nhận, đã điểm danh.
+   - Danh sách đăng ký thảo luận/chất vấn.
+   - Danh sách chương trình biểu quyết.
+2. BE tổng hợp số liệu từ các bảng `meeting_participants`, `meeting_attendances`, `meeting_discussion_registrations`, `meeting_vote_topics`.
+3. Khi đại biểu đăng ký thảo luận/chất vấn, FE gửi `type`, `content`, `meeting_agenda_id`, file đính kèm (nếu có).
+4. BE kiểm tra cờ cho phép theo agenda (`allow_discussion_registration` hoặc `allow_question_registration`), sau đó lưu đăng ký và `sort_order`.
+5. Điều hành/chủ trì đổi trạng thái lượt phát biểu (`registered -> called -> completed`), FE gọi action tương ứng.
+6. BE cập nhật trạng thái, thời điểm (`called_at`, `completed_at`) và trả danh sách mới để FE sắp xếp lại thứ tự hiển thị.
+7. Khi mở biểu quyết, FE điều hành gọi action `open` cho `meeting_vote_topics`.
+8. BE đổi trạng thái `opened`, ghi `opened_at`, chỉ cho đại biểu đủ điều kiện gửi phiếu.
+9. FE đại biểu hiển thị modal biểu quyết; mỗi đại biểu gửi 1 phiếu.
+10. BE ghi vào `meeting_vote_responses`, áp unique (`meeting_vote_topic_id + meeting_participant_id`) để chống bỏ phiếu trùng.
+11. Khi đóng biểu quyết, FE gọi action `close`.
+12. BE chốt `closed_at`, tổng hợp kết quả theo `vote_type` và trả:
+    - Dữ liệu tổng hợp cho màn chiếu/thiết bị cá nhân theo cờ hiển thị.
+    - Dữ liệu chi tiết theo người chỉ khi đúng quyền và đúng `ballot_mode`.
+
+#### Giai đoạn D - Sau họp (kết luận và tra cứu)
+
+1. FE điều hành nhập nội dung kết luận, đính kèm văn bản kết luận nếu có.
+2. BE lưu vào `meeting_conclusions` (qua `MediaService` khi có file), cho phép lưu nháp hoặc công bố.
+3. FE công khai kết luận theo trạng thái và quyền truy cập.
+4. BE ghi log lượt xem cuộc họp/tài liệu vào `meeting_views`, đồng thời tăng `view_count`/`download_count`.
+5. FE hiển thị lịch sử và số liệu tổng quan để phục vụ báo cáo.
+
+#### Chuẩn phối hợp BE/FE cần thống nhất từ đầu
+
+- FE luôn gửi `X-Organization-Id` cho endpoint tenant; BE bắt buộc scope theo tổ chức hiện tại.
+- FE không tự suy diễn quyền; luôn đọc quyền từ payload API và ẩn/hiện nút thao tác theo quyền thực tế.
+- BE trả response theo chuẩn `success`, `successResource`, `successCollection`, `error` để FE xử lý nhất quán.
+- Các action nhạy cảm (ban hành, mở/đóng biểu quyết, điểm danh thay, công bố kết luận) phải có xác nhận 2 bước ở FE và log nghiệp vụ ở BE.
+- Luồng reorder (chương trình, tài liệu, đăng ký, ghi chú) phải có cơ chế chống xung đột đồng thời như đã nêu tại phần dữ liệu.
+
 ---
 
 ## 4. Phân quyền chính
