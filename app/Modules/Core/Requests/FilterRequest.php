@@ -81,6 +81,18 @@ class FilterRequest extends FormRequest
     /**
      * Tránh cảnh báo của Scribe với request dùng cho query.
      */
+    public function attributes(): array
+    {
+        return [
+            'search' => 'Từ khóa tìm kiếm',
+            'status' => 'Trạng thái',
+            'from_date' => 'Từ ngày',
+            'to_date' => 'Đến ngày',
+            'sort_by' => 'Trường sắp xếp',
+            'sort_order' => 'Thứ tự sắp xếp',
+            'limit' => 'Số bản ghi mỗi trang',
+        ];
+    }
     public function bodyParameters(): array
     {
         return [];

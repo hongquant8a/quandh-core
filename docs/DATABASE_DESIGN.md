@@ -420,3 +420,231 @@ Các bảng: `document_types`, `document_issuing_agencies`, `document_issuing_le
 ---
 
 *File được cập nhật theo migration trong `database/migrations/`.*
+
+---
+
+## 6. Cuộc họp & Danh mục (Module Meeting)
+
+### `meeting_types`
+Danh mục loại cuộc họp.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK, auto increment |
+| organization_id | bigint unsigned | Yes | null | FK → organizations.id |
+| name | varchar(255) | No | — | |
+| description | text | Yes | null | |
+| status | varchar(255) | No | 'active' | active, inactive |
+| sort_order | int unsigned | No | 0 | |
+| created_by | bigint unsigned | Yes | null | FK → users.id |
+| updated_by | bigint unsigned | Yes | null | FK → users.id |
+| created_at | timestamp | Yes | null | |
+| updated_at | timestamp | Yes | null | |
+
+### `meeting_locations`
+Danh mục địa điểm họp.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK, auto increment |
+| organization_id | bigint unsigned | Yes | null | FK → organizations.id |
+| name | varchar(255) | No | — | |
+| address | varchar(255) | Yes | null | |
+| latitude | decimal(10,7) | Yes | null | |
+| longitude | decimal(10,7) | Yes | null | |
+| google_maps_url | varchar(255) | Yes | null | |
+| description | text | Yes | null | |
+| status | varchar(255) | No | 'active' | active, inactive |
+| sort_order | int unsigned | No | 0 | |
+| created_by | bigint unsigned | Yes | null | FK → users.id |
+| updated_by | bigint unsigned | Yes | null | FK → users.id |
+| created_at | timestamp | Yes | null | |
+| updated_at | timestamp | Yes | null | |
+
+### `meeting_document_types`
+Danh mục loại tài liệu họp.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK, auto increment |
+| organization_id | bigint unsigned | Yes | null | FK → organizations.id |
+| name | varchar(255) | No | — | |
+| description | text | Yes | null | |
+| status | varchar(255) | No | 'active' | active, inactive |
+| sort_order | int unsigned | No | 0 | |
+| created_by | bigint unsigned | Yes | null | FK → users.id |
+| updated_by | bigint unsigned | Yes | null | FK → users.id |
+| created_at | timestamp | Yes | null | |
+| updated_at | timestamp | Yes | null | |
+
+### `meetings`
+Bảng cuộc họp.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK, auto increment |
+| organization_id | bigint unsigned | No | — | FK → organizations.id |
+| meeting_type_id | bigint unsigned | Yes | null | FK → meeting_types.id |
+| meeting_location_id | bigint unsigned | Yes | null | FK → meeting_locations.id |
+| title | varchar(255) | No | — | |
+| is_public | tinyint(1) | No | 0 | |
+| content | text | Yes | null | |
+| start_time | datetime | No | — | |
+| end_time | datetime | Yes | null | |
+| status | varchar(255) | No | 'draft' | draft, published, in_progress, completed, cancelled |
+| view_count | int unsigned | No | 0 | |
+| published_at | datetime | Yes | null | |
+| created_by | bigint unsigned | Yes | null | FK → users.id |
+| updated_by | bigint unsigned | Yes | null | FK → users.id |
+| created_at | timestamp | Yes | null | |
+| updated_at | timestamp | Yes | null | |
+
+### `meeting_attendee_groups`
+Nhóm đại biểu thuộc tổ chức.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK |
+| organization_id | bigint unsigned | No | — | FK → organizations.id |
+| name | varchar(255) | No | — | |
+| description | text | Yes | null | |
+| status | varchar(255) | No | active | active, inactive |
+| sort_order | int unsigned | No | 0 | |
+
+### `meeting_attendees`
+Danh bạ đại biểu phục vụ mời họp.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK |
+| organization_id | bigint unsigned | No | — | FK → organizations.id |
+| meeting_attendee_group_id | bigint unsigned | Yes | null | FK → meeting_attendee_groups.id |
+| user_id | bigint unsigned | Yes | null | FK → users.id |
+| name | varchar(255) | No | — | |
+| status | varchar(255) | No | active | active, inactive |
+
+### `meeting_agendas`
+Chương trình họp theo từng cuộc họp.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK |
+| organization_id | bigint unsigned | No | — | FK → organizations.id |
+| meeting_id | bigint unsigned | No | — | FK → meetings.id |
+| parent_id | bigint unsigned | Yes | null | FK tự tham chiếu |
+| content | text | No | — | |
+| allow_discussion_registration | boolean | No | false | |
+| allow_question_registration | boolean | No | false | |
+| sort_order | int unsigned | No | 0 | |
+
+### `meeting_documents`
+Tài liệu đính kèm cuộc họp.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK |
+| organization_id | bigint unsigned | No | — | FK → organizations.id |
+| meeting_id | bigint unsigned | No | — | FK → meetings.id |
+| meeting_agenda_id | bigint unsigned | Yes | null | FK → meeting_agendas.id |
+| meeting_document_type_id | bigint unsigned | Yes | null | FK → meeting_document_types.id |
+| media_id | bigint unsigned | Yes | null | FK → media.id |
+| status | varchar(255) | No | draft | draft, published |
+| is_public | boolean | No | false | |
+| sort_order | int unsigned | No | 0 | |
+
+### `meeting_participants`
+Danh sách người tham dự theo cuộc họp (snapshot từ danh bạ đại biểu).
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK |
+| organization_id | bigint unsigned | No | — | FK → organizations.id |
+| meeting_id | bigint unsigned | No | — | FK → meetings.id |
+| meeting_attendee_id | bigint unsigned | No | — | FK → meeting_attendees.id |
+| role | varchar(255) | No | delegate | delegate, chairperson, operator, guest |
+| response_status | varchar(255) | No | pending | pending, accepted, declined |
+
+### `meeting_attendances`
+Điểm danh đại biểu theo từng cuộc họp.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK |
+| organization_id | bigint unsigned | No | — | FK → organizations.id |
+| meeting_id | bigint unsigned | No | — | FK → meetings.id |
+| meeting_participant_id | bigint unsigned | No | — | FK → meeting_participants.id |
+| status | varchar(255) | No | pending | pending, present, absent, late, excused |
+| checkin_method | varchar(255) | Yes | null | qr, button, manual |
+
+### `meeting_vote_topics`
+Chương trình biểu quyết thuộc cuộc họp.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK |
+| organization_id | bigint unsigned | No | — | FK → organizations.id |
+| meeting_id | bigint unsigned | No | — | FK → meetings.id |
+| title | varchar(255) | No | — | |
+| vote_type | varchar(255) | No | agree_disagree_abstain | agree_disagree_abstain, approve_reject_abstain |
+| ballot_mode | varchar(255) | No | anonymous | anonymous, public_named |
+| status | varchar(255) | No | draft | draft, opened, closed |
+
+### `meeting_vote_responses`
+Phiếu biểu quyết của đại biểu.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK |
+| organization_id | bigint unsigned | No | — | FK → organizations.id |
+| meeting_vote_topic_id | bigint unsigned | No | — | FK → meeting_vote_topics.id |
+| meeting_participant_id | bigint unsigned | No | — | FK → meeting_participants.id |
+| option | varchar(255) | No | — | agree, disagree, approve, reject, abstain |
+
+### `meeting_conclusions`
+Kết luận cuộc họp và file đính kèm.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK |
+| organization_id | bigint unsigned | No | — | FK → organizations.id |
+| meeting_id | bigint unsigned | No | — | FK → meetings.id |
+| title | varchar(255) | No | — | |
+| media_id | bigint unsigned | Yes | null | FK → media.id |
+| status | varchar(255) | No | draft | draft, published |
+
+### `meeting_discussion_registrations`
+Danh sách đăng ký thảo luận/chất vấn theo chương trình.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK |
+| organization_id | bigint unsigned | No | — | FK → organizations.id |
+| meeting_id | bigint unsigned | No | — | FK → meetings.id |
+| meeting_agenda_id | bigint unsigned | Yes | null | FK → meeting_agendas.id |
+| meeting_participant_id | bigint unsigned | No | — | FK → meeting_participants.id |
+| type | varchar(255) | No | discussion | discussion, question |
+| media_id | bigint unsigned | Yes | null | FK → media.id |
+| status | varchar(255) | No | registered | registered, called, completed, cancelled |
+
+### `meeting_personal_notes`
+Ghi chú cá nhân của đại biểu theo cuộc họp.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK |
+| organization_id | bigint unsigned | No | — | FK → organizations.id |
+| meeting_id | bigint unsigned | No | — | FK → meetings.id |
+| meeting_participant_id | bigint unsigned | No | — | FK → meeting_participants.id |
+| content | longtext | No | — | |
+| sort_order | int unsigned | No | 0 | |
+
+### `meeting_personal_note_attachments`
+Tập tin đính kèm của ghi chú cá nhân.
+
+| Cột | Kiểu | Nullable | Mặc định | Ràng buộc / Ghi chú |
+|-----|------|----------|----------|---------------------|
+| id | bigint unsigned | No | — | PK |
+| organization_id | bigint unsigned | No | — | FK → organizations.id |
+| meeting_personal_note_id | bigint unsigned | No | — | FK → meeting_personal_notes.id |
+| media_id | bigint unsigned | No | — | FK → media.id |
+| sort_order | int unsigned | No | 0 | |

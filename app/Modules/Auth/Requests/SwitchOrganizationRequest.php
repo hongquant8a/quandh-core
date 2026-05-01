@@ -26,7 +26,12 @@ class SwitchOrganizationRequest extends FormRequest
             'organization_id.exists' => 'Tổ chức không tồn tại.',
         ];
     }
-
+    public function attributes(): array
+    {
+        return [
+            'organization_id' => 'ID tổ chức',
+        ];
+    }
     public function bodyParameters(): array
     {
         return [

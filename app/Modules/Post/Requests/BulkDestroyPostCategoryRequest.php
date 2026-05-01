@@ -27,7 +27,13 @@ class BulkDestroyPostCategoryRequest extends FormRequest
             'ids.min' => 'Danh sách danh mục phải có ít nhất 1 danh mục.',
         ];
     }
-
+    public function attributes(): array
+    {
+        return [
+            'ids' => 'Danh sách ID',
+            'ids.*' => 'Phần tử của Danh sách ID',
+        ];
+    }
     public function bodyParameters(): array
     {
         return [];

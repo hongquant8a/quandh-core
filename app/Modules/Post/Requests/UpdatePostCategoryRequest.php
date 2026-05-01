@@ -39,7 +39,17 @@ class UpdatePostCategoryRequest extends FormRequest
             'parent_id.exists' => 'Danh mục cha không tồn tại.',
         ];
     }
-
+    public function attributes(): array
+    {
+        return [
+            'name' => 'Tên',
+            'slug' => 'Slug',
+            'description' => 'Mô tả',
+            'status' => 'Trạng thái',
+            'sort_order' => 'Thứ tự sắp xếp',
+            'parent_id' => 'ID bản ghi cha',
+        ];
+    }
     public function bodyParameters(): array
     {
         return [];

@@ -30,7 +30,13 @@ class LoginRequest extends FormRequest
             'password.required' => 'Mật khẩu không được để trống.',
         ];
     }
-
+    public function attributes(): array
+    {
+        return [
+            'email' => 'Email',
+            'password' => 'Mật khẩu',
+        ];
+    }
     public function bodyParameters(): array
     {
         return [

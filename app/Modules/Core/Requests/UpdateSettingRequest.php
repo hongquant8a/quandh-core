@@ -52,6 +52,14 @@ class UpdateSettingRequest extends FormRequest
     /**
      * Mô tả body mẫu cho tài liệu Scribe.
      */
+    public function attributes(): array
+    {
+        return [
+            'integer' => 'integer',
+            'boolean' => 'boolean',
+            'json' => 'json',
+        ];
+    }
     public function bodyParameters(): array
     {
         return [

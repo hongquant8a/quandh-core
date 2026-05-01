@@ -26,7 +26,12 @@ class ChangeStatusPostRequest extends FormRequest
             'status.in' => 'Trạng thái không hợp lệ. Chỉ chấp nhận draft, published, archived.',
         ];
     }
-
+    public function attributes(): array
+    {
+        return [
+            'status' => 'Trạng thái',
+        ];
+    }
     public function bodyParameters()
     {
         return [

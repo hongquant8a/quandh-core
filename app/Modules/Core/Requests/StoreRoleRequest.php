@@ -27,7 +27,15 @@ class StoreRoleRequest extends FormRequest
             'name.required' => 'Tên vai trò không được để trống.',
         ];
     }
-
+    public function attributes(): array
+    {
+        return [
+            'name' => 'Tên',
+            'guard_name' => 'guard name',
+            'permission_ids' => 'permission ids',
+            'permission_ids.*' => 'Phần tử của permission ids',
+        ];
+    }
     public function bodyParameters(): array
     {
         return [];
