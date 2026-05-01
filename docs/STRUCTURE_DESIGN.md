@@ -51,6 +51,14 @@ app/Modules/
 │   ├── Resources/
 │   ├── Routes/
 │   └── Services/
+├── Meeting/
+│   ├── Controllers/
+│   ├── Enums/
+│   ├── Models/
+│   ├── Requests/
+│   ├── Resources/
+│   ├── Routes/
+│   └── Services/
 └── Document/
     ├── Controllers/
     ├── Enums/

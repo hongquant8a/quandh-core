@@ -189,6 +189,21 @@ class LogActivity
             ?? $params['issuingLevel']
             ?? $params['documentSigner']
             ?? $params['documentField']
+            ?? $params['meeting']
+            ?? $params['meetingType']
+            ?? $params['meetingLocation']
+            ?? $params['meetingDocumentType']
+            ?? $params['meetingAttendeeGroup']
+            ?? $params['meetingAttendee']
+            ?? $params['meetingAgenda']
+            ?? $params['meetingDocument']
+            ?? $params['meetingParticipant']
+            ?? $params['meetingAttendance']
+            ?? $params['meetingVoteTopic']
+            ?? $params['meetingConclusion']
+            ?? $params['meetingDiscussionRegistration']
+            ?? $params['meetingPersonalNote']
+            ?? $params['meetingPersonalNoteAttachment']
             ?? $params['id']
             ?? null;
         $suffix = $id ? ' #'.(is_object($id) ? $id->getKey() : $id) : '';
@@ -214,6 +229,22 @@ class LogActivity
             'issuing-levels' => 'cấp ban hành',
             'document-signers' => 'người ký',
             'document-fields' => 'lĩnh vực',
+            'meetings' => 'cuộc họp',
+            'meeting-types' => 'loại cuộc họp',
+            'meeting-locations' => 'địa điểm họp',
+            'meeting-document-types' => 'loại tài liệu họp',
+            'meeting-attendee-groups' => 'nhóm đại biểu',
+            'meeting-attendees' => 'đại biểu',
+            'meeting-agendas' => 'chương trình họp',
+            'meeting-documents' => 'tài liệu họp',
+            'meeting-participants' => 'người tham dự họp',
+            'meeting-attendances' => 'điểm danh họp',
+            'meeting-vote-topics' => 'chương trình biểu quyết',
+            'meeting-vote-responses' => 'phiếu biểu quyết',
+            'meeting-conclusions' => 'kết luận họp',
+            'meeting-discussion-registrations' => 'đăng ký thảo luận/chất vấn',
+            'meeting-personal-notes' => 'ghi chú cá nhân họp',
+            'meeting-personal-note-attachments' => 'file ghi chú cá nhân',
             'settings' => 'cấu hình hệ thống',
         ];
 

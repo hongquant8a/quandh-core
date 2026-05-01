@@ -16,6 +16,16 @@ Route::get('/document-fields/public', [\App\Modules\Document\DocumentFieldContro
 Route::get('/document-fields/public-options', [\App\Modules\Document\DocumentFieldController::class, 'publicOptions'])->middleware('log.activity');
 Route::get('/document-types/public', [\App\Modules\Document\DocumentTypeController::class, 'public'])->middleware('log.activity');
 Route::get('/document-types/public-options', [\App\Modules\Document\DocumentTypeController::class, 'publicOptions'])->middleware('log.activity');
+Route::get('/meeting-types/public', [\App\Modules\Meeting\MeetingTypeController::class, 'public'])->middleware('log.activity');
+Route::get('/meeting-types/public-options', [\App\Modules\Meeting\MeetingTypeController::class, 'publicOptions'])->middleware('log.activity');
+Route::get('/meeting-locations/public', [\App\Modules\Meeting\MeetingLocationController::class, 'public'])->middleware('log.activity');
+Route::get('/meeting-locations/public-options', [\App\Modules\Meeting\MeetingLocationController::class, 'publicOptions'])->middleware('log.activity');
+Route::get('/meeting-document-types/public', [\App\Modules\Meeting\MeetingDocumentTypeController::class, 'public'])->middleware('log.activity');
+Route::get('/meeting-document-types/public-options', [\App\Modules\Meeting\MeetingDocumentTypeController::class, 'publicOptions'])->middleware('log.activity');
+Route::get('/meetings/public', [\App\Modules\Meeting\MeetingController::class, 'public'])->middleware('log.activity');
+Route::get('/meetings/public/{meeting}', [\App\Modules\Meeting\MeetingController::class, 'publicShow'])->middleware('log.activity');
+Route::get('/meeting-documents/public', [\App\Modules\Meeting\MeetingDocumentController::class, 'public'])->middleware('log.activity');
+Route::get('/meeting-documents/public/{meetingDocument}', [\App\Modules\Meeting\MeetingDocumentController::class, 'publicShow'])->middleware('log.activity');
 Route::get('/issuing-levels/public', [\App\Modules\Document\IssuingLevelController::class, 'public'])->middleware('log.activity');
 Route::get('/issuing-levels/public-options', [\App\Modules\Document\IssuingLevelController::class, 'publicOptions'])->middleware('log.activity');
 Route::get('/issuing-agencies/public', [\App\Modules\Document\IssuingAgencyController::class, 'public'])->middleware('log.activity');
@@ -70,5 +80,53 @@ Route::middleware(['auth:sanctum', 'set.permissions.team', 'log.activity'])->gro
     });
     Route::prefix('settings')->group(function () {
         require base_path('app/Modules/Core/Routes/setting.php');
+    });
+    Route::prefix('meetings')->middleware('ensure.route.org')->group(function () {
+        require base_path('app/Modules/Meeting/Routes/meeting.php');
+    });
+    Route::prefix('meeting-types')->group(function () {
+        require base_path('app/Modules/Meeting/Routes/meeting_type.php');
+    });
+    Route::prefix('meeting-locations')->group(function () {
+        require base_path('app/Modules/Meeting/Routes/meeting_location.php');
+    });
+    Route::prefix('meeting-document-types')->group(function () {
+        require base_path('app/Modules/Meeting/Routes/meeting_document_type.php');
+    });
+    Route::prefix('meeting-attendee-groups')->middleware('ensure.route.org')->group(function () {
+        require base_path('app/Modules/Meeting/Routes/meeting_attendee_group.php');
+    });
+    Route::prefix('meeting-attendees')->middleware('ensure.route.org')->group(function () {
+        require base_path('app/Modules/Meeting/Routes/meeting_attendee.php');
+    });
+    Route::prefix('meeting-agendas')->middleware('ensure.route.org')->group(function () {
+        require base_path('app/Modules/Meeting/Routes/meeting_agenda.php');
+    });
+    Route::prefix('meeting-documents')->middleware('ensure.route.org')->group(function () {
+        require base_path('app/Modules/Meeting/Routes/meeting_document.php');
+    });
+    Route::prefix('meeting-participants')->middleware('ensure.route.org')->group(function () {
+        require base_path('app/Modules/Meeting/Routes/meeting_participant.php');
+    });
+    Route::prefix('meeting-attendances')->middleware('ensure.route.org')->group(function () {
+        require base_path('app/Modules/Meeting/Routes/meeting_attendance.php');
+    });
+    Route::prefix('meeting-vote-topics')->middleware('ensure.route.org')->group(function () {
+        require base_path('app/Modules/Meeting/Routes/meeting_vote_topic.php');
+    });
+    Route::prefix('meeting-vote-responses')->middleware('ensure.route.org')->group(function () {
+        require base_path('app/Modules/Meeting/Routes/meeting_vote_response.php');
+    });
+    Route::prefix('meeting-conclusions')->middleware('ensure.route.org')->group(function () {
+        require base_path('app/Modules/Meeting/Routes/meeting_conclusion.php');
+    });
+    Route::prefix('meeting-discussion-registrations')->middleware('ensure.route.org')->group(function () {
+        require base_path('app/Modules/Meeting/Routes/meeting_discussion_registration.php');
+    });
+    Route::prefix('meeting-personal-notes')->middleware('ensure.route.org')->group(function () {
+        require base_path('app/Modules/Meeting/Routes/meeting_personal_note.php');
+    });
+    Route::prefix('meeting-personal-note-attachments')->middleware('ensure.route.org')->group(function () {
+        require base_path('app/Modules/Meeting/Routes/meeting_personal_note_attachment.php');
     });
 });
